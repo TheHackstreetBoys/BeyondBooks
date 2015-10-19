@@ -1,4 +1,4 @@
---- Author: krupo
+﻿--- Author: krupo
 
 -- For the User profile
 create table user_profile (
@@ -70,7 +70,7 @@ create table books(
        
        description text,
        title varchar,
-       primary key (isbn),
+       primary key (isbn)
 );
 
 -- Authors of the book
