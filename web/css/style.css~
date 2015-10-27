@@ -168,8 +168,12 @@ h1{border-bottom:0px solid #00BB64;}
 
 
 
-
-
+#search {
+margin-top:13px;
+}
+#searcH1{
+margin-top:-300px;
+}
 .search-form .form-group {
   float: right !important;
   transition: all 0.35s, border-radius 100s;
