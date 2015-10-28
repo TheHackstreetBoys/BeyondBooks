@@ -22,6 +22,16 @@
         </activity>
         <activity android:name=".Frame11" >
         </activity>
+        <activity android:name=".frame9" >
+        </activity>
+        <activity android:name=".Frame15" >
+        </activity>
+        <activity android:name=".Frame16" >
+        </activity>
+        <activity android:name=".Frame17" >
+        </activity>
+        <activity android:name=".Frame14" >
+        </activity>
     </application>
 
 </manifest>
