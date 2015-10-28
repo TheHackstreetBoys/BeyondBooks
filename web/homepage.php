@@ -108,7 +108,7 @@ Rest Content
 <hr>Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; Your Company 2014</p>
+<p class="text-right">Copyright &copy; BeyondBooks</p>
 </div>
 </footer>
 

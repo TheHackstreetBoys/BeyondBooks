@@ -159,8 +159,8 @@ function checkstudent()
 	        	<div class='modal-body-center'>
 	        	 	<div class="form-group">
 					<form action="login-script.php" method="POST">
-				      	<input type="username" id="username" name="username" placeholder="Enter your ID"  class="form-control 						login-field" required="required">
-				      	<span class="fa fa-user login-field-icon"></i>
+				      	<input type="username" id="username" name="username" placeholder="Enter your ID"  class="form-control login-field" required="required">
+				      	<i class="fa fa-user login-field-icon"></i>
 		  		</div>
 				<div class="form-group">
 		            	  <input type="password" id="password" name="password" class="form-control login-field" required="required">
@@ -236,7 +236,7 @@ function checkstudent()
 
 	  <div class="container">
 
-	    <p class="text-right">Copyright &copy; Your Company 2014</p>
+	    <p class="text-right">Copyright &copy; BeyondBooks</p>
 
 	  </div>
 

@@ -1,8 +1,11 @@
 <!doctype html>
+<?php
+include_once 'db_conn.php';
+?>
 <html>
 <head>
 <title>
-Forgot Password
+Set new passsword
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -15,7 +18,6 @@ Forgot Password
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
-</script>
 </head>
 
 
@@ -47,16 +49,17 @@ Forgot Password
 	</nav>
 
 <div class="container" id="forgot_pd">
-<form action="forgotpassword-script.php" method="POST" class="form-forgotpass">
+<form method="POST" class="form-forgotpass">
 <div class="form-group">
-<label for="email">Email</label>
-<i class="glyphicon glyphicon-user form-control-feedback" style="position: absolute; padding-top: 4.5%;"></i>
-<input type="email" id="email" name="email"  class="form-control login-field" required="required" placeholder="Enter your Email ID">
 
+<label for="password">Password</label>
+<i class="glyphicon glyphicon-lock form-control-feedback" style="position: absolute; padding-top: 4.5%;"></i>
+<input type="password" id="password" name="password" class="form-control login-field" required="required">
+<input type="hidden" id="email" name="email" class="form-control login-field" value="<?php $email=$_GET['email']; echo  $email; ?>" >
 </div>
-<button type="submit" class="btn btn-primary" onclick="sendpassword()">Submit</button>
-</div>
+<button type="submit" class="btn btn-primary" onclick="setnewpassword()">Submit</button>
 </form>
+</div>
 
 <footer class="generalfooter">
 <hr />
@@ -74,27 +77,24 @@ Forgot Password
 
 
 <script>
-function sendpassword()
+function setnewpassword()
 		{
+			alert("working");
+			var password=$('#password').val();
 			var email=$('#email').val();
 			jQuery.ajax({
 				type: "POST",
-				url: "forgotpassword-script.php",
-				data: 'email='+email,
+				url: "setpassword-script.php",
+				data: 'email='+email+'&password='+password,
 				cache: false,
 				success: function(response)
 				{
 					if(response==1)
 					{
-						$("#email").val("");
-						alert("An email has been sent to your registered email for password reset.");
+						alert("Password set! You are good to go now.");
+						document.location.href="index.php";
 					}
-					else
-					{
-						$("#email").val("");
-						alert("Whoa whoa whoa! You are trying to change password for an account that doesn't exist.");
-					}
-				}
 			})
 		}
 </script>
+
