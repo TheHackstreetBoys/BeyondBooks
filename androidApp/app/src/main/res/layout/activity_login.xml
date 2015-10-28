@@ -1,11 +1,101 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".LoginActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".LoginActivity"
+    android:weightSum="1"
+    android:orientation="vertical">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/title"
+        android:id="@+id/textView"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="100dp"
+        android:paddingRight="50dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:textColor="#ffffff"
+        android:width="@android:dimen/thumbnail_width"
+        android:background="#3fa9f5"
+        android:textSize="24dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.15" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:hint="Your iiitvadodara email here"
+        android:id="@+id/editText"
+        style="@android:style/ButtonBar"
+        android:background="#43888888" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.15" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:hint="Your password here"
+        android:id="@+id/editText2"
+        android:layout_gravity="center_horizontal"
+        style="@android:style/ButtonBar"
+        android:background="#43888888" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.15" />
+
+    <Button
+        android:layout_width="184dp"
+        android:layout_height="wrap_content"
+        android:text="Log In"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal"
+        android:background="#3fa9f5"
+        android:textColor="#ffffff"
+        android:textScaleX="1"
+        android:textSize="24dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        style="@style/Widget.AppCompat.ListPopupWindow"
+        android:theme="@android:style/Holo.Light.ButtonBar.AlertDialog" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="forgot password"
+        android:id="@+id/textView2"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#0004f0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="About Us"
+        android:id="@+id/textView3"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#0004f0" />
+
+</LinearLayout>
