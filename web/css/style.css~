@@ -1,5 +1,10 @@
 /* general styles */
 
+footer
+{
+position: absolute; left:0; right: 0; bottom: 0;
+}
+
 	html, body {
 
 	  height: 100%;
@@ -171,8 +176,8 @@ h1{border-bottom:0px solid #00BB64;}
 #search {
 margin-top:13px;
 }
-#searcH1{
-margin-top:-300px;
+#search1{
+margin-top:-3px;
 }
 .search-form .form-group {
   float: right !important;
@@ -224,4 +229,13 @@ margin-top:-300px;
   left: initial;
   font-size: 14px;
 }
+
+
+#forgot_pd{
+position: relative;
+top: 30%;
+width: 50%;
+height: 90%;
+}
+
 

@@ -1,5 +1,10 @@
 /* general styles */
 
+.generalfooter
+{
+position: absolute; left:0; right: 0; bottom: 0;
+}
+
 	html, body {
 
 	  height: 100%;
@@ -224,4 +229,13 @@ margin-top:-3px;
   left: initial;
   font-size: 14px;
 }
+
+
+#forgot_pd{
+position: relative;
+top: 30%;
+width: 50%;
+height: 90%;
+}
+
 

@@ -18,7 +18,7 @@ if (isset($_SESSION['user_id']))
 	}
 	else
 	{
-		header('Location: homepage.php');
+		header('Location: homepage_teacher.php');
 	}
 }
 ?>
@@ -47,6 +47,48 @@ Index Page
 		<script src="js/modernizr-2.6.2.min.js"></script>
 		<script src="js/jquery-1.10.2.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
+
+<script>
+
+function checkstudent()
+		{
+			var user=$('#username').val();
+			var password=$('#password').val();
+			jQuery.ajax({
+				type: "POST",
+				url: "login-script.php",
+				data: "username="+user+"&password="+password,
+				cache: false,
+				success: function(response)
+				{
+					if(response==1)
+					{
+						document.location.href="homepage_student.php";
+					}
+					else if(response==2)
+					{
+						document.location.href="homepage_teacher.php";
+					}
+					else if(response==3)
+					{
+						$("#username").val("");
+						$("#password").val("");
+						alert("It seems like you are invisible! Please sign up first!");	
+					}
+					else
+					{
+						$("#username").val("");
+						$("#password").val("");
+						alert("Whoops! Seems like wrong password!");
+					}
+				}
+			})
+		}
+
+
+
+
+</script>
 
 
 </head>
@@ -121,11 +163,11 @@ Index Page
 				      	<span class="fa fa-user login-field-icon"></i>
 		  		</div>
 				<div class="form-group">
-		            	  <input type="password" id="password" name="password" placeholder="Password" class="form-control login-field" required="required">
+		            	  <input type="password" id="password" name="password" class="form-control login-field" required="required">
 		              		<i class="fa fa-lock login-field-icon"></i>
 
 		
-		        	<input type="submit" class="btn btn-success modal-login-btn">
+		        	<button type="button" class="btn btn-success modal-login-btn" onclick="checkstudent()">Sign in</button>
 		            	<a href="php/forgot-password.php" class="login-link text-center">Lost your password</a>
 	        		</form>
 
