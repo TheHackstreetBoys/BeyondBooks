@@ -14,6 +14,21 @@ Home Page
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+
+
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".dropdown, .btn-group").hover(function(){
+		var dropdownMenu = $(this).children(".dropdown-menu");
+		if(dropdownMenu.is(":visible")){
+			dropdownMenu.parent().toggleClass("open");
+		}
+	});
+});		
+</script>
 </head>
 
 
@@ -63,7 +78,13 @@ Home Page
 
 	        <li><a href="#about">About</a></li>
 		
-		<li> <img src="/var/www/html/BeyondBooks/web/images/user.png" class="img-circle" style="width: 50px"></li>
+		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="/var/www/html/BeyondBooks/web/images/user.png" class="img-circle" style="width: 50px"></a>
+
+<ul class="dropdown-menu">
+<li><a herf="#">My profile</a></li>
+<li><a href="#">My uploads</a></li>
+</ul></li>
+
 	      </ul>
 
 	    </div><!-- /.navbar-collapse -->
