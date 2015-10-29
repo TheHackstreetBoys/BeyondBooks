@@ -16,19 +16,46 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <TableLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Add Book"
-                android:id="@+id/textView3"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/ourtheme"
-                android:editable="false"
-                android:textColor="#ffffff"
-                android:textSize="42dp"
-                />
+                android:stretchColumns="0">
+                <TableRow>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="Add Book"
+                            android:id="@+id/textView3"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@color/colorPrimary"
+                            android:textColor="#ffffff"
+                            android:textSize="42dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:paddingLeft="9dp"
+                            android:paddingRight="9dp"
+                            android:gravity="center"
+                            />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="5dp"
+                        android:background="#55000000"/>
+                </TableRow>
+            </TableLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"
+                android:layout_marginLeft="5dp"
+                android:background="#55000000"/>
+
             <TextView
                 android:layout_margin="20dp"
                 android:layout_width="match_parent"
@@ -43,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:hint="ISBN"
                 android:id="@+id/addBook_isbn"
-                android:drawableBottom="@color/ourtheme"/>
+                android:drawableBottom="@color/colorPrimary"/>
             <Button
                 android:layout_margin="50dp"
                 android:layout_width="match_parent"
@@ -52,7 +79,7 @@
                 android:gravity="center"
                 android:text="Add"
                 android:textColor="#ffffff"
-                android:background="@color/ourtheme"/>
+                android:background="@color/colorPrimary"/>
         </LinearLayout>
     </ScrollView>
 
