@@ -1,0 +1,12 @@
+The following points are to be considered while developing the android app:
+
+=> Before beginning the project: start by cloning the repo in your system by : "git clone https://github.com/TheHackstreetBoys/BeyondBooks.git"
+
+=> Minimum sdk version is to be API 15.
+
+=> To know the details about the wireframes such as the color hex code etc used in the wireframes, you can visit "www.fluidui.com" with username: "anjul.ten@gmail.com" or "201352029@iiitvadodara.ac.in" and password: "iiitv" for both the ids.
+
+=> The following points are to be considered for giving ids to the various items in the xml:
+	
+	Suppose you are working on wireframe 1 and first button from the top, then name it as "wf1_button1" with button number increasing in vertical order i.e the top most button is given the least number. The same procedure is to be followed for other items as well.
+
