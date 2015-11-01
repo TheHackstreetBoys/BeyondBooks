@@ -32,6 +32,27 @@ $(document).ready(function(){
 	});
 });		
 </script>
+
+
+
+
+<script type="text/javascript" >
+$(document).ready(function() { 
+    
+            $('#images').live('change', function()      { 
+                 $("#profile-pic").html('');
+          $("#profile-pic").html('<img src="../icons/loader.gif" alt="Uploading...." style="margin:0 25%;"/>');
+      $("#imageform").ajaxForm({
+            target: '#profile-pic'
+    }).submit();
+    
+      });
+        }); 
+</script>
+
+
+
+
 </head>
 
 
@@ -90,8 +111,9 @@ $(document).ready(function(){
 	        <li><a href="#home">Home</a></li>
 
 	        <li><a href="#about">About</a></li>
+	        <li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
 		
-		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="/var/www/html/BeyondBooks/web/images/user.png" class="img-circle" style="width: 50px"></a>
+		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="../images/user.png" class="img-circle" style="width: 50px"></a>
 
 <ul class="dropdown-menu">
 <li><a herf="#">My profile</a></li>
@@ -130,7 +152,7 @@ $(document).ready(function(){
 				<div class="form-group">
 					 <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-12" id="profile-pic">
 			<?php
                       $filename=$row['user_id']."_dp";
                         echo '<img style="margin:0 25%;" src="pictures/'.$filename.'.jpg" alt="" class="img-circle img-responsive" id="dp" height=200px width=200px >';
@@ -151,100 +173,71 @@ $(document).ready(function(){
 					<h3>
 						<b>Personel Details</b> <hr/>
 					</h3>
-					<form class="form-horizontal" role="form" >
+					<form class="form-horizontal" role="form" method="post" action="yourprofile-script.php">
 						<div class="form-group">
-							 
-							<label for="inputEmail3" class="col-sm-4 control-label">
-								Your Name :
+								 <label for="fname" class="col-sm-3 control-label">
+								 	First Name:
+								 </label>
+								  <div class="col-sm-7">
+								 	<?php
+								 		echo '<input type="text" class="form-control" id="fname" placholder="'.$row['f_name'].'"/>';
+								 		?>
+								 	</div>
+								 <label for="lname" class="col-sm-3 control-label">
+								 	Last Name:
+								 </label>
+								 	<div class="col-sm-7">
+								 	<?php
+								 		echo '<input type="text" class="form-control" id="lname" placholder="'.$row['l_name'].'"/>';
+								 		?>
+								 	</div>
+							<label for="inputEmail3" class="col-sm-3 control-label">
+								Your Email ID:
 							</label>
-							<div class="col-sm-6">
-								<input class="form-control" id="inputEmail3" type="email">
+							<div class="col-sm-7">
+								 <?php
+							        echo '<input type="text" class="form-control" id="inputEmail3" placeholder="'.$row['email_id'].'" readonly/>';
+							        ?>
 							</div>
 						</div>
-						<div class="form-group" >
-							 
-							<label for="inputPassword3" class="col-sm-4 control-label">
-								Email ID :
-							</label>
-							<div class="col-sm-6">
-								<input class="form-control" id="inputPassword3" type="password">
-							</div>
 						</div>
-						
-						<div class="form-group">
-							 
-							<label for="inputPassword3" class="col-sm-4 control-label">
-								Contact Information :
-							</label>
-							<div class="col-sm-6">
-								<input class="form-control" id="inputPassword3" type="password">
-							</div>
-						</div>
-
-						
-						<div class="form-group">
-							<div class="col-sm-offset-4 col-sm-6">
-								 
-								<button type="submit" class="btn btn-default">
-									Save Changes
-								</button>
-								
-								<button type="submit" class="btn btn-default">
-									Edit
-								</button>
-							</div>
-						</div>
-					</form>
 				</div>
 			</div>
 <hr/>
+			
 			<div class="row">
 				<div class="col-md-6">
 				</div>
 				<div class="col-md-6" style="background-color:lavender;">
-					<h3>
-						<b>Change Password </b> <hr/>
-					</h3>
+					<h3> <b>Change Password</b></h3>
+						<h4>To change your password, enter your current password and then the password you desire!</h4> <hr/>
+					
 	<form class="form-horizontal" role="form">
 						<div class="form-group">
 							 
-							<label for="inputEmail3" class="col-sm-4 control-label">
-								Your Name :
+							<label for="oldpwd" class="col-sm-3 control-label">
+								Current Password:
 							</label>
-							<div class="col-sm-6">
-								<input class="form-control" id="inputEmail3" type="email">
+							<div class="col-sm-7">
+								<input class="form-control" id="oldpwd" name="oldpwd" type="password" placeholder="Current Password" >
 							</div>
 						</div>
-						<div class="form-group">
-							 
-							<label for="inputPassword3" class="col-sm-4 control-label">
-								Email ID :
+						<div class="form-group" id="newpwddiv"  style="display:none;">
+						        <label for="newpwd" class="col-sm-3 control-label">
+								New Password:
 							</label>
-							<div class="col-sm-6">
-								<input class="form-control" id="inputPassword3" type="password">
-							</div>
-						</div>
-						
-						<div class="form-group">
-							 
-							<label for="inputPassword3" class="col-sm-4 control-label">
-								Contact Information :
-							</label>
-							<div class="col-sm-6">
-								<input class="form-control" id="inputPassword3" type="password">
-							</div>
-						</div>
+						        <div class="col-sm-7">
+						          <input type="password" name="newpwd" placeholder="New Password" id="newpwd"  class="form-control"/>
+						        </div>
+					
 
-						
+						</div>
+												
 						<div class="form-group">
 							<div class="col-sm-offset-4 col-sm-10">
 								 
 								<button type="submit" class="btn btn-default">
-									Save Changes
-								</button>
-								
-								<button type="submit" class="btn btn-default">
-									Edit
+									Save!
 								</button>
 							</div>
 						</div>
@@ -268,3 +261,31 @@ $(document).ready(function(){
 
   </body>
 </html>
+
+<script>
+    $(document).ready(function(){$('#oldpwd').blur(password_check);});
+    function password_check()
+    {
+      var id=$('#oldpwd').val();
+      jQuery.ajax({
+        type: "GET",
+        url: "password-checker-script.php",
+        data: 'pwd='+id,
+        cache: false,
+        success: function(response)
+        {
+          if(response==0)
+          {
+            $("#oldpwd").val("");
+            alert("Wrong Password");
+          }
+          else
+          {
+            
+            $("#newpwddiv").fadeIn();
+          }
+        }
+      })
+    }
+
+    </script>
