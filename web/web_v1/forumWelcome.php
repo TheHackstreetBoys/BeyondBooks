@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>
-Add Your Book
+WelcomeForum 
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -14,9 +14,7 @@ Add Your Book
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.min.js"></script>
-
-<script src="js/scripts.js"></script>
+</head>
 
 
 
@@ -31,16 +29,13 @@ $(document).ready(function(){
 	});
 });		
 </script>
-</head>
-
-
-
-
 
 
 
 <body>
-<!--                                                                                -->
+<!-- 
+                                                                               -->
+
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	  <div class="container-fluid">
 
@@ -95,69 +90,62 @@ $(document).ready(function(){
 
 	</nav>
 
+<br/><br/><br/>
 
-<br/><br/><br/><br/>
-<div class="container-fluid">
+
+    <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
-			<h3>
-				Add New Book <hr/>
-			</h3>
-			<div class="row">
-				<div class="col-md-12">
-					<h3 class="text-center">
-						<b>Add Your Book</b> <hr/>
-					</h3>
-					<form class="form-horizontal" role="form">
-						<div class="form-group">
-							 
-							<label for="inputEmail3" class="col-sm-4 control-label">
-								Enter the ISBN of the Book.
-							</label>
-							<div class="col-sm-4">
-								<input class="form-control" id="inputEmail3" type="email">
-							</div>
-						</div>
-						<div class="form-group">
-							 
-							<label for="inputPassword3" class="col-sm-4 control-label">
-								Enter the Price of Book.
-							</label>
-							<div class="col-sm-4">
-								<input class="form-control" id="inputPassword3" type="password">
-							</div>
-						</div>
-
-						<div class="form-group">
-							 
-							<label for="inputPassword3" class="col-sm-4 control-label">
-								Enter the Age of Book.
-							</label>
-							<div class="col-sm-4">
-								<input class="form-control" id="inputPassword3" type="password">
-							</div>
-						</div>
-
-
-					<center>
-						<div class="form-group">
-							<div class="col-sm-offset-3 col-sm-6">
-								 
-								<button type="submit" class="btn btn-default">
-									+ Click Here to Add Book
-								</button>
-							</div>
-					</center>
-
-						</div>
-					</form>
-				</div>
+			<div class="page-header">
+				<h1>
+					<br/>Discussion Forum  <hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);"> 
+				</h1>
 			</div>
-		</div>
-	</div>
-</div>
+			
+			<div class="row">
+				<div class="col-md-6">
+					<?php
+include 'mysql.php';
 
 
+//echo "<em>Design Project <b>Kushal Jangid</b></em>";
+
+
+$str = $_GET['subject'] ;
+$v  = strpos("$str","I");
+$c = substr("$str",0,$v);
+$username = substr("$str",$v-1);
+
+session_start();
+
+
+$result = mysql_safe_query("SELECT * FROM posts ORDER BY id DESC LIMIT 0, 5");
+
+
+if(!mysql_num_rows($result)) {
+	echo '<p>No forums is Created Yet.</p>';
+} else {
+	while($row = mysql_fetch_assoc($result)) {
+		echo '<h2>'.$row['title'].'</h2><br/>';
+		$body = substr($row['body'], 0, 20);
+		echo nl2br($body).'...<br/>';
+		echo '<a href="forumview.php?id='.$row['id'].'+'.$_SESSION['mycourse'].'">Read More</a> | ';
+		echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';	
+		echo '<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
+		
+	}
+}
+
+echo <<<HTML
+
+<a style='color: #CC0000'href="addquestion.php">+ Add Your Question Here</a><br/>
+<br/><br/>
+
+HTML;
+
+?>
+
+ 
 
 <footer>
 <hr />
@@ -165,9 +153,10 @@ $(document).ready(function(){
 <hr>Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
+<p class="text-right">Copyright &copy; IIITV 2015</p>
 </div>
 </footer>
 
-
+</body>
+</html>
 

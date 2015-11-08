@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>
-Add Your Book
+Discussion Forum
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -14,9 +14,7 @@ Add Your Book
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.min.js"></script>
 
-<script src="js/scripts.js"></script>
 
 
 
@@ -79,7 +77,7 @@ $(document).ready(function(){
 	        <li><a href="#home">Home</a></li>
 
 	        <li><a href="#about">About</a></li>
-		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
+		
 		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="/var/www/html/BeyondBooks/web/images/user.png" class="img-circle" style="width: 50px"></a>
 
 <ul class="dropdown-menu">
@@ -96,61 +94,76 @@ $(document).ready(function(){
 	</nav>
 
 
-<br/><br/><br/><br/>
-<div class="container-fluid">
+ <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-12">
-			<h3>
-				Add New Book <hr/>
-			</h3>
+		<div class="col-md-12"><h1>
+<b>Discussion Forums</b> <hr/>
+</h1>
 			<div class="row">
-				<div class="col-md-12">
-					<h3 class="text-center">
-						<b>Add Your Book</b> <hr/>
+				<div class="col-md-8">
+					<div class="row">
+						<div class="col-md-12">
+							 
+						
+							<h2>
+								Name of the Hash Tag
+							</h2>
+							<p>
+								#Software Engineering QMS <br/><br/>
+							What is software Engineering		
+							</p>
+							<p>
+
+							</p>
+						</div>
+					</div>
+				<hr/>
+					<div class="row">
+						<div class="col-md-12">
+							<h3>
+								<b> Comments : </b>
+							</h3>
+							<div class="row">
+									<div class="col-md-12">
+										Nothing but a myth. <br/><br/>			 
+									<button type="button" class="btn btn-success active btn-block">
+										Load More
+									</button>
+								</div>
+							</div>
+							<h3>
+								<b>Add Your Comment :</b>
+							</h3>
+							<form class="form-horizontal" role="form">
+								<div class="form-group">
+									 
+									<label for="inputEmail3" class="col-sm-2 control-label">
+								
+									</label>
+									<div class="col-sm-10">
+										
+<textarea id="NicEdit" cols="80" rows="5">Some Sample Text</textarea>
+
+									</div>
+								</div>
+								
+							
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										 
+										<button type="submit" class="btn btn-default">
+											Post Comment
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<h3>
+						Recently Created Discussions <hr/>
 					</h3>
-					<form class="form-horizontal" role="form">
-						<div class="form-group">
-							 
-							<label for="inputEmail3" class="col-sm-4 control-label">
-								Enter the ISBN of the Book.
-							</label>
-							<div class="col-sm-4">
-								<input class="form-control" id="inputEmail3" type="email">
-							</div>
-						</div>
-						<div class="form-group">
-							 
-							<label for="inputPassword3" class="col-sm-4 control-label">
-								Enter the Price of Book.
-							</label>
-							<div class="col-sm-4">
-								<input class="form-control" id="inputPassword3" type="password">
-							</div>
-						</div>
-
-						<div class="form-group">
-							 
-							<label for="inputPassword3" class="col-sm-4 control-label">
-								Enter the Age of Book.
-							</label>
-							<div class="col-sm-4">
-								<input class="form-control" id="inputPassword3" type="password">
-							</div>
-						</div>
-
-
-					<center>
-						<div class="form-group">
-							<div class="col-sm-offset-3 col-sm-6">
-								 
-								<button type="submit" class="btn btn-default">
-									+ Click Here to Add Book
-								</button>
-							</div>
-					</center>
-
-						</div>
-					</form>
 				</div>
 			</div>
 		</div>
@@ -158,6 +171,9 @@ $(document).ready(function(){
 </div>
 
 
+<p>
+Rest Content
+</p>
 
 <footer>
 <hr />
@@ -165,7 +181,7 @@ $(document).ready(function(){
 <hr>Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
+<p class="text-right">Copyright &copy; Your Company 2014</p>
 </div>
 </footer>
 

@@ -1,8 +1,11 @@
 <!doctype html>
+<?php
+include_once 'db_conn.php';
+?>
 <html>
 <head>
 <title>
-Add Your Book
+Edit Your Profile
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -14,9 +17,7 @@ Add Your Book
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.min.js"></script>
 
-<script src="js/scripts.js"></script>
 
 
 
@@ -40,6 +41,16 @@ $(document).ready(function(){
 
 
 <body>
+<?php
+   $mail=$_SESSION['user_id'];
+   $result=pg_query("SELECT * FROM user_profile where user_id='$user_id'");
+   $row=pg_fetch_array($result);
+?>
+
+
+
+
+
 <!--                                                                                -->
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	  <div class="container-fluid">
@@ -79,7 +90,7 @@ $(document).ready(function(){
 	        <li><a href="#home">Home</a></li>
 
 	        <li><a href="#about">About</a></li>
-		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
+		
 		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="/var/www/html/BeyondBooks/web/images/user.png" class="img-circle" style="width: 50px"></a>
 
 <ul class="dropdown-menu">
@@ -97,58 +108,145 @@ $(document).ready(function(){
 
 
 <br/><br/><br/><br/>
-<div class="container-fluid">
+
+    <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
 			<h3>
-				Add New Book <hr/>
+				Edit Your Profile <hr/>
 			</h3>
+
 			<div class="row">
-				<div class="col-md-12">
-					<h3 class="text-center">
-						<b>Add Your Book</b> <hr/>
+				<div class="col-md-6">
+
+<div class="verticalLine">
+
+
+</div>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12" style="background-color:lavender;">
+				<div class="form-group">
+					 <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<?php
+                      $filename=$row['user_id']."_dp";
+                        echo '<img style="margin:0 25%;" src="pictures/'.$filename.'.jpg" alt="" class="img-circle img-responsive" id="dp" height=200px width=200px >';
+                      ?>
+		</div>
+	</div>
+</div>
+					<form id="imageform" method="post" enctype="multipart/form-data" action='upload-dp-script.php' style="left:5%;">
+                    Upload your image <input type="file" name="images" id="images" />
+                  </form>
+				</div>
+				
+		</div>
+	</div>
+</div>
+				</div>
+				<div class="col-md-6" style="background-color:lavender;">
+					<h3>
+						<b>Personel Details</b> <hr/>
 					</h3>
-					<form class="form-horizontal" role="form">
+					<form class="form-horizontal" role="form" >
 						<div class="form-group">
 							 
 							<label for="inputEmail3" class="col-sm-4 control-label">
-								Enter the ISBN of the Book.
+								Your Name :
 							</label>
-							<div class="col-sm-4">
+							<div class="col-sm-6">
+								<input class="form-control" id="inputEmail3" type="email">
+							</div>
+						</div>
+						<div class="form-group" >
+							 
+							<label for="inputPassword3" class="col-sm-4 control-label">
+								Email ID :
+							</label>
+							<div class="col-sm-6">
+								<input class="form-control" id="inputPassword3" type="password">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							 
+							<label for="inputPassword3" class="col-sm-4 control-label">
+								Contact Information :
+							</label>
+							<div class="col-sm-6">
+								<input class="form-control" id="inputPassword3" type="password">
+							</div>
+						</div>
+
+						
+						<div class="form-group">
+							<div class="col-sm-offset-4 col-sm-6">
+								 
+								<button type="submit" class="btn btn-default">
+									Save Changes
+								</button>
+								
+								<button type="submit" class="btn btn-default">
+									Edit
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+<hr/>
+			<div class="row">
+				<div class="col-md-6">
+				</div>
+				<div class="col-md-6" style="background-color:lavender;">
+					<h3>
+						<b>Change Password </b> <hr/>
+					</h3>
+	<form class="form-horizontal" role="form">
+						<div class="form-group">
+							 
+							<label for="inputEmail3" class="col-sm-4 control-label">
+								Your Name :
+							</label>
+							<div class="col-sm-6">
 								<input class="form-control" id="inputEmail3" type="email">
 							</div>
 						</div>
 						<div class="form-group">
 							 
 							<label for="inputPassword3" class="col-sm-4 control-label">
-								Enter the Price of Book.
+								Email ID :
 							</label>
-							<div class="col-sm-4">
+							<div class="col-sm-6">
 								<input class="form-control" id="inputPassword3" type="password">
 							</div>
 						</div>
-
+						
 						<div class="form-group">
 							 
 							<label for="inputPassword3" class="col-sm-4 control-label">
-								Enter the Age of Book.
+								Contact Information :
 							</label>
-							<div class="col-sm-4">
+							<div class="col-sm-6">
 								<input class="form-control" id="inputPassword3" type="password">
 							</div>
 						</div>
 
-
-					<center>
+						
 						<div class="form-group">
-							<div class="col-sm-offset-3 col-sm-6">
+							<div class="col-sm-offset-4 col-sm-10">
 								 
 								<button type="submit" class="btn btn-default">
-									+ Click Here to Add Book
+									Save Changes
+								</button>
+								
+								<button type="submit" class="btn btn-default">
+									Edit
 								</button>
 							</div>
-					</center>
-
 						</div>
 					</form>
 				</div>
@@ -157,10 +255,8 @@ $(document).ready(function(){
 	</div>
 </div>
 
-
-
 <footer>
-<hr />
+
 <div class="container">
 <hr>Beyond Books Everywhere</hr>
 </br>
@@ -170,4 +266,5 @@ $(document).ready(function(){
 </footer>
 
 
-
+  </body>
+</html>

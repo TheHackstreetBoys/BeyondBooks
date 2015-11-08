@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>
-Add Your Book
+BookDescription
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -14,12 +14,7 @@ Add Your Book
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.min.js"></script>
-
-<script src="js/scripts.js"></script>
-
-
-
+</head>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -31,16 +26,16 @@ $(document).ready(function(){
 	});
 });		
 </script>
-</head>
-
-
 
 
 
 
 
 <body>
-<!--                                                                                -->
+<!-- 
+                                                                               -->
+
+
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	  <div class="container-fluid">
 
@@ -96,66 +91,130 @@ $(document).ready(function(){
 	</nav>
 
 
-<br/><br/><br/><br/>
+
+<<!--Here starts our welcome to Discussion Forum Page! -->>
+
+
+<br/><br/><br/>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
-			<h3>
-				Add New Book <hr/>
-			</h3>
+			<div class="page-header">
+				<h1>
+				 Here is your book!
+				</h1>
+			</div>
 			<div class="row">
-				<div class="col-md-12">
-					<h3 class="text-center">
-						<b>Add Your Book</b> <hr/>
-					</h3>
-					<form class="form-horizontal" role="form">
-						<div class="form-group">
-							 
-							<label for="inputEmail3" class="col-sm-4 control-label">
-								Enter the ISBN of the Book.
-							</label>
-							<div class="col-sm-4">
-								<input class="form-control" id="inputEmail3" type="email">
+				<div class="col-md-6">
+					<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/"> 
+					<p class="text-left"><button type="button" class="btn btn-primary">+Add to WishList
+					</button></p>                   
+			      
+					
+					<div class="row">
+						<div class="col-md-12">
+							<div class="page-header">
+								<h1>
+									ISBN
+								</h1>
 							</div>
 						</div>
-						<div class="form-group">
-							 
-							<label for="inputPassword3" class="col-sm-4 control-label">
-								Enter the Price of Book.
-							</label>
-							<div class="col-sm-4">
-								<input class="form-control" id="inputPassword3" type="password">
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="page-header">
+								<h1>
+									Books' Name
+								</h1>
 							</div>
 						</div>
-
-						<div class="form-group">
-							 
-							<label for="inputPassword3" class="col-sm-4 control-label">
-								Enter the Age of Book.
-							</label>
-							<div class="col-sm-4">
-								<input class="form-control" id="inputPassword3" type="password">
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="page-header">
+								<h1>
+									Authors' Name
+								</h1>
 							</div>
 						</div>
-
-
-					<center>
-						<div class="form-group">
-							<div class="col-sm-offset-3 col-sm-6">
-								 
-								<button type="submit" class="btn btn-default">
-									+ Click Here to Add Book
-								</button>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="page-header">
+								<h1>
+									Ratings
+								</h1>
 							</div>
-					</center>
-
 						</div>
-					</form>
+					</div>
 				</div>
+				<div class="col-md-6">
+					<dl>
+						<dt>
+							Description of the Book:
+						</dt>
+						<dd>
+							A description list is perfect for defining terms.
+						</dd>
+						<dt>
+							Euismod
+						</dt>
+						<dd>
+							Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+						</dd>
+						<dd>
+							Donec id elit non mi porta gravida at eget metus.
+						</dd>
+						<dt>
+							Malesuada porta
+						</dt>
+						<dd>
+							Etiam porta sem malesuada magna mollis euismod.
+						</dd>
+						<dt>
+							Felis euismod semper eget lacinia
+						</dt>
+						<dd>
+							Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<img alt="Bootstrap Thumbnail First" src="http://lorempixel.com/output/people-q-c-600-200-1.jpg">
+						
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<img alt="Bootstrap Thumbnail Second" src="http://lorempixel.com/output/city-q-c-600-200-1.jpg">
+						
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<img alt="Bootstrap Thumbnail Third" src="http://lorempixel.com/output/sports-q-c-600-200-1.jpg">
+						
+					</div>
+				</div>
+			</div>
+			<div class="jumbotron">
+				<h2>
+					Interested in Buying!
+				</h2>
+				<p>
+					Send your RTB to the seller.
+				</p>
+				<p>
+					<a class="btn btn-primary btn-large" href="#">Send Your Request</a>
+				</p>
 			</div>
 		</div>
 	</div>
 </div>
+
 
 
 
@@ -165,9 +224,10 @@ $(document).ready(function(){
 <hr>Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
+<p class="text-right">Copyright &copy; IIITV 2015</p>
 </div>
 </footer>
 
-
+</body>
+</html>
 

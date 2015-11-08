@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>
-Add Your Book
+Edit Your Question
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -14,12 +14,11 @@ Add Your Book
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.min.js"></script>
-
-<script src="js/scripts.js"></script>
 
 
-
+<!-- <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
+-->
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -33,14 +32,8 @@ $(document).ready(function(){
 </script>
 </head>
 
+  <body>
 
-
-
-
-
-
-<body>
-<!--                                                                                -->
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	  <div class="container-fluid">
 
@@ -96,71 +89,89 @@ $(document).ready(function(){
 	</nav>
 
 
-<br/><br/><br/><br/>
-<div class="container-fluid">
+
+<br/><br/><br/><br/><br/>
+    <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
-			<h3>
-				Add New Book <hr/>
-			</h3>
-			<div class="row">
-				<div class="col-md-12">
-					<h3 class="text-center">
-						<b>Add Your Book</b> <hr/>
-					</h3>
-					<form class="form-horizontal" role="form">
-						<div class="form-group">
-							 
-							<label for="inputEmail3" class="col-sm-4 control-label">
-								Enter the ISBN of the Book.
-							</label>
-							<div class="col-sm-4">
-								<input class="form-control" id="inputEmail3" type="email">
-							</div>
-						</div>
-						<div class="form-group">
-							 
-							<label for="inputPassword3" class="col-sm-4 control-label">
-								Enter the Price of Book.
-							</label>
-							<div class="col-sm-4">
-								<input class="form-control" id="inputPassword3" type="password">
-							</div>
-						</div>
+ <div id="header">
+         <center> <h1> <a href="#">Edit Your Question Here!</br>  </a></h1> </center> <br/>
+      </div>
+<hr>
 
-						<div class="form-group">
-							 
-							<label for="inputPassword3" class="col-sm-4 control-label">
-								Enter the Age of Book.
-							</label>
-							<div class="col-sm-4">
-								<input class="form-control" id="inputPassword3" type="password">
-							</div>
-						</div>
+<?php
+include 'mysql.php';
 
+if(!empty($_POST)) {
+	if(mysql_safe_query('UPDATE posts SET course=%s, title=%s, body=%s, date=%s WHERE id=%s',$_POST['course'], $_POST['title'], $_POST['body'], time(), $_GET['id']))
+		redirect('forumview.php?id='.$_GET['id']);
+	else
+		echo mysql_error();
+}
 
-					<center>
-						<div class="form-group">
-							<div class="col-sm-offset-3 col-sm-6">
-								 
-								<button type="submit" class="btn btn-default">
-									+ Click Here to Add Book
-								</button>
-							</div>
-					</center>
+$result = mysql_safe_query('SELECT * FROM posts WHERE id=%s', $_GET['id']);
 
-						</div>
-					</form>
+if(!mysql_num_rows($result)) {
+	echo 'Post #'.$_GET['id'].' not found';
+	exit;
+}
+
+$row = mysql_fetch_assoc($result);
+
+echo <<<HTML
+
+			<form class="form-horizontal" role="form" method="post" >
+				<div class="form-group">
+					 
+					<label for="inputEmail3" class="col-sm-4 control-label">
+						Enter the title :
+					</label>
+					<div class="col-sm-5">
+						<input class="form-control" value="{$row['title']}" name = "course" id="inputEmail3" type="text">
+					</div>
 				</div>
-			</div>
+				<div class="form-group">
+					 
+					<label for="inputPassword3" class="col-sm-4 control-label">
+						Enter the Content of the Question :
+					</label>
+					<div class="col-sm-5">
+						<textarea class="form-control" name = "body" id="inputPassword3" rows = "4" type="text">{$row['body']} </textarea>
+					</div>
+				</div>
+
+				<div class="form-group">
+					 
+					<label for="inputPassword3" class="col-sm-4 control-label">
+						Enter the Name of the Hash Tag :
+					</label>
+					<div class="col-sm-5">
+						<input class="form-control" value="{$row['course']}" name= "title" id="inputPassword3" type="text">
+					</div>
+				</div>
+				
+				
+
+				<center>
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-9">
+						 				<br/>						 				<br/>						 				<br/>
+						<button type="submit" size = "6" class="btn btn-default">
+							Update Discussion Here!
+						</button>
+					</div>
+				</div>
+				</center>
+			</form>
+HTML;
+?>
 		</div>
 	</div>
 </div>
 
-
-
 <footer>
-<hr />
+
 <div class="container">
 <hr>Beyond Books Everywhere</hr>
 </br>
@@ -171,3 +182,5 @@ $(document).ready(function(){
 
 
 
+  </body>
+</html>

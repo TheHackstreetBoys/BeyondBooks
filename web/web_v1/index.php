@@ -5,8 +5,8 @@ session_start();
 if (isset($_SESSION['user_id']))
 {
 	$user_id=$_SESSION['user_id'];
-	$result1=mysql_query("SELECT f_name from user_profile where user_is='$user_id'");
-	$result2=mysql_query("SELECT * from teacher where email='$user_id' and isfaculty='true'");
+	$result1=mysql_query("SELECT f_name from user_profile where user_id='$user_id'");
+	$result2=mysql_query("SELECT * from user_profile where user_id='$user_id' and isfaculty='true'");
 	$num1=mysql_num_rows($result1);
 	$num2=mysql_num_rows($result2);
 	if($num1==0)
@@ -126,6 +126,8 @@ function checkstudent()
 	        <li><a href="#home">Home</a></li>
 
 	        <li><a href="#about">About</a></li>
+
+	        <li><a href="about_us.html">Our Team</a><li>
 		
 		<li> <a data-toggle="modal" href="#login-modal">Login<span class="glyphicon glyphicon-log-in"></span></a></li>
 	      </ul>
