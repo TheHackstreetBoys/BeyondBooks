@@ -8,11 +8,11 @@
     tools:context="com.hackstreet_boys.androidapp.HarkatOnForum">
 
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true">
+        android:layout_centerHorizontal="true">
 
 
         <TextView
@@ -32,5 +32,5 @@
 
 
 
-    </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>

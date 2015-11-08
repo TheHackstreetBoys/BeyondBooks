@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".wireframe20" >
         </activity>
+        <activity android:name=".wireframe7" >
+        </activity>
     </application>
 
 </manifest>
