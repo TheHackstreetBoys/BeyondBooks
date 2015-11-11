@@ -3,18 +3,26 @@ package in.ac.iiitv.beyondbooks;
 //use this http://stackoverflow.com/questions/9767952/how-to-add-parameters-to-httpurlconnection-using-post
 
 import android.os.AsyncTask;
+import android.util.Pair;
 import android.widget.ArrayAdapter;
 
+import org.apache.http.NameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.ParameterizedType;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 /**
  * Created by anjul on 11/11/15.
@@ -25,13 +33,20 @@ public class RequestServer {
     private String address;
     private String output;
 
+    private ArrayList<NewlyAdded> newly_added_list;
+    private ArrayList<NewlyAdded> top_rated_list;
     RequestServer(){
-        ip = "10.100.1.1:8000";
+        ip = "10.100.91.55:80";
+        newly_added_list = new ArrayList<NewlyAdded>();
+        top_rated_list = new ArrayList<NewlyAdded>();
     }
 
     public Boolean authenticate(Integer id, String password){
-        address = "http://"+ip+"/authenticate.php/id="+id.toString()+":"+"password="+password;
-        new Setup().execute();
+        address = "http://"+ip+"/andy_authenticate.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("id", id.toString()));
+        params.add(new Pair<String, String>("password", password));
+        new Setup().execute(params);
         try {
             JSONObject is_authenticated_json = new JSONObject(output);
             return Boolean.parseBoolean(is_authenticated_json.getString("result"));
@@ -42,8 +57,10 @@ public class RequestServer {
     }
 
     public Boolean authenticate_forget(Integer id){
-        address = "http://"+ip+"/authenticate_forget/id="+id.toString();
-        new Setup().execute();
+        address = "http://"+ip+"/andy_authenticate_forget.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("id", id.toString()));
+        new Setup().execute(params);
         try {
             JSONObject is_authenticated_json = new JSONObject(output);
             return Boolean.parseBoolean(is_authenticated_json.getString("result"));
@@ -54,12 +71,13 @@ public class RequestServer {
     }
 
     public SearchOutputReturn search(String query){
-        address = "http://"+ip+"/search/query="+query;
+        address = "http://"+ip+"/andy_search.php";
         ArrayList<NewlyAdded> review_list = new ArrayList<NewlyAdded>();
         ArrayList<NewlyAdded> buy_sell_list = new ArrayList<NewlyAdded>();
         ArrayList<ForumOverview> forum_list = new ArrayList<ForumOverview>();
-        new Setup().execute();
-        new Setup().execute();
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("query", query));
+        new Setup().execute(params);
         try {
             JSONObject search_answer = new JSONObject(output);
             JSONArray review = search_answer.getJSONArray("review");
@@ -100,8 +118,9 @@ public class RequestServer {
     }
 
     public ArrayList<NewlyAdded> newly_added(){
-        address = "http://"+ip+"/newly_added";
-        new Setup().execute();
+        address = "http://"+ip+"/andy_newly_added.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        new Setup().execute(params);
         try{
             ArrayList<NewlyAdded> newly_added_list = new ArrayList<NewlyAdded>();
             JSONObject search_answer = new JSONObject(output);
@@ -115,6 +134,7 @@ public class RequestServer {
                 NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, id);
                 newly_added_list.add(temp);
             }
+            this.newly_added_list = newly_added_list;
             return newly_added_list;
         }
         catch (JSONException e){
@@ -124,8 +144,9 @@ public class RequestServer {
     }
 
     public ArrayList<NewlyAdded> top_rated(){
-        address = "http://"+ip+"/top_rated";
-        new Setup().execute();
+        address = "http://"+ip+"/andy_top_rated.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        new Setup().execute(params);
         try{
             ArrayList<NewlyAdded> top_rated_list = new ArrayList<NewlyAdded>();
             JSONObject search_answer = new JSONObject(output);
@@ -139,6 +160,7 @@ public class RequestServer {
                 NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, id);
                 top_rated_list.add(temp);
             }
+            this.top_rated_list = top_rated_list;
             return top_rated_list;
         }
         catch (JSONException e){
@@ -146,14 +168,26 @@ public class RequestServer {
         }
         return null;
     }
-    private class Setup extends AsyncTask<String, String, String> {
+
+
+    private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, String, ArrayList<Pair<String, String>>> {
         HttpURLConnection urlConnection;
         @Override
-        protected String doInBackground(String... args){
+        protected ArrayList<Pair<String, String>> doInBackground(ArrayList<Pair<String, String>>... args){
             StringBuilder result = new StringBuilder();
             try{
                 URL url = new URL(address);
                 urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setDoInput(true);
+                urlConnection.setDoOutput(true);
+                ArrayList<Pair<String, String>> to_send = args[0];
+                OutputStream os = urlConnection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getQuery(to_send));
+                writer.flush();
+                writer.close();
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 String line;
@@ -167,7 +201,23 @@ public class RequestServer {
                 urlConnection.disconnect();
             }
             output = result.toString();
-            return output;
+            return null;
         }
+    }
+    private String getQuery(ArrayList<Pair<String, String>> params) throws UnsupportedEncodingException
+    {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+
+        for (int i=0;i<params.size();i++) {
+            if (i!=0)
+                result.append("&");
+
+            result.append(URLEncoder.encode(params.get(i).first, "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(params.get(i).second, "UTF-8"));
+        }
+
+        return result.toString();
     }
 }
