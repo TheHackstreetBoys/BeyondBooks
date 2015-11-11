@@ -40,11 +40,11 @@ public class RequestServer {
         top_rated_list = new ArrayList<NewlyAdded>();
     }
     public Boolean authenticate(Integer id, String password){
-        address = "http://"+ip+"/authenticate.php";
+        address = "http://"+ip+"/andy_authenticate.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("id", id.toString()));
         params.add(new Pair<String, String>("password", password));
-        new Setup().execute();
+        new Setup().execute(params);
         try {
             JSONObject is_authenticated_json = new JSONObject(output);
             return Boolean.parseBoolean(is_authenticated_json.getString("result"));
@@ -55,8 +55,10 @@ public class RequestServer {
     }
 
     public Boolean authenticate_forget(Integer id){
-        address = "http://"+ip+"/authenticate_forget/id="+id.toString();
-        new Setup().execute();
+        address = "http://"+ip+"/andy_authenticate_forget.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("id", id.toString()));
+        new Setup().execute(params);
         try {
             JSONObject is_authenticated_json = new JSONObject(output);
             return Boolean.parseBoolean(is_authenticated_json.getString("result"));
@@ -66,12 +68,13 @@ public class RequestServer {
         return false;
     }
     public SearchOutputReturn search(String query){
-        address = "http://"+ip+"/search/query="+query;
+        address = "http://"+ip+"/andy_search.php";
         ArrayList<NewlyAdded> review_list = new ArrayList<NewlyAdded>();
         ArrayList<NewlyAdded> buy_sell_list = new ArrayList<NewlyAdded>();
         ArrayList<ForumOverview> forum_list = new ArrayList<ForumOverview>();
-        new Setup().execute();
-        new Setup().execute();
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("query", query));
+        new Setup().execute(params);
         try {
             JSONObject search_answer = new JSONObject(output);
             JSONArray review = search_answer.getJSONArray("review");
@@ -112,8 +115,9 @@ public class RequestServer {
     }
 
     public ArrayList<NewlyAdded> newly_added(){
-        address = "http://"+ip+"/newly_added";
-        new Setup().execute();
+        address = "http://"+ip+"/andy_newly_added.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        new Setup().execute(params);
         try{
             ArrayList<NewlyAdded> newly_added_list = new ArrayList<NewlyAdded>();
             JSONObject search_answer = new JSONObject(output);
@@ -137,8 +141,9 @@ public class RequestServer {
     }
 
     public ArrayList<NewlyAdded> top_rated(){
-        address = "http://"+ip+"/top_rated";
-        new Setup().execute();
+        address = "http://"+ip+"/andy_top_rated.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        new Setup().execute(params);
         try{
             ArrayList<NewlyAdded> top_rated_list = new ArrayList<NewlyAdded>();
             JSONObject search_answer = new JSONObject(output);
