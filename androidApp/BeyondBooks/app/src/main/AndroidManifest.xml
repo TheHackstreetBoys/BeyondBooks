@@ -26,7 +26,8 @@
         </activity>
         <activity android:name=".wireframe13" >
         </activity>
-        <activity android:name=".wireframe20" >
+        <activity android:name=".wireframe20" />
+        <activity android:name=".Frame6" >
         </activity>
     </application>
 

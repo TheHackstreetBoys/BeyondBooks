@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">androidApp</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="title">Beyond Books</string>
-</resources>
