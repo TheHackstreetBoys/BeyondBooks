@@ -1,5 +1,7 @@
 package in.ac.iiitv.beyondbooks;
 
+//use this http://stackoverflow.com/questions/9767952/how-to-add-parameters-to-httpurlconnection-using-post
+
 import android.os.AsyncTask;
 import android.widget.ArrayAdapter;
 
@@ -26,7 +28,7 @@ public class RequestServer {
         ip = "10.100.1.1:8000";
     }
     public Boolean authenticate(Integer id, String password){
-        address = "http://"+ip+"/authenticate/id="+id.toString()+":"+"password="+password;
+        address = "http://"+ip+"/authenticate.php/id="+id.toString()+":"+"password="+password;
         new Setup().execute();
         try {
             JSONObject is_authenticated_json = new JSONObject(output);
