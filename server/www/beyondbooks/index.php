@@ -6,4 +6,5 @@ echo $dbconn;
 
 sql_query("SELECT * FROM user_profile;");
 
+
 ?>

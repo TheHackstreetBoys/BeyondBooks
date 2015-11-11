@@ -30,10 +30,9 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="36dp"
                 android:text="User Name"
                 android:id="@+id/text_username"
-                android:paddingLeft="4dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/image_user"/>
 
@@ -42,34 +41,29 @@
                 android:layout_height="30dp"
                 android:text="Email Address"
                 android:id="@+id/text_email"
-                android:paddingLeft="4dp"
                 android:layout_marginTop="20dp"
                 android:layout_below="@id/text_username"
                 android:layout_toRightOf="@id/image_user" />
 
-            <TextView
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:ems="10"
-                android:paddingLeft="4dp"
                 android:inputType="textPassword"
                 android:text="password"
                 android:id="@+id/text_password"
                 android:editable="false"
                 android:layout_below="@id/text_email"
-                android:layout_toRightOf="@id/image_user"
-                android:clickable="true"/>
+                android:layout_toRightOf="@id/image_user"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:text="Phone Number"
-                android:paddingLeft="4dp"
+                android:text="Email Address"
                 android:id="@+id/phone"
                 android:layout_marginTop="20dp"
                 android:layout_below="@id/text_password"
-                android:layout_toRightOf="@id/image_user"
-                />
+                android:layout_toRightOf="@id/image_user" />
 
         </RelativeLayout>
 
@@ -89,22 +83,21 @@
                 android:text="Notification"
                 android:textSize="30dp"
                 android:textColor="#000fff"
-                android:id="@+id/textview4"
+                android:id="@+id/textView4"
                 android:layout_gravity="center_horizontal|top"
+                android:layout_above="@+id/list_notification"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
+                android:layout_alignParentStart="true" />
+
             <ListView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="268dp"
                 android:id="@+id/list_notification"
-
                 android:layout_gravity="center"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/textview4" />
-
+                android:layout_alignParentStart="true" />
         </RelativeLayout>
 
     </RelativeLayout>
