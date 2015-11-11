@@ -12,7 +12,7 @@ $response = file_get_contents($url);
 $decoded = json_decode($response);
 //var_dump($decoded);
 
-$res = (array('author' => $decoded->{'items'}[0]->{'volumeInfo'}->{'authors'},
+$res = array('author' => $decoded->{'items'}[0]->{'volumeInfo'}->{'authors'},
         "title" => $decoded->{'items'}[0]->{'volumeInfo'}->{'title'},
 
         "publisher" => $decoded->{'items'}[0]->{'volumeInfo'}->{'publisher'},
