@@ -9,7 +9,7 @@ $url = "https://www.googleapis.com/books/v1/volumes?q=isbn:9781451648546";
 
 // $response = http_get($url, array("timeout"=>1), $info);
 $response = file_get_contents($url);
-$decoded = (array)json_decode($response);
+$decoded = json_decode($response);
 var_dump($decoded);
 echo $decoded[0];
 ?>

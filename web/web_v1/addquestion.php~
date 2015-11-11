@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>
-Edit Your Question
+Add Your Question
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -95,48 +95,17 @@ $(document).ready(function(){
 	<div class="row">
 		<div class="col-md-12">
  <div id="header">
-         <center> <h1> <a href="#">Edit Your Question Here!</br>  </a></h1> </center> <br/>
+         <center> <h1> <a href="#">Add Your Question Here!</br>  </a></h1> </center> <br/>
       </div>
 <hr>
-
-<?php
-$dbconn=null;
-global $dbconn;
-$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-
-if(!empty($_POST)) {
-$course = $_POST['course'];
-$title = $_POST['title'];
-$body = $_POST['body'];
-$date = time();
-$id = $_GET['id'];
-
-	if(pg_query("UPDATE posts SET course= '$course', title= '$title', body= '$body', date='$date' WHERE id='$id'" ))
-
-       header("Location: forumview.php?id=$id");
-	else
-		echo pg_last_error();
-}
-$id1 = $_GET['id'];
-$result = pg_query("SELECT * FROM posts WHERE id='$id1'" );
-
-if(!pg_num_rows($result)) {
-	echo 'Post #'.$_GET['id'].' not found';
-	exit;
-}
-
-$row = pg_fetch_array($result);
-
-echo <<<HTML
-
-			<form class="form-horizontal" role="form" method="post" >
+			<form class="form-horizontal" role="form" method = "post" action = "questionadd.php">
 				<div class="form-group">
 					 
 					<label for="inputEmail3" class="col-sm-4 control-label">
 						Enter the title :
 					</label>
 					<div class="col-sm-5">
-						<input class="form-control" value="{$row['title']}" name = "course" id="inputEmail3" type="text">
+						<input class="form-control" id="inputEmail3" name = "course" type="text">
 					</div>
 				</div>
 				<div class="form-group">
@@ -145,7 +114,7 @@ echo <<<HTML
 						Enter the Content of the Question :
 					</label>
 					<div class="col-sm-5">
-						<textarea class="form-control" name = "body" id="inputPassword3" rows = "4" type="text">{$row['body']} </textarea>
+						<textarea class="form-control" id="inputPassword3" name = "body" rows = "4" type="text"> </textarea>
 					</div>
 				</div>
 
@@ -155,11 +124,11 @@ echo <<<HTML
 						Enter the Name of the Hash Tag :
 					</label>
 					<div class="col-sm-5">
-						<input class="form-control" value="{$row['course']}" name= "title" id="inputPassword3" type="text">
+						<input class="form-control" name = "title" id="inputPassword3" type="text">
 					</div>
 				</div>
 				
-				
+			
 
 				<center>
 
@@ -167,14 +136,12 @@ echo <<<HTML
 					<div class="col-sm-offset-2 col-sm-9">
 						 				<br/>						 				<br/>						 				<br/>
 						<button type="submit" size = "6" class="btn btn-default">
-							Update Discussion Here!
+							Create Discussion
 						</button>
 					</div>
 				</div>
 				</center>
 			</form>
-HTML;
-?>
 		</div>
 	</div>
 </div>
