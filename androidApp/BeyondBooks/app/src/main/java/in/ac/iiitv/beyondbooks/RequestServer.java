@@ -24,9 +24,11 @@ public class RequestServer {
     private String ip;
     private String address;
     private String output;
+
     RequestServer(){
         ip = "10.100.1.1:8000";
     }
+
     public Boolean authenticate(Integer id, String password){
         address = "http://"+ip+"/authenticate.php/id="+id.toString()+":"+"password="+password;
         new Setup().execute();
@@ -50,6 +52,7 @@ public class RequestServer {
         }
         return false;
     }
+
     public SearchOutputReturn search(String query){
         address = "http://"+ip+"/search/query="+query;
         ArrayList<NewlyAdded> review_list = new ArrayList<NewlyAdded>();
