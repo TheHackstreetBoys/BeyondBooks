@@ -106,12 +106,13 @@ $(document).ready(function(){
 							 
 						
 							<?php
-include 'mysql.php';
+$dbconn=null;
+global $dbconn;
+$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+$id = $_GET['id'];
+$result = pg_query("SELECT * FROM posts WHERE id= '$id'");
 
-
-$result = mysql_safe_query('SELECT * FROM posts WHERE id=%s LIMIT 1', $_GET['id']);
-
-if(!mysql_num_rows($result)) {
+if(!pg_num_rows($result)) {
 	echo 'Post #'.$_GET['id'].' not found';
 	exit;
 }
@@ -126,7 +127,7 @@ if(!mysql_num_rows($result)) {
 }*/
 
 
-$row = mysql_fetch_assoc($result);
+$row = pg_fetch_array($result);
 	session_start();
 	
 $str = $_GET['id'] ;
@@ -136,23 +137,23 @@ $c = substr("$str",$v+1);
     $username   = $_SESSION['current'];
     $mycourse = $_SESSION['mycourse']; 
     
-    
-$result1 = mysql_safe_query('SELECT * FROM teachers WHERE username=%s', $row['tname']);
+    $user = $row['tname'];
+$result1 = pg_query("SELECT * FROM user_profile WHERE user_id = '$user'" );
 
-if(!mysql_num_rows($result1))
+if(!pg_num_rows($result1))
 {
 }
-$row1 = mysql_fetch_assoc($result1);
+$row1 = pg_fetch_array($result1);
 
 echo '<h2>'.$row['title'].'</h2><br/>';
-echo 'By: <em>'.$row1['fname'].' '.$row1['lname'].'</em><br/>';
+echo 'By: <em>'.$row1['f_name'].' '.$row1['l_name'].'</em><br/>';
 echo '<em>Posted '.date('F j<\s\up>S</\s\up>, Y', $row['date']).'</em><br/>';
 echo nl2br($row['body']).'<br/>';
 echo '<a href="forumedit.php?id='.$_GET['id'].'">Edit</a> | <a href="forumdelete.php?id='.$_GET['id'].'">Delete</a> ';
 echo ' | <a href="forumWelcome.php">View All</a>';
-
+$id = $_GET['id'];
 echo '<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
-$result = mysql_safe_query('SELECT * FROM comments WHERE post_id=%s ORDER BY date DESC LIMIT 0, 5', $_GET['id']);
+$result = pg_query("SELECT * FROM reply WHERE post_id = '$id' ORDER BY date DESC LIMIT 4" );
 echo '<ul id="comments">';
 echo '<div class="row">
 						<div class="col-md-12">
@@ -162,19 +163,19 @@ echo '<div class="row">
 							</h3>
 </div>
 </div>';
-while($row = mysql_fetch_assoc($result)) {
+while($row = pg_fetch_array($result)) {
 	echo '<li id="post-'.$row['id'].'">';
 	echo (empty($row['website'])?'<strong>'.$row['name'].'</strong>':'<a style="color: blue" href="#" target="_blank">'.$row['name'].'</a>');		
 	echo '<br/><small>'.date('j-M-Y g:ia', $row['date']).'</small><br/>';
 	echo nl2br($row['content']);
 
 		
-		$result2 = mysql_safe_query('SELECT COUNT(plike) AS likes FROM commentss WHERE rollno = %s && id = %s', $row['rollno'], $row['id']);
+		$result2 = pg_query('SELECT COUNT(plike) AS likes FROM commentss WHERE rollno = %s && id = %s', $row['rollno'], $row['id']);
 
-    if(!mysql_num_rows($result2))
+    if(!pg_num_rows($result2))
     {
     }
-    $row2 = mysql_fetch_assoc($result2);
+    $row2 = pg_fetch_array($result2);
 
 	echo '<br/> <a href = "please.php?id='.$row['id'].'"> <img src = "like.png" title = "LIKE" height = "20px">  </a>' . $row2['likes'];
 	echo '</li><br/>';
@@ -185,8 +186,6 @@ while($row = mysql_fetch_assoc($result)) {
 echo '</ul>';
 
 $str = $_GET['id'];
-$k = mysql_insert_id();
-
 
 echo <<<HTML
 
@@ -246,14 +245,18 @@ HTML;
 
 					<?php
 		
-			$result = mysql_safe_query("SELECT * FROM posts ORDER BY date DESC LIMIT 0, 5");
+$dbconn=null;
+global $dbconn;
+$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-			if(!mysql_num_rows($result)) {
+			$result = pg_query("SELECT * FROM posts ORDER BY date DESC LIMIT 3");
+
+			if(!pg_num_rows($result)) {
 							echo '<p>No forums is Created Yet.</p>';
 						     } 
 			else {	
 			
-					while($row = mysql_fetch_assoc($result))
+					while($row = pg_fetch_array($result))
 				{
 					echo '<h2>'.$row['title'].'</h2><br/>';
 					$body = substr($row['body'], 0, 10);

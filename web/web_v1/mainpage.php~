@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>
-Edit Your Question
+Welcome to Beyond Books
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -16,9 +16,8 @@ Edit Your Question
 <script src="js/bootstrap.min.js"></script>
 
 
-<!-- <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
-<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
--->
+
+
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -32,8 +31,14 @@ $(document).ready(function(){
 </script>
 </head>
 
-  <body>
 
+
+
+
+
+
+<body>
+<!--                                                                                -->
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	  <div class="container-fluid">
 
@@ -90,106 +95,137 @@ $(document).ready(function(){
 
 
 
-<br/><br/><br/><br/><br/>
+
+
+<br/><br/><br/>
+
     <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
- <div id="header">
-         <center> <h1> <a href="#">Edit Your Question Here!</br>  </a></h1> </center> <br/>
-      </div>
-<hr>
-
-<?php
-$dbconn=null;
+			<div class="row">
+				<div class="col-md-12">
+					<div class="page-header">
+						<h1>
+							<br/>New Uploads! 
+						</h1>
+					</div>
+					<ul>
+						<li>
+							Lorem ipsum dolor sit amet
+						</li>
+						<li>
+							Consectetur adipiscing elit
+						</li>
+						<li>
+							Integer molestie lorem at massa
+						</li>
+						<li>
+							Facilisis in pretium nisl aliquet
+						</li>
+						<li>
+							Nulla volutpat aliquam velit
+						</li>
+						<li>
+							Faucibus porta lacus fringilla vel
+						</li>
+						<li>
+							Aenean sit amet erat nunc
+						</li>
+						<li>
+							Eget porttitor lorem
+						</li>
+					</ul>
+				</div>
+			</div>
+			<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="page-header">
+						<h1>
+							Popular/Top Rated Books!
+						</h1>
+					</div>
+					<?php
+		
+												$dbconn=null;
 global $dbconn;
 $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-if(!empty($_POST)) {
-$course = $_POST['course'];
-$title = $_POST['title'];
-$body = $_POST['body'];
-$date = time();
-$id = $_GET['id'];
+			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn LIMIT 3");
 
-	if(pg_query("UPDATE posts SET course= '$course', title= '$title', body= '$body', date='$date' WHERE id='$id'" ))
 
-       header("Location: forumview.php?id=$id");
-	else
-		echo pg_last_error();
-}
-$id1 = $_GET['id'];
-$result = pg_query("SELECT * FROM posts WHERE id='$id1'" );
 
-if(!pg_num_rows($result)) {
-	echo 'Post #'.$_GET['id'].' not found';
-	exit;
-}
+			if(!pg_num_rows($result)) {
+							echo '<p>No Book is available.</p>';
+						     } 
+			else {	
+			
+					while($row = pg_fetch_array($result))
+				{
+					echo '<b>'.$row['title'].'<br/></b>';
+					echo "<em>".$row['author']."</em><br/>";
+					echo '<em>'.$row['description'].'</em><br/>';
+					echo '<em>'.$row['publisher'].'</em><br/>';
+					echo "<a href = 'book_main_page.php'+".$row['isbn']."> Click</a>";
 
-$row = pg_fetch_array($result);
+			
+					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';	
+			     }
+					}
 
-echo <<<HTML
+					?>
+					
 
-			<form class="form-horizontal" role="form" method="post" >
-				<div class="form-group">
-					 
-					<label for="inputEmail3" class="col-sm-4 control-label">
-						Enter the title :
-					</label>
-					<div class="col-sm-5">
-						<input class="form-control" value="{$row['title']}" name = "course" id="inputEmail3" type="text">
-					</div>
 				</div>
-				<div class="form-group">
-					 
-					<label for="inputPassword3" class="col-sm-4 control-label">
-						Enter the Content of the Question :
-					</label>
-					<div class="col-sm-5">
-						<textarea class="form-control" name = "body" id="inputPassword3" rows = "4" type="text">{$row['body']} </textarea>
+				<div class="col-md-6">
+					<div class="page-header">
+						<h1>
+							Top Discussions on Forum!
+						</h1>
 					</div>
-				</div>
+					<?php
+		
+												$dbconn=null;
+global $dbconn;
+$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-				<div class="form-group">
-					 
-					<label for="inputPassword3" class="col-sm-4 control-label">
-						Enter the Name of the Hash Tag :
-					</label>
-					<div class="col-sm-5">
-						<input class="form-control" value="{$row['course']}" name= "title" id="inputPassword3" type="text">
-					</div>
-				</div>
-				
-				
+			$result = pg_query("SELECT * FROM posts ORDER BY num_comments DESC LIMIT 4");
 
-				<center>
+			if(!pg_num_rows($result)) {
+							echo '<p>No forums is Created Yet.</p>';
+						     } 
+			else {	
+			
+					while($row = pg_fetch_array($result))
+				{
+					echo '<h2>'.$row['title'].'</h2><br/>';
+					$body = substr($row['body'], 0, 10);
+					echo nl2br($body).'...<br/>';	
+					echo '<a href="forumview.php?id='.$row['id'].'">Read More</a> | ';
+					echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';	
+					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';	
+			     }
+					}
 
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-9">
-						 				<br/>						 				<br/>						 				<br/>
-						<button type="submit" size = "6" class="btn btn-default">
-							Update Discussion Here!
-						</button>
-					</div>
+					?>
+					
+
 				</div>
-				</center>
-			</form>
-HTML;
-?>
+			</div>
 		</div>
 	</div>
 </div>
 
-<footer>
 
+<footer>
+<hr />
 <div class="container">
 <hr>Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
+<p class="text-right">Copyright &copy; Your Company 2014</p>
 </div>
 </footer>
 
 
 
-  </body>
-</html>

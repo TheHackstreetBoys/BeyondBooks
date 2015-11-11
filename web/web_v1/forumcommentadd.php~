@@ -20,7 +20,7 @@ $time = time();
   $query1 = pg_query("UPDATE posts SET num_comments = num_comments+1 WHERE id= '$id'");
  if($query1)
 {	
-  header("Location: forumview.php?id= $id ");
+  header("Location: forumview.php?id='$id'");
 
 }
 

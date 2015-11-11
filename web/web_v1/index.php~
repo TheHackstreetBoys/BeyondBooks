@@ -1,4 +1,27 @@
 <!DOCTYPE HTML>
+<?php
+include_once 'db_conn.php';
+session_start();
+if (isset($_SESSION['user_id']))
+{
+	$user_id=$_SESSION['user_id'];
+	$result1=mysql_query("SELECT f_name from user_profile where user_id='$user_id'");
+	$result2=mysql_query("SELECT * from user_profile where user_id='$user_id' and isfaculty='true'");
+	$num1=mysql_num_rows($result1);
+	$num2=mysql_num_rows($result2);
+	if($num1==0)
+	{
+		if($num2==1)
+		{
+			header('Location: homepage.php');
+		}
+	}
+	else
+	{
+		header('Location: homepage_teacher.php');
+	}
+}
+?>
 <HTML>
 <HEAD>
 <TITLE>
@@ -25,6 +48,47 @@ Index Page
 		<script src="js/jquery-1.10.2.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 
+<script>
+
+function checkstudent()
+		{
+			var user=$('#username').val();
+			var password=$('#password').val();
+			jQuery.ajax({
+				type: "POST",
+				url: "login-script.php",
+				data: "username="+user+"&password="+password,
+				cache: false,
+				success: function(response)
+				{
+					if(response==1)
+					{
+						document.location.href="homepage_student.php";
+					}
+					else if(response==2)
+					{
+						document.location.href="homepage_teacher.php";
+					}
+					else if(response==3)
+					{
+						$("#username").val("");
+						$("#password").val("");
+						alert("It seems like you are invisible! Please sign up first!");	
+					}
+					else
+					{
+						$("#username").val("");
+						$("#password").val("");
+						alert("Whoops! Seems like wrong password!");
+					}
+				}
+			})
+		}
+
+
+
+
+</script>
 
 </head>
 
@@ -61,6 +125,8 @@ Index Page
 	        <li><a href="#home">Home</a></li>
 
 	        <li><a href="#about">About</a></li>
+
+	        <li><a href="about_us.html">Our Team</a><li>
 		
 		<li> <a data-toggle="modal" href="#login-modal">Login<span class="glyphicon glyphicon-log-in"></span></a></li>
 	      </ul>
@@ -92,23 +158,21 @@ Index Page
       		<div class="modal-body login-modal">
       			<br/>
 	        	<div class='modal-body-center'>
-					<form action="php/login-script.php" method="POST">
 	        	 	<div class="form-group">
-
-				      	<input type="text" id="username" name="username" placeholder="Enter your User name"  class="form-control 						login-field" required="required">
-				      	<span class="fa fa-user login-field-icon"></i>
+					<form action="login-script.php" method="POST">
+				      	<input type="username" id="username" name="username" placeholder="Enter your ID"  class="form-control login-field" required="required">
+				      	<i class="fa fa-user login-field-icon"></i>
 		  		</div>
 				<div class="form-group">
-		            	  <input type="password" id="password" name="password" placeholder="Password" class="form-control login-field" required="required">
+		            	  <input type="password" id="password" name="password" class="form-control login-field" required="required">
 		              		<i class="fa fa-lock login-field-icon"></i>
 
 		
-		        	<input type="submit" class="btn btn-success modal-login-btn">
+		        	<button type="button" class="btn btn-success modal-login-btn" onclick="checkstudent()">Sign in</button>
 		            	<a href="php/forgot-password.php" class="login-link text-center">Lost your password</a>
-
+	        		</form>
 
 				</div>
-	        		</form>
 
 
 	</div>
@@ -173,7 +237,7 @@ Index Page
 
 	  <div class="container">
 
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
+	    <p class="text-right">Copyright &copy; BeyondBooks</p>
 
 	  </div>
 

@@ -1,18 +1,28 @@
 package in.ac.iiitv.beyondbooks;
 
+//use this http://stackoverflow.com/questions/9767952/how-to-add-parameters-to-httpurlconnection-using-post
+
 import android.os.AsyncTask;
+import android.util.Pair;
 import android.widget.ArrayAdapter;
 
+import org.apache.http.NameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.ParameterizedType;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 /**
  * Created by anjul on 11/11/15.
@@ -23,11 +33,15 @@ public class RequestServer {
     private String address;
     private String output;
     RequestServer(){
-        ip = "10.100.1.1:8000";
+        ip = "10.100.91.55:80";
     }
+
     public Boolean authenticate(Integer id, String password){
-        address = "http://"+ip+"/authenticate/id="+id.toString()+":"+"password="+password;
-        new Setup().execute();
+        address = "http://"+ip+"/andy_authenticate.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("id", id.toString()));
+        params.add(new Pair<String, String>("password", password));
+        new Setup().execute(params);
         try {
             JSONObject is_authenticated_json = new JSONObject(output);
             return Boolean.parseBoolean(is_authenticated_json.getString("result"));
@@ -38,8 +52,10 @@ public class RequestServer {
     }
 
     public Boolean authenticate_forget(Integer id){
-        address = "http://"+ip+"/authenticate_forget/id="+id.toString();
-        new Setup().execute();
+        address = "http://"+ip+"/andy_authenticate_forget.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("id", id.toString()));
+        new Setup().execute(params);
         try {
             JSONObject is_authenticated_json = new JSONObject(output);
             return Boolean.parseBoolean(is_authenticated_json.getString("result"));
@@ -48,13 +64,15 @@ public class RequestServer {
         }
         return false;
     }
+
     public SearchOutputReturn search(String query){
-        address = "http://"+ip+"/search/query="+query;
+        address = "http://"+ip+"/andy_search.php";
         ArrayList<NewlyAdded> review_list = new ArrayList<NewlyAdded>();
         ArrayList<NewlyAdded> buy_sell_list = new ArrayList<NewlyAdded>();
         ArrayList<ForumOverview> forum_list = new ArrayList<ForumOverview>();
-        new Setup().execute();
-        new Setup().execute();
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("query", query));
+        new Setup().execute(params);
         try {
             JSONObject search_answer = new JSONObject(output);
             JSONArray review = search_answer.getJSONArray("review");
@@ -65,8 +83,8 @@ public class RequestServer {
                 String image_link = cur_book_obj.getString("image_link");
                 String book_name = cur_book_obj.getString("book_name");
                 Float ratings = Float.parseFloat(cur_book_obj.getString("ratings"));
-                Integer id = Integer.parseInt(cur_book_obj.getString("id"));
-                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, id);
+                Long isbn = Long.parseLong(cur_book_obj.getString("isbn"));
+                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
                 review_list.add(temp);
             }
             for(int i=0;i<buy_sell.length();i++){
@@ -74,8 +92,8 @@ public class RequestServer {
                 String image_link = cur_book_obj.getString("image_link");
                 String book_name = cur_book_obj.getString("book_name");
                 Float ratings = Float.parseFloat(cur_book_obj.getString("ratings"));
-                Integer id = Integer.parseInt(cur_book_obj.getString("id"));
-                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, id);
+                Long isbn = Long.parseLong(cur_book_obj.getString("isbn"));
+                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
                 buy_sell_list.add(temp);
             }
             for(int i=0;i<forum.length();i++){
@@ -83,7 +101,8 @@ public class RequestServer {
                 String title = cur_forum_obj.getString("title");
                 String author = cur_forum_obj.getString("author");
                 Integer author_id = Integer.parseInt(cur_forum_obj.getString("author_id"));
-                ForumOverview temp = new ForumOverview(title, author, author_id);
+                Integer q_id = Integer.parseInt(cur_forum_obj.getString("q_id"));
+                ForumOverview temp = new ForumOverview(title, author, author_id, q_id);
                 forum_list.add(temp);
             }
             SearchOutputReturn temp = new SearchOutputReturn(review_list, buy_sell_list, forum_list);
@@ -95,8 +114,9 @@ public class RequestServer {
     }
 
     public ArrayList<NewlyAdded> newly_added(){
-        address = "http://"+ip+"/newly_added";
-        new Setup().execute();
+        address = "http://"+ip+"/andy_newly_added.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        new Setup().execute(params);
         try{
             ArrayList<NewlyAdded> newly_added_list = new ArrayList<NewlyAdded>();
             JSONObject search_answer = new JSONObject(output);
@@ -106,8 +126,8 @@ public class RequestServer {
                 String image_link = cur_book_obj.getString("image_link");
                 String book_name = cur_book_obj.getString("book_name");
                 Float ratings = Float.parseFloat(cur_book_obj.getString("ratings"));
-                Integer id = Integer.parseInt(cur_book_obj.getString("id"));
-                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, id);
+                Long isbn = Long.parseLong(cur_book_obj.getString("isbn"));
+                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
                 newly_added_list.add(temp);
             }
             return newly_added_list;
@@ -118,9 +138,11 @@ public class RequestServer {
         return null;
     }
 
+
     public ArrayList<NewlyAdded> top_rated(){
-        address = "http://"+ip+"/top_rated";
-        new Setup().execute();
+        address = "http://"+ip+"/andy_top_rated.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        new Setup().execute(params);
         try{
             ArrayList<NewlyAdded> top_rated_list = new ArrayList<NewlyAdded>();
             JSONObject search_answer = new JSONObject(output);
@@ -130,8 +152,8 @@ public class RequestServer {
                 String image_link = cur_book_obj.getString("image_link");
                 String book_name = cur_book_obj.getString("book_name");
                 Float ratings = Float.parseFloat(cur_book_obj.getString("ratings"));
-                Integer id = Integer.parseInt(cur_book_obj.getString("id"));
-                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, id);
+                Long isbn = Long.parseLong(cur_book_obj.getString("isbn"));
+                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
                 top_rated_list.add(temp);
             }
             return top_rated_list;
@@ -141,14 +163,68 @@ public class RequestServer {
         }
         return null;
     }
-    private class Setup extends AsyncTask<String, String, String> {
+
+    public BookDetails book_page(Long isbn){
+        address = "http://"+ip+"/andy_book_page.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("isbn", isbn.toString()));
+        new Setup().execute(params);
+        try {
+            JSONObject book_page_json = new JSONObject(output);
+            Float public_ratings = Float.parseFloat(book_page_json.getString("public_ratings"));
+            Float faculty_ratings = Float.parseFloat(book_page_json.getString("faculty_ratings"));
+            Float student_ratigns = Float.parseFloat(book_page_json.getString("student_ratings"));
+            String about_book = book_page_json.getString("about_book");
+            Boolean bookshelf = Boolean.parseBoolean(book_page_json.getString("bookshelf"));
+            JSONArray sellers_list = book_page_json.getJSONArray("sellers_list");
+            ArrayList<Integer> sellers_id = new ArrayList<Integer>();
+            for (int i=0;i<sellers_list.length();i++) {
+                JSONObject temp = sellers_list.getJSONObject(i);
+                sellers_id.add(Integer.parseInt(temp.getString("id")));
+            }
+            BookDetails temp = new BookDetails(public_ratings, faculty_ratings, student_ratigns, about_book, bookshelf, isbn, sellers_id );
+            return temp;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Boolean to_shelf(Integer id, Long isbn, Boolean add){
+        address = "http://"+ip+"/andy_add_to_shelf.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("user_id", id.toString()));
+        params.add(new Pair<String, String>("isbn", isbn.toString()));
+        params.add(new Pair<String, String>("add", add.toString()));
+        new Setup().execute(params);
+        try {
+            JSONObject book_page_json = new JSONObject(output);
+            Boolean done_query = Boolean.parseBoolean(book_page_json.getString("done_query"));
+            return done_query;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, String, ArrayList<Pair<String, String>>> {
         HttpURLConnection urlConnection;
         @Override
-        protected String doInBackground(String... args){
+        protected ArrayList<Pair<String, String>> doInBackground(ArrayList<Pair<String, String>>... args){
             StringBuilder result = new StringBuilder();
             try{
                 URL url = new URL(address);
                 urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setDoInput(true);
+                urlConnection.setDoOutput(true);
+                ArrayList<Pair<String, String>> to_send = args[0];
+                OutputStream os = urlConnection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getQuery(to_send));
+                writer.flush();
+                writer.close();
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 String line;
@@ -162,7 +238,23 @@ public class RequestServer {
                 urlConnection.disconnect();
             }
             output = result.toString();
-            return output;
+            return null;
         }
+    }
+    private String getQuery(ArrayList<Pair<String, String>> params) throws UnsupportedEncodingException
+    {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+
+        for (int i=0;i<params.size();i++) {
+            if (i!=0)
+                result.append("&");
+
+            result.append(URLEncoder.encode(params.get(i).first, "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(params.get(i).second, "UTF-8"));
+        }
+
+        return result.toString();
     }
 }
