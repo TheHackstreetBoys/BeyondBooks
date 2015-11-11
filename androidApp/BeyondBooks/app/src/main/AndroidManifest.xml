@@ -29,7 +29,8 @@
         <activity android:name=".wireframe20" />
         <activity android:name=".Frame6" />
         <activity android:name=".AddBook" />
-        <activity android:name=".SellBook" >
+        <activity android:name=".SellBook" />
+        <activity android:name=".Frame5" >
 
         </activity>
     </application>
