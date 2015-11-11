@@ -24,7 +24,7 @@
             <RatingBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:style="?android:attr/ratingBarStyleSmall"
+                style="?android:attr/ratingBarStyleSmall"
                 android:id="@+id/frame6_small_rating"
                 />
         </LinearLayout>
