@@ -18,9 +18,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        Intent intent = new Intent(this,AddBook.class);
-        startActivity(intent);
     }
 
     @Override

@@ -18,7 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".wireframe7" >
         </activity>
         <activity android:name=".wireframe8" >
@@ -29,7 +28,8 @@
         </activity>
         <activity android:name=".wireframe20" />
         <activity android:name=".Frame6" />
-        <activity android:name=".AddBook" >
+        <activity android:name=".AddBook" />
+        <activity android:name=".SellBook" >
 
         </activity>
     </application>
