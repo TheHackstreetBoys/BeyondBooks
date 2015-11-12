@@ -9,8 +9,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    Button button_f5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +22,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        button_f5 = (Button)findViewById(R.id.button);
+
+        button_f5.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent to_frame5 = new Intent(getApplicationContext(), wireframe7.class);
+                startActivity(to_frame5);
+            }
+        });
     }
 
     @Override
