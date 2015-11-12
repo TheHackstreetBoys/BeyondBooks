@@ -246,6 +246,27 @@ public class RequestServer {
 
     }
 
+    public ArrayList<Long> get_bookshelf(Integer user_id){
+        address = "http://"+ip+"/andy_get_bookshelf.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("user_id", user_id.toString()));
+        new Setup().execute(params);
+        try {
+            ArrayList<Long> book_list = new ArrayList<Long>();
+            JSONObject search_answer = new JSONObject(output);
+            JSONArray books_json = search_answer.getJSONArray("books");
+            for(int i=0;i<books_json.length();i++){
+                JSONObject cur_book_obj = books_json.getJSONObject(i);
+                Long temp_isbn = Long.parseLong(cur_book_obj.getString("isbn"));
+                book_list.add(temp_isbn);
+            }
+            return book_list;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, String, ArrayList<Pair<String, String>>> {
         HttpURLConnection urlConnection;
         @Override
