@@ -33,7 +33,7 @@ public class RequestServer {
     private String address;
     private String output;
     RequestServer(){
-        ip = "10.100.91.55:80";
+        ip = "10.100.91.55:80/beyondbooks";
     }
 
     public Boolean authenticate(Integer id, String password){
@@ -288,10 +288,10 @@ public class RequestServer {
         }
     }
 
-    private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, String, ArrayList<Pair<String, String>>> {
+    private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, String, String> {
         HttpURLConnection urlConnection;
         @Override
-        protected ArrayList<Pair<String, String>> doInBackground(ArrayList<Pair<String, String>>... args){
+        protected String doInBackground(ArrayList<Pair<String, String>>... args){
             StringBuilder result = new StringBuilder();
             try{
                 URL url = new URL(address);
@@ -318,8 +318,10 @@ public class RequestServer {
             finally {
                 urlConnection.disconnect();
             }
-            output = result.toString();
-            return null;
+            return result.toString();
+        }
+        protected void onPostExecute(String result){
+            output = result;
         }
     }
     private String getQuery(ArrayList<Pair<String, String>> params) throws UnsupportedEncodingException
