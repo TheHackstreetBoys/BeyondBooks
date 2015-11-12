@@ -72,7 +72,9 @@ create table books(
        ts timestamp,
        title varchar,
        image_link varchar,
-       primary key (isbn)
+       by_user varchar not null,
+       primary key (isbn),
+       foreign key (by_user) references user_profile(user_id)
 );
 
 -- Authors of the book
@@ -108,8 +110,6 @@ create table review(
 create table pbase(
        prodid serial,
        ts timestamp,
-       description text,
-       price decimal,
        sellerid varchar,
        primary key (prodid),
        foreign key (sellerid) references user_profile(user_id)
@@ -142,6 +142,8 @@ create table single_sell(
        prodid int,
        isbn varchar(13),
        age int,
+       price decimal,
+       description text,
        primary key (prodid,isbn),
        foreign key (prodid) references pbase(prodid)
 );
@@ -152,6 +154,8 @@ create table combo_sell(
        isbn varchar(13),
        age int,
        quantity int,
+       price decimal,
+       description text,
        primary key (prodid,isbn),
        foreign key (prodid) references pbase(prodid)
 );
@@ -164,4 +168,14 @@ create table notify(
        link varchar,
        primary key (whom,des),
        foreign key (whom) references user_profile(user_id)
+);
+
+
+-- The bookshelf table
+create table book_shelf(
+    user_id varchar,
+    isbn varchar,
+    primary key (user_id,isbn),
+    foreign key (user_id) references user_profile(user_id),
+    foreign key (isbn) references books(isbn)
 );

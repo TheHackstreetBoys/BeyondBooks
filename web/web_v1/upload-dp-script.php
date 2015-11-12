@@ -3,8 +3,7 @@
 include_once 'db_conn.php';
 session_start();
 
-
-$userid=$_SESSION['user_id'];
+$userid=$_SESSION["user_id"];
 $id=$userid;
 
 $valid_formats = array("jpg", "png", "gif");
@@ -34,15 +33,16 @@ else
 
 if ($uploadOk == 0) {
     echo "Sorry, your file was not uploaded.";
-} 
+}
 
 
-else 
+else
 {
-    if (move_uploaded_file($_FILES["images"]["tmp_name"],"/var/www/html/BeyondBooks/web_v1/pictures/".$newfilename)) 
+    if (move_uploaded_file($_FILES["images"]["tmp_name"],"pictures/".$newfilename))
     {
-    	echo "<img src='../pictures/".$newfilename."' height=200px width=200px style='margin:0 25%;'> ";
-    } 
+    	echo "<img src='pictures/".$newfilename."' height=200px width=200px style='margin:0 25%;'> ";
+			header('Location: yourprofile.php');
+    }
     else {
         echo 0;
     }

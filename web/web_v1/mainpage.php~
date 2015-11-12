@@ -164,9 +164,13 @@ $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=pas
 				{
 					echo '<b>'.$row['title'].'<br/></b>';
 					echo "<em>".$row['author']."</em><br/>";
-					echo '<em>'.$row['description'].'</em><br/>';
+					echo '<em>'.substr($row['description'], 0, 200).'</em><br/>';
 					echo '<em>'.$row['publisher'].'</em><br/>';
-					echo "<a href = 'book_main_page.php'+".$row['isbn']."> Click</a>";
+					echo " <form method = 'POST' action= 'book_main_page.php'>
+ 
+  						<input type='hidden' name = 'isbn' value =".$row['isbn'].">
+  						<input type='submit' value = 'Click Here'>
+						</form> ";
 
 			
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';	

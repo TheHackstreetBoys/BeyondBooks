@@ -2,13 +2,12 @@
 <?php
 include_once 'db_conn.php';
 session_start();
-if (isset($_SESSION['user_id']))
+if (isset($_SESSION["user_id"]))
 {
-	$user_id=$_SESSION['user_id'];
-	$result1=mysql_query("SELECT f_name from user_profile where user_id='$user_id'");
-	$num1=mysql_num_rows($result1);
-
-	if($num1==0)
+	$user_id=$_SESSION["user_id"];
+	$result1=pg_query("SELECT f_name from user_profile where user_id='$user_id'");
+	$num1=pg_num_rows($result1);
+	if($num1!=0)
 	{
 			header('Location: homepage.php');
 	}
@@ -55,7 +54,7 @@ function checkstudent()
 				{
 					if(response==1)
 					{
-						document.location.href="mainpage.php";
+						document.location.href="homepage.php";
 					}
 					else if(response==3)
 					{
@@ -114,7 +113,7 @@ function checkstudent()
 
 	        <li><a href="#about">About</a></li>
 
-	        <li><a href="about_us.html">Our Team</a><li>
+	        <li><a href="about_us.php">Our Team</a><li>
 
 		<li> <a data-toggle="modal" href="#login-modal">Login<span class="glyphicon glyphicon-log-in"></span></a></li>
 	      </ul>

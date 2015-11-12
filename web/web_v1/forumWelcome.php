@@ -1,4 +1,12 @@
 <!doctype html>
+<?php
+include_once 'db_conn.php';
+session_start();
+if(!isset($_SESSION["user_id"]))
+{
+	header('Location: index.php');
+}
+?>
 <html>
 <head>
 <title>
@@ -8,9 +16,9 @@ Discussion Forum
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>		
+<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
-<link rel="stylesheet" href="css/font-awesome.min.css"/>	
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -25,7 +33,7 @@ $(document).ready(function(){
 			dropdownMenu.parent().toggleClass("open");
 		}
 	});
-});		
+});
 </script>
 </head>
 
@@ -58,15 +66,15 @@ $(document).ready(function(){
 
 	    </div>
 
-	 
+
 
 	    <div class="collapse navbar-collapse" id="navbar-collapse-main">
 
 	      <ul class="nav navbar-nav navbar-right">
-		
+
 		<li><form action="" class="search-form">
                 <div class="form-group has-feedback" id="search">
-            		
+
             		<input type="text" class="form-control" name="search" id="search1" placeholder="search">
               		<span class="glyphicon glyphicon-search form-control-feedback"></span>
 
@@ -78,7 +86,20 @@ $(document).ready(function(){
 
 	        <li><a href="#about">About</a></li>
 		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
-		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="/var/www/html/BeyondBooks/web/images/user.png" class="img-circle" style="width: 50px"></a>
+		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
+			<?php
+				 $user_id=$_SESSION["user_id"];
+				 $query="SELECT * FROM user_profile where user_id='$user_id'";
+				 $result=pg_query($query);
+				 $row=pg_fetch_array($result);
+			$filename=$row['user_id'].'_dp';
+			$filename="pictures/".$filename."*";
+			$result1=glob($filename);
+			if (!empty($result1))
+			echo '<img src="'.$result1[0].'"class="img-circle" style="width: 50px">';
+			else
+				echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
+				?></a>
 
 <ul class="dropdown-menu">
 <li><a herf="#">My profile</a></li>
@@ -97,7 +118,7 @@ $(document).ready(function(){
 <br/><br/><br/><br/>
  <div class="container-fluid">
 	<div class="row">
-	
+
 		<div class="col-md-12"><h1>
 <br/>
 <b>Discussion Forums</b>
@@ -106,20 +127,20 @@ $(document).ready(function(){
 
 
 			<div class="row">
-	
+
 				<div class="col-md-8">
 					<div class="row">
 						<div class="col-md-12">
-							 
-						
+
+
 
 
 <div class="row">
 						<div class="col-md-12">
-							
+
 							<div class="row">
 									<div class="col-md-12">
-									
+
 								</div>
 							</div>
 <?php
@@ -150,9 +171,9 @@ if(!pg_num_rows($result)) {
 		$body = substr($row['body'], 0, 20);
 		echo nl2br($body).'...<br/>';
 		echo '<a href="forumview.php?id='.$row['id'].'+'.$_SESSION['mycourse'].'">Read More</a> | ';
-		echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';	
+		echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';
 		echo '<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
-		
+
 	}
 }
 
@@ -166,16 +187,16 @@ HTML;
 ?>
 
 
-							
-						</div>		
+
+						</div>
 					</div>
 				</div>
-	
+
 	</div>
 					</div>
 <hr style="height:3px; border:none; color:rgb(60,60,60); background-color:rgb(60,60,60);">
-					
-				
+
+
 
 
 <div class="col-md-4">
@@ -184,30 +205,30 @@ HTML;
 					<h3>
 						Top Rated Discussions <hr style="height:1px; border:none; color:rgb(60,60,60); background-color:rgb(60,90,180);">
 					</h3>
-					
+
 
 					<?php
-		
+
 			$result = pg_query("SELECT * FROM posts ORDER BY num_comments DESC LIMIT 4");
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No forums is Created Yet.</p>';
-						     } 
-			else {	
-			
+						     }
+			else {
+
 					while($row = pg_fetch_array($result))
 				{
 					echo '<h2>'.$row['title'].'</h2><br/>';
 					$body = substr($row['body'], 0, 10);
-					echo nl2br($body).'...<br/>';	
+					echo nl2br($body).'...<br/>';
 					echo '<a href="forumview.php?id='.$row['id'].'">Read More</a> | ';
-					echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';	
-					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';	
+					echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';
+					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 			     }
 					}
 
 					?>
-					
+
 
 
 
@@ -224,9 +245,6 @@ HTML;
 <hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys 
+<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys
 </div>
 </footer>
-
-
-

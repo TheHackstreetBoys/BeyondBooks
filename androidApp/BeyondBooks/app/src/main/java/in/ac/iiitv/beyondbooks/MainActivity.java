@@ -10,18 +10,29 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+<<<<<<< HEAD
 
+=======
+import android.widget.EditText;
+import android.widget.Toast;
+>>>>>>> 861be047fcbe8b1bde3ce476c920bae5c7ea6ca3
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+<<<<<<< HEAD
     Button button_f5;
 
+=======
+    EditText username, password;
+    Button login;
+>>>>>>> 861be047fcbe8b1bde3ce476c920bae5c7ea6ca3
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+<<<<<<< HEAD
 
         button_f5 = (Button)findViewById(R.id.button);
 
@@ -33,6 +44,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(to_frame5);
             }
         });
+=======
+        username = (EditText) findViewById(R.id.username);
+        password = (EditText) findViewById(R.id.password);
+        login = (Button) findViewById(R.id.login);
+
+        Intent in= new Intent(this, Frame10.class);
+        startActivity(in);
+        login.setOnClickListener(this);
+>>>>>>> 861be047fcbe8b1bde3ce476c920bae5c7ea6ca3
     }
 
     @Override
@@ -49,11 +69,36 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        Intent in;
+        switch(id)
+        {
+            case R.id.search:
+                in = new Intent(this,Search.class);
+                startActivity(in);
+                break;
+            case R.id.home:
+
+                in = new Intent(this, MainActivity.class);
+                startActivity(in);
+                break;
+            case R.id.user_profile:
+                in = new Intent(this,wireframe8.class);
+                startActivity(in);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        RequestServer rs = new RequestServer();
+
+        boolean allowed = rs.authenticate(Integer.parseInt(username.getText().toString()),password.getText().toString());
+        if (allowed)
+        {
+            Toast.makeText(this, "allow kar diya bc", Toast.LENGTH_LONG).show();
+        }
+        else
+            Toast.makeText(this, "bhosad chod type correctly", Toast.LENGTH_LONG).show();
     }
 }

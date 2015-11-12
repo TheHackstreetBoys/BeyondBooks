@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html>
 <head>
 <title>
@@ -8,14 +9,16 @@ Main Page of Book
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>		
+<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
-<link rel="stylesheet" href="css/font-awesome.min.css"/>	
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
-
+<link href='css/rating.css' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/rating.js"></script>
 
 
 
@@ -27,7 +30,7 @@ $(document).ready(function(){
 			dropdownMenu.parent().toggleClass("open");
 		}
 	});
-});		
+});
 </script>
 </head>
 
@@ -60,15 +63,15 @@ $(document).ready(function(){
 
 	    </div>
 
-	 
+
 
 	    <div class="collapse navbar-collapse" id="navbar-collapse-main">
 
 	      <ul class="nav navbar-nav navbar-right">
-		
+
 		<li><form action="" class="search-form">
                 <div class="form-group has-feedback" id="search">
-            		
+
             		<input type="text" class="form-control" name="search" id="search1" placeholder="search">
               		<span class="glyphicon glyphicon-search form-control-feedback"></span>
             	</div>
@@ -78,7 +81,20 @@ $(document).ready(function(){
 
 	        <li><a href="#about">About</a></li>
 		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
-		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="/var/www/html/BeyondBooks/web/images/user.png" class="img-circle" style="width: 50px"></a>
+		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
+			<?php
+			   $user_id=$_SESSION["user_id"];
+				 $query="SELECT * FROM user_profile where user_id='$user_id'";
+			   $result=pg_query($query);
+			   $row=pg_fetch_array($result);
+			$filename=$row['user_id'].'_dp';
+			$filename="pictures/".$filename."*";
+			$result1=glob($filename);
+			if (!empty($result1))
+			echo '<img src="'.$result1[0].'"class="img-circle" style="width: 50px">';
+			else
+				echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
+				?></a>
 
 <ul class="dropdown-menu">
 <li><a herf="#">My profile</a></li>
@@ -99,10 +115,73 @@ $(document).ready(function(){
 	<div class="row">
 		<div class="col-md-6">
 			<div class="row">
-				<div class="col-md-6">
-					<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/"> 
-					<button type="button" class="btn btn-success">
-						+ ADD to wishlist
+				<div class="col-md-6"><br/>
+	<?php
+session_start();					
+			$dbconn=null;
+			global $dbconn;
+			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+				
+			$isbn = $_POST['isbn'];
+			$_SESSION['isbn'] = $isbn;
+			
+	$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn WHERE books.isbn = '$isbn'");
+
+
+
+			if(!pg_num_rows($result)) {
+							echo '<p>No Book is available.</p>';
+						     } 
+			else {	
+			
+					while($row = pg_fetch_array($result))
+				{
+					echo '<b>'.$row['title'].'</b></br>';
+					echo "<b> By :".$row['author']."</b>";
+	
+			     }
+					}
+
+					?>
+</br></br>
+					<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/">
+
+
+					<br/><br/>
+<div id="rating_panel" data-pollid="1" data-rated="0">
+<?php
+			$dbconn=null;
+			global $dbconn;
+			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+				
+
+			
+	$result = pg_query("SELECT COUNT(uid) AS total FROM rating WHERE isbn = '$isbn'");	
+	$result1 = pg_query("SELECT sum(rating) AS totalrating FROM rating WHERE isbn = '$isbn'");
+	$row = pg_fetch_array($result);
+	$row1 = pg_fetch_array($result1);
+
+$starNumber = $row1['totalrating']/$row['total'];
+echo "Rating :";
+    for($x=1;$x<=$starNumber;$x++) {
+        echo '<img src="full.png" />';
+    }
+    if (strpos($starNumber,'.')) {
+        echo '<img src="half.png" />';
+        $x++;
+    }
+    while ($x<=5) {
+        echo '<img src="zero.png" />';
+        $x++;
+    }		
+
+
+					?>
+<br/>					<br/><br/>
+	Your Rating :			<img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /><div id="starloader"> </div>
+				
+				<br/><br/></div><button type="button" class="btn btn-success">
+						 + ADD to wishlist
 					</button>
 				</div>
 				<div class="col-md-6">
@@ -113,8 +192,39 @@ $(document).ready(function(){
 			<h3>
 				Rating and Reviews
 			</h3>
+	
+
+
+	<?php
+			$dbconn=null;
+			global $dbconn;
+			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+				
+	$result = pg_query("SELECT * FROM review WHERE isbn = '$isbn' LIMIT 3");
+
+			if(!pg_num_rows($result)) {
+							echo '<p>No forums is Created Yet.</p>';
+						     }
+			else {
+
+					echo "<br/><br/>Review:<br/><br/>";
+
+					while($row = pg_fetch_array($result))
+				{
+					echo '<b>'.$row['uid'].'</b><br/>';
+					$body = $row['review'];
+					echo "&nbsp;&nbsp;&nbsp;".nl2br($body).'...<br/><br/>';
+				
+			     }
+					}
+
+				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
+					?>
+
+
+
 			<p>
-				Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
+				
 			</p>
 		</div>
 	</div>
@@ -124,24 +234,93 @@ $(document).ready(function(){
 				About the Book
 			</h3>
 			<p>
-				Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
+				<?php
+session_start();					
+				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
+			$dbconn=null;
+			global $dbconn;
+			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+				
+			$isbn = $_POST['isbn'];
+			$_SESSION['isbn'] = $isbn;
+			
+	$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn WHERE books.isbn = '$isbn'");
+
+
+
+			if(!pg_num_rows($result)) {
+							echo '<p>No Book is available.</p>';
+						     } 
+			else {	
+			
+					while($row = pg_fetch_array($result))
+				{
+					echo '<b> Title :</b> '.$row['title'].'<br/>';
+					echo "<b> Authors :</b><em>".$row['author']."</em><br/>";
+				        echo '<b> Publication: </b><em>'.$row['publisher'].'</em><br/>';	
+					echo '<b> Decription: </b><em>'.$row['description'].'</em><br/>';
+
+			
+
+			
+					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';	
+			     }
+					}
+
+					?>
+					
 			</p>
 		</div>
 		<div class="col-md-6">
 			<h3>
 				Any User Selling Book
 			</h3>
-			<p>
-				Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
-			</p>
+			<?php
+			$dbconn=null;
+			global $dbconn;
+			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+				
+	$result = pg_query("SELECT * FROM pbase JOIN single_sell ON single_sell.prodid = pbase.prodid WHERE single_sell.isbn = '$isbn' AND pbase.prodid = single_sell.prodid");
+
+			if(!pg_num_rows($result)) {
+							echo '<p> No Seller is available.</p>';
+						     }
+			else {
+
+					echo "<br/><b>Available Seller:</b><br/>";
+	
+					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
+
+					while($row = pg_fetch_array($result))
+				{
+					echo '<b>Seller:&nbsp;'.$row['sellerid'].'</b><br/>';
+					echo 'Price:&nbsp;'.$row['price'].'<br/>';
+					echo 'Age:&nbsp;'.$row['age'].'<br/>';
+					$body = $row['description'];
+					echo "Description:&nbsp;".nl2br($body).'';
+					$user_id = "201351022";
+					echo " <form method = 'POST' action= 'mailproceed.php'>
+ 
+  						<input type='hidden' name = 'isbn' value =".$row['isbn'].">
+  						<input type='hidden' name = 'sellerid' value =".$row['sellerid'].">
+  						<input type='hidden' name = 'user_id' value =".$user_id.">
+
+  						<input type='submit' value = 'Send Interest'>
+						</form><br/> ";
+
+					
+				
+			     }
+					}
+
+				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
+					?>
+
+
 		</div>
 	</div>
 </div>
 
-
-<p>
-Rest Content
-</p>
 
 <footer>
 <hr />
@@ -152,6 +331,3 @@ Rest Content
 <p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
 </div>
 </footer>
-
-
-

@@ -1,6 +1,6 @@
 <?php
 include_once 'db_conn.php';
-
+session_start();
 if($_SERVER['REQUEST_METHOD']=='POST')
 {
 $email=$_POST['email'];
@@ -20,7 +20,9 @@ $query="SELECT * from user_profile where email_id = '$email'";
 	{
 		if ($pwd == $row['password'])
 		{
+			$_SESSION["user_id"] = $row['user_id'];
 			echo 1;
+
 		}
 		else
 		{

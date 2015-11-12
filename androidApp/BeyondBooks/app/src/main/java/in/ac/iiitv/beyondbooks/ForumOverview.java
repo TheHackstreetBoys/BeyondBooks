@@ -8,12 +8,14 @@ public class ForumOverview {
     private String author;
     private Integer author_id;
     private Integer q_id;
+
     ForumOverview(String title, String author, Integer author_id, Integer q_id){
         this.title = title;
         this.author = author;
         this.author_id = author_id;
         this.q_id = q_id;
     }
+
     public void setTitle(String title){
         this.title = title;
     }
