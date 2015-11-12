@@ -112,6 +112,8 @@ $(document).ready(function(){
 			<center >The HackStreet Boys is a software engineering team of IIIT Vadodara. The team comprises of all the different personas, from a dedicated coder to a free thinker.  </center>
 				</div>
 			</div>
+<hr style="height:1px; border:none; color:rgb(60,60,60); background-color:rgb(60,60,60);">
+							</h3>
 			<h3 class="text-center">
 				The Team <hr/>
 			</h3>
@@ -171,7 +173,7 @@ $(document).ready(function(){
 					
 				</div>
 				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="images/akhil.jpg">
+					<img class="img-circle" alt="Bootstrap Image Preview" src="images/gaurav.jpg" height="200" width="200">
 					<h2>
 						Gaurav Yadav
 					</h2>
@@ -193,7 +195,7 @@ $(document).ready(function(){
 			</div>
 			<div class="row">
 				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="images/kushal.jpg">
+					<img class="img-circle" alt="Bootstrap Image Preview" src="images/akhil.jpg">
 					<h2>
 						Kushal Jangid
 					</h2>
@@ -218,7 +220,7 @@ $(document).ready(function(){
 						Sonu Patidar
 					</h2>
 					<p>
-						This guy is different from all. He is a careful thinker and good observer. Always interested in details, helpful, hardworker and passion for photography.
+						This guy is different from all. He is a careful thinker and good observer. Always interested in details, helpful, hardworker and has a passion for photography.
 					</p>
 					
 				</div>
