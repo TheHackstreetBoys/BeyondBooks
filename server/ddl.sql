@@ -142,6 +142,7 @@ create table single_sell(
        prodid int,
        isbn varchar(13),
        age int,
+       price decimal,
        primary key (prodid,isbn),
        foreign key (prodid) references pbase(prodid)
 );
@@ -152,6 +153,7 @@ create table combo_sell(
        isbn varchar(13),
        age int,
        quantity int,
+       price decimal,
        primary key (prodid,isbn),
        foreign key (prodid) references pbase(prodid)
 );
