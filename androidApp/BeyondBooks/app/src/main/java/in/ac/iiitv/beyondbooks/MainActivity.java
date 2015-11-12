@@ -44,9 +44,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.search) {
-            return true;
+        Intent in;
+        switch(id)
+        {
+            case R.id.search:
+                return true;
+            case R.id.home:
+                in = new Intent(this, MainActivity.class);
+                startActivity(in);
+                break;
+            case R.id.user_profile:
+                in = new Intent(this,wireframe8.class);
+                startActivity(in);
         }
 
         return super.onOptionsItemSelected(item);
