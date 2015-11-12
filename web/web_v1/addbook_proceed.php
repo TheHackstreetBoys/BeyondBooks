@@ -8,9 +8,9 @@ Add Your Book
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>		
+<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
-<link rel="stylesheet" href="css/font-awesome.min.css"/>	
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -29,7 +29,7 @@ $(document).ready(function(){
 			dropdownMenu.parent().toggleClass("open");
 		}
 	});
-});		
+});
 </script>
 </head>
 
@@ -62,15 +62,15 @@ $(document).ready(function(){
 
 	    </div>
 
-	 
+
 
 	    <div class="collapse navbar-collapse" id="navbar-collapse-main">
 
 	      <ul class="nav navbar-nav navbar-right">
-		
+
 		<li><form action="" class="search-form">
                 <div class="form-group has-feedback" id="search">
-            		
+
             		<input type="text" class="form-control" name="search" id="search1" placeholder="search">
               		<span class="glyphicon glyphicon-search form-control-feedback"></span>
             	</div>
@@ -80,7 +80,20 @@ $(document).ready(function(){
 
 	        <li><a href="#about">About</a></li>
 		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
-		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="/var/www/html/BeyondBooks/web/images/user.png" class="img-circle" style="width: 50px"></a>
+		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
+			<?php
+			   $user_id=$_SESSION["user_id"];
+				 $query="SELECT * FROM user_profile where user_id='$user_id'";
+			   $result=pg_query($query);
+			   $row=pg_fetch_array($result);
+			$filename=$row['user_id'].'_dp';
+			$filename="pictures/".$filename."*";
+			$result1=glob($filename);
+			if (!empty($result1))
+			echo '<img src="'.$result1[0].'"class="img-circle" style="width: 50px">';
+			else
+				echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
+				?></a>
 
 <ul class="dropdown-menu">
 <li><a herf="#">My profile</a></li>
@@ -110,7 +123,7 @@ $(document).ready(function(){
 					</h3>
 					<form class="form-horizontal" role="form" method = "post" action = "addbook_insert.php">
 						<div class="form-group">
-							 
+
 							<label for="inputEmail3" class="col-sm-4 control-label">
 								Enter the ISBN of the Book.
 							</label>
@@ -158,7 +171,7 @@ $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=pas
 $query1 = pg_query("INSERT INTO books(isbn, publisher, description, title) VALUES ('$isbn', '$publisher', '$description', '$title')");
 
  if($query1)
-{	
+{
 }
 else
 {
@@ -173,8 +186,8 @@ else
 $query = pg_query("INSERT INTO author(isbn, author) VALUES ('$isbn', '$author')");
 
  if($query)
-{	
-  
+{
+
 }
 else
 {
@@ -188,7 +201,7 @@ else
 						</div>
 
 						<div class="form-group">
-							 
+
 							<label for="inputPassword3" class="col-sm-4 control-label">
 								Enter the Price of Book.
 							</label>
@@ -198,7 +211,7 @@ else
 						</div>
 
 						<div class="form-group">
-							 
+
 							<label for="inputPassword3" class="col-sm-4 control-label">
 								Enter the Age of Book.
 							</label>
@@ -208,7 +221,7 @@ else
 						</div>
 
 						<div class="form-group">
-							 
+
 							<label for="inputPassword3" class="col-sm-4 control-label">
 								Enter the Description of Book.
 							</label>
@@ -221,7 +234,7 @@ else
 					<center>
 						<div class="form-group">
 							<div class="col-sm-offset-3 col-sm-6">
-								 
+
 								<button type="submit" class="btn btn-default">
 									+ Click Here to Add Book
 								</button>
@@ -247,6 +260,3 @@ else
 <p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
 </div>
 </footer>
-
-
-
