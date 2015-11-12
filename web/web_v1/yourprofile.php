@@ -44,9 +44,9 @@ $(document).ready(function(){
 <script type="text/javascript" >
 $(document).ready(function() {
 
-            $('#images').live('change', function()      {
+            $('#images').on('change', function()      {
                  $("#profile-pic").html('');
-          $("#profile-pic").html('<img src="../icons/loader.gif" alt="Uploading...." style="margin:0 25%;"/>');
+          $("#profile-pic").html('<img src="icons/loader.gif" alt="Uploading...." style="margin:0 25%;"/>');
       $("#imageform").ajaxForm({
             target: '#profile-pic'
     }).submit();
@@ -68,8 +68,9 @@ $(document).ready(function() {
 
 <body>
 <?php
-   $mail=$_SESSION['user_id'];
-   $result=pg_query("SELECT * FROM user_profile where user_id='$user_id'");
+   $user_id=$_SESSION["user_id"];
+	 $query="SELECT * FROM user_profile where user_id='$user_id'";
+   $result=pg_query($query);
    $row=pg_fetch_array($result);
 ?>
 
@@ -95,7 +96,7 @@ $(document).ready(function() {
 	        <span class="icon-bar"></span>
 	      </button>
 
-	      <a class="navbar-brand" href="#">Beyond Books</a>
+	      <a class="navbar-brand" href="homepage.php">Beyond Books</a>
 
 	    </div>
 
@@ -113,15 +114,24 @@ $(document).ready(function() {
             	</div>
             </form></li>
 
-	        <li><a href="#home">Home</a></li>
+	        <li><a href="homepage.php">Home</a></li>
 
 	        <li><a href="#about">About</a></li>
 	        <li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
 
-		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="../images/user.png" class="img-circle" style="width: 50px"></a>
+		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
+			<?php
+			$filename=$row['user_id'].'_dp';
+			$filename="pictures/".$filename."*";
+			$result1=glob($filename);
+			if (!empty($result1))
+			echo '<img src="'.$result1[0].'"class="img-circle" style="width: 50px">';
+			else
+				echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
+				?>
+		</a>
 
 <ul class="dropdown-menu">
-<li><a herf="#">My profile</a></li>
 <li><a href="#">My uploads</a></li>
 </ul></li>
 
@@ -159,14 +169,20 @@ $(document).ready(function() {
 	<div class="row">
 		<div class="col-md-12" id="profile-pic">
 			<?php
-                      $filename=$row['user_id']."_dp";
-                        echo '<img style="margin:0 25%;" src="pictures/'.$filename.'.jpg" alt="" class="img-circle img-responsive" id="dp" height=200px width=200px >';
-                      ?>
+			$filename=$row['user_id'].'_dp';
+			$filename="pictures/".$filename."*";
+			$result1=glob($filename);
+			if (!empty($result1))
+                        echo '<img style="margin:0 25%;" src="'.$result1[0].'" alt="" class="img-circle img-responsive" id="dp" height=200px width=200px >';
+												else
+												echo '<img style="margin:0 25%;" src="images/user.png" alt="" class="img-circle img-responsive" id="dp" height=200px width=200px >';
+												?>
 		</div>
 	</div>
 </div>
 					<form id="imageform" method="post" enctype="multipart/form-data" action='upload-dp-script.php' style="left:5%;">
                     Upload your image <input type="file" name="images" id="images" />
+										<input type="submit">
                   </form>
 				</div>
 

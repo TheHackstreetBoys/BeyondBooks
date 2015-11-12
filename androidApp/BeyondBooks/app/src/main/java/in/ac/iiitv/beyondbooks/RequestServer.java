@@ -31,9 +31,9 @@ import java.util.ArrayList;
 public class RequestServer {
     private String ip;
     private String address;
-    private String output;
+    private String output=null;
     RequestServer(){
-        ip = "10.100.91.55:80";
+        ip = "10.100.91.55:80/beyondbooks";
     }
 
     public Boolean authenticate(Integer id, String password){
@@ -43,6 +43,7 @@ public class RequestServer {
         params.add(new Pair<String, String>("password", password));
         new Setup().execute(params);
         try {
+            System.out.println("fucker"+output);
             JSONObject is_authenticated_json = new JSONObject(output);
             return Boolean.parseBoolean(is_authenticated_json.getString("result"));
         }catch(JSONException e){
@@ -206,7 +207,7 @@ public class RequestServer {
         }
         return false;
     }
-
+//push it
     public Boolean review_submit(Integer user_id,Long isbn, Float ratings, String comment){
         address = "http://"+ip+"/andy_review_submit.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
@@ -288,10 +289,10 @@ public class RequestServer {
         }
     }
 
-    private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, String, ArrayList<Pair<String, String>>> {
+    private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, String, String> {
         HttpURLConnection urlConnection;
         @Override
-        protected ArrayList<Pair<String, String>> doInBackground(ArrayList<Pair<String, String>>... args){
+        protected String doInBackground(ArrayList<Pair<String, String>>... args){
             StringBuilder result = new StringBuilder();
             try{
                 URL url = new URL(address);
@@ -318,8 +319,10 @@ public class RequestServer {
             finally {
                 urlConnection.disconnect();
             }
-            output = result.toString();
-            return null;
+            return result.toString();
+        }
+        protected void onPostExecute(String result){
+            output = result;
         }
     }
     private String getQuery(ArrayList<Pair<String, String>> params) throws UnsupportedEncodingException
