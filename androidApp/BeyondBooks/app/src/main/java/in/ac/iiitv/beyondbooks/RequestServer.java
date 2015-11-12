@@ -112,6 +112,7 @@ public class RequestServer {
         }
         return null;
     }
+    //go push it again
 
     public ArrayList<NewlyAdded> newly_added(){
         address = "http://"+ip+"/andy_newly_added.php";
@@ -137,7 +138,6 @@ public class RequestServer {
         }
         return null;
     }
-
 
     public ArrayList<NewlyAdded> top_rated(){
         address = "http://"+ip+"/andy_top_rated.php";
@@ -191,7 +191,7 @@ public class RequestServer {
     }
 
     public Boolean to_shelf(Integer id, Long isbn, Boolean add){
-        address = "http://"+ip+"/andy_add_to_shelf.php";
+        address = "http://"+ip+"/andy_to_shelf.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", id.toString()));
         params.add(new Pair<String, String>("isbn", isbn.toString()));
@@ -204,7 +204,88 @@ public class RequestServer {
         }catch(JSONException e){
             e.printStackTrace();
         }
+        return false;
+    }
+
+    public Boolean review_submit(Integer user_id,Long isbn, Float ratings, String comment){
+        address = "http://"+ip+"/andy_review_submit.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("user_id", user_id.toString()));
+        params.add(new Pair<String, String>("isbn", isbn.toString()));
+        params.add(new Pair<String, String>("ratings", ratings.toString()));
+        params.add(new Pair<String, String>("comment", comment));
+        new Setup().execute(params);
+        try {
+            JSONObject book_page_json = new JSONObject(output);
+            Boolean done_query = Boolean.parseBoolean(book_page_json.getString("done_query"));
+            return done_query;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public ArrayList<String>get_notification(Integer user_id){
+        address = "http://"+ip+"/andy_get_notification.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("user_id", user_id.toString()));
+        new Setup().execute(params);
+        try {
+            ArrayList<String> notification_list = new ArrayList<String>();
+            JSONObject search_answer = new JSONObject(output);
+            JSONArray notifications_json = search_answer.getJSONArray("notifications");
+            for(int i=0;i<notifications_json.length();i++){
+                JSONObject cur_book_obj = notifications_json.getJSONObject(i);
+                String notification = cur_book_obj.getString("notification");
+                notification_list.add(notification);
+            }
+            return notification_list;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
         return null;
+
+    }
+
+    public ArrayList<Long> get_bookshelf(Integer user_id){
+        address = "http://"+ip+"/andy_get_bookshelf.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("user_id", user_id.toString()));
+        new Setup().execute(params);
+        try {
+            ArrayList<Long> book_list = new ArrayList<Long>();
+            JSONObject search_answer = new JSONObject(output);
+            JSONArray books_json = search_answer.getJSONArray("books");
+            for(int i=0;i<books_json.length();i++){
+                JSONObject cur_book_obj = books_json.getJSONObject(i);
+                Long temp_isbn = Long.parseLong(cur_book_obj.getString("isbn"));
+                book_list.add(temp_isbn);
+            }
+            return book_list;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void get_activities(UserData cur_user){
+        address = "http://"+ip+"/andy_get_activities.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("user_id", cur_user.getId().toString()));
+        new Setup().execute(params);
+        try {
+            ArrayList<Long> uploads_list = new ArrayList<Long>();
+            JSONObject activities = new JSONObject(output);
+            JSONArray uploads = activities.getJSONArray("uploads");
+            for(int i=0;i<uploads.length();i++){
+                JSONObject cur_book_obj = uploads.getJSONObject(i);
+                Long uploaded_book = Long.parseLong(cur_book_obj.getString("isbn"));
+                uploads_list.add(uploaded_book);
+            }
+            cur_user.setUploads(uploads_list);
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
     }
 
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, String, ArrayList<Pair<String, String>>> {

@@ -1,8 +1,11 @@
 <?php
 
-include ("db_conn.php");
+if($dbconn != null)
+{
+    include ("db_conn.php");
+}
 
-$query = "select * from (books natural join ratings) as coll order by ts desc limit 4;";
+$query = "select * from (books natural join ratings) as coll order by ratings desc limit 4;";
 $result=pg_query($query);
 
 

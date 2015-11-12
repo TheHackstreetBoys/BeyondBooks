@@ -78,7 +78,7 @@ $(document).ready(function(){
 
 	        <li><a href="#about">About</a></li>
 		
-		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="/var/www/html/BeyondBooks/web/images/user.png" class="img-circle" style="width: 50px"></a>
+		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="../images/user.png" class="img-circle" style="width: 50px"></a>
 
 <ul class="dropdown-menu">
 <li><a herf="#">My profile</a></li>
@@ -106,140 +106,123 @@ $(document).ready(function(){
 			</h3>
 			<div class="row">
 				<div class="col-md-12">
-					<h3 class="text-center text-success">
-						HackStreet Boys
-					</h3>
+					<h1 class="text-center text-success">
+						The HackStreet Boys
+					</h1>
+			<center >The HackStreet Boys is a software engineering team of IIIT Vadodara. The team comprises of all the different personas, from a dedicated coder to a free thinker.  </center>
 				</div>
 			</div>
+<hr style="height:1px; border:none; color:rgb(60,60,60); background-color:rgb(60,60,60);">
+							</h3>
 			<h3 class="text-center">
-				The Team
+				The Team <hr/>
 			</h3>
 			<div class="row">
-				<div class="col-md-12">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
+				<div class="col-md-12" style="text-align: center;">
+					<img class="img-circle" alt="Bootstrap Image Preview" src="images/chirag.jpg">
 					<h2>
 						Pampus Boy
 					</h2>
 					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+										         Chirag a tech-geek. A good critics and a great leader. 
 					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
+					
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
+					<img class="img-circle" alt="Bootstrap Image Preview" src="images/akhil.jpg">
 					<h2>
 						Aditya Prakash
 					</h2>
 					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+							         Aditya is an adamant and manipulative guy. He is a great reviewer, presenter and has got superb english profeciency.
 					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
+					
 				</div>
 				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
+					<img class="img-circle" alt="Bootstrap Image Preview" src="images/akhil.jpg">
 					<h2>
 						Akhilesh Kumar
 					</h2>
 					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+						 Akhilesh is a dedicated and smart guy. His english profeciency and technological knowledge are superb. He is known as a "Good Boy" in IIITV.
 					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
+					
 				</div>
 				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
+					<img class="img-circle" alt="Bootstrap Image Preview" src="images/anjul.jpg">
 					<h2>
 						Anjul Tyagi
 					</h2>
 					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+						This over talkative boy has an intricate mixture of curiosity and dedication. He has an enormous amount of energy which flows around and thrill everybody. He is smart and always planned.
 					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
+					
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
+					<img class="img-circle" alt="Bootstrap Image Preview" src="images/dilip.jpg">
 					<h2>
 						Dilip Puri
 					</h2>
 					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+										 Dilip is the most straight forward guy of IIITV senior batch. He is really appreciated for his LaTeX skills.
 					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
+					
 				</div>
 				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
+					<img class="img-circle" alt="Bootstrap Image Preview" src="images/gaurav.jpg" height="200" width="200">
 					<h2>
 						Gaurav Yadav
 					</h2>
 					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+											Gaurav is one among the cool guys. He has a passion for hindi poems and mathematics.	
 					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
+					
 				</div>
 				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
+					<img class="img-circle" alt="Bootstrap Image Preview" src="images/anjul.jpg">
 					<h2>
 						Harish Krupo
 					</h2>
 					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+						This guy is a universal set, he knows everything. Much talked-about in college for his technical brilliancy. He is pro-active and smart.
 					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
+					
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
+					<img class="img-circle" alt="Bootstrap Image Preview" src="images/akhil.jpg">
 					<h2>
 						Kushal Jangid
 					</h2>
 					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+						 This guy is the salt of the Earth. He is a dedicate, pro-active hard worker. He has got lots of energy which keeps him persistent and devoted to tasks.
 					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
+					
 				</div>
 				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
+					<img class="img-circle" alt="Bootstrap Image Preview" src="images/akhil.jpg">
 					<h2>
 						Raghuvar Prajapati
 					</h2>
 					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+											Raghuvar is a coke-bottle-pizza guy. He believes in hard working and has passion for whatever he does.
 					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
+					
 				</div>
 				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
+					<img class="img-circle" alt="Bootstrap Image Preview" src="images/sonu.jpg">
 					<h2>
 						Sonu Patidar
 					</h2>
 					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+						This guy is different from all. He is a careful thinker and good observer. Always interested in details, helpful, hardworker and has a passion for photography.
 					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
+					
 				</div>
 			</div>
 			<h3>

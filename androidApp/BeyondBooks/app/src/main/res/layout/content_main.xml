@@ -39,7 +39,7 @@
         android:inputType="textEmailAddress"
         android:ems="10"
         android:hint="Your iiitvadodara email here"
-        android:id="@+id/editText"
+        android:id="@+id/username"
         style="@android:style/ButtonBar"
         android:background="#43888888" />
 
@@ -52,10 +52,10 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:inputType="textEmailAddress"
+        android:inputType="textPassword"
         android:ems="10"
         android:hint="Your password here"
-        android:id="@+id/editText2"
+        android:id="@+id/password"
         android:layout_gravity="center_horizontal"
         style="@android:style/ButtonBar"
         android:background="#43888888" />
@@ -70,7 +70,7 @@
         android:layout_width="184dp"
         android:layout_height="wrap_content"
         android:text="Log In"
-        android:id="@+id/button"
+        android:id="@+id/login"
         android:layout_gravity="center_horizontal"
         android:background="#3fa9f5"
         android:textColor="#ffffff"

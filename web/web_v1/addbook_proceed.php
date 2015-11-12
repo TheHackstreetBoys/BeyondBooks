@@ -1,7 +1,4 @@
 <!doctype html>
-
-
-
 <html>
 <head>
 <title>
@@ -11,15 +8,9 @@ Add Your Book
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
-
 <link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>		
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
 <link rel="stylesheet" href="css/font-awesome.min.css"/>	
-
-<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="css/bootstrap.min.css"/>
-<link rel="stylesheet" href="css/font-awesome.min.css"/>
-
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -38,7 +29,7 @@ $(document).ready(function(){
 			dropdownMenu.parent().toggleClass("open");
 		}
 	});
-
+});		
 </script>
 </head>
 
@@ -71,22 +62,15 @@ $(document).ready(function(){
 
 	    </div>
 
-
+	 
 
 	    <div class="collapse navbar-collapse" id="navbar-collapse-main">
 
 	      <ul class="nav navbar-nav navbar-right">
-
 		
 		<li><form action="" class="search-form">
                 <div class="form-group has-feedback" id="search">
             		
-
-
-		<li><form action="" class="search-form">
-                <div class="form-group has-feedback" id="search">
-
-
             		<input type="text" class="form-control" name="search" id="search1" placeholder="search">
               		<span class="glyphicon glyphicon-search form-control-feedback"></span>
             	</div>
@@ -116,11 +100,7 @@ $(document).ready(function(){
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
-
 			<h3><br/>
-
-			<h3>
-
 				Add New Book <hr/>
 			</h3>
 			<div class="row">
@@ -128,39 +108,124 @@ $(document).ready(function(){
 					<h3 class="text-center">
 						<b>Add Your Book</b> <hr/>
 					</h3>
-
-					<form class="form-horizontal" role="form" method = "post" action = "addbook_proceed.php">
+					<form class="form-horizontal" role="form" method = "post" action = "addbook_insert.php">
 						<div class="form-group">
 							 
-
-					<form class="form-horizontal" role="form">
-						<div class="form-group">
-
-
 							<label for="inputEmail3" class="col-sm-4 control-label">
 								Enter the ISBN of the Book.
 							</label>
 							<div class="col-sm-4">
+								<input class="form-control" id="inputEmail3" name = 'isbn' value = "<?php echo $_POST['isbn']?>" readonly type="email">
+<center>
+	<?php
 
-								<input class="form-control" id="inputEmail3" type="text" name = 'isbn'>
+
+/* needed description authors title and publisher*/
+$isbn = $_POST['isbn'];
+$url = "https://www.googleapis.com/books/v1/volumes?q=isbn:".$isbn;
+
+//$respose = http_get("http://www.google.com",array("timeout"=>1),$info);
+
+
+// $response = http_get($url, array("timeout"=>1), $info);
+$response = file_get_contents($url);
+$decoded = json_decode($response);
+//var_dump($decoded);
+
+$res = array('author' => $decoded->{'items'}[0]->{'volumeInfo'}->{'authors'},
+        "title" => $decoded->{'items'}[0]->{'volumeInfo'}->{'title'},
+
+        "publisher" => $decoded->{'items'}[0]->{'volumeInfo'}->{'publisher'},
+        "description" => $decoded->{'items'}[0]->{'volumeInfo'}->{'description'});
+
+$author = $res['author'][0];
+$title  = $res['title'];
+$publisher = $res['publisher'];
+$description = $res['description'];
+echo "<br/><br/><br/><br/>";
+echo "<b>Authors:</b>".$author."<br/>";
+echo "<b>Title:</b>".$title."<br/>";
+echo "<b>Publisher:</b>".$publisher."<br/>";
+echo "<b>Description:</b>". substr($description, 0, 200)."....<br/><br/><br/><br/>";
+
+
+
+$dbconn=null;
+global $dbconn;
+$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+
+
+$query1 = pg_query("INSERT INTO books(isbn, publisher, description, title) VALUES ('$isbn', '$publisher', '$description', '$title')");
+
+ if($query1)
+{	
+}
+else
+{
+  echo "Error".pg_last_error();
+}
+
+
+
+
+
+
+$query = pg_query("INSERT INTO author(isbn, author) VALUES ('$isbn', '$author')");
+
+ if($query)
+{	
+  
+}
+else
+{
+  echo "Error".pg_last_error();
+}
+
+?>
+</center>
+
 							</div>
 						</div>
+
+						<div class="form-group">
+							 
+							<label for="inputPassword3" class="col-sm-4 control-label">
+								Enter the Price of Book.
+							</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="inputPassword3" name = 'price' type="text">
+							</div>
+						</div>
+
+						<div class="form-group">
+							 
+							<label for="inputPassword3" class="col-sm-4 control-label">
+								Enter the Age of Book.
+							</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="inputPassword3"  name = 'age' type="text">
+							</div>
+						</div>
+
+						<div class="form-group">
+							 
+							<label for="inputPassword3" class="col-sm-4 control-label">
+								Enter the Description of Book.
+							</label>
+							<div class="col-sm-4">
+								<textarea class="form-control" id="inputPassword3"  name = 'description' type="text"> </textarea>
+							</div>
+						</div>
+
 
 					<center>
 						<div class="form-group">
 							<div class="col-sm-offset-3 col-sm-6">
-								 <br/> 	 <br/>
+								 
 								<button type="submit" class="btn btn-default">
-									Click here to Proceed.
-
+									+ Click Here to Add Book
 								</button>
 							</div>
-						</div>
-						
-
-
-					<center>
-						
 					</center>
 
 						</div>
@@ -182,4 +247,6 @@ $(document).ready(function(){
 <p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
 </div>
 </footer>
+
+
 
