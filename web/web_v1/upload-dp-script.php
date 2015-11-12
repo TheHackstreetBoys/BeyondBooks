@@ -41,6 +41,7 @@ else
     if (move_uploaded_file($_FILES["images"]["tmp_name"],"pictures/".$newfilename))
     {
     	echo "<img src='pictures/".$newfilename."' height=200px width=200px style='margin:0 25%;'> ";
+			header('Location: yourprofile.php');
     }
     else {
         echo 0;

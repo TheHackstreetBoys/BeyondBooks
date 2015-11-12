@@ -41,19 +41,6 @@ $(document).ready(function(){
 
 
 
-<script type="text/javascript" >
-$(document).ready(function() {
-
-            $('#images').on('change', function()      {
-                 $("#profile-pic").html('');
-          $("#profile-pic").html('<img src="icons/loader.gif" alt="Uploading...." style="margin:0 25%;"/>');
-      $("#imageform").ajaxForm({
-            target: '#profile-pic'
-    }).submit();
-
-      });
-        });
-</script>
 
 
 
@@ -181,8 +168,9 @@ $(document).ready(function() {
 	</div>
 </div>
 					<form id="imageform" method="post" enctype="multipart/form-data" action='upload-dp-script.php' style="left:5%;">
-                    Upload your image <input type="file" name="images" id="images" />
-										<input type="submit">
+										<span class="btn btn-default btn-file">
+										Browse for your avatar <input type="file" name="images" id="images" /></span>
+										<button type="submit"class="btn btn-primary">Change my Avatar</button>
                   </form>
 				</div>
 
@@ -201,7 +189,7 @@ $(document).ready(function() {
 								 </label>
 								  <div class="col-sm-7">
 								 	<?php
-								 		echo '<input type="text" class="form-control" id="fname" placholder="'.$row['f_name'].'"/>';
+								 		echo '<input type="text" class="form-control" id="fname" placeholder="'.$row['f_name'].'"/>';
 								 		?>
 								 	</div>
 								 <label for="lname" class="col-sm-3 control-label">
@@ -209,7 +197,7 @@ $(document).ready(function() {
 								 </label>
 								 	<div class="col-sm-7">
 								 	<?php
-								 		echo '<input type="text" class="form-control" id="lname" placholder="'.$row['l_name'].'"/>';
+								 		echo '<input type="text" class="form-control" id="lname" placeholder="'.$row['l_name'].'"/>';
 								 		?>
 								 	</div>
 							<label for="inputEmail3" class="col-sm-3 control-label">
