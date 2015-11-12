@@ -2,23 +2,14 @@
 <?php
 include_once 'db_conn.php';
 session_start();
-if (isset($_SESSION['user_id']))
+if (isset($_SESSION["user_id"]))
 {
-	$user_id=$_SESSION['user_id'];
-	$result1=mysql_query("SELECT f_name from user_profile where user_id='$user_id'");
-	$result2=mysql_query("SELECT * from user_profile where user_id='$user_id' and isfaculty='true'");
-	$num1=mysql_num_rows($result1);
-	$num2=mysql_num_rows($result2);
-	if($num1==0)
+	$user_id=$_SESSION["user_id"];
+	$result1=pg_query("SELECT f_name from user_profile where user_id='$user_id'");
+	$num1=pg_num_rows($result1);
+	if($num1!=0)
 	{
-		if($num2==1)
-		{
 			header('Location: homepage.php');
-		}
-	}
-	else
-	{
-		header('Location: homepage_teacher.php');
 	}
 }
 ?>
@@ -39,11 +30,11 @@ Index Page
 
 <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
-		
-		
+
+
 		<link rel="stylesheet" href="css/bootstrap.min.css"/>
 		<link rel="stylesheet" href="css/font-awesome.min.css"/>
-	
+
 		<script src="js/modernizr-2.6.2.min.js"></script>
 		<script src="js/jquery-1.10.2.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
@@ -52,32 +43,28 @@ Index Page
 
 function checkstudent()
 		{
-			var user=$('#username').val();
+			var email=$('#email').val();
 			var password=$('#password').val();
 			jQuery.ajax({
 				type: "POST",
 				url: "login-script.php",
-				data: "username="+user+"&password="+password,
+				data: "email="+email+"&password="+password,
 				cache: false,
 				success: function(response)
 				{
 					if(response==1)
 					{
-						document.location.href="homepage_student.php";
-					}
-					else if(response==2)
-					{
-						document.location.href="homepage_teacher.php";
+						document.location.href="homepage.php";
 					}
 					else if(response==3)
 					{
-						$("#username").val("");
+						$("#email").val("");
 						$("#password").val("");
-						alert("It seems like you are invisible! Please sign up first!");	
+						alert("It seems like you are invisible! Please sign up first!");
 					}
 					else
 					{
-						$("#username").val("");
+						$("#email").val("");
 						$("#password").val("");
 						alert("Whoops! Seems like wrong password!");
 					}
@@ -116,7 +103,7 @@ function checkstudent()
 
 	    </div>
 
-	 
+
 
 	    <div class="collapse navbar-collapse" id="navbar-collapse-main">
 
@@ -127,7 +114,7 @@ function checkstudent()
 	        <li><a href="#about">About</a></li>
 
 	        <li><a href="about_us.html">Our Team</a><li>
-		
+
 		<li> <a data-toggle="modal" href="#login-modal">Login<span class="glyphicon glyphicon-log-in"></span></a></li>
 	      </ul>
 
@@ -160,16 +147,16 @@ function checkstudent()
 	        	<div class='modal-body-center'>
 	        	 	<div class="form-group">
 					<form action="login-script.php" method="POST">
-				      	<input type="username" id="username" name="username" placeholder="Enter your ID"  class="form-control login-field" required="required">
+				      	<input type="email" id="email" name="email" placeholder="Enter Email-ID"  class="form-control login-field" required="required">
 				      	<i class="fa fa-user login-field-icon"></i>
 		  		</div>
 				<div class="form-group">
-		            	  <input type="password" id="password" name="password" class="form-control login-field" required="required">
+		            	  <input type="password" id="password" name="password" placeholder="Enter Password" class="form-control login-field" required="required">
 		              		<i class="fa fa-lock login-field-icon"></i>
 
-		
+
 		        	<button type="button" class="btn btn-success modal-login-btn" onclick="checkstudent()">Sign in</button>
-		            	<a href="php/forgot-password.php" class="login-link text-center">Lost your password</a>
+		            	<a href="forgot-password.php" class="login-link text-center">Lost your password</a>
 	        		</form>
 
 				</div>
@@ -245,5 +232,3 @@ function checkstudent()
 
 </body>
 </html>
-
-

@@ -1,4 +1,12 @@
 <!doctype html>
+<?php
+include_once 'db_conn.php';
+session_start();
+if(!isset($_SESSION["user_id"]))
+{
+	header('Location: index.php');
+}
+?>
 <html>
 <head>
 <title>
@@ -8,9 +16,9 @@ Discussion Forum
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>		
+<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
-<link rel="stylesheet" href="css/font-awesome.min.css"/>	
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -25,7 +33,7 @@ $(document).ready(function(){
 			dropdownMenu.parent().toggleClass("open");
 		}
 	});
-});		
+});
 </script>
 </head>
 
@@ -58,15 +66,15 @@ $(document).ready(function(){
 
 	    </div>
 
-	 
+
 
 	    <div class="collapse navbar-collapse" id="navbar-collapse-main">
 
 	      <ul class="nav navbar-nav navbar-right">
-		
+
 		<li><form action="" class="search-form">
                 <div class="form-group has-feedback" id="search">
-            		
+
             		<input type="text" class="form-control" name="search" id="search1" placeholder="search">
               		<span class="glyphicon glyphicon-search form-control-feedback"></span>
             	</div>
@@ -103,8 +111,8 @@ $(document).ready(function(){
 				<div class="col-md-8">
 					<div class="row">
 						<div class="col-md-12">
-							 
-						
+
+
 							<?php
 $dbconn=null;
 global $dbconn;
@@ -121,7 +129,7 @@ if(!pg_num_rows($result)) {
 
 	/*$result1 = mysql_safe_query('SELECT username FROM comments ');
 	$row1 = mysql_fetch_assoc($result1);
-	
+
 	foreach ($row1 as $date) {
     echo $date['username'];
 }*/
@@ -129,14 +137,14 @@ if(!pg_num_rows($result)) {
 
 $row = pg_fetch_array($result);
 	session_start();
-	
+
 $str = $_GET['id'] ;
 $v  = strpos("$str"," ");
 $c = substr("$str",$v+1);
 
     $username   = $_SESSION['current'];
-    $mycourse = $_SESSION['mycourse']; 
-    
+    $mycourse = $_SESSION['mycourse'];
+
     $user = $row['tname'];
 $result1 = pg_query("SELECT * FROM user_profile WHERE user_id = '$user'" );
 
@@ -165,11 +173,11 @@ echo '<div class="row">
 </div>';
 while($row = pg_fetch_array($result)) {
 	echo '<li id="post-'.$row['id'].'">';
-	echo (empty($row['website'])?'<strong>'.$row['name'].'</strong>':'<a style="color: blue" href="#" target="_blank">'.$row['name'].'</a>');		
+	echo (empty($row['website'])?'<strong>'.$row['name'].'</strong>':'<a style="color: blue" href="#" target="_blank">'.$row['name'].'</a>');
 	echo '<br/><small>'.date('j-M-Y g:ia', $row['date']).'</small><br/>';
 	echo nl2br($row['content']);
 
-		
+
 		$result2 = pg_query('SELECT COUNT(plike) AS likes FROM commentss WHERE rollno = %s && id = %s', $row['rollno'], $row['id']);
 
     if(!pg_num_rows($result2))
@@ -180,8 +188,8 @@ while($row = pg_fetch_array($result)) {
 	echo '<br/> <a href = "please.php?id='.$row['id'].'"> <img src = "like.png" title = "LIKE" height = "20px">  </a>' . $row2['likes'];
 	echo '</li><br/>';
 		echo '</li><br/>';
-		
-	
+
+
 }
 echo '</ul>';
 
@@ -191,7 +199,7 @@ echo <<<HTML
 
 <div class="row">
 						<div class="col-md-12">
-							
+
 							<div class="row">
 									<div class="col-md-12">
 									<button type="button" class="btn btn-success active btn-block">
@@ -204,31 +212,31 @@ echo <<<HTML
 							</h3>
 							<form class="form-horizontal" role="form" method="post" action="forumcommentadd.php?id={$_GET['id']}">
 								<div class="form-group">
-									 
+
 									<label for="inputEmail3" class="col-sm-2 control-label">
-								
+
 									</label>
 									<div class="col-sm-10">
-										
+
 								<textarea class="form-control" name = "content" rows = "4" id="inputEmail3" type="text"> </textarea>
 
 									</div>
 								</div>
-								
-							
+
+
 								<div class="form-group">
 									<div class="col-sm-offset-2 col-sm-10">
-										 
+
 										<button type="submit" class="btn btn-default">
 											Post Comment
 										</button>
 									</div>
 								</div>
 							</form>
-						</div>		
+						</div>
 					</div>
 				</div>
-	
+
 </form>
 HTML;
 
@@ -236,15 +244,15 @@ HTML;
 						</div>
 					</div>
 <hr style="height:3px; border:none; color:rgb(60,60,60); background-color:rgb(60,60,60);">
-					
+
 				<div class="col-md-4">
 					<h3>
 						Recently Created Discussions <hr style="height:1px; border:none; color:rgb(60,60,60); background-color:rgb(60,90,180);">
 					</h3>
-					
+
 
 					<?php
-		
+
 $dbconn=null;
 global $dbconn;
 $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
@@ -253,17 +261,17 @@ $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=pas
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No forums is Created Yet.</p>';
-						     } 
-			else {	
-			
+						     }
+			else {
+
 					while($row = pg_fetch_array($result))
 				{
 					echo '<h2>'.$row['title'].'</h2><br/>';
 					$body = substr($row['body'], 0, 10);
-					echo nl2br($body).'...<br/>';	
+					echo nl2br($body).'...<br/>';
 					echo '<a href="forumview.php?id='.$row['id'].'">Read More</a> | ';
-					echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';	
-					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';	
+					echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';
+					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 			     }
 					}
 
@@ -283,9 +291,6 @@ $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=pas
 <hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys 
+<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys
 </div>
 </footer>
-
-
-
