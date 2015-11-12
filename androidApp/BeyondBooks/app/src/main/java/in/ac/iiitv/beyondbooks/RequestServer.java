@@ -325,6 +325,22 @@ public class RequestServer {
                 uploads_list.add(uploaded_book);
             }
             cur_user.setUploads(uploads_list);
+            JSONArray reviewed = activities.getJSONArray("reviewed");
+            ArrayList<Long> reviewed_list = new ArrayList<Long>();
+            for(int i=0;i<reviewed.length();i++){
+                JSONObject cur_book = reviewed.getJSONObject(i);
+                Long reviewed_book = Long.parseLong(cur_book.getString("isbn"));
+                reviewed_list.add(reviewed_book);
+            }
+            cur_user.setReviewed(reviewed_list);
+            JSONArray enquired = activities.getJSONArray("enquired");
+            ArrayList<Long> enquired_list = new ArrayList<Long>();
+            for(int i=0;i<enquired.length();i++){
+                JSONObject cur_book = enquired.getJSONObject(i);
+                Long enquired_book = Long.parseLong(cur_book.getString("isbn"));
+                enquired_list.add(enquired_book);
+            }
+            cur_user.setEnquired(enquired_list);
         }catch(JSONException e){
             e.printStackTrace();
         }catch(InterruptedException e){
