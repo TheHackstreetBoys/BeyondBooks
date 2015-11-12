@@ -33,7 +33,7 @@ public class RequestServer {
     private String address;
     private String output;
     RequestServer(){
-        ip = "10.100.91.55:80";
+        ip = "10.100.91.55/beyondbooks";
     }
 
     public Boolean authenticate(Integer id, String password){
@@ -228,9 +228,11 @@ public class RequestServer {
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 String line;
+
                 while((line = reader.readLine())!= null){
                     result.append(line);
                 }
+                System.out.println(result);
             }catch (Exception e){
                 e.printStackTrace();
             }

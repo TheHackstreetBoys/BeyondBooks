@@ -108,8 +108,6 @@ create table review(
 create table pbase(
        prodid serial,
        ts timestamp,
-       description text,
-       price decimal,
        sellerid varchar,
        primary key (prodid),
        foreign key (sellerid) references user_profile(user_id)
@@ -143,6 +141,7 @@ create table single_sell(
        isbn varchar(13),
        age int,
        price decimal,
+       description text,
        primary key (prodid,isbn),
        foreign key (prodid) references pbase(prodid)
 );
@@ -154,6 +153,7 @@ create table combo_sell(
        age int,
        quantity int,
        price decimal,
+       description text,
        primary key (prodid,isbn),
        foreign key (prodid) references pbase(prodid)
 );
