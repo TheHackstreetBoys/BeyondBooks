@@ -267,6 +267,26 @@ public class RequestServer {
         return null;
     }
 
+    public void get_activities(UserData cur_user){
+        address = "http://"+ip+"/andy_get_activities.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("user_id", cur_user.getId().toString()));
+        new Setup().execute(params);
+        try {
+            ArrayList<Long> uploads_list = new ArrayList<Long>();
+            JSONObject activities = new JSONObject(output);
+            JSONArray uploads = activities.getJSONArray("uploads");
+            for(int i=0;i<uploads.length();i++){
+                JSONObject cur_book_obj = uploads.getJSONObject(i);
+                Long uploaded_book = Long.parseLong(cur_book_obj.getString("isbn"));
+                uploads_list.add(uploaded_book);
+            }
+            cur_user.setUploads(uploads_list);
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+    }
+
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, String, ArrayList<Pair<String, String>>> {
         HttpURLConnection urlConnection;
         @Override
