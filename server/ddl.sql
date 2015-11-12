@@ -67,9 +67,11 @@ create table forum_replies(
 create table books(
        isbn varchar(13),
        publisher varchar,
-       
        description text,
+
+       ts timestamp,
        title varchar,
+       image_link varchar,
        primary key (isbn)
 );
 
