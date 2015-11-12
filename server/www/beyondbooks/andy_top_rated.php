@@ -10,7 +10,7 @@ $result=pg_query($query);
 
 
 $ret=array();
-while ($row = pg_fetch_row($result)) {
+while ($row = pg_fetch_array($result)) {
     append($ret,array("isbn"=>$row['isbn'], "ratings"=>$row['ratings'], "book_name"=> $row['title'], "image_link"=>$row['image_link']));
 }
 

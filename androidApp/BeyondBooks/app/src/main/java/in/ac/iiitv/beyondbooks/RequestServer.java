@@ -32,8 +32,13 @@ public class RequestServer {
     private String ip;
     private String address;
     private String output;
+
+    private ArrayList<NewlyAdded> newly_added_list;
+    private ArrayList<NewlyAdded> top_rated_list;
     RequestServer(){
-        ip = "10.100.91.55/beyondbooks";
+        ip = "10.100.91.55:80";
+        newly_added_list = new ArrayList<NewlyAdded>();
+        top_rated_list = new ArrayList<NewlyAdded>();
     }
 
     public Boolean authenticate(Integer id, String password){
@@ -83,8 +88,8 @@ public class RequestServer {
                 String image_link = cur_book_obj.getString("image_link");
                 String book_name = cur_book_obj.getString("book_name");
                 Float ratings = Float.parseFloat(cur_book_obj.getString("ratings"));
-                Long isbn = Long.parseLong(cur_book_obj.getString("isbn"));
-                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
+                Integer id = Integer.parseInt(cur_book_obj.getString("id"));
+                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, id);
                 review_list.add(temp);
             }
             for(int i=0;i<buy_sell.length();i++){
@@ -92,8 +97,8 @@ public class RequestServer {
                 String image_link = cur_book_obj.getString("image_link");
                 String book_name = cur_book_obj.getString("book_name");
                 Float ratings = Float.parseFloat(cur_book_obj.getString("ratings"));
-                Long isbn = Long.parseLong(cur_book_obj.getString("isbn"));
-                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
+                Integer id = Integer.parseInt(cur_book_obj.getString("id"));
+                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, id);
                 buy_sell_list.add(temp);
             }
             for(int i=0;i<forum.length();i++){
@@ -101,8 +106,7 @@ public class RequestServer {
                 String title = cur_forum_obj.getString("title");
                 String author = cur_forum_obj.getString("author");
                 Integer author_id = Integer.parseInt(cur_forum_obj.getString("author_id"));
-                Integer q_id = Integer.parseInt(cur_forum_obj.getString("q_id"));
-                ForumOverview temp = new ForumOverview(title, author, author_id, q_id);
+                ForumOverview temp = new ForumOverview(title, author, author_id);
                 forum_list.add(temp);
             }
             SearchOutputReturn temp = new SearchOutputReturn(review_list, buy_sell_list, forum_list);
@@ -126,10 +130,11 @@ public class RequestServer {
                 String image_link = cur_book_obj.getString("image_link");
                 String book_name = cur_book_obj.getString("book_name");
                 Float ratings = Float.parseFloat(cur_book_obj.getString("ratings"));
-                Long isbn = Long.parseLong(cur_book_obj.getString("isbn"));
-                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
+                Integer id = Integer.parseInt(cur_book_obj.getString("id"));
+                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, id);
                 newly_added_list.add(temp);
             }
+            this.newly_added_list = newly_added_list;
             return newly_added_list;
         }
         catch (JSONException e){
@@ -137,7 +142,6 @@ public class RequestServer {
         }
         return null;
     }
-
 
     public ArrayList<NewlyAdded> top_rated(){
         address = "http://"+ip+"/andy_top_rated.php";
@@ -152,10 +156,11 @@ public class RequestServer {
                 String image_link = cur_book_obj.getString("image_link");
                 String book_name = cur_book_obj.getString("book_name");
                 Float ratings = Float.parseFloat(cur_book_obj.getString("ratings"));
-                Long isbn = Long.parseLong(cur_book_obj.getString("isbn"));
-                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
+                Integer id = Integer.parseInt(cur_book_obj.getString("id"));
+                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, id);
                 top_rated_list.add(temp);
             }
+            this.top_rated_list = top_rated_list;
             return top_rated_list;
         }
         catch (JSONException e){
@@ -164,48 +169,6 @@ public class RequestServer {
         return null;
     }
 
-    public BookDetails book_page(Long isbn){
-        address = "http://"+ip+"/andy_book_page.php";
-        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
-        params.add(new Pair<String, String>("isbn", isbn.toString()));
-        new Setup().execute(params);
-        try {
-            JSONObject book_page_json = new JSONObject(output);
-            Float public_ratings = Float.parseFloat(book_page_json.getString("public_ratings"));
-            Float faculty_ratings = Float.parseFloat(book_page_json.getString("faculty_ratings"));
-            Float student_ratigns = Float.parseFloat(book_page_json.getString("student_ratings"));
-            String about_book = book_page_json.getString("about_book");
-            Boolean bookshelf = Boolean.parseBoolean(book_page_json.getString("bookshelf"));
-            JSONArray sellers_list = book_page_json.getJSONArray("sellers_list");
-            ArrayList<Integer> sellers_id = new ArrayList<Integer>();
-            for (int i=0;i<sellers_list.length();i++) {
-                JSONObject temp = sellers_list.getJSONObject(i);
-                sellers_id.add(Integer.parseInt(temp.getString("id")));
-            }
-            BookDetails temp = new BookDetails(public_ratings, faculty_ratings, student_ratigns, about_book, bookshelf, isbn, sellers_id );
-            return temp;
-        }catch(JSONException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public Boolean to_shelf(Integer id, Long isbn, Boolean add){
-        address = "http://"+ip+"/andy_add_to_shelf.php";
-        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
-        params.add(new Pair<String, String>("user_id", id.toString()));
-        params.add(new Pair<String, String>("isbn", isbn.toString()));
-        params.add(new Pair<String, String>("add", add.toString()));
-        new Setup().execute(params);
-        try {
-            JSONObject book_page_json = new JSONObject(output);
-            Boolean done_query = Boolean.parseBoolean(book_page_json.getString("done_query"));
-            return done_query;
-        }catch(JSONException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, String, ArrayList<Pair<String, String>>> {
         HttpURLConnection urlConnection;
@@ -228,11 +191,9 @@ public class RequestServer {
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 String line;
-
                 while((line = reader.readLine())!= null){
                     result.append(line);
                 }
-                System.out.println(result);
             }catch (Exception e){
                 e.printStackTrace();
             }
