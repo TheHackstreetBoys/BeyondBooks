@@ -1,18 +1,38 @@
 <?php
-include 'mysql.php';
+$dbconn=null;
+global $dbconn;
+$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+
+echo "Ji";
 session_start();
 //$username = $_SESSION['current'];
-$username = "Kushal";
-
-
-
+$user = "Kushal";
+$id = $_GET['id'];
+$name = "KJ";
+$content = $_POST['content'];
+$time = time();
   //$result = mysql_safe_query('SELECT * FROM teachers WHERE username = %s ', $username);
    // $row = mysql_fetch_assoc($result);
-    $_POST['name']    = "Kj";
-    $_POST['email']   = "k@gmail.com";
-    $_POST['website'] = "student";
 
-mysql_safe_query('INSERT INTO comments (post_id, rollno, name, email,website,content,date) VALUES (%s,%s,%s,%s,%s,%s,%s)', 
-	$_GET['id'], $username, $_POST['name'], $_POST['email'], $_POST['website'], $_POST['content'], time());
-mysql_safe_query('UPDATE posts SET num_comments=num_comments+1 WHERE id=%s LIMIT 1', $_GET['id']);
-redirect('forumview.php?id='.$_GET['id'].'#post-'.mysql_insert_id());
+ $query = pg_query("INSERT INTO reply (post_id, rollno, name, content, date) VALUES ('$id', '$user', '$name' , '$content', '$time')" );
+ if($query)
+{	
+  $query1 = pg_query("UPDATE posts SET num_comments = num_comments+1 WHERE id= '$id'");
+ if($query1)
+{	
+  header("Location: forumview.php?id= $id ");
+
+}
+
+}
+
+else
+{
+  echo "Error".pg_last_error();
+}
+
+
+
+
+
+?>

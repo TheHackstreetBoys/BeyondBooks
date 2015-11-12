@@ -13,17 +13,15 @@ public class BookDetails {
     private String about_book;
     private Boolean bookshelf;
     private Long isbn;
-    private Integer id;
     private ArrayList<Integer> sellers;
 
-    BookDetails(Float public_ratings, Float faculty_ratings, Float student_ratings, String about_book, Boolean bookshelf, Long isbn, Integer id, ArrayList<Integer> sellers){
+    BookDetails(Float public_ratings, Float faculty_ratings, Float student_ratings, String about_book, Boolean bookshelf, Long isbn, ArrayList<Integer> sellers){
         this.public_ratings = public_ratings;
         this.faculty_ratings = faculty_ratings;
         this.student_ratings = student_ratings;
         this.about_book = about_book;
         this.bookshelf = bookshelf;
         this.isbn = isbn;
-        this.id = id;
         this.sellers = sellers;
     }
 
@@ -73,14 +71,6 @@ public class BookDetails {
 
     public void setIsbn(Long isbn) {
         this.isbn = isbn;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public ArrayList<Integer> getSellers() {

@@ -1,11 +1,16 @@
 <?php
-include 'mysql.php';
+$dbconn=null;
+global $dbconn;
+$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+
 
 //session_start();
   //  $username   = $_SESSION['current'];
     //$mycourse = $_SESSION['mycourse']; 
-    
-mysql_safe_query('DELETE FROM posts WHERE id=%s LIMIT 1', $_GET['id']);
-mysql_safe_query('DELETE FROM comments WHERE post_id=%s', $_GET['id']);
-redirect('forumWelcome.php');
 
+    $id = $_GET['id'];
+pg_query("DELETE FROM posts WHERE id= '$id' " );
+pg_query("DELETE FROM reply WHERE post_id= '$id'" );
+header("Location: forumWelcome.php");
+
+?>

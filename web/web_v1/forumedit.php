@@ -100,23 +100,32 @@ $(document).ready(function(){
 <hr>
 
 <?php
-include 'mysql.php';
+$dbconn=null;
+global $dbconn;
+$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
 if(!empty($_POST)) {
-	if(mysql_safe_query('UPDATE posts SET course=%s, title=%s, body=%s, date=%s WHERE id=%s',$_POST['course'], $_POST['title'], $_POST['body'], time(), $_GET['id']))
-		redirect('forumview.php?id='.$_GET['id']);
+$course = $_POST['course'];
+$title = $_POST['title'];
+$body = $_POST['body'];
+$date = time();
+$id = $_GET['id'];
+
+	if(pg_query("UPDATE posts SET course= '$course', title= '$title', body= '$body', date='$date' WHERE id='$id'" ))
+
+       header("Location: forumview.php?id=$id");
 	else
-		echo mysql_error();
+		echo pg_last_error();
 }
+$id1 = $_GET['id'];
+$result = pg_query("SELECT * FROM posts WHERE id='$id1'" );
 
-$result = mysql_safe_query('SELECT * FROM posts WHERE id=%s', $_GET['id']);
-
-if(!mysql_num_rows($result)) {
+if(!pg_num_rows($result)) {
 	echo 'Post #'.$_GET['id'].' not found';
 	exit;
 }
 
-$row = mysql_fetch_assoc($result);
+$row = pg_fetch_array($result);
 
 echo <<<HTML
 
