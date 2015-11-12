@@ -112,6 +112,7 @@ public class RequestServer {
         }
         return null;
     }
+    //go push
 
     public ArrayList<NewlyAdded> newly_added(){
         address = "http://"+ip+"/andy_newly_added.php";
