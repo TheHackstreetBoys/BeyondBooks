@@ -1,12 +1,5 @@
 <!doctype html>
-<?php
-include_once 'db_conn.php';
-session_start();
-if(!isset($_SESSION["user_id"]))
-{
-	header('Location: index.php');
-}
-?>
+
 <html>
 <head>
 <title>
@@ -23,7 +16,9 @@ Main Page of Book
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
-
+<link href='css/rating.css' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/rating.js"></script>
 
 
 
@@ -107,10 +102,45 @@ $(document).ready(function(){
 	<div class="row">
 		<div class="col-md-6">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-6"><br/>
+	<?php
+session_start();					
+			$dbconn=null;
+			global $dbconn;
+			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+				
+			$isbn = $_POST['isbn'];
+			$_SESSION['isbn'] = $isbn;
+			
+	$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn WHERE books.isbn = '$isbn'");
+
+
+
+			if(!pg_num_rows($result)) {
+							echo '<p>No Book is available.</p>';
+						     } 
+			else {	
+			
+					while($row = pg_fetch_array($result))
+				{
+					echo '<b>'.$row['title'].'</b></br>';
+					echo "<b> By :".$row['author']."</b>";
+	
+			     }
+					}
+
+					?>
+</br></br>
 					<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/">
-					<button type="button" class="btn btn-success">
-						+ ADD to wishlist
+
+
+					<br/><br/>
+<div id="rating_panel" data-pollid="1" data-rated="0">
+
+					<img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /><div id="starloader"> </div>
+				
+				<br/><br/></div><button type="button" class="btn btn-success">
+						 + ADD to wishlist
 					</button>
 				</div>
 				<div class="col-md-6">
@@ -121,8 +151,53 @@ $(document).ready(function(){
 			<h3>
 				Rating and Reviews
 			</h3>
+	<?php
+			$dbconn=null;
+			global $dbconn;
+			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+				
+
+			
+	$result = pg_query("SELECT COUNT(uid) AS total FROM rating WHERE isbn = '$isbn'");	
+	$result1 = pg_query("SELECT sum(rating) AS totalrating FROM rating WHERE isbn = '$isbn'");
+	$row = pg_fetch_array($result);
+	$row1 = pg_fetch_array($result1);
+					
+	echo "The total rating of the book<br/><br/>".$row1['totalrating']/$row['total'].""."/5.0";
+				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
+					?>
+
+
+	<?php
+			$dbconn=null;
+			global $dbconn;
+			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+				
+	$result = pg_query("SELECT * FROM review LIMIT 3");
+
+			if(!pg_num_rows($result)) {
+							echo '<p>No forums is Created Yet.</p>';
+						     }
+			else {
+
+					echo "<br/><br/>Review:<br/><br/>";
+
+					while($row = pg_fetch_array($result))
+				{
+					echo '<b>'.$row['uid'].'</b><br/>';
+					$body = $row['review'];
+					echo "&nbsp;&nbsp;&nbsp;".nl2br($body).'...<br/><br/>';
+				
+			     }
+					}
+
+				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
+					?>
+
+
+
 			<p>
-				Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
+				
 			</p>
 		</div>
 	</div>
@@ -132,7 +207,41 @@ $(document).ready(function(){
 				About the Book
 			</h3>
 			<p>
-				Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
+				<?php
+session_start();					
+				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
+			$dbconn=null;
+			global $dbconn;
+			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+				
+			$isbn = $_POST['isbn'];
+			$_SESSION['isbn'] = $isbn;
+			
+	$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn WHERE books.isbn = '$isbn'");
+
+
+
+			if(!pg_num_rows($result)) {
+							echo '<p>No Book is available.</p>';
+						     } 
+			else {	
+			
+					while($row = pg_fetch_array($result))
+				{
+					echo '<b> Title :</b> '.$row['title'].'<br/>';
+					echo "<b> Authors :</b><em>".$row['author']."</em><br/>";
+				        echo '<b> Publication: </b><em>'.$row['publisher'].'</em><br/>';	
+					echo '<b> Decription: </b><em>'.$row['description'].'</em><br/>';
+
+			
+
+			
+					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';	
+			     }
+					}
+
+					?>
+					
 			</p>
 		</div>
 		<div class="col-md-6">
@@ -146,10 +255,6 @@ $(document).ready(function(){
 	</div>
 </div>
 
-
-<p>
-Rest Content
-</p>
 
 <footer>
 <hr />
