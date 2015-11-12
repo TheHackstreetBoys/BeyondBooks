@@ -24,6 +24,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 /**
  * Created by anjul on 11/11/15.
  */
@@ -41,12 +43,16 @@ public class RequestServer {
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("id", id.toString()));
         params.add(new Pair<String, String>("password", password));
-        new Setup().execute(params);
         try {
+            new Setup().execute(params).get();
             System.out.println("fucker 2"+output);
             JSONObject is_authenticated_json = new JSONObject(output);
             return Boolean.parseBoolean(is_authenticated_json.getString("result"));
         }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
             e.printStackTrace();
         }
         return false;
@@ -289,7 +295,7 @@ public class RequestServer {
         }
     }
 
-    private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, String, String> {
+    private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, Void, String> {
         HttpURLConnection urlConnection;
         @Override
         protected String doInBackground(ArrayList<Pair<String, String>>... args){
@@ -319,11 +325,8 @@ public class RequestServer {
             finally {
                 urlConnection.disconnect();
             }
-            System.out.println("fucker 1: "+result.toString());
+            return_method(result.toString());
             return result.toString();
-        }
-        protected void onPostExecute(String result){
-            return_method(result);
         }
     }
     private void return_method(String return_value){
