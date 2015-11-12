@@ -7,12 +7,12 @@ public class NewlyAdded {
     private String image_link;
     private String book_name;
     private Float ratings;
-    private Integer id;
-    NewlyAdded(String image_link, String book_name, Float ratings, Integer id){
+    private Long isbn;
+    NewlyAdded(String image_link, String book_name, Float ratings, Long isbn){
         this.image_link = image_link;
         this.book_name = book_name;
         this.ratings = ratings;
-        this.id = id;
+        this.isbn = isbn;
     }
 
     public void setBook_name(String book_name){
@@ -30,11 +30,11 @@ public class NewlyAdded {
     public void setRatings(Float ratings){
         this.ratings = ratings;
     }
-    public void setId(Integer id){
-        this.id = id;
+    public void setId(Long isbn){
+        this.isbn = isbn;
     }
-    public Integer getId(){
-        return id;
+    public Long getId(){
+        return isbn;
     }
     public Float getRatings(){
         return ratings;
