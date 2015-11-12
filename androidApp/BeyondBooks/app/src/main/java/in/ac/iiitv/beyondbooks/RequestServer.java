@@ -57,7 +57,7 @@ public class RequestServer {
         }
         return false;
     }
-
+//push it
     public Boolean authenticate_forget(Integer id){
         address = "http://"+ip+"/andy_authenticate_forget.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
