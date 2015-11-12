@@ -349,7 +349,7 @@ public class RequestServer {
             e.printStackTrace();
         }
     }
-
+//push it
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, Void, String> {
         HttpURLConnection urlConnection;
         @Override
