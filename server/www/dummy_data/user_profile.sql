@@ -1,23 +1,7 @@
-----------------------------------------------------------------------------------------------------------------------------------
--- For the User profile
--- create table user_profile (  
---	f_name varchar(300),
---	l_name varchar(300),
---	user_id varchar(30),
---	password varchar(900),
---	email_id varchar(50),
---	image_location varchar(50),
---	isFaculty boolean,(y-yes/n-no)
---	phone_number varchar(10),
---	last_loggedin timestamp,
---	primary key (user_id)
---);
-----------------------------------------------------------------------------------------------------------------------------------
-set search_path to coursera;
-----------------------------------------------------------------------------------------------------------------------------------
+﻿------------------------------------------------------------------------------------------------
 
 --faculty
-INSERT INTO user_profile VALUES ('asim','banerjee','f1','password','asim_banerjee@daiict.ac.in','','y','079-30510554','2015-11-06 04:05:06');
+INSERT INTO user_profile VALUES ('asim','banerjee','f1','password','asim_banerjee@daiict.ac.in','','y','7930510554','2015-11-06 04:05:06');
 INSERT INTO user_profile VALUES ('nandini','banerjee','f2','password','nandini_banerjee@daiict.ac.in','','y','','2015-11-06 04:05:06');
 
 
