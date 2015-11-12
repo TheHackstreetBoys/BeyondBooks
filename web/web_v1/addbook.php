@@ -1,15 +1,7 @@
 <!doctype html>
-<<<<<<< HEAD
-=======
-<?php
-include_once 'db_conn.php';
-session_start();
-if(!isset($_SESSION["user_id"]))
-{
-	header('Location: index.php');
-}
-?>
->>>>>>> 78219188264b149b1544eb65584e58e794a89f09
+
+
+
 <html>
 <head>
 <title>
@@ -19,15 +11,15 @@ Add Your Book
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
-<<<<<<< HEAD
+
 <link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>		
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
 <link rel="stylesheet" href="css/font-awesome.min.css"/>	
-=======
+
 <link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
 <link rel="stylesheet" href="css/font-awesome.min.css"/>
->>>>>>> 78219188264b149b1544eb65584e58e794a89f09
+
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -46,11 +38,7 @@ $(document).ready(function(){
 			dropdownMenu.parent().toggleClass("open");
 		}
 	});
-<<<<<<< HEAD
-});		
-=======
-});
->>>>>>> 78219188264b149b1544eb65584e58e794a89f09
+
 </script>
 </head>
 
@@ -83,26 +71,22 @@ $(document).ready(function(){
 
 	    </div>
 
-<<<<<<< HEAD
-	 
-=======
 
->>>>>>> 78219188264b149b1544eb65584e58e794a89f09
 
 	    <div class="collapse navbar-collapse" id="navbar-collapse-main">
 
 	      <ul class="nav navbar-nav navbar-right">
-<<<<<<< HEAD
+
 		
 		<li><form action="" class="search-form">
                 <div class="form-group has-feedback" id="search">
             		
-=======
+
 
 		<li><form action="" class="search-form">
                 <div class="form-group has-feedback" id="search">
 
->>>>>>> 78219188264b149b1544eb65584e58e794a89f09
+
             		<input type="text" class="form-control" name="search" id="search1" placeholder="search">
               		<span class="glyphicon glyphicon-search form-control-feedback"></span>
             	</div>
@@ -132,11 +116,11 @@ $(document).ready(function(){
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
-<<<<<<< HEAD
+
 			<h3><br/>
-=======
+
 			<h3>
->>>>>>> 78219188264b149b1544eb65584e58e794a89f09
+
 				Add New Book <hr/>
 			</h3>
 			<div class="row">
@@ -144,20 +128,20 @@ $(document).ready(function(){
 					<h3 class="text-center">
 						<b>Add Your Book</b> <hr/>
 					</h3>
-<<<<<<< HEAD
+
 					<form class="form-horizontal" role="form" method = "post" action = "addbook_proceed.php">
 						<div class="form-group">
 							 
-=======
+
 					<form class="form-horizontal" role="form">
 						<div class="form-group">
 
->>>>>>> 78219188264b149b1544eb65584e58e794a89f09
+
 							<label for="inputEmail3" class="col-sm-4 control-label">
 								Enter the ISBN of the Book.
 							</label>
 							<div class="col-sm-4">
-<<<<<<< HEAD
+
 								<input class="form-control" id="inputEmail3" type="text" name = 'isbn'>
 							</div>
 						</div>
@@ -168,40 +152,15 @@ $(document).ready(function(){
 								 <br/> 	 <br/>
 								<button type="submit" class="btn btn-default">
 									Click here to Proceed.
-=======
-								<input class="form-control" id="inputEmail3" type="email">
+
+								</button>
 							</div>
 						</div>
-						<div class="form-group">
-
-							<label for="inputPassword3" class="col-sm-4 control-label">
-								Enter the Price of Book.
-							</label>
-							<div class="col-sm-4">
-								<input class="form-control" id="inputPassword3" type="password">
-							</div>
-						</div>
-
-						<div class="form-group">
-
-							<label for="inputPassword3" class="col-sm-4 control-label">
-								Enter the Age of Book.
-							</label>
-							<div class="col-sm-4">
-								<input class="form-control" id="inputPassword3" type="password">
-							</div>
-						</div>
+						
 
 
 					<center>
-						<div class="form-group">
-							<div class="col-sm-offset-3 col-sm-6">
-
-								<button type="submit" class="btn btn-default">
-									+ Click Here to Add Book
->>>>>>> 78219188264b149b1544eb65584e58e794a89f09
-								</button>
-							</div>
+						
 					</center>
 
 						</div>
@@ -223,9 +182,4 @@ $(document).ready(function(){
 <p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
 </div>
 </footer>
-<<<<<<< HEAD
 
-
-
-=======
->>>>>>> 78219188264b149b1544eb65584e58e794a89f09
