@@ -190,6 +190,23 @@ public class RequestServer {
         return null;
     }
 
+    public Boolean to_shelf(Integer id, Long isbn, Boolean add){
+        address = "http://"+ip+"/andy_add_to_shelf.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("user_id", id.toString()));
+        params.add(new Pair<String, String>("isbn", isbn.toString()));
+        params.add(new Pair<String, String>("add", add.toString()));
+        new Setup().execute(params);
+        try {
+            JSONObject book_page_json = new JSONObject(output);
+            Boolean done_query = Boolean.parseBoolean(book_page_json.getString("done_query"));
+            return done_query;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, String, ArrayList<Pair<String, String>>> {
         HttpURLConnection urlConnection;
         @Override
