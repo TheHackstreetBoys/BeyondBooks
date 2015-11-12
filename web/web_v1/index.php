@@ -113,7 +113,7 @@ function checkstudent()
 
 	        <li><a href="#about">About</a></li>
 
-	        <li><a href="about_us.html">Our Team</a><li>
+	        <li><a href="about_us.php">Our Team</a><li>
 
 		<li> <a data-toggle="modal" href="#login-modal">Login<span class="glyphicon glyphicon-log-in"></span></a></li>
 	      </ul>
