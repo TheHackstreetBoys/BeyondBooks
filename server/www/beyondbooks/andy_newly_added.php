@@ -2,7 +2,7 @@
 
 include ("db_conn.php");
 
-$query = "select * from (books natural join ratings) as coll order by ts desc limit 4";
+$query = "select * from (books natural join ratings) as coll order by ts desc limit 4;";
 $result=pg_query($query);
 
 
