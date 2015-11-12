@@ -176,4 +176,4 @@ create table book_shelf(
     primary key (uid,isbn),
     foreign key (uid) references user_profile(user_id),
     foreign key (isbn) references books(isbn)
-)
+);
