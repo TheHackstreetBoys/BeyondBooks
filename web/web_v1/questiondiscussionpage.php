@@ -25,6 +25,8 @@ Discussion Forum
 
 
 
+
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$(".dropdown, .btn-group").hover(function(){
@@ -103,9 +105,7 @@ $(document).ready(function(){
  <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12"><h1>
-<br/>
-<b>Discussion Forums</b>
-<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
+<b>Discussion Forums</b> <hr/>
 </h1>
 			<div class="row">
 				<div class="col-md-8">
@@ -113,95 +113,27 @@ $(document).ready(function(){
 						<div class="col-md-12">
 
 
-							<?php
-$dbconn=null;
-global $dbconn;
-$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-$id = $_GET['id'];
-$result = pg_query("SELECT * FROM posts WHERE id= '$id'");
+							<h2>
+								Name of the Hash Tag
+							</h2>
+							<p>
+								#Software Engineering QMS <br/><br/>
+							What is software Engineering
+							</p>
+							<p>
 
-if(!pg_num_rows($result)) {
-	echo 'Post #'.$_GET['id'].' not found';
-	exit;
-}
-
-
-
-	/*$result1 = mysql_safe_query('SELECT username FROM comments ');
-	$row1 = mysql_fetch_assoc($result1);
-
-	foreach ($row1 as $date) {
-    echo $date['username'];
-}*/
-
-
-$row = pg_fetch_array($result);
-	session_start();
-
-$str = $_GET['id'] ;
-$v  = strpos("$str"," ");
-$c = substr("$str",$v+1);
-
-    $username   = $_SESSION['current'];
-    $mycourse = $_SESSION['mycourse'];
-
-    $user = $row['tname'];
-$result1 = pg_query("SELECT * FROM user_profile WHERE user_id = '$user'" );
-
-if(!pg_num_rows($result1))
-{
-}
-$row1 = pg_fetch_array($result1);
-
-echo '<h2>'.$row['title'].'</h2><br/>';
-echo 'By: <em>'.$row1['f_name'].' '.$row1['l_name'].'</em><br/>';
-echo '<em>Posted '.date('F j<\s\up>S</\s\up>, Y', $row['date']).'</em><br/>';
-echo nl2br($row['body']).'<br/>';
-echo '<a href="forumedit.php?id='.$_GET['id'].'">Edit</a> | <a href="forumdelete.php?id='.$_GET['id'].'">Delete</a> ';
-echo ' | <a href="forumWelcome.php">View All</a>';
-$id = $_GET['id'];
-echo '<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
-$result = pg_query("SELECT * FROM reply WHERE post_id = '$id' ORDER BY date DESC LIMIT 4" );
-echo '<ul id="comments">';
-echo '<div class="row">
+							</p>
+						</div>
+					</div>
+				<hr/>
+					<div class="row">
 						<div class="col-md-12">
 							<h3>
 								<b> Comments : </b>
-<hr style="height:1px; border:none; color:rgb(60,60,60); background-color:rgb(60,60,60);">
 							</h3>
-</div>
-</div>';
-while($row = pg_fetch_array($result)) {
-	echo '<li id="post-'.$row['id'].'">';
-	echo (empty($row['website'])?'<strong>'.$row['name'].'</strong>':'<a style="color: blue" href="#" target="_blank">'.$row['name'].'</a>');
-	echo '<br/><small>'.date('j-M-Y g:ia', $row['date']).'</small><br/>';
-	echo nl2br($row['content']);
-
-
-		$result2 = pg_query('SELECT COUNT(plike) AS likes FROM commentss WHERE rollno = %s && id = %s', $row['rollno'], $row['id']);
-
-    if(!pg_num_rows($result2))
-    {
-    }
-    $row2 = pg_fetch_array($result2);
-
-	echo '<br/> <a href = "please.php?id='.$row['id'].'"> <img src = "like.png" title = "LIKE" height = "20px">  </a>' . $row2['likes'];
-	echo '</li><br/>';
-		echo '</li><br/>';
-
-
-}
-echo '</ul>';
-
-$str = $_GET['id'];
-
-echo <<<HTML
-
-<div class="row">
-						<div class="col-md-12">
-
 							<div class="row">
 									<div class="col-md-12">
+										Nothing but a myth. <br/><br/>
 									<button type="button" class="btn btn-success active btn-block">
 										Load More
 									</button>
@@ -210,7 +142,7 @@ echo <<<HTML
 							<h3>
 								<b>Add Your Comment :</b>
 							</h3>
-							<form class="form-horizontal" role="form" method="post" action="forumcommentadd.php?id={$_GET['id']}">
+							<form class="form-horizontal" role="form">
 								<div class="form-group">
 
 									<label for="inputEmail3" class="col-sm-2 control-label">
@@ -218,7 +150,7 @@ echo <<<HTML
 									</label>
 									<div class="col-sm-10">
 
-								<textarea class="form-control" name = "content" rows = "4" id="inputEmail3" type="text"> </textarea>
+								<textarea class="form-control" rows = "4" id="inputEmail3" type="email"> </textarea>
 
 									</div>
 								</div>
@@ -236,48 +168,10 @@ echo <<<HTML
 						</div>
 					</div>
 				</div>
-
-</form>
-HTML;
-
-?>
-						</div>
-					</div>
-<hr style="height:3px; border:none; color:rgb(60,60,60); background-color:rgb(60,60,60);">
-
 				<div class="col-md-4">
 					<h3>
-						Recently Created Discussions <hr style="height:1px; border:none; color:rgb(60,60,60); background-color:rgb(60,90,180);">
+						Recently Created Discussions <hr/>
 					</h3>
-
-
-					<?php
-
-$dbconn=null;
-global $dbconn;
-$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-
-			$result = pg_query("SELECT * FROM posts ORDER BY date DESC LIMIT 3");
-
-			if(!pg_num_rows($result)) {
-							echo '<p>No forums is Created Yet.</p>';
-						     }
-			else {
-
-					while($row = pg_fetch_array($result))
-				{
-					echo '<h2>'.$row['title'].'</h2><br/>';
-					$body = substr($row['body'], 0, 10);
-					echo nl2br($body).'...<br/>';
-					echo '<a href="forumview.php?id='.$row['id'].'">Read More</a> | ';
-					echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';
-					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
-			     }
-					}
-
-					?>
-
-
 				</div>
 			</div>
 		</div>
@@ -288,7 +182,7 @@ $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=pas
 
 <footer>
 <div class="container">
-<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">Beyond Books Everywhere</hr>
+<hr>Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
 <p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys

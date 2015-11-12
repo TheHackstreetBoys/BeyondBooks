@@ -10,7 +10,7 @@ if(!isset($_SESSION["user_id"]))
 <html>
 <head>
 <title>
-Edit Your Question
+Add Your Book
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -22,11 +22,12 @@ Edit Your Question
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.min.js"></script>
+
+<script src="js/scripts.js"></script>
 
 
-<!-- <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
-<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
--->
+
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -40,8 +41,14 @@ $(document).ready(function(){
 </script>
 </head>
 
-  <body>
 
+
+
+
+
+
+<body>
+<!--                                                                                -->
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	  <div class="container-fluid">
 
@@ -97,98 +104,71 @@ $(document).ready(function(){
 	</nav>
 
 
-
-<br/><br/><br/><br/><br/>
-    <div class="container-fluid">
+<br/><br/><br/><br/>
+<div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
- <div id="header">
-         <center> <h1> <a href="#">Edit Your Question Here!</br>  </a></h1> </center> <br/>
-      </div>
-<hr>
+			<h3>
+				Add New Book <hr/>
+			</h3>
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="text-center">
+						<b>Add Your Book</b> <hr/>
+					</h3>
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
 
-<?php
-$dbconn=null;
-global $dbconn;
-$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+							<label for="inputEmail3" class="col-sm-4 control-label">
+								Enter the ISBN of the Book.
+							</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="inputEmail3" type="email">
+							</div>
+						</div>
+						<div class="form-group">
 
-if(!empty($_POST)) {
-$course = $_POST['course'];
-$title = $_POST['title'];
-$body = $_POST['body'];
-$date = time();
-$id = $_GET['id'];
+							<label for="inputPassword3" class="col-sm-4 control-label">
+								Enter the Price of Book.
+							</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="inputPassword3" type="password">
+							</div>
+						</div>
 
-	if(pg_query("UPDATE posts SET course= '$course', title= '$title', body= '$body', date='$date' WHERE id='$id'" ))
+						<div class="form-group">
 
-       header("Location: forumview.php?id=$id");
-	else
-		echo pg_last_error();
-}
-$id1 = $_GET['id'];
-$result = pg_query("SELECT * FROM posts WHERE id='$id1'" );
+							<label for="inputPassword3" class="col-sm-4 control-label">
+								Enter the Age of Book.
+							</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="inputPassword3" type="password">
+							</div>
+						</div>
 
-if(!pg_num_rows($result)) {
-	echo 'Post #'.$_GET['id'].' not found';
-	exit;
-}
 
-$row = pg_fetch_array($result);
+					<center>
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-6">
 
-echo <<<HTML
+								<button type="submit" class="btn btn-default">
+									+ Click Here to Add Book
+								</button>
+							</div>
+					</center>
 
-			<form class="form-horizontal" role="form" method="post" >
-				<div class="form-group">
-
-					<label for="inputEmail3" class="col-sm-4 control-label">
-						Enter the title :
-					</label>
-					<div class="col-sm-5">
-						<input class="form-control" value="{$row['title']}" name = "course" id="inputEmail3" type="text">
-					</div>
+						</div>
+					</form>
 				</div>
-				<div class="form-group">
-
-					<label for="inputPassword3" class="col-sm-4 control-label">
-						Enter the Content of the Question :
-					</label>
-					<div class="col-sm-5">
-						<textarea class="form-control" name = "body" id="inputPassword3" rows = "4" type="text">{$row['body']} </textarea>
-					</div>
-				</div>
-
-				<div class="form-group">
-
-					<label for="inputPassword3" class="col-sm-4 control-label">
-						Enter the Name of the Hash Tag :
-					</label>
-					<div class="col-sm-5">
-						<input class="form-control" value="{$row['course']}" name= "title" id="inputPassword3" type="text">
-					</div>
-				</div>
-
-
-
-				<center>
-
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-9">
-						 				<br/>						 				<br/>						 				<br/>
-						<button type="submit" size = "6" class="btn btn-default">
-							Update Discussion Here!
-						</button>
-					</div>
-				</div>
-				</center>
-			</form>
-HTML;
-?>
+			</div>
 		</div>
 	</div>
 </div>
 
-<footer>
 
+
+<footer>
+<hr />
 <div class="container">
 <hr>Beyond Books Everywhere</hr>
 </br>
@@ -196,8 +176,3 @@ HTML;
 <p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
 </div>
 </footer>
-
-
-
-  </body>
-</html>

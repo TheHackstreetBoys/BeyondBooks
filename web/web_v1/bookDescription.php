@@ -10,7 +10,7 @@ if(!isset($_SESSION["user_id"]))
 <html>
 <head>
 <title>
-Edit Your Question
+BookDescription
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -22,11 +22,7 @@ Edit Your Question
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-
-
-<!-- <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
-<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
--->
+</head>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -38,9 +34,15 @@ $(document).ready(function(){
 	});
 });
 </script>
-</head>
 
-  <body>
+
+
+
+
+<body>
+<!--
+                                                                               -->
+
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	  <div class="container-fluid">
@@ -98,106 +100,141 @@ $(document).ready(function(){
 
 
 
-<br/><br/><br/><br/><br/>
-    <div class="container-fluid">
+<<!--Here starts our welcome to Discussion Forum Page! -->>
+
+
+<br/><br/><br/>
+<div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
- <div id="header">
-         <center> <h1> <a href="#">Edit Your Question Here!</br>  </a></h1> </center> <br/>
-      </div>
-<hr>
+			<div class="page-header">
+				<h1>
+				 Here is your book!
+				</h1>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/">
+					<p class="text-left"><button type="button" class="btn btn-primary">+Add to WishList
+					</button></p>
 
-<?php
-$dbconn=null;
-global $dbconn;
-$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-if(!empty($_POST)) {
-$course = $_POST['course'];
-$title = $_POST['title'];
-$body = $_POST['body'];
-$date = time();
-$id = $_GET['id'];
-
-	if(pg_query("UPDATE posts SET course= '$course', title= '$title', body= '$body', date='$date' WHERE id='$id'" ))
-
-       header("Location: forumview.php?id=$id");
-	else
-		echo pg_last_error();
-}
-$id1 = $_GET['id'];
-$result = pg_query("SELECT * FROM posts WHERE id='$id1'" );
-
-if(!pg_num_rows($result)) {
-	echo 'Post #'.$_GET['id'].' not found';
-	exit;
-}
-
-$row = pg_fetch_array($result);
-
-echo <<<HTML
-
-			<form class="form-horizontal" role="form" method="post" >
-				<div class="form-group">
-
-					<label for="inputEmail3" class="col-sm-4 control-label">
-						Enter the title :
-					</label>
-					<div class="col-sm-5">
-						<input class="form-control" value="{$row['title']}" name = "course" id="inputEmail3" type="text">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="page-header">
+								<h1>
+									ISBN
+								</h1>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="page-header">
+								<h1>
+									Books' Name
+								</h1>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="page-header">
+								<h1>
+									Authors' Name
+								</h1>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="page-header">
+								<h1>
+									Ratings
+								</h1>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="col-md-6">
+					<dl>
+						<dt>
+							Description of the Book:
+						</dt>
+						<dd>
+							A description list is perfect for defining terms.
+						</dd>
+						<dt>
+							Euismod
+						</dt>
+						<dd>
+							Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+						</dd>
+						<dd>
+							Donec id elit non mi porta gravida at eget metus.
+						</dd>
+						<dt>
+							Malesuada porta
+						</dt>
+						<dd>
+							Etiam porta sem malesuada magna mollis euismod.
+						</dd>
+						<dt>
+							Felis euismod semper eget lacinia
+						</dt>
+						<dd>
+							Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<img alt="Bootstrap Thumbnail First" src="http://lorempixel.com/output/people-q-c-600-200-1.jpg">
 
-					<label for="inputPassword3" class="col-sm-4 control-label">
-						Enter the Content of the Question :
-					</label>
-					<div class="col-sm-5">
-						<textarea class="form-control" name = "body" id="inputPassword3" rows = "4" type="text">{$row['body']} </textarea>
 					</div>
 				</div>
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<img alt="Bootstrap Thumbnail Second" src="http://lorempixel.com/output/city-q-c-600-200-1.jpg">
 
-				<div class="form-group">
-
-					<label for="inputPassword3" class="col-sm-4 control-label">
-						Enter the Name of the Hash Tag :
-					</label>
-					<div class="col-sm-5">
-						<input class="form-control" value="{$row['course']}" name= "title" id="inputPassword3" type="text">
 					</div>
 				</div>
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<img alt="Bootstrap Thumbnail Third" src="http://lorempixel.com/output/sports-q-c-600-200-1.jpg">
 
-
-
-				<center>
-
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-9">
-						 				<br/>						 				<br/>						 				<br/>
-						<button type="submit" size = "6" class="btn btn-default">
-							Update Discussion Here!
-						</button>
 					</div>
 				</div>
-				</center>
-			</form>
-HTML;
-?>
+			</div>
+			<div class="jumbotron">
+				<h2>
+					Interested in Buying!
+				</h2>
+				<p>
+					Send your RTB to the seller.
+				</p>
+				<p>
+					<a class="btn btn-primary btn-large" href="#">Send Your Request</a>
+				</p>
+			</div>
 		</div>
 	</div>
 </div>
 
-<footer>
 
+
+
+<footer>
+<hr />
 <div class="container">
 <hr>Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
+<p class="text-right">Copyright &copy; IIITV 2015</p>
 </div>
 </footer>
 
-
-
-  </body>
+</body>
 </html>

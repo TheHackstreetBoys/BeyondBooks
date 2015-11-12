@@ -1,6 +1,11 @@
 <!doctype html>
 <?php
 include_once 'db_conn.php';
+session_start();
+if(!isset($_SESSION["user_id"]))
+{
+	header('Location: index.php');
+}
 ?>
 <html>
 <head>
@@ -11,9 +16,9 @@ Edit Your Profile
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>		
+<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
-<link rel="stylesheet" href="css/font-awesome.min.css"/>	
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -30,24 +35,24 @@ $(document).ready(function(){
 			dropdownMenu.parent().toggleClass("open");
 		}
 	});
-});		
+});
 </script>
 
 
 
 
 <script type="text/javascript" >
-$(document).ready(function() { 
-    
-            $('#images').live('change', function()      { 
+$(document).ready(function() {
+
+            $('#images').live('change', function()      {
                  $("#profile-pic").html('');
           $("#profile-pic").html('<img src="../icons/loader.gif" alt="Uploading...." style="margin:0 25%;"/>');
       $("#imageform").ajaxForm({
             target: '#profile-pic'
     }).submit();
-    
+
       });
-        }); 
+        });
 </script>
 
 
@@ -94,15 +99,15 @@ $(document).ready(function() {
 
 	    </div>
 
-	 
+
 
 	    <div class="collapse navbar-collapse" id="navbar-collapse-main">
 
 	      <ul class="nav navbar-nav navbar-right">
-		
+
 		<li><form action="" class="search-form">
                 <div class="form-group has-feedback" id="search">
-            		
+
             		<input type="text" class="form-control" name="search" id="search1" placeholder="search">
               		<span class="glyphicon glyphicon-search form-control-feedback"></span>
             	</div>
@@ -112,7 +117,7 @@ $(document).ready(function() {
 
 	        <li><a href="#about">About</a></li>
 	        <li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
-		
+
 		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="../images/user.png" class="img-circle" style="width: 50px"></a>
 
 <ul class="dropdown-menu">
@@ -164,7 +169,7 @@ $(document).ready(function() {
                     Upload your image <input type="file" name="images" id="images" />
                   </form>
 				</div>
-				
+
 		</div>
 	</div>
 </div>
@@ -204,17 +209,17 @@ $(document).ready(function() {
 				</div>
 			</div>
 <hr/>
-			
+
 			<div class="row">
 				<div class="col-md-6">
 				</div>
 				<div class="col-md-6" style="background-color:lavender;">
 					<h3> <b>Change Password</b></h3>
 						<h4>To change your password, enter your current password and then the password you desire!</h4> <hr/>
-					
+
 	<form class="form-horizontal" role="form">
 						<div class="form-group">
-							 
+
 							<label for="oldpwd" class="col-sm-3 control-label">
 								Current Password:
 							</label>
@@ -229,13 +234,13 @@ $(document).ready(function() {
 						        <div class="col-sm-7">
 						          <input type="password" name="newpwd" placeholder="New Password" id="newpwd"  class="form-control"/>
 						        </div>
-					
+
 
 						</div>
-												
+
 						<div class="form-group">
 							<div class="col-sm-offset-4 col-sm-10">
-								 
+
 								<button type="submit" class="btn btn-default">
 									Save!
 								</button>
@@ -281,7 +286,7 @@ $(document).ready(function() {
           }
           else
           {
-            
+
             $("#newpwddiv").fadeIn();
           }
         }
