@@ -10,41 +10,26 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-<<<<<<< HEAD
-
-=======
 import android.widget.EditText;
 import android.widget.Toast;
->>>>>>> 861be047fcbe8b1bde3ce476c920bae5c7ea6ca3
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-<<<<<<< HEAD
-    Button button_f5;
-
-=======
     EditText username, password;
     Button login;
->>>>>>> 861be047fcbe8b1bde3ce476c920bae5c7ea6ca3
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-<<<<<<< HEAD
 
-        button_f5 = (Button)findViewById(R.id.button);
+        Intent to_frame5 = new Intent(getApplicationContext(), wireframe7.class);
+        startActivity(to_frame5);
 
-        button_f5.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                Intent to_frame5 = new Intent(getApplicationContext(), wireframe7.class);
-                startActivity(to_frame5);
-            }
-        });
-=======
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         login = (Button) findViewById(R.id.login);
@@ -52,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent in= new Intent(this, Frame10.class);
         startActivity(in);
         login.setOnClickListener(this);
->>>>>>> 861be047fcbe8b1bde3ce476c920bae5c7ea6ca3
+
     }
 
     @Override
