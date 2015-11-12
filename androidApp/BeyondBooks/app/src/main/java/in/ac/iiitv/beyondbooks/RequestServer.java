@@ -449,6 +449,107 @@ public class RequestServer {
         }
         return null;
     }
+
+    public ForumDetails forumDetails(Integer q_id){
+        address = "http://"+ip+"/andy_forum_details.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("q_id", q_id.toString()));
+        try {
+            new Setup().execute(params).get();
+            JSONObject jsonObject = new JSONObject(output);
+            String title = jsonObject.getString("title");
+            String author_name = jsonObject.getString("author_name");
+            Integer author_id = Integer.parseInt(jsonObject.getString("author_id"));
+            Integer forum_id = Integer.parseInt(jsonObject.getString("id"));
+            String details = jsonObject.getString("details");
+            JSONArray jsonArray = jsonObject.getJSONArray("comments");
+            ArrayList<Comments> comments = new ArrayList<Comments>();
+            for(int i=0;i<jsonArray.length();i++){
+                JSONObject comment_json = jsonArray.getJSONObject(i);
+                Integer comment_user_id = Integer.parseInt(comment_json.getString("user_id"));
+                String comment_text = comment_json.getString("text");
+                Integer comment_id = Integer.parseInt(comment_json.getString("comment_id"));
+                Comments temp = new Comments(comment_user_id, comment_text, comment_id, forum_id, title);
+                comments.add(temp);
+            }
+            ForumDetails to_return = new ForumDetails(title, author_name, forum_id, author_id, comments);
+            to_return.setDetails(details);
+            return to_return;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Boolean add_forum_question(ForumDetails forumDetails){
+        address = "http://"+ip+"/andy_add_forum_question.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("title", forumDetails.getTitle()));
+        params.add(new Pair<String, String>("author_name", forumDetails.getAuthor_name()));
+        params.add(new Pair<String, String>("author_id", forumDetails.getAuthor_id().toString()));
+        params.add(new Pair<String, String>("question_id", forumDetails.getId().toString()));
+        params.add(new Pair<String, String>("details", forumDetails.getDetails()));
+        try{
+            new Setup().execute(params).get();
+            JSONObject jsonObject = new JSONObject(output);
+            Boolean result = Boolean.parseBoolean(jsonObject.getString("result"));
+            return result;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Boolean add_book(Long isbn, Integer user_id){
+        address = "http://"+ip+"/andy_add_book.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("isbn", isbn.toString()));
+        params.add(new Pair<String, String>("user_id", user_id.toString()));
+        try{
+            new Setup().execute(params).get();
+            JSONObject jsonObject = new JSONObject(output);
+            Boolean result = Boolean.parseBoolean(jsonObject.getString("result"));
+            return result;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Boolean sell_book(Long isbn, Integer user_id, Float age, Float price){
+        address = "http://"+ip+"/andy_sell_book.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("isbn", isbn.toString()));
+        params.add(new Pair<String, String>("user_id", user_id.toString()));
+        params.add(new Pair<String, String>("age", age.toString()));
+        params.add(new Pair<String, String>("price", price.toString()));
+        try{
+            new Setup().execute(params).get();
+            JSONObject jsonObject = new JSONObject(output);
+            Boolean result = Boolean.parseBoolean(jsonObject.getString("result"));
+            return result;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, Void, String> {
         HttpURLConnection urlConnection;
         @Override
