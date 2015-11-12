@@ -173,7 +173,7 @@ create table notify(
 create table book_shelf(
     user_id varchar,
     isbn varchar,
-    primary key (uid,isbn),
-    foreign key (uid) references user_profile(user_id),
+    primary key (user_id,isbn),
+    foreign key (user_id) references user_profile(user_id),
     foreign key (isbn) references books(isbn)
 );
