@@ -43,7 +43,7 @@ public class RequestServer {
         params.add(new Pair<String, String>("password", password));
         new Setup().execute(params);
         try {
-            System.out.println("fucker"+output);
+            System.out.println("fucker 2"+output);
             JSONObject is_authenticated_json = new JSONObject(output);
             return Boolean.parseBoolean(is_authenticated_json.getString("result"));
         }catch(JSONException e){
@@ -207,7 +207,7 @@ public class RequestServer {
         }
         return false;
     }
-//push it
+
     public Boolean review_submit(Integer user_id,Long isbn, Float ratings, String comment){
         address = "http://"+ip+"/andy_review_submit.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
@@ -319,11 +319,16 @@ public class RequestServer {
             finally {
                 urlConnection.disconnect();
             }
+            System.out.println("fucker 1: "+result.toString());
             return result.toString();
         }
         protected void onPostExecute(String result){
-            output = result;
+            return_method(result);
         }
+    }
+    private void return_method(String return_value){
+        System.out.println("fucker : "+return_value);
+        output = return_value;
     }
     private String getQuery(ArrayList<Pair<String, String>> params) throws UnsupportedEncodingException
     {
