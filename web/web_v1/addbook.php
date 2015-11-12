@@ -1,5 +1,12 @@
 <!doctype html>
-
+<?php
+include_once 'db_conn.php';
+session_start();
+if(!isset($_SESSION["user_id"]))
+{
+	header('Location: index.php');
+}
+?>
 
 
 <html>
@@ -12,9 +19,9 @@ Add Your Book
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
 
-<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>		
+<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
-<link rel="stylesheet" href="css/font-awesome.min.css"/>	
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
 
 <link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
@@ -77,10 +84,10 @@ $(document).ready(function(){
 
 	      <ul class="nav navbar-nav navbar-right">
 
-		
+
 		<li><form action="" class="search-form">
                 <div class="form-group has-feedback" id="search">
-            		
+
 
 
 		<li><form action="" class="search-form">
@@ -131,7 +138,7 @@ $(document).ready(function(){
 
 					<form class="form-horizontal" role="form" method = "post" action = "addbook_proceed.php">
 						<div class="form-group">
-							 
+
 
 					<form class="form-horizontal" role="form">
 						<div class="form-group">
@@ -156,11 +163,11 @@ $(document).ready(function(){
 								</button>
 							</div>
 						</div>
-						
+
 
 
 					<center>
-						
+
 					</center>
 
 						</div>
@@ -182,4 +189,3 @@ $(document).ready(function(){
 <p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
 </div>
 </footer>
-
