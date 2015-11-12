@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html>
 <head>
 <title>
@@ -7,6 +6,7 @@ About Us
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/style1.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
@@ -57,7 +57,7 @@ $(document).ready(function(){
 	        <span class="icon-bar"></span>
 	      </button>
 
-	      <a class="navbar-brand" href="#">Beyond Books</a>
+	      <a class="navbar-brand" href="index.php">Beyond Books</a>
 
 	    </div>
 
@@ -75,16 +75,10 @@ $(document).ready(function(){
             	</div>
             </form></li>
 
-	        <li><a href="#home">Home</a></li>
+	        <li><a href="index.php">Home</a></li>
 
-	        <li><a href="#about">About</a></li>
+	        <li><a href="index.php#about">About</a></li>
 
-		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="../images/user.png" class="img-circle" style="width: 50px"></a>
-
-<ul class="dropdown-menu">
-<li><a herf="#">My profile</a></li>
-<li><a href="#">My uploads</a></li>
-</ul></li>
 
 	      </ul>
 
@@ -100,157 +94,163 @@ $(document).ready(function(){
 
 <p>
 <div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
-			<h3 class="text-center">
-				WHO WE ARE?
-			</h3>
-			<div class="row">
-				<div class="col-md-12">
-					<h1 class="text-center text-success">
-						The HackStreet Boys
-					</h1>
-				</div>
-			</div>
-			<h3 class="text-center">
-				The Team
-			</h3>
-			<div class="row">
-				<div class="col-md-12" style="text-align: center;">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
-					<h2>
-						Pampus Boy
-					</h2>
+	<!-- Our team Section -->
+<section id="team" class="team content-section">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h2>Our Team</h2>
+				<h4> The Hackstreet Boys</h3>
+        <h4 class="caption gray">Meet the people who make awesome stuffs</h4>
+      </div><!-- /.col-md-12 -->
+
+      <div class="container">
+        <div class="row">
+
+          <div class="col-md-4">
+            <div class="team-member">
+              <figure>
+                <img src="images/chirag.jpg" alt="" class="img-responsive">
+                <figcaption>
+                  <p> Chirag a tech-geek. A good critics and a great leader. </p>
+                </figcaption>
+              </figure>
+              <h4>Chirag Panpalia</h4>
+              <p>Team Leader</p>
+            </div><!-- /.team-member-->
+          </div><!-- /.col-md-4 -->
+
+					<div class="col-md-4">
+						<div class="team-member">
+							<figure>
+								<img src="images/aditya.jpg" alt="" class="img-responsive">
+								<figcaption>
+									<p> Aditya is an adamant and manipulative guy. He is a great reviewer, presenter and has got superb english profeciency. </p>
+								</figcaption>
+							</figure>
+							<h4>Aditya Prakash</h4>
+						</div><!-- /.team-member-->
+					</div><!-- /.col-md-4 -->
+
+					<div class="col-md-4">
+						<div class="team-member">
+							<figure>
+								<img src="images/akhil.jpg" alt="" class="img-responsive">
+								<figcaption>
+									<p> Akhilesh is a dedicated and smart guy. His english profeciency and technological knowledge are superb. He is known as a "Good Boy" in IIITV. </p>
+								</figcaption>
+							</figure>
+							<h4>Akhilesh Kumar</h4>
+						</div><!-- /.team-member-->
+					</div><!-- /.col-md-4 -->
+</div>
+<div class="row">
+
+	<div class="col-md-4">
+		<div class="team-member">
+			<figure>
+				<img src="images/anjul.jpg" alt="" class="img-responsive">
+				<figcaption>
+					<p> 	This over talkative boy has an intricate mixture of curiosity and dedication. He has an enormous amount of energy which flows around and thrill everybody. He is smart and always planned.
+					</p></figcaption>
+			</figure>
+			<h4>Anjul Tyagi</h4>
+		</div><!-- /.team-member-->
+	</div><!-- /.col-md-4 -->
+
+	<div class="col-md-4">
+		<div class="team-member">
+			<figure>
+				<img src="images/dilip.jpg" alt="" class="img-responsive">
+				<figcaption>
 					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-					</p>
+										 Dilip is the most straight forward guy of IIITV senior batch. He is really appreciated for his LaTeX skills.
+					</p></figcaption>
+			</figure>
+			<h4>Dilip Puri</h4>
+		</div><!-- /.team-member-->
+	</div><!-- /.col-md-4 -->
+
+	<div class="col-md-4">
+		<div class="team-member">
+			<figure>
+				<img src="images/gaurav.jpg" alt="" class="img-responsive">
+				<figcaption>
 					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
-					<h2>
-						Aditya Prakash
-					</h2>
+											Gaurav is one among the cool guys. He has a passion for hindi poems and mathematics.
+					</p></figcaption>
+			</figure>
+			<h4>Gaurav Yadav</h4>
+		</div><!-- /.team-member-->
+	</div><!-- /.col-md-4 -->
+</div>
+
+<div class="row">
+	<div class="col-md-4">
+		<div class="team-member">
+			<figure>
+				<img src="images/krupo.jpg" alt="" class="img-responsive">
+				<figcaption>
 					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-					</p>
+						This guy is a universal set, he knows everything. Much talked-about in college for his technical brilliancy. He is pro-active and smart.
+				</p></figcaption>
+			</figure>
+			<h4>Harish Krupo</h4>
+		</div><!-- /.team-member-->
+	</div><!-- /.col-md-4 -->
+
+
+	<div class="col-md-4">
+		<div class="team-member">
+			<figure>
+				<img src="images/kushal.jpg" alt="" class="img-responsive">
+				<figcaption>
 					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
-				</div>
-				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
-					<h2>
-						Akhilesh Kumar
-					</h2>
+						This guy is the salt of the Earth. He is a dedicate, pro-active hard worker. He has got lots of energy which keeps him persistent and devoted to tasks.
+			 </p></figcaption>
+			</figure>
+			<h4>Kushal Jangid</h4>
+		</div><!-- /.team-member-->
+	</div><!-- /.col-md-4 -->
+
+
+	<div class="col-md-4">
+		<div class="team-member">
+			<figure>
+				<img src="images/raghuvar.jpg" alt="" class="img-responsive">
+				<figcaption>
 					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
-				</div>
-				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
-					<h2>
-						Anjul Tyagi
-					</h2>
-					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
-					<h2>
-						Dilip Puri
-					</h2>
-					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
-				</div>
-				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
-					<h2>
-						Gaurav Yadav
-					</h2>
-					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
-				</div>
-				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
-					<h2>
-						Harish Krupo
-					</h2>
-					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
-					<h2>
-						Kushal Jangid
-					</h2>
-					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
-				</div>
-				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
-					<h2>
-						Raghuvar Prajapati
-					</h2>
-					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
-				</div>
-				<div class="col-md-4">
-					<img class="img-circle" alt="Bootstrap Image Preview" src="url.jpg">
-					<h2>
-						Sonu Patidar
-					</h2>
-					<p>
-						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-					</p>
-					<p>
-						<a class="btn" href="#">View details »</a>
-					</p>
-				</div>
-			</div>
-			<h3>
-				Thanks To ....
-			</h3>
-			<h3 class="text-right">
-				Mentored By
-			</h3>
-		</div>
+						Raghuvar is a coke-bottle-pizza guy. He believes in hard working and has passion for whatever he does.
+ </p></figcaption>
+			</figure>
+			<h4>Raghuvar Prajapati</h4>
+		</div><!-- /.team-member-->
+	</div><!-- /.col-md-4 -->
 	</div>
+</div>
+
+<div class="row">
+
+	<div class="col-md-4">
+		<div class="team-member">
+			<figure>
+				<img src="images/sonu.jpg" alt="" class="img-responsive">
+				<figcaption>
+					<p>
+						This guy is different from all. He is a careful thinker and good observer. Always interested in details, helpful, hardworker and has a passion for photography.
+					</p></figcaption>
+			</figure>
+			<h4>Sonu Patidar</h4>
+		</div><!-- /.team-member-->
+	</div><!-- /.col-md-4 -->
+
+
+				</div><!-- /.row -->
+      </div><!-- /.container -->
+
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+</section><!-- /.our-team -->
 </div>
 </p>
 

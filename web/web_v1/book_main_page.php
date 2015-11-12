@@ -81,7 +81,20 @@ $(document).ready(function(){
 
 	        <li><a href="#about">About</a></li>
 		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
-		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="/var/www/html/BeyondBooks/web/images/user.png" class="img-circle" style="width: 50px"></a>
+		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
+			<?php
+			   $user_id=$_SESSION["user_id"];
+				 $query="SELECT * FROM user_profile where user_id='$user_id'";
+			   $result=pg_query($query);
+			   $row=pg_fetch_array($result);
+			$filename=$row['user_id'].'_dp';
+			$filename="pictures/".$filename."*";
+			$result1=glob($filename);
+			if (!empty($result1))
+			echo '<img src="'.$result1[0].'"class="img-circle" style="width: 50px">';
+			else
+				echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
+				?></a>
 
 <ul class="dropdown-menu">
 <li><a herf="#">My profile</a></li>

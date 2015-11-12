@@ -24,6 +24,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 /**
  * Created by anjul on 11/11/15.
  */
@@ -31,9 +33,9 @@ import java.util.ArrayList;
 public class RequestServer {
     private String ip;
     private String address;
-    private String output;
+    private String output=null;
     RequestServer(){
-        ip = "10.100.91.55:80";
+        ip = "10.100.91.55:80/beyondbooks";
     }
 
     public Boolean authenticate(Integer id, String password){
@@ -41,25 +43,34 @@ public class RequestServer {
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("id", id.toString()));
         params.add(new Pair<String, String>("password", password));
-        new Setup().execute(params);
         try {
+            new Setup().execute(params).get();
+//            System.out.println("fucker 2"+output);
             JSONObject is_authenticated_json = new JSONObject(output);
             return Boolean.parseBoolean(is_authenticated_json.getString("result"));
         }catch(JSONException e){
             e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
         }
         return false;
     }
-
+//push it
     public Boolean authenticate_forget(Integer id){
         address = "http://"+ip+"/andy_authenticate_forget.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("id", id.toString()));
-        new Setup().execute(params);
         try {
+            new Setup().execute(params).get();
             JSONObject is_authenticated_json = new JSONObject(output);
             return Boolean.parseBoolean(is_authenticated_json.getString("result"));
         }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
             e.printStackTrace();
         }
         return false;
@@ -72,8 +83,8 @@ public class RequestServer {
         ArrayList<ForumOverview> forum_list = new ArrayList<ForumOverview>();
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("query", query));
-        new Setup().execute(params);
         try {
+            new Setup().execute(params).get();
             JSONObject search_answer = new JSONObject(output);
             JSONArray review = search_answer.getJSONArray("review");
             JSONArray buy_sell = search_answer.getJSONArray("buy_sell");
@@ -109,16 +120,19 @@ public class RequestServer {
             return temp;
         }catch(JSONException e){
             e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
         }
         return null;
     }
-    //go push it again
 
     public ArrayList<NewlyAdded> newly_added(){
         address = "http://"+ip+"/andy_newly_added.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
-        new Setup().execute(params);
         try{
+            new Setup().execute(params).get();
             ArrayList<NewlyAdded> newly_added_list = new ArrayList<NewlyAdded>();
             JSONObject search_answer = new JSONObject(output);
             JSONArray newly_added_json = search_answer.getJSONArray("newly_added");
@@ -135,6 +149,10 @@ public class RequestServer {
         }
         catch (JSONException e){
             e.printStackTrace();;
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
         }
         return null;
     }
@@ -142,8 +160,8 @@ public class RequestServer {
     public ArrayList<NewlyAdded> top_rated(){
         address = "http://"+ip+"/andy_top_rated.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
-        new Setup().execute(params);
         try{
+            new Setup().execute(params).get();
             ArrayList<NewlyAdded> top_rated_list = new ArrayList<NewlyAdded>();
             JSONObject search_answer = new JSONObject(output);
             JSONArray top_rated_json = search_answer.getJSONArray("top_rated");
@@ -160,6 +178,10 @@ public class RequestServer {
         }
         catch (JSONException e){
             e.printStackTrace();;
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
         }
         return null;
     }
@@ -168,8 +190,8 @@ public class RequestServer {
         address = "http://"+ip+"/andy_book_page.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("isbn", isbn.toString()));
-        new Setup().execute(params);
         try {
+            new Setup().execute(params).get();
             JSONObject book_page_json = new JSONObject(output);
             Float public_ratings = Float.parseFloat(book_page_json.getString("public_ratings"));
             Float faculty_ratings = Float.parseFloat(book_page_json.getString("faculty_ratings"));
@@ -186,6 +208,10 @@ public class RequestServer {
             return temp;
         }catch(JSONException e){
             e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
         }
         return null;
     }
@@ -196,12 +222,16 @@ public class RequestServer {
         params.add(new Pair<String, String>("user_id", id.toString()));
         params.add(new Pair<String, String>("isbn", isbn.toString()));
         params.add(new Pair<String, String>("add", add.toString()));
-        new Setup().execute(params);
         try {
+            new Setup().execute(params).get();
             JSONObject book_page_json = new JSONObject(output);
             Boolean done_query = Boolean.parseBoolean(book_page_json.getString("done_query"));
             return done_query;
         }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
             e.printStackTrace();
         }
         return false;
@@ -214,12 +244,16 @@ public class RequestServer {
         params.add(new Pair<String, String>("isbn", isbn.toString()));
         params.add(new Pair<String, String>("ratings", ratings.toString()));
         params.add(new Pair<String, String>("comment", comment));
-        new Setup().execute(params);
         try {
+            new Setup().execute(params).get();
             JSONObject book_page_json = new JSONObject(output);
             Boolean done_query = Boolean.parseBoolean(book_page_json.getString("done_query"));
             return done_query;
         }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
             e.printStackTrace();
         }
         return false;
@@ -229,8 +263,8 @@ public class RequestServer {
         address = "http://"+ip+"/andy_get_notification.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", user_id.toString()));
-        new Setup().execute(params);
         try {
+            new Setup().execute(params).get();
             ArrayList<String> notification_list = new ArrayList<String>();
             JSONObject search_answer = new JSONObject(output);
             JSONArray notifications_json = search_answer.getJSONArray("notifications");
@@ -242,6 +276,10 @@ public class RequestServer {
             return notification_list;
         }catch(JSONException e){
             e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
         }
         return null;
 
@@ -251,8 +289,8 @@ public class RequestServer {
         address = "http://"+ip+"/andy_get_bookshelf.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", user_id.toString()));
-        new Setup().execute(params);
         try {
+            new Setup().execute(params).get();
             ArrayList<Long> book_list = new ArrayList<Long>();
             JSONObject search_answer = new JSONObject(output);
             JSONArray books_json = search_answer.getJSONArray("books");
@@ -264,6 +302,10 @@ public class RequestServer {
             return book_list;
         }catch(JSONException e){
             e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
         }
         return null;
     }
@@ -272,8 +314,8 @@ public class RequestServer {
         address = "http://"+ip+"/andy_get_activities.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", cur_user.getId().toString()));
-        new Setup().execute(params);
         try {
+            new Setup().execute(params).get();
             ArrayList<Long> uploads_list = new ArrayList<Long>();
             JSONObject activities = new JSONObject(output);
             JSONArray uploads = activities.getJSONArray("uploads");
@@ -283,15 +325,35 @@ public class RequestServer {
                 uploads_list.add(uploaded_book);
             }
             cur_user.setUploads(uploads_list);
+            JSONArray reviewed = activities.getJSONArray("reviewed");
+            ArrayList<Long> reviewed_list = new ArrayList<Long>();
+            for(int i=0;i<reviewed.length();i++){
+                JSONObject cur_book = reviewed.getJSONObject(i);
+                Long reviewed_book = Long.parseLong(cur_book.getString("isbn"));
+                reviewed_list.add(reviewed_book);
+            }
+            cur_user.setReviewed(reviewed_list);
+            JSONArray enquired = activities.getJSONArray("enquired");
+            ArrayList<Long> enquired_list = new ArrayList<Long>();
+            for(int i=0;i<enquired.length();i++){
+                JSONObject cur_book = enquired.getJSONObject(i);
+                Long enquired_book = Long.parseLong(cur_book.getString("isbn"));
+                enquired_list.add(enquired_book);
+            }
+            cur_user.setEnquired(enquired_list);
         }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
             e.printStackTrace();
         }
     }
-
-    private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, String, ArrayList<Pair<String, String>>> {
+//push it
+    private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, Void, String> {
         HttpURLConnection urlConnection;
         @Override
-        protected ArrayList<Pair<String, String>> doInBackground(ArrayList<Pair<String, String>>... args){
+        protected String doInBackground(ArrayList<Pair<String, String>>... args){
             StringBuilder result = new StringBuilder();
             try{
                 URL url = new URL(address);
@@ -318,9 +380,13 @@ public class RequestServer {
             finally {
                 urlConnection.disconnect();
             }
-            output = result.toString();
-            return null;
+            return_method(result.toString());
+            return result.toString();
         }
+    }
+    private void return_method(String return_value){
+//        System.out.println("fucker : "+return_value);
+        output = return_value;
     }
     private String getQuery(ArrayList<Pair<String, String>> params) throws UnsupportedEncodingException
     {

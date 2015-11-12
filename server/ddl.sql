@@ -167,3 +167,13 @@ create table notify(
        primary key (whom,des),
        foreign key (whom) references user_profile(user_id)
 );
+
+
+-- The bookshelf table
+create table book_shelf(
+    user_id varchar,
+    isbn varchar,
+    primary key (user_id,isbn),
+    foreign key (user_id) references user_profile(user_id),
+    foreign key (isbn) references books(isbn)
+);
