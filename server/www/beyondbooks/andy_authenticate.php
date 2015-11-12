@@ -1,21 +1,29 @@
-<? php
+<?php
 
 include ("db_conn.php");
 
 $username = $_POST['id'];
-$password = $_POST['password']
+$password = $_POST['password'];
 
 
+$myfile = fopen("logfile.txt", "w");
 
-$allow = false;
-$query = "select * from user_profile where user_id=".$username.";";
+fwrite($myfile,"$username\n$password");
+
+$allow = "false";
+$query = "select * from user_profile where user_id='$username';";
 $result=pg_query($query);
-while ($row = pg_fetch_row($result)) {
-    if (strcmp($row[3],md5($password))==0)
+
+
+while ($row = pg_fetch_array($result))
+{
+    if (strcmp($row['password'],(string)md5($password))==0)
     {
-        $allow=true;
+        $allow="true";
+        break;
     }
 
 }
-echo json_encode(array("result" => "$allow"));
+fwrite($myfile,"\n".$allow);
+echo json_encode(array('result' => "$allow"));
 ?>
