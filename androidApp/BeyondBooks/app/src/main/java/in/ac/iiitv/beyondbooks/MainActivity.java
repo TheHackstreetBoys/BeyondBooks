@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         password = (EditText) findViewById(R.id.password);
         login = (Button) findViewById(R.id.login);
 
+        Intent in= new Intent(this, Frame10.class);
+        startActivity(in);
         login.setOnClickListener(this);
     }
 
@@ -48,8 +50,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(id)
         {
             case R.id.search:
-                return true;
+                in = new Intent(this,Search.class);
+                startActivity(in);
+                break;
             case R.id.home:
+
                 in = new Intent(this, MainActivity.class);
                 startActivity(in);
                 break;

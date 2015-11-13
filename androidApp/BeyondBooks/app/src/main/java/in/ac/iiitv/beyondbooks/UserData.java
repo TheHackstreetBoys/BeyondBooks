@@ -7,32 +7,22 @@ import java.util.ArrayList;
  */
 public class UserData {
     private Integer id;
-    ArrayList<Long> uploads;
-    ArrayList<Long> reviewed;
-    ArrayList<Long> enquired;
-
-    public ArrayList<Long> getUploads() {
+    ArrayList<NewlyAdded> uploads;
+    ArrayList<NewlyAdded> reviewed;
+    public ArrayList<NewlyAdded> getUploads() {
         return uploads;
     }
 
-    public void setUploads(ArrayList<Long> uploads) {
+    public void setUploads(ArrayList<NewlyAdded> uploads) {
         this.uploads = uploads;
     }
 
-    public ArrayList<Long> getReviewed() {
+    public ArrayList<NewlyAdded> getReviewed() {
         return reviewed;
     }
 
-    public void setReviewed(ArrayList<Long> reviewed) {
+    public void setReviewed(ArrayList<NewlyAdded> reviewed) {
         this.reviewed = reviewed;
-    }
-
-    public ArrayList<Long> getEnquired() {
-        return enquired;
-    }
-
-    public void setEnquired(ArrayList<Long> enquired) {
-        this.enquired = enquired;
     }
 
     UserData(Integer id) {
