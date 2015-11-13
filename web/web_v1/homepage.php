@@ -108,7 +108,7 @@ $(document).ready(function(){
 
 <ul class="dropdown-menu">
 <li><a href="yourprofile.php">My profile</a></li>
-<li><a href="#">My uploads</a></li>
+<li><a href="bookshelf.php">My Bookshelf</a></li>
 </ul></li>
 
 	      </ul>
