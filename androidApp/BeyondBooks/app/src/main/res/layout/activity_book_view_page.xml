@@ -10,21 +10,61 @@
     tools:context="in.ac.iiitv.beyondbooks.BookViewPage"
     android:orientation="vertical"
     android:weightSum="1">
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Newly Added Books"
-        android:textStyle="bold"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        />
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Newly Added Books"
+            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_weight="1"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add your Book"
+            android:background="@android:color/holo_blue_dark"/>
+    </LinearLayout>
 
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newadded"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.5"/>
+        android:layout_weight="0.5">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/linear_newbook"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/image_newbook"
+                android:src="@mipmap/book"
+                android:layout_gravity="left|center_vertical"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bookname"
+                android:id="@+id/newbookname"/>
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/ratingBarStyleIndicator"/>
+
+        </LinearLayout>
+
+
+    </HorizontalScrollView>
 
     <TextView
         android:layout_width="match_parent"
@@ -39,6 +79,32 @@
         android:layout_height="wrap_content"
         android:id="@+id/toprated"
         android:layout_weight="0.5">
-        </HorizontalScrollView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/linear_topbook"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/image_topbook"
+                android:src="@mipmap/user_image"
+                android:layout_gravity="left|center_vertical"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bookname"
+                android:id="@+id/bookname"/>
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/ratingBarStyleIndicator"/>
+        </LinearLayout>
+
+    </HorizontalScrollView>
 
 </LinearLayout>
