@@ -23,6 +23,7 @@ import java.lang.reflect.ParameterizedType;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.channels.NonWritableChannelException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -57,7 +58,6 @@ public class RequestServer {
         }
         return false;
     }
-//push it
     public Boolean authenticate_forget(Integer id){
         address = "http://"+ip+"/andy_authenticate_forget.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
@@ -316,31 +316,35 @@ public class RequestServer {
         params.add(new Pair<String, String>("user_id", cur_user.getId().toString()));
         try {
             new Setup().execute(params).get();
-            ArrayList<Long> uploads_list = new ArrayList<Long>();
+            ArrayList<NewlyAdded> uploads_list = new ArrayList<NewlyAdded>();
             JSONObject activities = new JSONObject(output);
             JSONArray uploads = activities.getJSONArray("uploads");
             for(int i=0;i<uploads.length();i++){
                 JSONObject cur_book_obj = uploads.getJSONObject(i);
-                Long uploaded_book = Long.parseLong(cur_book_obj.getString("isbn"));
-                uploads_list.add(uploaded_book);
+                Long uploaded_book_isbn = Long.parseLong(cur_book_obj.getString("isbn"));
+                String uploaded_book_name = cur_book_obj.getString("book_name");
+                NewlyAdded temp = new NewlyAdded(null, uploaded_book_name, null, uploaded_book_isbn);
+                uploads_list.add(temp);
             }
             cur_user.setUploads(uploads_list);
             JSONArray reviewed = activities.getJSONArray("reviewed");
-            ArrayList<Long> reviewed_list = new ArrayList<Long>();
+            ArrayList<NewlyAdded> reviewed_list = new ArrayList<NewlyAdded>();
             for(int i=0;i<reviewed.length();i++){
                 JSONObject cur_book = reviewed.getJSONObject(i);
                 Long reviewed_book = Long.parseLong(cur_book.getString("isbn"));
-                reviewed_list.add(reviewed_book);
+                String reviewed_book_name = cur_book.getString("book_name");
+                NewlyAdded temp = new NewlyAdded(null, reviewed_book_name, null, reviewed_book);
+                reviewed_list.add(temp);
             }
             cur_user.setReviewed(reviewed_list);
-            JSONArray enquired = activities.getJSONArray("enquired");
-            ArrayList<Long> enquired_list = new ArrayList<Long>();
-            for(int i=0;i<enquired.length();i++){
-                JSONObject cur_book = enquired.getJSONObject(i);
-                Long enquired_book = Long.parseLong(cur_book.getString("isbn"));
-                enquired_list.add(enquired_book);
-            }
-            cur_user.setEnquired(enquired_list);
+//            JSONArray enquired = activities.getJSONArray("enquired");
+//            ArrayList<Long> enquired_list = new ArrayList<Long>();
+//            for(int i=0;i<enquired.length();i++){
+//                JSONObject cur_book = enquired.getJSONObject(i);
+//                Long enquired_book = Long.parseLong(cur_book.getString("isbn"));
+//                enquired_list.add(enquired_book);
+//            }
+//            cur_user.setEnquired(enquired_list);
         }catch(JSONException e){
             e.printStackTrace();
         }catch(InterruptedException e){
@@ -349,7 +353,7 @@ public class RequestServer {
             e.printStackTrace();
         }
     }
-//push it
+
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, Void, String> {
         HttpURLConnection urlConnection;
         @Override
