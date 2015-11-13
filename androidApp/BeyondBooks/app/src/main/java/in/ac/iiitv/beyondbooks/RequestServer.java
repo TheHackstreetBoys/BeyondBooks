@@ -25,6 +25,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.channels.NonWritableChannelException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -535,6 +536,27 @@ public class RequestServer {
         params.add(new Pair<String, String>("user_id", user_id.toString()));
         params.add(new Pair<String, String>("age", age.toString()));
         params.add(new Pair<String, String>("price", price.toString()));
+        try{
+            new Setup().execute(params).get();
+            JSONObject jsonObject = new JSONObject(output);
+            Boolean result = Boolean.parseBoolean(jsonObject.getString("result"));
+            return result;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Boolean send_enquiry(Integer buyer_id, Integer seller_id, Long isbn){
+        address = "http://"+ip+"/andy_enquiry.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("buyer_id", buyer_id.toString()));
+        params.add(new Pair<String, String>("seller_id", seller_id.toString()));
+        params.add(new Pair<String, String>("isbn", isbn.toString()));
         try{
             new Setup().execute(params).get();
             JSONObject jsonObject = new JSONObject(output);
