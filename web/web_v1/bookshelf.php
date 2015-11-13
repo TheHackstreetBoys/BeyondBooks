@@ -48,7 +48,7 @@ $(document).ready(function(){
 
 
 
-<body class="bookshelf1">
+<body>
 <!--                                                                                -->
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	  <div class="container-fluid">
@@ -88,7 +88,7 @@ $(document).ready(function(){
 	        <li><a href="homepage.php">Home</a></li>
 
 	        <li><a href="#about">About</a></li>
-		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
+		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
 		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 			<?php
 			   $user_id=$_SESSION["user_id"];
@@ -121,7 +121,10 @@ $(document).ready(function(){
 
 
 
-	<div class="bookshelf" style="padding-top:10%; position: relative;">
+	<div class="bookshelf">
+		<?php
+
+		?>
 	  <div class="book book-green">
 	    <h2>Harry Potter</h2>
 	  </div><div class="book book-green">
@@ -146,132 +149,6 @@ $(document).ready(function(){
 	    <h2>CSS For Dummies</h2>
 	  </div><div class="book book-green">
 	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div><div class="book book-umber">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-green">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-blue">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-green">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div><div class="book book-springer">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-springer">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-green">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-blue">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div><div class="book book-blue">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-blue">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-umber">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book-tilted"><div class="book book-green">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div></div><div class="book book-blue">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-springer">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-green">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-green">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div><div class="book book-umber">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-blue">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-umber">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-green">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div><div class="book book-green">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-green">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-green">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-green">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div><div class="book book-springer">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-green">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-springer">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-umber">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div><div class="book book-green">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-green">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-umber">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-blue">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div><div class="book book-springer">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-green">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-springer">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-green">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div><div class="book book-umber">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-green">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-green">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-umber">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div><div class="book book-green">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-springer">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-blue">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-blue">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div>
-	  <div class="book book-springer">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-green">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-springer">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-green">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div><div class="book book-umber">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-green">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-green">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-umber">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div><div class="book book-green">
-	    <h2>Harry Potter</h2>
-	  </div>
-	  <div class="book book-springer">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-green">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-springer">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-green">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div><div class="book book-umber">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-green">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-green">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-umber">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div><div class="book book-green">
-	    <h2>Harry Potter</h2>
 	  </div>
 	</div>
 
@@ -286,12 +163,7 @@ $(document).ready(function(){
 
 
 
-
-
-
-
-
-  <footer>
+  <footer style="background-color:white;">
   <hr />
   <div class="container">
   <hr>Beyond Books Everywhere</hr>
@@ -300,3 +172,6 @@ $(document).ready(function(){
   <p class="text-right">Copyright &copy; Your Company 2014</p>
   </div>
   </footer>
+
+</body>
+</html>

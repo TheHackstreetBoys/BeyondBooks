@@ -80,7 +80,7 @@ $(document).ready(function(){
 	        <li><a href="#home">Home</a></li>
 
 	        <li><a href="#about">About</a></li>
-		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
+		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
 		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 			<?php
 			   $user_id=$_SESSION["user_id"];
@@ -117,28 +117,28 @@ $(document).ready(function(){
 			<div class="row">
 				<div class="col-md-6"><br/>
 	<?php
-session_start();					
+session_start();
 			$dbconn=null;
 			global $dbconn;
 			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-				
+
 			$isbn = $_POST['isbn'];
 			$_SESSION['isbn'] = $isbn;
-			
+
 	$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn WHERE books.isbn = '$isbn'");
 
 
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No Book is available.</p>';
-						     } 
-			else {	
-			
+						     }
+			else {
+
 					while($row = pg_fetch_array($result))
 				{
 					echo '<b>'.$row['title'].'</b></br>';
 					echo "<b> By :".$row['author']."</b>";
-	
+
 			     }
 					}
 
@@ -153,10 +153,10 @@ session_start();
 			$dbconn=null;
 			global $dbconn;
 			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-				
 
-			
-	$result = pg_query("SELECT COUNT(uid) AS total FROM rating WHERE isbn = '$isbn'");	
+
+
+	$result = pg_query("SELECT COUNT(uid) AS total FROM rating WHERE isbn = '$isbn'");
 	$result1 = pg_query("SELECT sum(rating) AS totalrating FROM rating WHERE isbn = '$isbn'");
 	$row = pg_fetch_array($result);
 	$row1 = pg_fetch_array($result1);
@@ -173,13 +173,13 @@ echo "Rating :";
     while ($x<=5) {
         echo '<img src="zero.png" />';
         $x++;
-    }		
+    }
 
 
 					?>
 <br/>					<br/><br/>
 	Your Rating :			<img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /><div id="starloader"> </div>
-				
+
 				<br/><br/></div><button type="button" class="btn btn-success">
 						 + ADD to wishlist
 					</button>
@@ -192,14 +192,14 @@ echo "Rating :";
 			<h3>
 				Rating and Reviews
 			</h3>
-	
+
 
 
 	<?php
 			$dbconn=null;
 			global $dbconn;
 			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-				
+
 	$result = pg_query("SELECT * FROM review WHERE isbn = '$isbn' LIMIT 3");
 
 			if(!pg_num_rows($result)) {
@@ -214,7 +214,7 @@ echo "Rating :";
 					echo '<b>'.$row['uid'].'</b><br/>';
 					$body = $row['review'];
 					echo "&nbsp;&nbsp;&nbsp;".nl2br($body).'...<br/><br/>';
-				
+
 			     }
 					}
 
@@ -224,7 +224,7 @@ echo "Rating :";
 
 
 			<p>
-				
+
 			</p>
 		</div>
 	</div>
@@ -235,40 +235,40 @@ echo "Rating :";
 			</h3>
 			<p>
 				<?php
-session_start();					
+session_start();
 				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 			$dbconn=null;
 			global $dbconn;
 			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-				
+
 			$isbn = $_POST['isbn'];
 			$_SESSION['isbn'] = $isbn;
-			
+
 	$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn WHERE books.isbn = '$isbn'");
 
 
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No Book is available.</p>';
-						     } 
-			else {	
-			
+						     }
+			else {
+
 					while($row = pg_fetch_array($result))
 				{
 					echo '<b> Title :</b> '.$row['title'].'<br/>';
 					echo "<b> Authors :</b><em>".$row['author']."</em><br/>";
-				        echo '<b> Publication: </b><em>'.$row['publisher'].'</em><br/>';	
+				        echo '<b> Publication: </b><em>'.$row['publisher'].'</em><br/>';
 					echo '<b> Decription: </b><em>'.$row['description'].'</em><br/>';
 
-			
 
-			
-					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';	
+
+
+					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 			     }
 					}
 
 					?>
-					
+
 			</p>
 		</div>
 		<div class="col-md-6">
@@ -279,7 +279,7 @@ session_start();
 			$dbconn=null;
 			global $dbconn;
 			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-				
+
 	$result = pg_query("SELECT * FROM pbase JOIN single_sell ON single_sell.prodid = pbase.prodid WHERE single_sell.isbn = '$isbn' AND pbase.prodid = single_sell.prodid");
 
 			if(!pg_num_rows($result)) {
@@ -288,7 +288,7 @@ session_start();
 			else {
 
 					echo "<br/><b>Available Seller:</b><br/>";
-	
+
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 
 					while($row = pg_fetch_array($result))
@@ -300,7 +300,7 @@ session_start();
 					echo "Description:&nbsp;".nl2br($body).'';
 					$user_id = "201351022";
 					echo " <form method = 'POST' action= 'mailproceed.php'>
- 
+
   						<input type='hidden' name = 'isbn' value =".$row['isbn'].">
   						<input type='hidden' name = 'sellerid' value =".$row['sellerid'].">
   						<input type='hidden' name = 'user_id' value =".$user_id.">
@@ -308,8 +308,8 @@ session_start();
   						<input type='submit' value = 'Send Interest'>
 						</form><br/> ";
 
-					
-				
+
+
 			     }
 					}
 
