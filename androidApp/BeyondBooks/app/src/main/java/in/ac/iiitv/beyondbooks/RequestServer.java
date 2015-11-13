@@ -395,7 +395,60 @@ public class RequestServer {
         }
         return null;
     }
-
+    public ArrayList<ForumOverview> top_rated_discussions(){
+        address = "http://"+ip+"/andy_top_rated_discussions.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        try {
+            new Setup().execute(params).get();
+            ArrayList<ForumOverview> top_discussions_list = new ArrayList<ForumOverview>();
+            JSONObject activities = new JSONObject(output);
+            JSONArray uploads = activities.getJSONArray("top_rated");
+            for(int i=0;i<uploads.length();i++){
+                JSONObject cur_book_obj = uploads.getJSONObject(i);
+                String title = cur_book_obj.getString("title");
+                String author = cur_book_obj.getString("author");
+                Integer author_id = Integer.parseInt(cur_book_obj.getString("author_id"));
+                Integer q_id = Integer.parseInt(cur_book_obj.getString("q_id"));
+                ForumOverview temp = new ForumOverview(title, author, author_id, q_id);
+                top_discussions_list.add(temp);
+            }
+            return top_discussions_list;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public ArrayList<ForumOverview> recent_discussions(){
+        address = "http://"+ip+"/andy_recent_discussions.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        try {
+            new Setup().execute(params).get();
+            ArrayList<ForumOverview> recent_discussions_list = new ArrayList<ForumOverview>();
+            JSONObject activities = new JSONObject(output);
+            JSONArray uploads = activities.getJSONArray("recent");
+            for(int i=0;i<uploads.length();i++){
+                JSONObject cur_book_obj = uploads.getJSONObject(i);
+                String title = cur_book_obj.getString("title");
+                String author = cur_book_obj.getString("author");
+                Integer author_id = Integer.parseInt(cur_book_obj.getString("author_id"));
+                Integer q_id = Integer.parseInt(cur_book_obj.getString("q_id"));
+                ForumOverview temp = new ForumOverview(title, author, author_id, q_id);
+                recent_discussions_list.add(temp);
+            }
+            return recent_discussions_list;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, Void, String> {
         HttpURLConnection urlConnection;
         @Override
