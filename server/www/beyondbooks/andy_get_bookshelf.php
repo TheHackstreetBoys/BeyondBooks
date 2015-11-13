@@ -2,7 +2,7 @@
 require ('db_conn.php');
 $username = $_POST['user_id'];
 
-$query = "select * from (book_shelf natural join books) as bullshit where user_id='201351010' limit 4;" ;
+$query = "select * from (book_shelf natural join books) as bullshit where user_id='$username' limit 4;" ;
 $result = pg_query($query);
 echo pg_last_error();
 
