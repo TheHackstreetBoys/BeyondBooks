@@ -285,7 +285,7 @@ public class RequestServer {
 
     }
 
-    public ArrayList<NewlyAdded> get_bookshelf(Integer user_id){
+    public ArrayList<NewlyAdded> get_bookshelf(Integer user_id) {
         address = "http://"+ip+"/andy_get_bookshelf.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", user_id.toString()));
@@ -356,6 +356,99 @@ public class RequestServer {
         }
     }
 
+    public ForumActivities get_forum_activities(Integer user_id){
+        address = "http://"+ip+"/andy_get_forum_activities.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("user_id", user_id.toString()));
+        try {
+            new Setup().execute(params).get();
+            ArrayList<ForumOverview> questions_started = new ArrayList<ForumOverview>();
+            JSONObject activities = new JSONObject(output);
+            JSONArray uploads = activities.getJSONArray("questions_started");
+            for(int i=0;i<uploads.length();i++){
+                JSONObject cur_book_obj = uploads.getJSONObject(i);
+                String title = cur_book_obj.getString("title");
+                Integer author_id = Integer.parseInt(cur_book_obj.getString("author_id"));
+                Integer q_id = Integer.parseInt(cur_book_obj.getString("q_id"));
+                ForumOverview temp = new ForumOverview(title, null, author_id, q_id);
+                questions_started.add(temp);
+            }
+            JSONArray reviewed = activities.getJSONArray("commented");
+            ArrayList<Comments> commented_list = new ArrayList<Comments>();
+            for(int i=0;i<reviewed.length();i++){
+                JSONObject cur_book = reviewed.getJSONObject(i);
+                String text = cur_book.getString("text");
+                Integer q_id = Integer.parseInt(cur_book.getString("q_id"));
+                String q_title = cur_book.getString("q_title");
+                Integer comment_id = Integer.parseInt(cur_book.getString("comment_id"));
+                Comments temp = new Comments(user_id, text, comment_id, q_id, q_title);
+                commented_list.add(temp);
+            }
+            ForumActivities forumActivities = new ForumActivities(questions_started, commented_list);
+            return forumActivities;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public ArrayList<ForumOverview> top_rated_discussions(){
+        address = "http://"+ip+"/andy_top_rated_discussions.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        try {
+            new Setup().execute(params).get();
+            ArrayList<ForumOverview> top_discussions_list = new ArrayList<ForumOverview>();
+            JSONObject activities = new JSONObject(output);
+            JSONArray uploads = activities.getJSONArray("top_rated");
+            for(int i=0;i<uploads.length();i++){
+                JSONObject cur_book_obj = uploads.getJSONObject(i);
+                String title = cur_book_obj.getString("title");
+                String author = cur_book_obj.getString("author");
+                Integer author_id = Integer.parseInt(cur_book_obj.getString("author_id"));
+                Integer q_id = Integer.parseInt(cur_book_obj.getString("q_id"));
+                ForumOverview temp = new ForumOverview(title, author, author_id, q_id);
+                top_discussions_list.add(temp);
+            }
+            return top_discussions_list;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public ArrayList<ForumOverview> recent_discussions(){
+        address = "http://"+ip+"/andy_recent_discussions.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        try {
+            new Setup().execute(params).get();
+            ArrayList<ForumOverview> recent_discussions_list = new ArrayList<ForumOverview>();
+            JSONObject activities = new JSONObject(output);
+            JSONArray uploads = activities.getJSONArray("recent");
+            for(int i=0;i<uploads.length();i++){
+                JSONObject cur_book_obj = uploads.getJSONObject(i);
+                String title = cur_book_obj.getString("title");
+                String author = cur_book_obj.getString("author");
+                Integer author_id = Integer.parseInt(cur_book_obj.getString("author_id"));
+                Integer q_id = Integer.parseInt(cur_book_obj.getString("q_id"));
+                ForumOverview temp = new ForumOverview(title, author, author_id, q_id);
+                recent_discussions_list.add(temp);
+            }
+            return recent_discussions_list;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, Void, String> {
         HttpURLConnection urlConnection;
         @Override
