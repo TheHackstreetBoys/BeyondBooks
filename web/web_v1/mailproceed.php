@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>
-Welcome to Beyond Books
+Interested Buying This Book
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -94,132 +94,96 @@ $(document).ready(function(){
 	</nav>
 
 
-
-
-
 <br/><br/><br/>
+<hr/>
 
-    <div class="container-fluid">
+
+<p>
+<div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
+			<h3>
+				<b>Interested in Buying this Book</b><hr/>
+			</h3>
 			<div class="row">
 				<div class="col-md-12">
-					<div class="page-header">
-						<h1>
-							<br/>New Uploads! 
-						</h1>
+					<div class="row">
+						<div class="col-md-12">
+							<h3 class="text-center">
+								<b>Send Your Request</b> <hr/>
+							</h3>
+						</div>
 					</div>
-					<ul>
-						<li>
-							Lorem ipsum dolor sit amet
-						</li>
-						<li>
-							Consectetur adipiscing elit
-						</li>
-						<li>
-							Integer molestie lorem at massa
-						</li>
-						<li>
-							Facilisis in pretium nisl aliquet
-						</li>
-						<li>
-							Nulla volutpat aliquam velit
-						</li>
-						<li>
-							Faucibus porta lacus fringilla vel
-						</li>
-						<li>
-							Aenean sit amet erat nunc
-						</li>
-						<li>
-							Eget porttitor lorem
-						</li>
-					</ul>
-				</div>
-			</div>
-			<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="page-header">
-						<h1>
-							Popular/Top Rated Books!
-						</h1>
-					</div>
-					<?php
-		
-												$dbconn=null;
-global $dbconn;
-$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+					<form class="form-horizontal" method = "POST" action = "mail.php" role="form">
 
-			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn LIMIT 3");
+<div class="form-group">
+							 
+							<label for="inputPassword3" class="col-sm-3 control-label">
+								Reciever:
+							</label>
+							<div class="col-sm-6">
+								<input class="form-control" name = "sellerid" value = "<?php echo $_POST['sellerid']?>" id="inputPassword3" type="text" readonly>
+							</div>
+						</div>
 
+<div class="form-group">
+							 
+							<label for="inputPassword3" class="col-sm-3 control-label">
+ISBN of the Book:
+							</label>
+							<div class="col-sm-6">
+								<input class="form-control" name = "isbn" value = "<?php echo $_POST['isbn']; ?>" id="inputPassword3" type="text" readonly>
+							</div>
 
+<div class="form-group">
+							 
+							<label for="inputPassword3" class="col-sm-3 control-label">
 
-			if(!pg_num_rows($result)) {
-							echo '<p>No Book is available.</p>';
-						     } 
-			else {	
-			
-					while($row = pg_fetch_array($result))
-				{
-					echo '<b>'.$row['title'].'<br/></b>';
-					echo "<em>".$row['author']."</em><br/>";
-					echo '<em>'.substr($row['description'], 0, 200).'</em><br/>';
-					echo '<em>'.$row['publisher'].'</em><br/>';
-					echo " <form method = 'POST' action= 'book_main_page.php'>
- 
-  						<input type='hidden' name = 'isbn' value =".$row['isbn'].">
-  						<input type='submit' value = 'Click Here'>
-						</form> ";
+							</label>
+							<div class="col-sm-6">
+								<input type = "hidden" name = "user_id" class="form-control" value = "<?php echo $_POST['user_id']?>" id="inputPassword3" type="text" readonly>
+							</div>
+						</div>
 
-			
-					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';	
-			     }
-					}
+						</div>
 
-					?>
+						<div class="form-group">
+							 
+							<label for="inputEmail3" class="col-sm-3 control-label">
+								Enter Your Message
+							</label>
+							<div class="col-sm-6">
+								<textarea  class="form-control" name = "message" rows = "5" id="inputEmail3" type="text" > </textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							 
+							<label for="inputPassword3" class="col-sm-3 control-label">
+								Enter Your Contact Number
+							</label>
+							<div class="col-sm-6">
+								<input class="form-control" name = "contactno" id="inputPassword3" type="text">
+							</div>
+						</div>
+
+<div class="form-group">
+							 
+							<label for="inputPassword3" class="col-sm-3 control-label">
+
+							</label>
+							<div class="col-sm-6">
+								<input class="form-control" type = "Submit" "id="inputPassword3" type="submit">
+							</div>
+						</div>
 					
-
+						
+					</form>
 				</div>
-				<div class="col-md-6">
-					<div class="page-header">
-						<h1>
-							Top Discussions on Forum!
-						</h1>
-					</div>
-					<?php
-		
-												$dbconn=null;
-global $dbconn;
-$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-
-			$result = pg_query("SELECT * FROM posts ORDER BY num_comments DESC LIMIT 4");
-
-			if(!pg_num_rows($result)) {
-							echo '<p>No forums is Created Yet.</p>';
-						     } 
-			else {	
-			
-					while($row = pg_fetch_array($result))
-				{
-					echo '<h2>'.$row['title'].'</h2><br/>';
-					$body = substr($row['body'], 0, 10);
-					echo nl2br($body).'...<br/>';	
-					echo '<a href="forumview.php?id='.$row['id'].'">Read More</a> | ';
-					echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';	
-					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';	
-			     }
-					}
-
-					?>
-					
-
-				</div>
-			</div>
+			</div> <hr/>
 		</div>
 	</div>
 </div>
-
+</p>
 
 <footer>
 <hr />
@@ -227,7 +191,7 @@ $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=pas
 <hr>Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; Your Company 2014</p>
+<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
 </div>
 </footer>
 

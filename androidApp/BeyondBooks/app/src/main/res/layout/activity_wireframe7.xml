@@ -66,28 +66,32 @@
             android:background="@android:color/darker_gray"/>
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reviews and Ratings"
-                android:id="@+id/text"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reviews and Ratings"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/text"
+                    android:layout_weight="1"/>
+                 <Button
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignParentRight="true"
+                     android:text="give review"/>
+            </LinearLayout>
+
             <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="?android:attr/ratingBarStyleIndicator"
                 android:id="@+id/frame7_rating"
                 android:layout_below="@+id/text"/>
-            <Button
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="give reviews"
-                android:id="@+id/frame6_give_reviews"
-                android:layout_alignParentRight="true"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -120,47 +124,41 @@
                     android:textColor="#0000EE"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@+id/ratings"
-                android:id="@+id/comments"
-                >
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/user_comments"
-                    android:dividerHeight="2dp">
-                </ListView>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:text="comments"
+                   android:textAppearance="?android:attr/textAppearanceMedium"
+                   android:textStyle="bold"
+                   />
+
+               <ListView
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:id="@+id/comments"
+                   android:layout_weight="1"></ListView>
 
 
-            </LinearLayout>
-            <View
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:id="@+id/view"
-                android:layout_below="@+id/comments"
-                android:background="@android:color/darker_gray"/>
-        </RelativeLayout>
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:textStyle="bold"
+                   android:textAppearance="?android:attr/textAppearanceMedium"
+                   android:text="Sellers available" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sellers availabel"/>
+               <ListView
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:id="@+id/sellers"
+                   android:layout_weight="1"></ListView>
 
-    </LinearLayout>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/sellers"
-        >
-    </ListView>
+
+           </LinearLayout>
 
 </LinearLayout>
