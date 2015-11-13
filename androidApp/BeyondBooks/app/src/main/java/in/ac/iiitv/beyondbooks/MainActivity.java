@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Intent to_frame5 = new Intent(getApplicationContext(), wireframe7.class);
+        Intent to_frame5 = new Intent(getApplicationContext(), BookViewPage.class);
         startActivity(to_frame5);
 
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         login = (Button) findViewById(R.id.login);
 
         Intent in= new Intent(this, Frame10.class);
-        startActivity(in);
+        //startActivity(in);
         login.setOnClickListener(this);
 
     }
