@@ -83,6 +83,7 @@ $(document).ready(function(){
 		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
 		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 			<?php
+			
 			   $user_id=$_SESSION["user_id"];
 				 $query="SELECT * FROM user_profile where user_id='$user_id'";
 			   $result=pg_query($query);
@@ -194,6 +195,35 @@ echo "Rating :";
 			</h3>
 	
 
+<?php
+$dbconn=null;
+global $dbconn;
+$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+
+session_start();
+//$username = $_SESSION['current'];
+
+$uid = "201351022";
+$review = $_POST['content'];
+$isbn = $_POST['isbn'];
+
+  //$result = mysql_safe_query('SELECT * FROM teachers WHERE username = %s ', $username);
+   // $row = mysql_fetch_assoc($result);
+
+
+$result = pg_query("SELECT * FROM review WHERE uid='$uid'");
+
+if(pg_num_rows($result)!=0 ) 
+{
+ $query = pg_query("UPDATE review SET review = '$review', isbn = '$isbn' WHERE uid='$uid'" );
+}
+else
+{
+$query = pg_query("INSERT INTO review (uid, review, isbn) VALUES ('$uid', '$review', '$isbn')" );
+}
+
+
+?>
 
 	<?php
 			$dbconn=null;
@@ -207,20 +237,68 @@ echo "Rating :";
 						     }
 			else {
 
-					echo "<br/><br/>Review:<br/><br/>";
+					echo "<br/><b>Reviews of the Users:</b><br/><br/>";
 
 					while($row = pg_fetch_array($result))
 				{
 					echo '<b>'.$row['uid'].'</b><br/>';
 					$body = $row['review'];
-					echo "&nbsp;&nbsp;&nbsp;".nl2br($body).'...<br/><br/>';
+					echo "".nl2br($body).'<br><br/>';
 				
 			     }
 					}
 
 				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
+		echo <<<HTML
+
+ <form class="form-horizontal" role="form" method="post" action="">
+								<div class="form-group">
+
+							
+									<div class="col-sm-10">
+
+				<textarea class="form-control" name = "content" rows = "1" id="inputEmail3" type="text"> Add Your Review</textarea>
+
+									</div>
+								</div>
+
+<div class="form-group">
+
+							
+									<div class="col-sm-4">
+
+				<input class="form-control" type ="hidden" value = "$isbn" name = "isbn" id="inputEmail3" type="text"/>
+
+									</div>
+								</div>
+
+
+
+	<div class="form-group">
+
+							
+									<div class="col-sm-4">
+
+				<input class="form-control" type ="submit" name = "Submit" value =" Add Review" id="inputEmail3" type="text"/>
+
+									</div>
+								</div>
+
+
+								
+							</form>
+HTML;
+
+				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
+
+
+
 					?>
 
+
+
+							
+				
 
 
 			<p>

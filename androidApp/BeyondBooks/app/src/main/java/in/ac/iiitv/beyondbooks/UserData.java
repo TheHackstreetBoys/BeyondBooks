@@ -1,11 +1,12 @@
 package in.ac.iiitv.beyondbooks;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by anjul on 11/11/15.
  */
-public class UserData {
+public class UserData implements Serializable{
     private Integer id;
     ArrayList<NewlyAdded> uploads;
     ArrayList<NewlyAdded> reviewed;
