@@ -108,33 +108,42 @@ $(document).ready(function(){
 						<h1>
 							<br/>New Uploads! 
 						</h1>
+			<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
+
+<?php
+		
+												$dbconn=null;
+global $dbconn;
+$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
+
+			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn LIMIT 6");
+
+
+
+			if(!pg_num_rows($result)) {
+							echo '<p>No Book is available.</p>';
+						     } 
+			else {	
+			
+					while($row = pg_fetch_array($result))
+				{
+			echo "<div class='col-md-3'><br/>
+<a href='book_main_page.php?isbn=".$row['isbn']."'>".$row['title']."</a>
+<br/>
+By:".$row['author']."<br/>
+</div>
+";				
+
+
+		
+			     }
+					}
+
+					?>
+					
+
 					</div>
-					<ul>
-						<li>
-							Lorem ipsum dolor sit amet
-						</li>
-						<li>
-							Consectetur adipiscing elit
-						</li>
-						<li>
-							Integer molestie lorem at massa
-						</li>
-						<li>
-							Facilisis in pretium nisl aliquet
-						</li>
-						<li>
-							Nulla volutpat aliquam velit
-						</li>
-						<li>
-							Faucibus porta lacus fringilla vel
-						</li>
-						<li>
-							Aenean sit amet erat nunc
-						</li>
-						<li>
-							Eget porttitor lorem
-						</li>
-					</ul>
+					
 				</div>
 			</div>
 			<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
@@ -162,15 +171,12 @@ $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=pas
 			
 					while($row = pg_fetch_array($result))
 				{
+			echo "<img src='http://www.librarything.com/devkey/KEY/medium/isbn/".$row['isbn']."'alt='Image is not available' > <br/> ";
 					echo '<b>'.$row['title'].'<br/></b>';
 					echo "<em>".$row['author']."</em><br/>";
 					echo '<em>'.substr($row['description'], 0, 200).'</em><br/>';
 					echo '<em>'.$row['publisher'].'</em><br/>';
-					echo " <form method = 'POST' action= 'book_main_page.php'>
- 
-  						<input type='hidden' name = 'isbn' value =".$row['isbn'].">
-  						<input type='submit' value = 'Click Here'>
-						</form> ";
+					echo "<a href='book_main_page.php?isbn=".$row['isbn']."'>Click Here</a>";
 
 			
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';	

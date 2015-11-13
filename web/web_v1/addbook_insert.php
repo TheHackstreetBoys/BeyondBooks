@@ -11,13 +11,14 @@ $age = $_POST['age'];
 $ts = time();
 
 $price = $_POST['price'];
-$description = $_POST['description'];
+$description = pg_escape_string($_POST['description']);
 $seller = "201351022";
 
 $query1 = pg_query("INSERT INTO pbase(ts, price, sellerid) VALUES ('$ts', '$price', '$seller')");
 
 if($query1)
-{	
+{
+
 }
 
 
@@ -25,6 +26,7 @@ $query2 = pg_query("INSERT INTO single_sell(isbn, age, description, price) VALUE
 
 if($query2)
 {	
+header("Location: mainpage.php"); /* Redirect browser */
 }
 
 

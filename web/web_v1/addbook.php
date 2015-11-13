@@ -2,10 +2,10 @@
 <?php
 include_once 'db_conn.php';
 session_start();
-if(!isset($_SESSION["user_id"]))
-{
-	header('Location: index.php');
-}
+//if(!isset($_SESSION["user_id"]))
+//{
+//	header('Location: index.php');
+//}
 ?>
 <html>
 <head>
