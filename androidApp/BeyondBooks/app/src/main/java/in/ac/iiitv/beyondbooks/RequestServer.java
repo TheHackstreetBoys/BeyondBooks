@@ -285,19 +285,21 @@ public class RequestServer {
 
     }
 
-    public ArrayList<Long> get_bookshelf(Integer user_id){
+    public ArrayList<NewlyAdded> get_bookshelf(Integer user_id){
         address = "http://"+ip+"/andy_get_bookshelf.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", user_id.toString()));
         try {
             new Setup().execute(params).get();
-            ArrayList<Long> book_list = new ArrayList<Long>();
+            ArrayList<NewlyAdded> book_list = new ArrayList<NewlyAdded>();
             JSONObject search_answer = new JSONObject(output);
             JSONArray books_json = search_answer.getJSONArray("books");
             for(int i=0;i<books_json.length();i++){
                 JSONObject cur_book_obj = books_json.getJSONObject(i);
                 Long temp_isbn = Long.parseLong(cur_book_obj.getString("isbn"));
-                book_list.add(temp_isbn);
+                String temp_name = cur_book_obj.getString("book_name");
+                NewlyAdded tempo = new NewlyAdded(null, temp_name, null, temp_isbn);
+                book_list.add(tempo);
             }
             return book_list;
         }catch(JSONException e){
