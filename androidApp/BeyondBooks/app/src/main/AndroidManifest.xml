@@ -3,6 +3,7 @@
     package="in.ac.iiitv.beyondbooks" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -47,6 +48,8 @@
         <activity android:name=".Frame14" >
         </activity>
         <activity android:name=".BookViewPage" >
+        </activity>
+        <activity android:name=".Search" >
         </activity>
     </application>
 

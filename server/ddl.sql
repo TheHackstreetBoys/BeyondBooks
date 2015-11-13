@@ -72,7 +72,9 @@ create table books(
        ts timestamp,
        title varchar,
        image_link varchar,
-       primary key (isbn)
+       by_user varchar not null,
+       primary key (isbn),
+       foreign key (by_user) references user_profile(user_id)
 );
 
 -- Authors of the book
