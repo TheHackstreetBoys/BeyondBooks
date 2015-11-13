@@ -96,6 +96,7 @@ $(document).ready(function(){
 				echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
 				?></a>
 
+
 <ul class="dropdown-menu">
 <li><a herf="#">My profile</a></li>
 <li><a href="#">My uploads</a></li>
@@ -111,12 +112,21 @@ $(document).ready(function(){
 
 <br/><br/><br/><br/>
 <hr/>
-  <div class="container-fluid">
+
+    <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-12">
 			<div class="row">
-				<div class="col-md-6"><br/>
-	<?php
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-md-6">
+
+							<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/">
+						</div>
+
+						<div class="col-md-6">
+							 
+						<?php
 session_start();					
 			$dbconn=null;
 			global $dbconn;
@@ -137,32 +147,18 @@ session_start();
 					while($row = pg_fetch_array($result))
 				{
 					echo '<b>'.$row['title'].'</b></br>';
-					echo "<b> By :".$row['author']."</b>";
+					echo "<b> By :".$row['author']."</b><br/>";
 	
 			     }
 					}
 
-					?>
-</br></br>
-					<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/">
-
-
-					<br/><br/>
-<div id="rating_panel" data-pollid="1" data-rated="0">
-<?php
-			$dbconn=null;
-			global $dbconn;
-			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-				
-
-			
-	$result = pg_query("SELECT COUNT(uid) AS total FROM rating WHERE isbn = '$isbn'");	
+$result = pg_query("SELECT COUNT(uid) AS total FROM rating WHERE isbn = '$isbn'");	
 	$result1 = pg_query("SELECT sum(rating) AS totalrating FROM rating WHERE isbn = '$isbn'");
 	$row = pg_fetch_array($result);
 	$row1 = pg_fetch_array($result1);
 
 $starNumber = $row1['totalrating']/$row['total'];
-echo "Rating :";
+
     for($x=1;$x<=$starNumber;$x++) {
         echo '<img src="full.png" />';
     }
@@ -171,43 +167,39 @@ echo "Rating :";
         $x++;
     }
     while ($x<=5) {
-        echo '<img src="zero.png" />';
+        echo '<img src="blank.png" />';
         $x++;
     }		
 
-
 					?>
-<br/>					<br/><br/>
-	Your Rating :			<img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /><div id="starloader"> </div>
-				
-				<br/><br/></div><button type="button" class="btn btn-success">
-						 + ADD to wishlist
-					</button>
+						</div>	
+					</div>
 				</div>
 				<div class="col-md-6">
-				</div>
-			</div>
-		</div>
-		<div class="col-md-6">
-			<h3>
+
+<h3>
 				Rating and Reviews
 			</h3>
-	
 
+<div id="rating_panel" data-pollid="1" data-rated="0">
 
-	<?php
+					<img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /><div id="starloader"> </div>
+				
+				</div>
+
+					<?php
 			$dbconn=null;
 			global $dbconn;
 			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 				
-	$result = pg_query("SELECT * FROM review WHERE isbn = '$isbn' LIMIT 3");
+	$result = pg_query("SELECT * FROM review LIMIT 3");
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No forums is Created Yet.</p>';
 						     }
 			else {
 
-					echo "<br/><br/>Review:<br/><br/>";
+					echo "<br/>Review:<br/><br/>";
 
 					while($row = pg_fetch_array($result))
 				{
@@ -221,20 +213,18 @@ echo "Rating :";
 				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 					?>
 
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
 
+<h3>
+				About the Book:
+			</h3 
 
-			<p>
-				
-			</p>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-6">
-			<h3>
-				About the Book
-			</h3>
-			<p>
-				<?php
+					<?php
+		
+					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 session_start();					
 				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 			$dbconn=null;
@@ -268,66 +258,21 @@ session_start();
 					}
 
 					?>
-					
-			</p>
-		</div>
-		<div class="col-md-6">
-			<h3>
+				</div>
+				<div class="col-md-6">
+
+				<h3>
 				Any User Selling Book
 			</h3>
-			<?php
-			$dbconn=null;
-			global $dbconn;
-			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-				
-	$result = pg_query("SELECT * FROM pbase JOIN single_sell ON single_sell.prodid = pbase.prodid WHERE single_sell.isbn = '$isbn' AND pbase.prodid = single_sell.prodid");
-
-			if(!pg_num_rows($result)) {
-							echo '<p> No Seller is available.</p>';
-						     }
-			else {
-
-					echo "<br/><b>Available Seller:</b><br/>";
-	
-					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
-
-					while($row = pg_fetch_array($result))
-				{
-					echo '<b>Seller:&nbsp;'.$row['sellerid'].'</b><br/>';
-					echo 'Price:&nbsp;'.$row['price'].'<br/>';
-					echo 'Age:&nbsp;'.$row['age'].'<br/>';
-					$body = $row['description'];
-					echo "Description:&nbsp;".nl2br($body).'';
-					$user_id = "201351022";
-					echo " <form method = 'POST' action= 'mailproceed.php'>
- 
-  						<input type='hidden' name = 'isbn' value =".$row['isbn'].">
-  						<input type='hidden' name = 'sellerid' value =".$row['sellerid'].">
-  						<input type='hidden' name = 'user_id' value =".$user_id.">
-
-  						<input type='submit' value = 'Send Interest'>
-						</form><br/> ";
-
-					
-				
-			     }
-					}
-
-				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
-					?>
-
-
+					<p>
+						Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>. Aliquam eget sapien sapien. Curabitur in metus urna. In hac habitasse platea dictumst. Phasellus eu sem sapien, sed vestibulum velit. Nam purus nibh, lacinia non faucibus et, pharetra in dolor. Sed iaculis posuere diam ut cursus. <em>Morbi commodo sodales nisi id sodales. Proin consectetur, nisi id commodo imperdiet, metus nunc consequat lectus, id bibendum diam velit et dui.</em> Proin massa magna, vulputate nec bibendum nec, posuere nec lacus. <small>Aliquam mi erat, aliquam vel luctus eu, pharetra quis elit. Nulla euismod ultrices massa, et feugiat ipsum consequat eu.</small>
+					</p>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 
-
-<footer>
-<hr />
-<div class="container">
-<hr>Beyond Books Everywhere</hr>
-</br>
-<p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
-</div>
-</footer>
+ 
+  </body>
+</html>
