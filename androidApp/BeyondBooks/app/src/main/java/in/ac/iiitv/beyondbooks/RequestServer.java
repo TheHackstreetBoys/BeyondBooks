@@ -201,10 +201,13 @@ public class RequestServer {
             String about_book = book_page_json.getString("about_book");
             Boolean bookshelf = Boolean.parseBoolean(book_page_json.getString("bookshelf"));
             JSONArray sellers_list = book_page_json.getJSONArray("sellers_list");
-            ArrayList<Integer> sellers_id = new ArrayList<Integer>();
+            ArrayList<UserData> sellers_id = new ArrayList<UserData>();
             for (int i=0;i<sellers_list.length();i++) {
+                UserData userData = new UserData(user_id);
                 JSONObject temp = sellers_list.getJSONObject(i);
-                sellers_id.add(Integer.parseInt(temp.getString("id")));
+                userData.setId(Integer.parseInt(temp.getString("seller_id")));
+                userData.setUser_name(temp.getString("seller_name"));
+                sellers_id.add(userData);
             }
             BookDetails temp = new BookDetails(public_ratings, faculty_ratings, student_ratigns, about_book, bookshelf, isbn, sellers_id );
             return temp;
