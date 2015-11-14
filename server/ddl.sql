@@ -165,9 +165,10 @@ create table combo_sell(
 create table notify(
        whom varchar,
        des varchar,
-       link varchar,
+       link int,
        primary key (whom,des),
-       foreign key (whom) references user_profile(user_id)
+       foreign key (whom) references user_profile(user_id),
+       foreign key (link) references pbase(prodid)
 );
 
 

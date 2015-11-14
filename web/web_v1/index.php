@@ -221,16 +221,14 @@ function checkstudent()
 
 
 	<footer>
-
-	  <hr />
-
-	  <div class="container">
-
-	    <p class="text-right">Copyright &copy; BeyondBooks</p>
-
-	  </div>
-
-	</footer>
+	<hr />
+	<div class="container">
+	<hr>Beyond Books Everywhere</hr>
+	</br>
+	<p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
+	<p class="text-right">Copyright &copy; Your Company 2014</p>
+	</div>
+</footer>
 
 </body>
 </html>

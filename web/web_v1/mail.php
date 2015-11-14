@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+include_once "db_conn.php";
 
 $isbn =  $_POST['isbn'];
 $sellerid = $_POST['sellerid']."@iiitvadodara.ac.in";
@@ -11,7 +12,7 @@ $user_id = $_POST['user_id'];
 
 		$to      = $sellerid;
 		$subject = "Feedback Message";
-		$subject =  $subject." ".$user_id;	
+		$subject =  $subject." ".$user_id;
 		$message =  $_POST['message']." ".$isbn." ".$_POST['contactno'];
 
 
@@ -24,6 +25,6 @@ ini_set('display_errors',1);
   } else {
    echo("<p>Email delivery failed</p>");
   }
-      
+
 
 ?>

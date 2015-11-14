@@ -1,8 +1,6 @@
 <?php
 
-$dbconn=null;
-$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-
+include_once "db_conn.php";
 if($_POST)
 {
     $q = pg_escape_string($_POST['search']);
@@ -13,7 +11,7 @@ if($_POST)
         $isbn  = $row['isbn'];
 	$publisher    = $row['publisher'];
 	$title        = $row['title'];
-     
+
         ?>
             <div class="show" align="left">
             <span class="name"><a href = "book_main_page.php?isbn=<?php echo $isbn ?> ">  </a></span>&nbsp;           </div>

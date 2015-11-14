@@ -104,7 +104,7 @@ public class Wireframe7 extends Activity {
         ArrayList<String> sellers = new ArrayList<>(0);
 
         for(int i=0;i<bookDetails.getSellers().size();i++){
-            sellers.add(bookDetails.getSellers().get(i).getUser_name());
+            sellers.add(bookDetails.getSellers().get(i).first.getUser_name());
         }
 
         return sellers;

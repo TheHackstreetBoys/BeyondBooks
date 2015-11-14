@@ -477,18 +477,10 @@ HTML;
 
 					while($row = pg_fetch_array($result))
 				{
-
-
-
-
 					echo '<b> Title :</b> '.$row['title'].'<br/>';
 					echo "<b> Authors :</b><em>".$row['author']."</em><br/>";
-				        echo '<b> Publication: </b><em>'.$row['publisher'].'</em><br/>';
+			    echo '<b> Publication: </b><em>'.$row['publisher'].'</em><br/>';
 					echo '<b> Description: </b><em>'.$row['description'].'</em><br/>';
-
-
-
-
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 			     }
 					}
