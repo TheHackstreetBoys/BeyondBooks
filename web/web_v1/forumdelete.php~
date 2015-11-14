@@ -11,6 +11,6 @@ $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=pas
     $id = $_GET['id'];
 pg_query("DELETE FROM posts WHERE id= '$id' " );
 pg_query("DELETE FROM reply WHERE post_id= '$id'" );
-
+header("Location: forumWelcome.php");
 
 ?>

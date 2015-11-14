@@ -1,16 +1,16 @@
 <!doctype html>
 <?php
-//include_once 'db_conn.php';
-//session_start();
-//if(!isset($_SESSION["user_id"]))
-//{
-//	header('Location: index.php');
-//}
+include_once 'db_conn.php';
+session_start();
+if(!isset($_SESSION["user_id"]))
+{
+	header('Location: index.php');
+}
 ?>
 <html>
 <head>
 <title>
-Edit Your Question
+Discussion Forum
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -24,9 +24,8 @@ Edit Your Question
 <script src="js/bootstrap.min.js"></script>
 
 
-<!-- <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
-<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
--->
+
+
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -40,8 +39,14 @@ $(document).ready(function(){
 </script>
 </head>
 
-  <body>
 
+
+
+
+
+
+<body>
+<!--                                                                                -->
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	  <div class="container-fluid">
 
@@ -109,108 +114,90 @@ $(document).ready(function(){
 
 	</nav>
 
-
-
-<br/><br/><br/><br/><br/>
-    <div class="container-fluid">
+<br/><br/><br/><br/>
+ <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-12">
- <div id="header">
-         <center> <h1> <a href="#">Edit Your Question Here!</br>  </a></h1> </center> <br/>
-      </div>
-<hr>
+		<div class="col-md-12"><h1>
+<b>Discussion Forums</b> <hr/>
+</h1>
+			<div class="row">
+				<div class="col-md-8">
+					<div class="row">
+						<div class="col-md-12">
 
-<?php
-$dbconn=null;
-global $dbconn;
-$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-if(!empty($_POST)) {
-$course = $_POST['course'];
-$title = $_POST['title'];
-$body = $_POST['body'];
-$date = time();
-$id = $_GET['id'];
+							<h2>
+								Name of the Hash Tag
+							</h2>
+							<p>
+								#Software Engineering QMS <br/><br/>
+							What is software Engineering
+							</p>
+							<p>
 
-	if(pg_query("UPDATE posts SET course= '$course', title= '$title', body= '$body', date='$date' WHERE id='$id'" ))
+							</p>
+						</div>
+					</div>
+				<hr/>
+					<div class="row">
+						<div class="col-md-12">
+							<h3>
+								<b> Comments : </b>
+							</h3>
+							<div class="row">
+									<div class="col-md-12">
+										Nothing but a myth. <br/><br/>
+									<button type="button" class="btn btn-success active btn-block">
+										Load More
+									</button>
+								</div>
+							</div>
+							<h3>
+								<b>Add Your Comment :</b>
+							</h3>
+							<form class="form-horizontal" role="form">
+								<div class="form-group">
 
-       header("Location: forumview.php?id=$id");
-	else
-		echo pg_last_error();
-}
-$id1 = $_GET['id'];
-$result = pg_query("SELECT * FROM posts WHERE id='$id1'" );
+									<label for="inputEmail3" class="col-sm-2 control-label">
 
-if(!pg_num_rows($result)) {
-	echo 'Post #'.$_GET['id'].' not found';
-	exit;
-}
+									</label>
+									<div class="col-sm-10">
 
-$row = pg_fetch_array($result);
+								<textarea class="form-control" rows = "4" id="inputEmail3" type="email"> </textarea>
 
-echo <<<HTML
+									</div>
+								</div>
 
-			<form class="form-horizontal" role="form" method="post" >
-				<div class="form-group">
 
-					<label for="inputEmail3" class="col-sm-4 control-label">
-						Enter the title :
-					</label>
-					<div class="col-sm-5">
-						<input class="form-control" value="{$row['title']}" name = "course" id="inputEmail3" type="text">
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+
+										<button type="submit" class="btn btn-default">
+											Post Comment
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
-				<div class="form-group">
-
-					<label for="inputPassword3" class="col-sm-4 control-label">
-						Enter the Content of the Question :
-					</label>
-					<div class="col-sm-5">
-						<textarea class="form-control" name = "body" id="inputPassword3" rows = "4" type="text">{$row['body']} </textarea>
-					</div>
+				<div class="col-md-4">
+					<h3>
+						Recently Created Discussions <hr/>
+					</h3>
 				</div>
-
-				<div class="form-group">
-
-					<label for="inputPassword3" class="col-sm-4 control-label">
-						Enter the Name of the Hash Tag :
-					</label>
-					<div class="col-sm-5">
-						<input class="form-control" value="{$row['course']}" name= "title" id="inputPassword3" type="text">
-					</div>
-				</div>
-
-
-
-				<center>
-
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-9">
-						 				<br/>						 				<br/>						 				<br/>
-						<button type="submit" size = "6" class="btn btn-default">
-							Update Discussion Here!
-						</button>
-					</div>
-				</div>
-				</center>
-			</form>
-HTML;
-?>
+			</div>
 		</div>
 	</div>
 </div>
 
-<footer>
 
+
+<footer>
 <div class="container">
 <hr>Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
+<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys
 </div>
 </footer>
-
-
-
-  </body>
-</html>
