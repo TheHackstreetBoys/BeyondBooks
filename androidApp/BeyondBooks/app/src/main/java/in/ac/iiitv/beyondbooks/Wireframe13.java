@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class wireframe13 extends AppCompatActivity {
+public class Wireframe13 extends AppCompatActivity {
 
     ListView toprated,recent;
     ArrayAdapter<String> adapter_toprated,adapter_recent;

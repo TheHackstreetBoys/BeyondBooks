@@ -15,16 +15,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class wireframe8 extends AppCompatActivity {
+public class Wireframe8 extends AppCompatActivity {
     private ArrayList<String> notifications;
     ImageView user_image;
     ListView notification_list ;
-    TextView username,userid;
+    TextView username,userid;;
     ArrayAdapter<String> adapter_notification;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.wireframe8);
+        setContentView(R.layout.Wireframe8);
 
         //Added by Anjul Tyagi
         notifications = new ArrayList<String>();
@@ -54,14 +54,10 @@ public class wireframe8 extends AppCompatActivity {
         userid = (TextView) findViewById(R.id.user_id);
         userid.setText(userData.getId());
 
-
-        notification_list = (ListView) findViewById(R.id.list_notification);
-        notifications = new ArrayList<>(0);
-        for(int i=0;i<10;i++){
-            notifications.add("notification"+i);
-        }
-
+        //set notifications (Already there is a arraylist for arrayadapter)
         adapter_notification = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,android.R.id.text1,notifications);
         notification_list.setAdapter(adapter_notification);
     }
+
+
 }

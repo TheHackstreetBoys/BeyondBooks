@@ -395,6 +395,7 @@ public class RequestServer {
         }
         return null;
     }
+
     public ArrayList<ForumOverview> top_rated_discussions(){
         address = "http://"+ip+"/andy_top_rated_discussions.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
@@ -422,6 +423,7 @@ public class RequestServer {
         }
         return null;
     }
+
     public ArrayList<ForumOverview> recent_discussions(){
         address = "http://"+ip+"/andy_recent_discussions.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
@@ -460,7 +462,7 @@ public class RequestServer {
             String title = jsonObject.getString("title");
             String author_name = jsonObject.getString("author_name");
             Integer author_id = Integer.parseInt(jsonObject.getString("author_id"));
-            Integer forum_id = Integer.parseInt(jsonObject.getString("id"));
+            Integer forum_id = q_id;
             String details = jsonObject.getString("details");
             JSONArray jsonArray = jsonObject.getJSONArray("comments");
             ArrayList<Comments> comments = new ArrayList<Comments>();
