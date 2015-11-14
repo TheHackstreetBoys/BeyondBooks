@@ -1,7 +1,12 @@
 <!doctype html>
-
-
-
+<?php
+include_once 'db_conn.php';
+session_start();
+if(!isset($_SESSION["user_id"]))
+{
+	header('Location: index.php');
+}
+?>
 <html>
 <head>
 <title>
@@ -12,9 +17,9 @@ Add Your Book
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
 
-<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>		
+<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
-<link rel="stylesheet" href="css/font-awesome.min.css"/>	
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
 
 <link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
@@ -77,10 +82,10 @@ $(document).ready(function(){
 
 	      <ul class="nav navbar-nav navbar-right">
 
-		
+
 		<li><form action="" class="search-form">
                 <div class="form-group has-feedback" id="search">
-            		
+
 
 
 		<li><form action="" class="search-form">
@@ -95,8 +100,21 @@ $(document).ready(function(){
 	        <li><a href="#home">Home</a></li>
 
 	        <li><a href="#about">About</a></li>
-		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
-		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="/var/www/html/BeyondBooks/web/images/user.png" class="img-circle" style="width: 50px"></a>
+		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
+		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
+			<?php
+				 $user_id=$_SESSION["user_id"];
+				 $query="SELECT * FROM user_profile where user_id='$user_id'";
+				 $result=pg_query($query);
+				 $row=pg_fetch_array($result);
+			$filename=$row['user_id'].'_dp';
+			$filename="pictures/".$filename."*";
+			$result1=glob($filename);
+			if (!empty($result1))
+			echo '<img src="'.$result1[0].'"class="img-circle" style="width: 50px">';
+			else
+				echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
+				?></a>
 
 <ul class="dropdown-menu">
 <li><a herf="#">My profile</a></li>
@@ -131,7 +149,7 @@ $(document).ready(function(){
 
 					<form class="form-horizontal" role="form" method = "post" action = "addbook_proceed.php">
 						<div class="form-group">
-							 
+
 
 					<form class="form-horizontal" role="form">
 						<div class="form-group">
@@ -156,11 +174,11 @@ $(document).ready(function(){
 								</button>
 							</div>
 						</div>
-						
+
 
 
 					<center>
-						
+
 					</center>
 
 						</div>
@@ -182,4 +200,3 @@ $(document).ready(function(){
 <p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
 </div>
 </footer>
-

@@ -7,7 +7,7 @@ $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=pas
 
 	$rated		=	$_GET['rated']+'.0';
 	$pollid		=	$_GET['pid'];
-	$uid		=       "201351014";
+	$uid		=       "201351022";
 	$isbn		=	$_SESSION['isbn'];
 
 $query1 = pg_query("INSERT INTO rating(uid, rating, isbn) VALUES('$uid','$rated','$isbn')");

@@ -154,7 +154,7 @@ $res = array('author' => $decoded->{'items'}[0]->{'volumeInfo'}->{'authors'},
 $author = $res['author'][0];
 $title  = $res['title'];
 $publisher = $res['publisher'];
-$description = $res['description'];
+$description = pg_escape_string($res['description']);
 echo "<br/><br/><br/><br/>";
 echo "<b>Authors:</b>".$author."<br/>";
 echo "<b>Title:</b>".$title."<br/>";
@@ -177,7 +177,6 @@ else
 {
   echo "Error".pg_last_error();
 }
-
 
 
 

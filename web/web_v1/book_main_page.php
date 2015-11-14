@@ -123,7 +123,7 @@ session_start();
 			global $dbconn;
 			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-			$isbn = $_POST['isbn'];
+			$isbn = $_GET['isbn'];
 			$_SESSION['isbn'] = $isbn;
 
 	$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn WHERE books.isbn = '$isbn'");
@@ -143,13 +143,14 @@ session_start();
 			     }
 					}
 
+echo "	</br></br>				<img src='http://www.librarything.com/devkey/KEY/medium/isbn/$isbn'  alt='Image is not available' >  ";
 					?>
-</br></br>
-					<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/">
+
+
 
 
 					<br/><br/>
-<div id="rating_panel" data-pollid="1" data-rated="0">
+
 <?php
 			$dbconn=null;
 			global $dbconn;
@@ -178,10 +179,13 @@ echo "Rating :";
 
 
 					?>
-<br/>					<br/><br/>
-	Your Rating :			<img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /><div id="starloader"> </div>
+<br/><br/>
+Your Rating:
+<div id="rating_panel" data-pollid="1" data-rated="0">
+					<img src="zero.png" /> <img src="zero.png" /> <img src="zero.png" /> <img src="zero.png" /> <img src="zero.png" /><div id="starloader"></div>
+				</div>
 
-				<br/><br/></div><button type="button" class="btn btn-success">
+				<br/><br/><button type="button" class="btn btn-success">
 						 + ADD to wishlist
 					</button>
 				</div>
@@ -205,7 +209,7 @@ session_start();
 
 $uid = "201351022";
 $review = $_POST['content'];
-$isbn = $_POST['isbn'];
+$isbn = $_GET['isbn'];
 
   //$result = mysql_safe_query('SELECT * FROM teachers WHERE username = %s ', $username);
    // $row = mysql_fetch_assoc($result);
@@ -244,13 +248,13 @@ $query = pg_query("INSERT INTO review (uid, review, isbn) VALUES ('$uid', '$revi
 				{
 					echo '<b>'.$row['uid'].'</b><br/>';
 					$body = $row['review'];
-<<<<<<< HEAD
+
 					echo "".nl2br($body).'<br><br/>';
 				
-=======
-					echo "&nbsp;&nbsp;&nbsp;".nl2br($body).'...<br/><br/>';
 
->>>>>>> 832d1778b85fa9de5c1cd67eafccc791d00c2dfd
+
+
+
 			     }
 					}
 
@@ -325,7 +329,7 @@ session_start();
 			global $dbconn;
 			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-			$isbn = $_POST['isbn'];
+			$isbn = $_GET['isbn'];
 			$_SESSION['isbn'] = $isbn;
 
 	$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn WHERE books.isbn = '$isbn'");
@@ -339,6 +343,10 @@ session_start();
 
 					while($row = pg_fetch_array($result))
 				{
+					
+					
+		
+
 					echo '<b> Title :</b> '.$row['title'].'<br/>';
 					echo "<b> Authors :</b><em>".$row['author']."</em><br/>";
 				        echo '<b> Publication: </b><em>'.$row['publisher'].'</em><br/>';
@@ -389,7 +397,7 @@ session_start();
   						<input type='hidden' name = 'sellerid' value =".$row['sellerid'].">
   						<input type='hidden' name = 'user_id' value =".$user_id.">
 
-  						<input type='submit' value = 'Send Interest'>
+  						<input type='submit' value = 'Show Interest'>
 						</form><br/> ";
 
 
