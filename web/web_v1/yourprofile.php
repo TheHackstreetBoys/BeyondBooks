@@ -104,7 +104,7 @@ $(document).ready(function(){
 	        <li><a href="homepage.php">Home</a></li>
 
 	        <li><a href="#about">About</a></li>
-	        <li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
+	        <li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
 
 		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 			<?php

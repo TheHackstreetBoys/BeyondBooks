@@ -5,7 +5,7 @@ package in.ac.iiitv.beyondbooks;
  * Created by anjul on 11/11/15.
  */
 public class Comments {
-    private Integer user_id; // Name of the user
+    private Integer user_id;
     private String text;
     private Integer q_id;
     private String q_title;

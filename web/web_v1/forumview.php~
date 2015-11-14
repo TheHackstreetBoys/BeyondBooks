@@ -84,6 +84,7 @@ $(document).ready(function(){
 	        <li><a href="#home">Home</a></li>
 
 	        <li><a href="#about">About</a></li>
+<<<<<<< HEAD
 		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
 		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 			<?php
@@ -99,6 +100,10 @@ $(document).ready(function(){
 			else
 				echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
 				?></a>
+=======
+		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
+		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="/var/www/html/BeyondBooks/web/images/user.png" class="img-circle" style="width: 50px"></a>
+>>>>>>> 832d1778b85fa9de5c1cd67eafccc791d00c2dfd
 
 <ul class="dropdown-menu">
 <li><a herf="#">My profile</a></li>
