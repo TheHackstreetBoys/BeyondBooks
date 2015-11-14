@@ -112,11 +112,16 @@ $(document).ready(function(){
 
 <?php
 		
-												$dbconn=null;
+$num_rec_per_page=4;
+
+$dbconn=null;
 global $dbconn;
 $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn LIMIT 6");
+if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; }; 
+$start_from = ($page-1) * $num_rec_per_page; 
+
+			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn LIMIT $num_rec_per_page OFFSET $start_from");
 
 
 
@@ -134,6 +139,12 @@ By:".$row['author']."<br/>
 ".$row['publisher']."</div>
 ";				
 
+$sql = "SELECT * FROM books JOIN author ON books.isbn = author.isbn"; 
+$rs_result = pg_query($sql); //run the query
+$total_records = pg_num_rows($rs_result);  //count number of records
+$total_pages = ceil($total_records / $num_rec_per_page);
+
+
 
 		
 			     }
@@ -143,9 +154,19 @@ By:".$row['author']."<br/>
 					
 
 					</div>
-					
-				</div>
-			</div>
+	</div>
+				
+</div>
+	<?php	
+echo "<hr>";			
+echo "<a href='mainpage.php?page1=1'>".'Prev-'."</a> "; // Goto 1st page  
+
+for ($i=1; $i<=$total_pages; $i++) { 
+            echo "<a href='mainpage.php?page1=".$i."'>".$i."</a> "; 
+}; 
+echo "<a href='mainpage.php?page1=$total_pages'>".'-Next'."</a> "; // Goto last page
+
+		?>
 			<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
 			<div class="row">
 				<div class="col-md-6">
@@ -155,12 +176,16 @@ By:".$row['author']."<br/>
 						</h1>
 					</div>
 					<?php
-		
+		$num_rec_per_page=3;
 												$dbconn=null;
 global $dbconn;
 $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn LIMIT 3");
+if (isset($_GET["page"])) { $page1  = $_GET["page"]; } else { $page1=1; }; 
+$start_from = ($page1-1) * $num_rec_per_page; 
+
+
+			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn LIMIT $num_rec_per_page OFFSET $start_from");
 
 
 
@@ -171,7 +196,7 @@ $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=pas
 			
 					while($row = pg_fetch_array($result))
 				{
-			echo "<img src='http://www.librarything.com/devkey/KEY/medium/isbn/".$row['isbn']."'alt='Image is not available' > <br/> ";
+			//echo "<img src='http://www.librarything.com/devkey/KEY/medium/isbn/".$row['isbn']."'alt='Image is not available' > <br/> ";
 					echo '<b>'.$row['title'].'<br/></b>';
 					echo "<em>".$row['author']."</em><br/>";
 					echo '<em>'.substr($row['description'], 0, 200).'</em><br/>';
@@ -179,13 +204,25 @@ $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=pas
 					echo "<a href='book_main_page.php?isbn=".$row['isbn']."'>Click Here</a>";
 
 			
+$sql = "SELECT * FROM books JOIN author ON books.isbn = author.isbn"; 
+$rs_result = pg_query($sql); //run the query
+$total_records = pg_num_rows($rs_result);  //count number of records
+$total_pages = ceil($total_records / $num_rec_per_page);
+
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';	
 			     }
 					}
 
 					?>
-					
+				<?php
 
+echo "<a href='mainpage.php?page=1'>".'Prev-'."</a> "; // Goto 1st page  
+
+for ($i=1; $i<=$total_pages; $i++) { 
+            echo "<a href='mainpage.php?page=".$i."'>".$i."</a> "; 
+}; 
+echo "<a href='mainpage.php?page=$total_pages'>".'-Next'."</a> "; // Goto last page	
+?>
 				</div>
 				<div class="col-md-6">
 					<div class="page-header">
@@ -194,12 +231,18 @@ $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=pas
 						</h1>
 					</div>
 					<?php
+$num_rec_per_page=2;
 		
 												$dbconn=null;
 global $dbconn;
 $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-			$result = pg_query("SELECT * FROM posts ORDER BY num_comments DESC LIMIT 4");
+if (isset($_GET["page2"])) { $page2  = $_GET["page2"]; } else { $page2=1; }; 
+$start_from = ($page2-1) * $num_rec_per_page; 
+
+
+
+			$result = pg_query("SELECT * FROM posts ORDER BY num_comments DESC LIMIT $num_rec_per_page OFFSET $start_from");
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No forums is Created Yet.</p>';
@@ -213,14 +256,29 @@ $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=pas
 					echo nl2br($body).'...<br/>';	
 					echo '<a href="forumview.php?id='.$row['id'].'">Read More</a> | ';
 					echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';	
+
+$sql = "SELECT * FROM posts ORDER BY num_comments"; 
+$rs_result = pg_query($sql); //run the query
+$total_records = pg_num_rows($rs_result);  //count number of records
+$total_pages = ceil($total_records / $num_rec_per_page);
+
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';	
 			     }
 					}
 
 					?>
-					
+					<?php
+
+echo "<a href='mainpage.php?page2=1'>".'Prev-'."</a> "; // Goto 1st page  
+
+for ($i=1; $i<=$total_pages; $i++) { 
+            echo "<a href='mainpage.php?page2=".$i."'>".$i."</a> "; 
+}; 
+echo "<a href='mainpage.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last page	
+?>
 
 				</div>
+
 			</div>
 		</div>
 	</div>

@@ -208,7 +208,7 @@ session_start();
 //$username = $_SESSION['current'];
 
 $uid = "201351022";
-$review = $_POST['content'];
+$review = pg_escape_string($_POST['content']);
 $isbn = $_GET['isbn'];
 
   //$result = mysql_safe_query('SELECT * FROM teachers WHERE username = %s ', $username);
@@ -350,7 +350,7 @@ session_start();
 					echo '<b> Title :</b> '.$row['title'].'<br/>';
 					echo "<b> Authors :</b><em>".$row['author']."</em><br/>";
 				        echo '<b> Publication: </b><em>'.$row['publisher'].'</em><br/>';
-					echo '<b> Decription: </b><em>'.$row['description'].'</em><br/>';
+					echo '<b> Description: </b><em>'.$row['description'].'</em><br/>';
 
 
 
