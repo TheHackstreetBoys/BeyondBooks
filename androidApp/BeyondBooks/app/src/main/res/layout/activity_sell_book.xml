@@ -51,6 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Identify"
+                    android:onClick="identify"
                     android:id="@+id/sellbook_identify"
                     />
             </LinearLayout>
@@ -114,6 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Start Selling!"
+                    android:onClick="sell"
                     android:id="@+id/sellbook_sell"
                     />
             </LinearLayout>

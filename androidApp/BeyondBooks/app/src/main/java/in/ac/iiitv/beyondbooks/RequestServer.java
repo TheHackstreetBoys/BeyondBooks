@@ -187,10 +187,11 @@ public class RequestServer {
         return null;
     }
 
-    public BookDetails book_page(Long isbn){
+    public BookDetails book_page(Long isbn, Integer user_id){
         address = "http://"+ip+"/andy_book_page.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("isbn", isbn.toString()));
+        params.add(new Pair<String, String>("user_id", user_id.toString()));
         try {
             new Setup().execute(params).get();
             JSONObject book_page_json = new JSONObject(output);
@@ -571,6 +572,26 @@ public class RequestServer {
         }
         return false;
     }
+
+    public String identify_book(Long isbn){
+        address = "http://"+ip+"/andy_identify_book.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("isbn", isbn.toString()));
+        try{
+            new Setup().execute(params).get();
+            JSONObject jsonObject = new JSONObject(output);
+            String result = jsonObject.getString("book_name");
+            return result;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, Void, String> {
         HttpURLConnection urlConnection;

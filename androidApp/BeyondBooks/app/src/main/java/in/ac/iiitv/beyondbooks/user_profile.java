@@ -9,5 +9,6 @@ public class user_profile extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+        RequestServer requestServer = new RequestServer();
     }
 }

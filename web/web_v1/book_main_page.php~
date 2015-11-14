@@ -208,7 +208,7 @@ session_start();
 //$username = $_SESSION['current'];
 
 $uid = "201351022";
-$review = $_POST['content'];
+$review = pg_escape_string($_POST['content']);
 $isbn = $_GET['isbn'];
 
   //$result = mysql_safe_query('SELECT * FROM teachers WHERE username = %s ', $username);

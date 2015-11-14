@@ -1,7 +1,9 @@
 package in.ac.iiitv.beyondbooks;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -36,5 +38,13 @@ public class wireframe7 extends Activity {
 
         adapter_sellers = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,android.R.id.text1,values_sellers);
         sellers.setAdapter(adapter_sellers);
+    }
+
+    public void give_review(View v){
+        Intent intent = getIntent();
+        UserData userData = (UserData) intent.getSerializableExtra("user_data");
+        intent = new Intent(this, Frame6.class);
+        intent.putExtra("user_data", userData);
+        startActivity(intent);
     }
 }

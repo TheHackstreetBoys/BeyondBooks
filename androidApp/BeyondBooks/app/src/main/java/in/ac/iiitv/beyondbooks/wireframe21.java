@@ -1,14 +1,13 @@
 package in.ac.iiitv.beyondbooks;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class HarkatOnForum extends Activity {
+public class wireframe21 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_harkat_on_forum);
+        setContentView(R.layout.activity_wireframe21);
     }
 }

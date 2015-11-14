@@ -1,5 +1,6 @@
 package in.ac.iiitv.beyondbooks;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -16,7 +17,12 @@ public class wireframe12 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wireframe12);
-
+        //Added by anjul
+        Intent intent = getIntent();
+        UserData userData = (UserData) intent.getSerializableExtra("user_data");
+        RequestServer requestServer = new RequestServer();
+        ForumActivities forumActivities = requestServer.get_forum_activities(userData.getId());
+        // Till here
         harkat_forum = (ListView) findViewById(R.id.harkatzlist);
         harkats = new ArrayList<>(0);
         for(int i=0;i<10;i++){
