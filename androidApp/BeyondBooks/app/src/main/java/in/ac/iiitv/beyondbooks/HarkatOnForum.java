@@ -1,18 +1,18 @@
 package in.ac.iiitv.beyondbooks;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class Search extends AppCompatActivity {
+public class HarkatOnForum extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_harkat_on_forum);
         Intent intent = getIntent();
-        String query = intent.getStringExtra("query");
+        UserData userData = (UserData) intent.getSerializableExtra("user_data");
         RequestServer requestServer = new RequestServer();
-        SearchOutputReturn searchOutputReturn = requestServer.search(query);
+        ForumActivities forumActivities = requestServer.get_forum_activities(userData.getId());
     }
 }
