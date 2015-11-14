@@ -80,7 +80,7 @@ $(document).ready(function(){
 	        <li><a href="#home">Home</a></li>
 
 	        <li><a href="#about">About</a></li>
-		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
+		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
 		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 			<?php
 			   $user_id=$_SESSION["user_id"];
@@ -125,34 +125,34 @@ $(document).ready(function(){
 						</div>
 
 						<div class="col-md-6">
-							 
+
 						<?php
-session_start();					
+session_start();
 			$dbconn=null;
 			global $dbconn;
 			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-				
+
 			$isbn = $_POST['isbn'];
 			$_SESSION['isbn'] = $isbn;
-			
+
 	$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn WHERE books.isbn = '$isbn'");
 
 
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No Book is available.</p>';
-						     } 
-			else {	
-			
+						     }
+			else {
+
 					while($row = pg_fetch_array($result))
 				{
 					echo '<b>'.$row['title'].'</b></br>';
 					echo "<b> By :".$row['author']."</b><br/>";
-	
+
 			     }
 					}
 
-$result = pg_query("SELECT COUNT(uid) AS total FROM rating WHERE isbn = '$isbn'");	
+$result = pg_query("SELECT COUNT(uid) AS total FROM rating WHERE isbn = '$isbn'");
 	$result1 = pg_query("SELECT sum(rating) AS totalrating FROM rating WHERE isbn = '$isbn'");
 	$row = pg_fetch_array($result);
 	$row1 = pg_fetch_array($result1);
@@ -169,10 +169,10 @@ $starNumber = $row1['totalrating']/$row['total'];
     while ($x<=5) {
         echo '<img src="blank.png" />';
         $x++;
-    }		
+    }
 
 					?>
-						</div>	
+						</div>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -184,14 +184,14 @@ $starNumber = $row1['totalrating']/$row['total'];
 <div id="rating_panel" data-pollid="1" data-rated="0">
 
 					<img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /><div id="starloader"> </div>
-				
+
 				</div>
 
 					<?php
 			$dbconn=null;
 			global $dbconn;
 			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-				
+
 	$result = pg_query("SELECT * FROM review LIMIT 3");
 
 			if(!pg_num_rows($result)) {
@@ -206,7 +206,7 @@ $starNumber = $row1['totalrating']/$row['total'];
 					echo '<b>'.$row['uid'].'</b><br/>';
 					$body = $row['review'];
 					echo "&nbsp;&nbsp;&nbsp;".nl2br($body).'...<br/><br/>';
-				
+
 			     }
 					}
 
@@ -220,40 +220,40 @@ $starNumber = $row1['totalrating']/$row['total'];
 
 <h3>
 				About the Book:
-			</h3 
+			</h3
 
 					<?php
-		
+
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
-session_start();					
+session_start();
 				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 			$dbconn=null;
 			global $dbconn;
 			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-				
+
 			$isbn = $_POST['isbn'];
 			$_SESSION['isbn'] = $isbn;
-			
+
 	$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn WHERE books.isbn = '$isbn'");
 
 
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No Book is available.</p>';
-						     } 
-			else {	
-			
+						     }
+			else {
+
 					while($row = pg_fetch_array($result))
 				{
 					echo '<b> Title :</b> '.$row['title'].'<br/>';
 					echo "<b> Authors :</b><em>".$row['author']."</em><br/>";
-				        echo '<b> Publication: </b><em>'.$row['publisher'].'</em><br/>';	
+				        echo '<b> Publication: </b><em>'.$row['publisher'].'</em><br/>';
 					echo '<b> Decription: </b><em>'.$row['description'].'</em><br/>';
 
-			
 
-			
-					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';	
+
+
+					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 			     }
 					}
 
@@ -273,6 +273,6 @@ session_start();
 	</div>
 </div>
 
- 
+
   </body>
 </html>

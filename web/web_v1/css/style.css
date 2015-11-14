@@ -1,13 +1,15 @@
+.bookshelf1 html{
+  height: 100%;
+}
 
-
-body {
-  background-color: #AAACB5;
+.bookshelf1 body{
+  background-color: #FFF;
 }
 
 .bookshelf {
   width: 80%;
   height: 100%;
-  margin: 0 auto;
+  margin: 10% auto;
   border: 10px #A87328 solid;
   overflow: hidden;
   background-image: -webkit-linear-gradient(#241909, #2c1e0b 220px, #b87e2c 220px, #b87e2c 222px, #A87328 222px, #A87328 228px, #986824 228px, #986824 230px);
