@@ -207,7 +207,7 @@ $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=pas
 session_start();
 //$username = $_SESSION['current'];
 
-$uid = "201351022";
+$uid = "201351005";
 $review = pg_escape_string($_POST['content']);
 $isbn = $_GET['isbn'];
 
@@ -216,26 +216,31 @@ $isbn = $_GET['isbn'];
 
 if (!empty($review))
 {
-$result = pg_query("SELECT * FROM review WHERE uid='$uid'");
-
+$result = pg_query("SELECT * FROM review WHERE uid='$uid' AND isbn = '$isbn'");
 if(pg_num_rows($result)!=0 ) 
 {
- $query = pg_query("UPDATE review SET review = '$review', isbn = '$isbn' WHERE uid='$uid'" );
+ $query = pg_query("UPDATE review SET review = '$review' WHERE uid = '$uid' AND isbn = '$isbn'" );
 }
 else
 {
-$query = pg_query("INSERT INTO review (uid, review, isbn) VALUES ('$uid', '$review', '$isbn')" );
+ $query1 = pg_query("INSERT INTO review (uid, review, isbn) VALUES ('$uid', '$review', '$isbn') " );
 }
+
 }
 
 ?>
 
 	<?php
+		$num_rec_per_page=2;
+
 			$dbconn=null;
 			global $dbconn;
 			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-	$result = pg_query("SELECT * FROM review WHERE isbn = '$isbn' LIMIT 3");
+if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; }; 
+$start_from = ($page-1) * $num_rec_per_page; 
+
+	$result = pg_query("SELECT * FROM review WHERE isbn = '$isbn' LIMIT $num_rec_per_page OFFSET $start_from");
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No forums is Created Yet.</p>';
@@ -252,10 +257,22 @@ $query = pg_query("INSERT INTO review (uid, review, isbn) VALUES ('$uid', '$revi
 					echo "".nl2br($body).'<br><br/>';
 				
 
+$sql = "SELECT * FROM review WHERE isbn = '$isbn'"; 
+$rs_result = pg_query($sql); //run the query
+$total_records = pg_num_rows($rs_result);  //count number of records
+$total_pages = ceil($total_records / $num_rec_per_page);
+
 
 
 
 			     }
+echo "<a href='book_main_page.php?isbn=$isbn&page=1'>".'Prev-'."</a> "; // Goto 1st page  
+
+for ($i=1; $i<=$total_pages; $i++) { 
+            echo "<a href='book_main_page.php?isbn=$isbn&page=".$i."'>".$i."</a> "; 
+}; 
+echo "<a href='book_main_page.php?isbn=$isbn&page=$total_pages'>".'-Next'."</a> "; // Goto last page
+
 					}
 
 				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
@@ -368,11 +385,17 @@ session_start();
 				Any User Selling Book
 			</h3>
 			<?php
+
+		$num_rec_per_page=1;
+
 			$dbconn=null;
 			global $dbconn;
 			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-	$result = pg_query("SELECT * FROM pbase JOIN single_sell ON single_sell.prodid = pbase.prodid WHERE single_sell.isbn = '$isbn' AND pbase.prodid = single_sell.prodid");
+if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; }; 
+$start_from = ($page-1) * $num_rec_per_page; 
+
+	$result = pg_query("SELECT * FROM pbase JOIN single_sell ON single_sell.prodid = pbase.prodid WHERE single_sell.isbn = '$isbn' AND pbase.prodid = single_sell.prodid LIMIT $num_rec_per_page OFFSET $start_from");
 
 			if(!pg_num_rows($result)) {
 							echo '<p> No Seller is available.</p>';
@@ -400,10 +423,24 @@ session_start();
   						<input type='submit' value = 'Show Interest'>
 						</form><br/> ";
 
+$sql = "SELECT * FROM pbase JOIN single_sell ON single_sell.prodid = pbase.prodid WHERE single_sell.isbn = '$isbn' AND pbase.prodid = single_sell.prodid"; 
+$rs_result = pg_query($sql); //run the query
+$total_records = pg_num_rows($rs_result);  //count number of records
+$total_pages = ceil($total_records / $num_rec_per_page);
 
 
 			     }
-					}
+
+					
+echo "<a href='book_main_page.php?isbn=$isbn&page1=1'>".'Prev-'."</a> "; // Goto 1st page  
+
+for ($i=1; $i<=$total_pages; $i++) { 
+            echo "<a href='book_main_page.php?isbn=$isbn&page1=".$i."'>".$i."</a> "; 
+}; 
+echo "<a href='book_main_page.php?isbn=$isbn&page1=$total_pages'>".'-Next'."</a> "; // Goto last page
+
+			
+}
 
 				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 					?>

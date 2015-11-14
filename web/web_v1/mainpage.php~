@@ -269,12 +269,12 @@ $total_pages = ceil($total_records / $num_rec_per_page);
 					?>
 					<?php
 
-echo "<a href='mainpage.php?page=1'>".'Prev-'."</a> "; // Goto 1st page  
+echo "<a href='mainpage.php?page2=1'>".'Prev-'."</a> "; // Goto 1st page  
 
 for ($i=1; $i<=$total_pages; $i++) { 
-            echo "<a href='mainpage.php?page=".$i."'>".$i."</a> "; 
+            echo "<a href='mainpage.php?page2=".$i."'>".$i."</a> "; 
 }; 
-echo "<a href='mainpage.php?page=$total_pages'>".'-Next'."</a> "; // Goto last page	
+echo "<a href='mainpage.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last page	
 ?>
 
 				</div>

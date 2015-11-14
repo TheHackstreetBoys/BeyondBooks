@@ -18,7 +18,7 @@ $isbn = $_POST['isbn'];
  if($query)
 {	
   	
-  header("Location: book_main_page.php?isbn=$isbn");
+  header("Location: book_main_page.php");
 
 }
 
