@@ -11,9 +11,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,12 +19,14 @@ public class Wireframe7 extends Activity {
 
     ListView comments,sellers ;
     ArrayList<String> values_comments,values_sellers;
-    ArrayAdapter<String> adapter_comments,adapter_sellers;
+    CustomAdapter_frame7comment adapter_comments;
+    ArrayAdapter<String> adapter_sellers;
     Intent intent;
     UserData userData;
     ImageView bookimage;
     RatingBar bookrating,rating;
     TextView bookdesc,general,student,faculty;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,29 +87,29 @@ public class Wireframe7 extends Activity {
 
         //fill the comment list
         //TODO
+        comments = (ListView) findViewById(R.id.comments);
+        //adapter_comments = new CustomAdapter_frame7comment(this,bookDetails.);
+        comments.setAdapter(adapter_comments);
         //bookdetail should also contain an arraylist of comments on this book
+
 
         //fill the sellers available listview
         //TODO
-        //bookdetail should also contain an arraylist of sellers of this book
-        comments = (ListView) findViewById(R.id.comments);
-        values_comments = new ArrayList<>(0);
-        for(int i=0;i<10;i++){
-            values_comments.add("comments"+i);
+        //sellers.setAdapter(new ArrayAdapter<String>(this , android.R.layout.simple_list_item_1,android.R.id.text1,getsellers(bookDetails)));
+
+
+
+
+    }
+
+    private ArrayList<String> getsellers(BookDetails bookDetails) {
+        ArrayList<String> sellers = new ArrayList<>(0);
+
+        for(int i=0;i<bookDetails.getSellers().size();i++){
+            sellers.add(bookDetails.getSellers().get(i).getUser_name());
         }
 
-        adapter_comments = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,android.R.id.text1,values_comments);
-        comments.setAdapter(adapter_comments);
-
-        //for sellers listview
-        sellers = (ListView) findViewById(R.id.sellers);
-        values_sellers = new ArrayList<>(0);
-        for(int i=0;i<10;i++){
-            values_sellers.add("seller" + i);
-        }
-
-        adapter_sellers = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,android.R.id.text1,values_sellers);
-        sellers.setAdapter(adapter_sellers);
+        return sellers;
     }
 
     public void give_review(View v){
