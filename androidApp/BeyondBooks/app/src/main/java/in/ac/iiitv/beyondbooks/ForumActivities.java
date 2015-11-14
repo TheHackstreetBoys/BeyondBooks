@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class ForumActivities {
     private ArrayList<ForumOverview> questions_started;
     private ArrayList<Comments> commented;
+
     ForumActivities(ArrayList<ForumOverview> questions_started, ArrayList<Comments> commented){
         this.questions_started = questions_started;
         this.commented = commented;
