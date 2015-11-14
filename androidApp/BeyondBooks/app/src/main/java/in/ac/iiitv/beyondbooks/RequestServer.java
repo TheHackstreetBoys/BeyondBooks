@@ -314,10 +314,11 @@ public class RequestServer {
         return null;
     }
 
-    public void get_activities(UserData cur_user){
+    public UserData get_activities (Integer user_id){
         address = "http://"+ip+"/andy_get_activities.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
-        params.add(new Pair<String, String>("user_id", cur_user.getId().toString()));
+        params.add(new Pair<String, String>("user_id", user_id.toString()));
+        UserData cur_user = new UserData(user_id);
         try {
             new Setup().execute(params).get();
             ArrayList<NewlyAdded> uploads_list = new ArrayList<NewlyAdded>();
@@ -341,14 +342,7 @@ public class RequestServer {
                 reviewed_list.add(temp);
             }
             cur_user.setReviewed(reviewed_list);
-//            JSONArray enquired = activities.getJSONArray("enquired");
-//            ArrayList<Long> enquired_list = new ArrayList<Long>();
-//            for(int i=0;i<enquired.length();i++){
-//                JSONObject cur_book = enquired.getJSONObject(i);
-//                Long enquired_book = Long.parseLong(cur_book.getString("isbn"));
-//                enquired_list.add(enquired_book);
-//            }
-//            cur_user.setEnquired(enquired_list);
+            return cur_user;
         }catch(JSONException e){
             e.printStackTrace();
         }catch(InterruptedException e){
@@ -356,6 +350,7 @@ public class RequestServer {
         }catch (ExecutionException e){
             e.printStackTrace();
         }
+        return null;
     }
 
     public ForumActivities get_forum_activities(Integer user_id){
@@ -582,6 +577,29 @@ public class RequestServer {
             JSONObject jsonObject = new JSONObject(output);
             String result = jsonObject.getString("book_name");
             return result;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public UserData get_user_name_image(Integer id){
+        address = "http://"+ip+"/andy_get_user_data.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("user_id", id.toString()));
+        try{
+            new Setup().execute(params).get();
+            JSONObject jsonObject = new JSONObject(output);
+            String user_name = jsonObject.getString("user_name");
+            String image_link = jsonObject.getString("image_link");
+            UserData temp = new UserData(id);
+            temp.setUser_name(user_name);
+            temp.setImage_link(image_link);
+            return temp;
         }catch(JSONException e){
             e.printStackTrace();
         }catch(InterruptedException e){
