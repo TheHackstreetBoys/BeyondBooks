@@ -24,9 +24,9 @@ public class Frame5 extends AppCompatActivity {
         buysell_list = (ListView) findViewById(R.id.buy_sell);
         forum_list = (ListView) findViewById(R.id.forum);
 
-        adapter_review = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,android.R.id.text1,setreview_listitem(review_list,searchOutputReturn));
-        adapter_buysell = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,android.R.id.text1,setbuysell_listitem(buysell_list, searchOutputReturn));
-        adapter_forum = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,android.R.id.text1,setforum_listitem(forum_list, searchOutputReturn));
+        adapter_review = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,android.R.id.text1,setreview_listitem(searchOutputReturn));
+        adapter_buysell = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,android.R.id.text1,setbuysell_listitem(searchOutputReturn));
+        adapter_forum = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,android.R.id.text1,setforum_listitem(searchOutputReturn));
 
         review_list.setAdapter(adapter_review);
         buysell_list.setAdapter(adapter_buysell);
@@ -36,7 +36,7 @@ public class Frame5 extends AppCompatActivity {
 
 
 
-    public ArrayList<String> setreview_listitem(ListView lv , SearchOutputReturn sr){
+    public ArrayList<String> setreview_listitem( SearchOutputReturn sr){
         ArrayList<String> values = new ArrayList<String>(0);
         ArrayList<NewlyAdded> values_review = sr.getReview();
         for(int reviews=0;reviews<values_review.size();reviews++){
@@ -47,7 +47,7 @@ public class Frame5 extends AppCompatActivity {
 
 
 
-    public ArrayList<String> setbuysell_listitem(ListView lv , SearchOutputReturn sr){
+    public ArrayList<String> setbuysell_listitem(SearchOutputReturn sr){
         ArrayList<String> values = new ArrayList<String>(0);
         ArrayList<NewlyAdded> values_buysell = sr.getBuy_sell();
         for(int i=0;i<values_buysell.size();i++){
@@ -57,7 +57,7 @@ public class Frame5 extends AppCompatActivity {
     }
 
 
-    public ArrayList<String> setforum_listitem(ListView lv , SearchOutputReturn sr){
+    public ArrayList<String> setforum_listitem(SearchOutputReturn sr){
         ArrayList<String> values = new ArrayList<String>(0);
         ArrayList<ForumOverview> values_forum = sr.getForum();
         for(int i=0;i<values_forum.size();i++){

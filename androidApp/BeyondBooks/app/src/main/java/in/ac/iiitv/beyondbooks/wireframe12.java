@@ -11,25 +11,28 @@ import java.util.ArrayList;
 public class wireframe12 extends AppCompatActivity {
 
     ListView harkat_forum;
-    ArrayList<String> harkats;
+    //ArrayList<String> harkats;
     ArrayAdapter<String> adapter_harkat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wireframe12);
+
         //Added by anjul
         Intent intent = getIntent();
         UserData userData = (UserData) intent.getSerializableExtra("user_data");
         RequestServer requestServer = new RequestServer();
         ForumActivities forumActivities = requestServer.get_forum_activities(userData.getId());
         // Till here
+
         harkat_forum = (ListView) findViewById(R.id.harkatzlist);
+        /*
         harkats = new ArrayList<>(0);
         for(int i=0;i<10;i++){
             harkats.add("harkats" + i);
-        }
-
+        }*/
         adapter_harkat = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,android.R.id.text1,harkats);
         harkat_forum.setAdapter(adapter_harkat);
     }
+
 }
