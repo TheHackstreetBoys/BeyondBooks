@@ -18,9 +18,7 @@ import java.util.Map;
 public class Wireframe7 extends Activity {
 
     ListView comments,sellers ;
-    ArrayList<String> values_comments,values_sellers;
-    CustomAdapter_frame7comment adapter_comments;
-    ArrayAdapter<String> adapter_sellers;
+    CustomAdapter_frame7comment adapter_comments,adapter_sellers;
     Intent intent;
     UserData userData;
     ImageView bookimage;
@@ -88,7 +86,7 @@ public class Wireframe7 extends Activity {
         //fill the comment list
         //TODO
         comments = (ListView) findViewById(R.id.comments);
-        //adapter_comments = new CustomAdapter_frame7comment(this,bookDetails.);
+        adapter_comments = new CustomAdapter_frame7comment(this,bookDetails.getComments());
         comments.setAdapter(adapter_comments);
         //bookdetail should also contain an arraylist of comments on this book
 

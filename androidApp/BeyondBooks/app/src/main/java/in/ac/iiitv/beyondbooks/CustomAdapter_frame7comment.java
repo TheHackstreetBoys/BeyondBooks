@@ -1,6 +1,7 @@
 package in.ac.iiitv.beyondbooks;
 
 import android.app.Activity;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +18,13 @@ public class CustomAdapter_frame7comment extends BaseAdapter
     ArrayList<String> commentby;
     ArrayList<String> comments;
 
-    public CustomAdapter_frame7comment (Activity context, ArrayList<String> commentby, ArrayList<String> comments){
+    public CustomAdapter_frame7comment (Activity context, ArrayList<Pair<String,String>> comments_and_by){
         super();
         this.context = context;
-        this.comments = comments;
-        this.commentby = commentby;
+        for(int i=0;i<comments_and_by.size();i++){
+            this.comments.add(i,comments_and_by.get(i).first);
+            this.commentby.add(i,comments_and_by.get(i).second);
+        }
     }
 
     public int getCount() {
