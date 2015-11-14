@@ -48,8 +48,6 @@
         </activity>
         <activity android:name=".BookViewPage" >
         </activity>
-        <activity android:name=".Search" >
-        </activity>
         <activity android:name=".wireframe21" >
         </activity>
     </application>
