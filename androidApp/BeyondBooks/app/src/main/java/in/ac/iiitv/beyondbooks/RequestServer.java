@@ -540,13 +540,14 @@ public class RequestServer {
         return false;
     }
 
-    public Boolean sell_book(Long isbn, Integer user_id, Float age, Float price){
+    public Boolean sell_book(Long isbn, Integer user_id, Float age, Float price, String description){
         address = "http://"+ip+"/andy_sell_book.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("isbn", isbn.toString()));
         params.add(new Pair<String, String>("user_id", user_id.toString()));
         params.add(new Pair<String, String>("age", age.toString()));
         params.add(new Pair<String, String>("price", price.toString()));
+        params.add(new Pair<String, String>("description",description));
         try{
             new Setup().execute(params).get();
             JSONObject jsonObject = new JSONObject(output);
