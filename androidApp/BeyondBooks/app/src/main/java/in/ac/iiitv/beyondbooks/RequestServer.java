@@ -187,10 +187,11 @@ public class RequestServer {
         return null;
     }
 
-    public BookDetails book_page(Long isbn){
+    public BookDetails book_page(Long isbn, Integer user_id){
         address = "http://"+ip+"/andy_book_page.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("isbn", isbn.toString()));
+        params.add(new Pair<String, String>("user_id", user_id.toString()));
         try {
             new Setup().execute(params).get();
             JSONObject book_page_json = new JSONObject(output);

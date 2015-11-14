@@ -10,6 +10,5 @@ public class user_profile extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         RequestServer requestServer = new RequestServer();
-        requestServer.
     }
 }

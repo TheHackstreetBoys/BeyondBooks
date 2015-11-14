@@ -10,9 +10,5 @@ public class HarkatOnForum extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_harkat_on_forum);
-        Intent intent = getIntent();
-        UserData userData = (UserData) intent.getSerializableExtra("user_data");
-        RequestServer requestServer = new RequestServer();
-        ForumActivities forumActivities = requestServer.get_forum_activities(userData.getId());
     }
 }
