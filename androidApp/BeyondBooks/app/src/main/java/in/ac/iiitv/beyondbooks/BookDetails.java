@@ -1,5 +1,8 @@
 package in.ac.iiitv.beyondbooks;
 
+import android.util.Pair;
+
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -14,8 +17,17 @@ public class BookDetails {
     private Boolean bookshelf;
     private Long isbn;
     private ArrayList<UserData> sellers;
+    private ArrayList<Pair<String, String>> comments;
 
-    BookDetails(Float public_ratings, Float faculty_ratings, Float student_ratings, String about_book, Boolean bookshelf, Long isbn, ArrayList<UserData> sellers){
+    public ArrayList<Pair<String, String>> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<Pair<String, String>> comments) {
+        this.comments = comments;
+    }
+
+    BookDetails(Float public_ratings, Float faculty_ratings, Float student_ratings, String about_book, Boolean bookshelf, Long isbn, ArrayList<UserData> sellers, ArrayList<Pair<String, String>> comments){
         this.public_ratings = public_ratings;
         this.faculty_ratings = faculty_ratings;
         this.student_ratings = student_ratings;
@@ -23,6 +35,8 @@ public class BookDetails {
         this.bookshelf = bookshelf;
         this.isbn = isbn;
         this.sellers = sellers;
+        this.comments = comments;
+
     }
 
     public Float getPublic_ratings() {

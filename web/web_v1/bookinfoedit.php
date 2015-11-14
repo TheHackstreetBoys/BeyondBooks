@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>
-Interested Buying This Book
+Add Your Book
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -14,7 +14,9 @@ Interested Buying This Book
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.min.js"></script>
 
+<script src="js/scripts.js"></script>
 
 
 
@@ -77,8 +79,21 @@ $(document).ready(function(){
 	        <li><a href="#home">Home</a></li>
 
 	        <li><a href="#about">About</a></li>
-		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
-		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="/var/www/html/BeyondBooks/web/images/user.png" class="img-circle" style="width: 50px"></a>
+		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
+		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
+			<?php
+			   $user_id=$_SESSION["user_id"];
+				 $query="SELECT * FROM user_profile where user_id='$user_id'";
+			   $result=pg_query($query);
+			   $row=pg_fetch_array($result);
+			$filename=$row['user_id'].'_dp';
+			$filename="pictures/".$filename."*";
+			$result1=glob($filename);
+			if (!empty($result1))
+			echo '<img src="'.$result1[0].'"class="img-circle" style="width: 50px">';
+			else
+				echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
+				?></a>
 
 <ul class="dropdown-menu">
 <li><a herf="#">My profile</a></li>
@@ -94,96 +109,139 @@ $(document).ready(function(){
 	</nav>
 
 
-<br/><br/><br/>
-<hr/>
-
-
-<p>
+<br/><br/><br/><br/>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
-			<h3>
-				<b>Interested in Buying this Book</b><hr/>
+			<h3><br/>
+				Update Book Details<hr/>
 			</h3>
 			<div class="row">
 				<div class="col-md-12">
-					<div class="row">
-						<div class="col-md-12">
-							<h3 class="text-center">
-								<b>Send Your Request</b> <hr/>
-							</h3>
-						</div>
-					</div>
-					<form class="form-horizontal" method = "POST" action = "mail.php" role="form">
+					<h3 class="text-center">
+						<b>Update Book Details</b> <hr/>
+					</h3>
 
-<div class="form-group">
+<?php
 
-							<label for="inputPassword3" class="col-sm-3 control-label">
-								Reciever:
+
+include_once 'db_conn.php';
+$isbn = $_GET['isbn'];
+$sellerid = "201351022";
+
+
+$result = pg_query("SELECT * FROM  pbase JOIN single_sell ON single_sell.prodid = pbase.prodid WHERE single_sell.isbn = '$isbn' AND pbase.sellerid = '$sellerid'");
+
+if(!pg_num_rows($result)) {
+	echo 'No ';
+}
+
+$row = pg_fetch_array($result);
+
+if(!empty($_POST)) 
+{
+$prodid = $row['prodid'];
+$price = $_POST['price'];
+$age = $_POST['age'];
+$des = $_POST['description'];
+
+$ts = time();
+
+if(pg_query("UPDATE single_sell SET age = '$age', description = '$des', price = '$price' WHERE isbn ='$isbn' AND prodid = '$prodid' " ))
+	{
+
+if(pg_query("UPDATE pbase SET ts = '$ts', price = '$price' WHERE sellerid ='$sellerid' AND prodid = '$prodid' " ))
+	{
+      header("Location: mysells.php");
+	
+	}
+}
+	else
+		echo pg_last_error();
+
+	
+	}
+	
+
+
+
+
+
+
+
+
+?>
+
+
+
+					<form class="form-horizontal" role="form" method = "post" action = "">
+						<div class="form-group">
+
+							<label for="inputEmail3" class="col-sm-4 control-label">
+								Enter the ISBN of the Book.
 							</label>
-							<div class="col-sm-6">
-								<input class="form-control" name = "sellerid" value = "<?php echo $_POST['sellerid']?>" id="inputPassword3" type="text" readonly>
+							<div class="col-sm-4">
+								<input class="form-control" id="inputEmail3" name = 'isbn' value = "<?php echo $_GET['isbn']?>" readonly type="email">
+<center>
+
+
+</center>
+
 							</div>
-						</div>
-
-<div class="form-group">
-
-							<label for="inputPassword3" class="col-sm-3 control-label">
-ISBN of the Book:
-							</label>
-							<div class="col-sm-6">
-								<input class="form-control" name = "isbn" value = "<?php echo $_POST['isbn']; ?>" id="inputPassword3" type="text" readonly>
-							</div>
-
-<div class="form-group">
-
-							<label for="inputPassword3" class="col-sm-3 control-label">
-
-							</label>
-							<div class="col-sm-6">
-								<input type = "hidden" name = "user_id" class="form-control" value = "<?php echo $_POST['user_id']?>" id="inputPassword3" type="text" readonly>
-							</div>
-						</div>
-
 						</div>
 
 						<div class="form-group">
 
-							<label for="inputEmail3" class="col-sm-3 control-label">
-								Enter Your Message
+	
+
+							<label for="inputPassword3" class="col-sm-4 control-label">
+								Enter the Price of Book.
 							</label>
-							<div class="col-sm-6">
-								<textarea  class="form-control" name = "message" rows = "5" id="inputEmail3" type="text" > </textarea>
+							<div class="col-sm-4">
+								<input class="form-control" value = "<?php echo $row['price']?>" id="inputPassword3" name = 'price' type="text">
 							</div>
 						</div>
+
 						<div class="form-group">
 
-							<label for="inputPassword3" class="col-sm-3 control-label">
-								Enter Your Contact Number
+							<label for="inputPassword3" class="col-sm-4 control-label">
+								Enter the Age of Book.
 							</label>
-							<div class="col-sm-6">
-								<input class="form-control" name = "contactno" id="inputPassword3" type="text">
+							<div class="col-sm-4">
+								<input class="form-control" placeholder = "This is showing the age of the book in months" value = "<?php echo $row['age']?>" id="inputPassword3"  name = 'age' type="text">
 							</div>
 						</div>
 
-<div class="form-group">
+						<div class="form-group">
 
-							<label for="inputPassword3" class="col-sm-3 control-label">
-
+							<label for="inputPassword3" class="col-sm-4 control-label">
+								Enter the Description of Book.
 							</label>
-							<div class="col-sm-6">
-								<input class="form-control" type = "Submit" id="inputPassword3" type="submit">
+							<div class="col-sm-4">
+								<textarea class="form-control" id="inputPassword3" value = "" name = 'description' type="text"><?php echo $row['description']?> </textarea>
 							</div>
 						</div>
 
 
+					<center>
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-6">
+
+								<button type="submit" class="btn btn-default">
+									Update book Details
+								</button>
+							</div>
+					</center>
+
+						</div>
 					</form>
 				</div>
-			</div> <hr/>
+			</div>
 		</div>
 	</div>
 </div>
-</p>
+
+
 
 <footer>
 <hr />

@@ -54,7 +54,7 @@ $start_from = ($page-1) * $num_rec_per_page;
 						     }
 			else {
 
-					echo "<br/><b>Available Seller:</b><br/>";
+					echo "<br/><b>Books added for Selling:</b><br/>";
 
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 					$i = 1;
@@ -65,7 +65,9 @@ $start_from = ($page-1) * $num_rec_per_page;
 					echo 'Price:&nbsp;'.$row['price'].'<br/>';
 					echo 'Age:&nbsp;'.$row['age'].'<br/>';
 					$body = $row['description'];
-					echo "Description:&nbsp;".nl2br($body).'<br/><br/>';
+					echo "Description:&nbsp;".nl2br($body).'<br/>';
+					echo "<a href='bookinfoedit.php?isbn=".$row['isbn']."'>Click Here to Edit</a><br/>";
+					echo "<a href='bookdelete.php?isbn=".$row['isbn']."&sellerid=".$sellerid."&id=".$row['prodid']."'>Delete the link</a><br/><br/>";
 					$i = $i+1;
 				
 
@@ -122,8 +124,8 @@ $start_from = ($page-1) * $num_rec_per_page;
 						     }
 			else {
 
-					echo "<br/><b></b><br/>";
 
+					echo "<br/><b>Forums Created by you:</b><br/>";
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 					$i = 1;
 					while($row = pg_fetch_array($result))
@@ -134,6 +136,7 @@ $start_from = ($page-1) * $num_rec_per_page;
 					echo 'Age:&nbsp;'.$row['date'].'<br/>';
 					$body = $row['body'];
 					echo "Description:&nbsp;".nl2br($body).'<br/><br/>';
+
 					$i = $i+1;
 				
 
