@@ -28,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="?android:attr/ratingBarStyleSmall"
-                    android:id="@+id/frame6_small_rating"
+                    android:id="@+id/book_rating"
                     />
             </LinearLayout>
             <LinearLayout
@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="?android:attr/ratingBarStyleIndicator"
-                android:id="@+id/frame7_rating"
+                android:id="@+id/rating"
                 android:layout_below="@+id/text"/>
 
             <LinearLayout
@@ -107,7 +107,9 @@
                     android:clickable="true"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textColor="#0000EE"/>
+                    android:textColor="#0000EE"
+                    android:id="@+id/general_rating"
+                    />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -115,7 +117,9 @@
                     android:clickable="true"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textColor="#0000EE"/>
+                    android:textColor="#0000EE"
+                    android:id="@+id/student_rating"
+                    android:onClick="get_student_rating"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -123,7 +127,9 @@
                     android:clickable="true"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textColor="#0000EE"/>
+                    android:textColor="#0000EE"
+                    android:id="@+id/faculty_rating"
+                    android:onClick="get_faculty_rating"/>
             </LinearLayout>
 
 
