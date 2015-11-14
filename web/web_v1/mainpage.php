@@ -17,8 +17,6 @@ Welcome to Beyond Books
 
 
 
-
-
 <script type="text/javascript">
 $(document).ready(function(){
 	$(".dropdown, .btn-group").hover(function(){
@@ -66,18 +64,106 @@ $(document).ready(function(){
 
 	      <ul class="nav navbar-nav navbar-right">
 		
-		<li><form action="" class="search-form">
-                <div class="form-group has-feedback" id="search">
-            		
-            		<input type="text" class="form-control" name="search" id="search1" placeholder="search">
-              		<span class="glyphicon glyphicon-search form-control-feedback"></span>
-            	</div>
-            </form></li>
+		<li><?php
 
-	        <li><a href="#home">Home</a></li>
+$content ='
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript">
+$(function(){
+$(".search").keyup(function() 
+{ 
+var searchid = $(this).val();
+var dataString = \'search=\'+ searchid;
+if(searchid!=\'\')
+{
+    $.ajax({
+    type: "POST",
+    url: "search.php",
+    data: dataString,
+    cache: false,
+    success: function(html)
+    {
+    $("#result").html(html).show();
+    }
+    });
+}return false;    
+});
 
-	        <li><a href="#about">About</a></li>
-		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
+jQuery("#result").live("click",function(e){ 
+    var $clicked = $(e.target);
+    var $name = $clicked.find(\'.name\').html();
+    var decoded = $("<div/>").html($name).text();
+    $(\'#searchid\').val(decoded);
+});
+jQuery(document).live("click", function(e) { 
+    var $clicked = $(e.target);
+    if (! $clicked.hasClass("search")){
+    jQuery("#result").fadeOut(); 
+    }
+});
+$(\'#searchid\').click(function(){
+    jQuery("#result").fadeIn();
+});
+});
+</script>
+
+<style type="text/css">
+    #searchid
+    {
+        width:190px;
+        border:solid 1px #000;
+        padding:8px;
+        font-size:12px;
+	margin-top:-1cm;
+
+     margin-left:1cm;
+       }
+    #result
+    {
+        position:absolute;
+        width:190px;
+        padding:10px;
+        display:none;
+     margin-left:1cm;
+
+        margin-top:-1px;
+        border-top: 0px;
+        overflow:hidden;
+        border:1px #CCC solid;
+        background-color: white;
+    }
+    .show
+    {
+        padding:10px; 
+        border-bottom:0px #999 ;
+        font-size:12px; 
+
+        height:10px;
+
+
+    }
+    .show:hover
+    {
+       
+        cursor:pointer;
+    }
+</style>
+<div class="content">
+<input type="text" class="search" id="searchid" placeholder="Search for Books" />
+<div id="result"> </div>
+</div>
+';
+
+
+$pre = 1;
+include("html.inc");
+?></li>
+
+
+	        <li><br/><a href="#home">Home</a></li>
+
+	        <li><br/><a href="#about">About</a></li>
+		<li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
 		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="/var/www/html/BeyondBooks/web/images/user.png" class="img-circle" style="width: 50px"></a>
 
 <ul class="dropdown-menu">
