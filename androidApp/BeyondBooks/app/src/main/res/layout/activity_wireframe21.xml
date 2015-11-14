@@ -77,9 +77,10 @@
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:id="@+id/frame7_rating"
-        android:layout_below="@+id/text"/>
+        android:id="@+id/giverating"
+        android:numStars="5"
+        android:stepSize="0.5"
+        android:rating="0"/>
 
     <TextView
         android:layout_width="wrap_content"

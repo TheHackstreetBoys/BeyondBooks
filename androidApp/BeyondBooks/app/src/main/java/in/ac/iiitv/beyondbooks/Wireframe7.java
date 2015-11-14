@@ -78,11 +78,11 @@ public class Wireframe7 extends Activity {
                 }
             }
         };
-
         general.setOnClickListener(cl);
         student.setOnClickListener(cl);
         faculty.setOnClickListener(cl);
 
+        
         //fill the comment list
         //TODO
         comments = (ListView) findViewById(R.id.comments);
