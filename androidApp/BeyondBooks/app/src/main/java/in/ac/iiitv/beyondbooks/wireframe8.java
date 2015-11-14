@@ -12,12 +12,11 @@ import java.util.List;
 public class wireframe8 extends AppCompatActivity {
 
     ListView notification_list ;
-    ArrayList<String> notifications;
     ArrayAdapter<String> adapter_notification;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wireframe8);
+        setContentView(R.layout.wireframe8);
 
         //Added by Anjul Tyagi
         RequestServer requestServer = new RequestServer();
