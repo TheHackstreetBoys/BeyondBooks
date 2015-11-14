@@ -78,6 +78,7 @@
                 android:id="@+id/addBook"
                 android:gravity="center"
                 android:text="Add"
+                android:onClick="add_book"
                 android:textColor="#ffffff"
                 android:background="@color/colorPrimary"/>
         </LinearLayout>

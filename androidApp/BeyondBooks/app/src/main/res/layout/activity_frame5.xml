@@ -1,17 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="in.ac.iiitv.beyondbooks.Frame5"
-    android:orientation="vertical">
-
-
-    <ListView
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listView"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context="in.ac.iiitv.beyondbooks.Frame5"
+        android:orientation="vertical">
+       <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Reviewed"
+                android:id="@+id/textView10" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="183dp"
+                android:id="@+id/review" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Buy/Sell"
+                android:id="@+id/textView11" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="183dp"
+                android:id="@+id/buy_sell" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Forum Activities"
+            android:id="@+id/textView12" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="183dp"
+            android:id="@+id/forum" />
+    </LinearLayout>
+</ScrollView>

@@ -89,7 +89,7 @@ $(document).ready(function(){
 	        <li><a href="#home">Home</a></li>
 
 	        <li><a href="#about">About</a></li>
-		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
+		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
 		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 			<?php
 			   $user_id=$_SESSION["user_id"];
@@ -252,3 +252,5 @@ $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=pas
 <p class="text-right">Copyright &copy; Your Company 2014</p>
 </div>
 </footer>
+</body>
+</html>

@@ -79,7 +79,7 @@ $(document).ready(function(){
 	        <li><a href="#home">Home</a></li>
 
 	        <li><a href="#about">About</a></li>
-		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
+		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
 		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 			<?php
 			   $user_id=$_SESSION["user_id"];
@@ -154,7 +154,7 @@ $res = array('author' => $decoded->{'items'}[0]->{'volumeInfo'}->{'authors'},
 $author = $res['author'][0];
 $title  = $res['title'];
 $publisher = $res['publisher'];
-$description = $res['description'];
+$description = pg_escape_string($res['description']);
 echo "<br/><br/><br/><br/>";
 echo "<b>Authors:</b>".$author."<br/>";
 echo "<b>Title:</b>".$title."<br/>";
@@ -177,7 +177,6 @@ else
 {
   echo "Error".pg_last_error();
 }
-
 
 
 

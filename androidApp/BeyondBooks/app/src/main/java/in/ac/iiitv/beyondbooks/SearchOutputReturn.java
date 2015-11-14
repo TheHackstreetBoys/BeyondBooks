@@ -1,11 +1,12 @@
 package in.ac.iiitv.beyondbooks;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by anjul on 11/11/15.
  */
-public class SearchOutputReturn {
+public class SearchOutputReturn implements Serializable{
     private ArrayList<NewlyAdded> review;
     private ArrayList<NewlyAdded> buy_sell;
     private ArrayList<ForumOverview> forum;
