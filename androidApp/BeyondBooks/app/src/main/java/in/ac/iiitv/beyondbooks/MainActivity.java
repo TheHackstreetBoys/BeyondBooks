@@ -16,28 +16,16 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText username, password;
-    Button login;
-
+    private EditText username;
+    private EditText password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        Intent to_frame5 = new Intent(getApplicationContext(), BookViewPage.class);
-        startActivity(to_frame5);
-
-
-        username = (EditText) findViewById(R.id.username);
-        password = (EditText) findViewById(R.id.password);
-        login = (Button) findViewById(R.id.login);
-
-        Intent in= new Intent(this, Frame10.class);
-        //startActivity(in);
-        login.setOnClickListener(this);
-
+        username = (EditText)findViewById(R.id.username);
+        password = (EditText)findViewById(R.id.password);
     }
 
     @Override
@@ -59,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             case R.id.search:
                 in = new Intent(this,Search.class);
+
                 startActivity(in);
                 break;
             case R.id.home:
@@ -77,13 +66,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         RequestServer rs = new RequestServer();
-
         boolean allowed = rs.authenticate(Integer.parseInt(username.getText().toString()),password.getText().toString());
+        UserData userData = new UserData(Integer.parseInt(username.toString()));
         if (allowed)
         {
-            Toast.makeText(this, "allow kar diya bc", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, BookViewPage.class);
+            intent.putExtra("user_data", userData);
+            startActivity(intent);
         }
         else
-            Toast.makeText(this, "bhosad chod type correctly", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Incorrect username or password", Toast.LENGTH_LONG).show();
     }
 }

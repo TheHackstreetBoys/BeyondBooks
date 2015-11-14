@@ -38,7 +38,7 @@
         android:layout_height="40dp"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:hint="Your iiitvadodara email here"
+        android:hint="Your iiitvadodara id here"
         android:id="@+id/username"
         style="@android:style/ButtonBar"
         android:background="#43888888" />
