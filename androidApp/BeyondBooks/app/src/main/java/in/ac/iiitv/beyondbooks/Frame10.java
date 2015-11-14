@@ -1,5 +1,6 @@
 package in.ac.iiitv.beyondbooks;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ViewGroup;
@@ -10,7 +11,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class Frame10 extends AppCompatActivity {
-
+    private Intent intent;
     ListView lv;
     RequestServer rs;
     ArrayList<NewlyAdded> myshelf;
@@ -19,7 +20,9 @@ public class Frame10 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frame10);
         rs = new RequestServer();
-        myshelf = rs.get_bookshelf(201351010);
+        intent = getIntent();
+        UserData userData = (UserData) intent.getSerializableExtra("user_data");
+        myshelf = rs.get_bookshelf(userData.getId());
         lv = (ListView) findViewById(R.id.frame10_bookshelf);
         ArrayList<String> sl = new ArrayList<String>();
         int i;

@@ -9,16 +9,22 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class wireframe7 extends Activity {
+public class Wireframe7 extends Activity {
 
     ListView comments,sellers ;
     ArrayList<String> values_comments,values_sellers;
     ArrayAdapter<String> adapter_comments,adapter_sellers;
+    Intent intent;
+    UserData userData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wireframe7);
-
+        intent = getIntent();
+        userData = (UserData) intent.getSerializableExtra("user_data");
+        Long isbn = Long.parseLong(intent.getStringExtra("isbn"));
+        RequestServer requestServer = new RequestServer();
+        BookDetails bookDetails = requestServer.book_page(isbn, userData.getId());
         comments = (ListView) findViewById(R.id.comments);
         values_comments = new ArrayList<>(0);
         for(int i=0;i<10;i++){
@@ -41,9 +47,7 @@ public class wireframe7 extends Activity {
     }
 
     public void give_review(View v){
-        Intent intent = getIntent();
-        UserData userData = (UserData) intent.getSerializableExtra("user_data");
-        intent = new Intent(this, Frame6.class);
+        intent = new Intent(this, wireframe21.class);
         intent.putExtra("user_data", userData);
         startActivity(intent);
     }

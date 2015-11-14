@@ -9,7 +9,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class wireframe12 extends AppCompatActivity {
+public class Wireframe12 extends AppCompatActivity {
 
     ListView started_list,commented_list;
     ArrayAdapter<String> adapter_started,adapter_commented;

@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(in);
                 break;
             case R.id.user_profile:
-                in = new Intent(this,wireframe8.class);
+                in = new Intent(this,Wireframe8.class);
                 startActivity(in);
         }
 

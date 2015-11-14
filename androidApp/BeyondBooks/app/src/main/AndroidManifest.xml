@@ -20,15 +20,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".wireframe7" >
+        <activity android:name=".Wireframe7" >
         </activity>
-        <activity android:name=".wireframe8" >
+        <activity android:name=".Wireframe12" >
         </activity>
-        <activity android:name=".wireframe12" >
+        <activity android:name=".Wireframe13" >
         </activity>
-        <activity android:name=".wireframe13" >
-        </activity>
-        <activity android:name=".wireframe20" />
+        <activity android:name=".Wireframe20" />
         <activity android:name=".AddBook" />
         <activity android:name=".SellBook" />
         <activity android:name=".Frame5" />
@@ -48,7 +46,9 @@
         </activity>
         <activity android:name=".BookViewPage" >
         </activity>
-        <activity android:name=".wireframe21" >
+        <activity android:name=".Wireframe21" >
+        </activity>
+        <activity android:name=".Wireframe8" >
         </activity>
     </application>
 
