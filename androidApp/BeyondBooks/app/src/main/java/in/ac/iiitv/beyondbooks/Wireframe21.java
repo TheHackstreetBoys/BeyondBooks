@@ -1,13 +1,13 @@
 package in.ac.iiitv.beyondbooks;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class wireframe20 extends Activity {
+public class Wireframe21 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wireframe20);
+        setContentView(R.layout.activity_wireframe21);
     }
 }

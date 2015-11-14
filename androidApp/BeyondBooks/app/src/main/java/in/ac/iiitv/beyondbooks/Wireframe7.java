@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class wireframe7 extends Activity {
+public class Wireframe7 extends Activity {
 
     ListView comments,sellers ;
     ArrayList<String> values_comments,values_sellers;
