@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(id)
         {
             case R.id.search:
-                in = new Intent(this,Search.class);
+                in = new Intent(this,Frame5.class);
 
                 startActivity(in);
                 break;

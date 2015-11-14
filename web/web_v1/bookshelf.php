@@ -48,7 +48,7 @@ $(document).ready(function(){
 
 
 
-<body>
+<body style="height:auto;">
 <!--                                                                                -->
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	  <div class="container-fluid">
@@ -123,33 +123,30 @@ $(document).ready(function(){
 
 	<div class="bookshelf">
 		<?php
+			$class1="book book-green";
+			$class2="book book-umber";
+			$class3="book book-blue";
+			$class4="book book-springer";
 
+			$query_bookshelf="SELECT * from book_shelf where user_id='$user_id'";
+			$answer=pg_query($query_bookshelf);
+			$rows=pg_num_rows($query_bookshelf);
+			if($rows==0)
+			{
+				echo '<h3 style="color:blue;">Looks like you are not an avid reader! </h3>';
+			}
+			while($row=pg_fetch_array($answer))
+			{
+				$books=pg_query("SELECT * from books where isbn='$row[isbn]'");
+				$bookname=pg_fetch_array($books);
+				$var='$class'.rand(1,3);
+				echo (rand(1,3));
+				echo '<h3>'.$var.'</h3>';
+				echo '<div class="'.$var.'">';
+				echo '<h2><a href="book_main_page.php?isbn='.$row['isbn'].'&page=1">'.$bookname['title'].'</a></h2>';
+				echo '</div>';
+			}
 		?>
-	  <div class="book book-green">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-green">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-green">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-umber">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div><div class="book book-blue">
-	    <h2>Harry Potter</h2>
-	  </div><div class="book book-umber">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-springer">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-blue">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div><div class="book-tilted"><div class="book book-umber">
-	    <h2>Harry Potter</h2>
-	  </div></div><div class="book book-blue">
-	    <h2>Introducing HTML5</h2>
-	  </div><div class="book book-green">
-	    <h2>CSS For Dummies</h2>
-	  </div><div class="book book-green">
-	    <h2>Actionscript:</h2><h3>The Definitive Guide</h3>
-	  </div>
 	</div>
 
 
@@ -165,7 +162,7 @@ $(document).ready(function(){
 
   <footer style="background-color:white;">
   <hr />
-  <div class="container">
+  <div class="container generalfooter">
   <hr>Beyond Books Everywhere</hr>
   </br>
   <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
