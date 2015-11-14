@@ -275,7 +275,7 @@ public class RequestServer {
             JSONArray notifications_json = search_answer.getJSONArray("notifications");
             for(int i=0;i<notifications_json.length();i++){
                 JSONObject cur_book_obj = notifications_json.getJSONObject(i);
-                String notification = cur_book_obj.getString("notification");
+                String notification = cur_book_obj.toString();
                 notification_list.add(notification);
             }
             return notification_list;
