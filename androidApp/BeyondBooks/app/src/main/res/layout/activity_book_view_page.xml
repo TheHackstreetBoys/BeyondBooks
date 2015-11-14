@@ -59,7 +59,8 @@
             <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="?android:attr/ratingBarStyleIndicator"/>
+                style="?android:attr/ratingBarStyleIndicator"
+                android:id="@+id/ratingsnew"/>
 
         </LinearLayout>
 
