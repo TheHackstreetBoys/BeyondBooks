@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 public class BookViewPage extends AppCompatActivity {
 
@@ -31,6 +32,11 @@ public class BookViewPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_view_page);
 
+        RequestServer requestServer = new RequestServer();
+        ArrayList<NewlyAdded> newlyAddedArrayList = new ArrayList<NewlyAdded>();
+        ArrayList<NewlyAdded> topRatedArrayList = new ArrayList<NewlyAdded>();
+        newlyAddedArrayList = requestServer.newly_added();
+        topRatedArrayList = requestServer.top_rated();
         //set image
         iv1 = (ImageView) findViewById(R.id.image_newbook);
         iv1.setImageDrawable(getResources().getDrawable(R.drawable.user_image));
