@@ -8,7 +8,8 @@ import android.widget.Toast;
 public class Wireframe21 extends AppCompatActivity {
 
     RatingBar giverating;
-    public float bookrating;
+    //send this book rating to the sever
+    float bookrating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
