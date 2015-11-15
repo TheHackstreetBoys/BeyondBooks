@@ -24,6 +24,7 @@ if (mail($to, $subject, $message, $headers)) {
 ini_set('display_errors',1);
   } else {
    echo("<p>Email delivery failed</p>");
+   header( "refresh:2;url=homepage.php" );
   }
 
 

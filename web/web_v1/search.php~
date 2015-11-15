@@ -1,8 +1,5 @@
 <?php
-$dbconn=null;
-global $dbconn;
-$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-
+include_once "db_conn.php"
 
 if($_POST)
 {
@@ -20,7 +17,7 @@ if($_POST)
         // $final_email = str_ireplace($q, $b_email, $email);
         ?>
             <div class="show" align="left">
-            <span class="name"><a href = "book_main_page.php?Isbn= <?php echo $isbn; ?> "> <?php echo $title; ?> </a></span>&nbsp;           </div>
+            <span class="name"><a href = "book_main_page.php?isbn=<?php echo $isbn; ?> "> <?php echo $title; ?> </a></span>&nbsp;           </div>
         <?php
     }
 

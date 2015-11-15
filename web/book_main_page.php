@@ -38,24 +38,33 @@ $(document).ready(function(){
 </script>
 
 <script type="text/javascript">
-$("document").ready(function(){
+
+
+function deletebookshelf()
+{
 	var isbn=$('#isbn').val();
 	var userid=$('#userid').val();
 	jQuery.ajax({
 		type: "POST",
-		url: "checkbookshelf-script.php",
+		url: "deletebookshelf-script.php",
 		data: "isbn="+isbn+"&userid="+userid,
 		cache: false,
 		success: function(response)
 		{
 			if(response==1)
 			{
-				document.getElementById("bookshelfbtn").value="Added to Bookshelf";
+alert("Removed from your Bookshelf");
+				
 
+
+			}
+			else
+			{
+			alert("It is not in your bookshelf");	
 			}
 		}
 	})
-});
+}
 
 function insertbookshelf()
 {
@@ -70,7 +79,7 @@ function insertbookshelf()
 		{
 			if(response==1)
 			{
-				document.getElementById("bookshelfbtn").value="Added to Bookshelf";
+				alert("Added to Bookshelf");
 
 			}
 			else
@@ -376,8 +385,9 @@ Your Rating:
 				<br/><br/>
 				<input type="hidden" id="isbn" value="<?php echo $isbn; ?>">
 				<input type="hidden" id="userid" value='<?php echo $_SESSION["user_id"]; ?>'>
-				<input type="button" id="bookshelfbtn" class="btn btn-default btn-primary" value="+Add to my Bookshelf" onclick="insertbookshelf()">
-					</input>
+				<input type="button" id="bookshelfbtn" class="btn btn-default btn-primary" value="+Add to my Bookshelf" onclick="insertbookshelf()"> </br></input>
+<input type="button" id="bookshelfbtn1" class="btn btn-default btn-danger" value="-Remove from my Bookshelf" onclick="deletebookshelf()" style="padding-top:5px; margin-top:5px;"></input>
+
 				</div>
 				<div class="col-md-6">
 				</div>
