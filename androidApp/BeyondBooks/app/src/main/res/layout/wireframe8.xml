@@ -22,7 +22,7 @@
                 android:id="@+id/user_image"
                 />
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Upload Image"
                 android:background="#4169e1"

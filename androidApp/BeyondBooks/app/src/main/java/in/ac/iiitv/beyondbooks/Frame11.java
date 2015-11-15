@@ -21,7 +21,7 @@ public class Frame11 extends AppCompatActivity {
         intent = getIntent();
         UserData userData = (UserData)intent.getSerializableExtra("user_data");
         RequestServer requestServer = new RequestServer();
-        UserData temp = requestServer.get_activities(userData.getId());
+        UserData temp = requestServer.get_activities(/*userData.getId()*/201351010);
         uploads = temp.getUploads();
         reviewed_books = temp.getReviewed();
         //Till here
@@ -54,7 +54,6 @@ public class Frame11 extends AppCompatActivity {
         for(int i=0;i<uploads.size();i++){
             value.add(reviewed_books.get(i).getBook_name());
         }
-
         return value;
     }
 }
