@@ -48,12 +48,15 @@ public class Wireframe8 extends AppCompatActivity {
 //        userData.setUploads(temp2.getUploads());
         userData.setUser_name(requestServer.get_user_name(userData.getId()));
         notifications = requestServer.get_notification(userData.getId());
+        System.out.println("notifications: "+notifications);
         //Till here... userData contains every information about the user. Use it to populate the page.
 
         //set image of the user
         //TODO changes to set the image of the user
         user_image = (ImageView) findViewById(R.id.user_image);
-        user_image.setImageBitmap(requestServer.getImage(userData.getId().toString() + "_dp.jpg"));
+        Bitmap temp = requestServer.getImage(userData.getId().toString() + "_dp.jpg");
+        System.out.println("temp : "+temp);
+        user_image.setImageBitmap(temp);
         //set username
         username = (TextView) findViewById(R.id.user_name);
         username.setText(userData.getUser_name());
@@ -85,8 +88,8 @@ public class Wireframe8 extends AppCompatActivity {
         //set notifications (Already there is a arraylist for arrayadapter)
         notification_list = (ListView) findViewById(R.id.notification_list);
         adapter_notification = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,android.R.id.text1,notifications);
-        System.out.println("Reaching here ....");
         notification_list.setAdapter(adapter_notification);
+        System.out.println("Reaching here ....");
     }
     public void set_dp(View v){
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
