@@ -25,12 +25,14 @@ public class MainActivity extends AppCompatActivity  {
     String password_string;
     UserData userData;
     private Button LogIn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
         aboutus = (TextView) findViewById(R.id.aboutus);
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity  {
                     }
                 }
         );
+
 
     }
 
