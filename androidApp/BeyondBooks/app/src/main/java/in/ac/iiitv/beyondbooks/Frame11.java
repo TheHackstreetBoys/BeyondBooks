@@ -30,11 +30,9 @@ public class Frame11 extends AppCompatActivity {
         list_review = (ListView) findViewById(R.id.list_review);
 
         //fill list_upload
-        list_upload.setAdapter(new ArrayAdapter<String>(this,android.R.layout.
-                simple_list_item_1,android.R.id.text1,get_uploads(uploads)));
+        list_upload.setAdapter(new ArrayAdapter<String>(this,R.layout.frame10_list_view,get_uploads(uploads)));
 
-        list_upload.setAdapter(new ArrayAdapter<String>(this,android.R.layout.
-                simple_list_item_1,android.R.id.text1,get_reviews(reviewed_books)));
+        list_upload.setAdapter(new ArrayAdapter<String>(this,R.layout.frame10_list_view,get_reviews(reviewed_books)));
 
     }
 

@@ -86,7 +86,7 @@ if(searchid!=\'\')
 {
     $.ajax({
     type: "POST",
-    url: "search.php",
+    url: "searchforum.php",
     data: dataString,
     cache: false,
     success: function(html)
@@ -257,7 +257,7 @@ if(!pg_num_rows($result)) {
 		$body = substr($row['content'], 0, 20);
 		echo nl2br($body).'...<br/>';
 		echo '<a href="forumview.php?qid='.$row['qid'].'">Read More</a> | ';
-		echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row['num'].' comments</a>';
+		echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row1['num'].' comments</a>';
 		echo '<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 
 	}

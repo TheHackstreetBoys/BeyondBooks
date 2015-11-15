@@ -1,4 +1,18 @@
 <!doctype html>
+<?php
+include_once 'db_conn.php';
+session_start();
+if (isset($_SESSION["user_id"]))
+{
+	$user_id=$_SESSION["user_id"];
+	$result1=pg_query("SELECT f_name from user_profile where user_id='$user_id'");
+	$num1=pg_num_rows($result1);
+	if($num1!=0)
+	{
+			header('Location: homepage.php');
+	}
+}
+?>
 <html>
 <head>
 <title>
@@ -8,9 +22,9 @@ Forgot Password
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>		
+<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
-<link rel="stylesheet" href="css/font-awesome.min.css"/>	
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -38,7 +52,7 @@ Forgot Password
 	        <span class="icon-bar"></span>
 	      </button>
 
-	      <a class="navbar-brand" href="#">Beyond Books</a>
+	      <a class="navbar-brand" href="index.php">Beyond Books</a>
 
 	    </div>
 
@@ -87,7 +101,7 @@ function sendpassword()
 					if(response==1)
 					{
 						$("#email").val("");
-						alert("An email has been sent to your registered email for password reset.");
+						alert("An email has been sent to your registered email.");
 					}
 					else
 					{
