@@ -6,6 +6,7 @@ package in.ac.iiitv.beyondbooks;
  */
 public class Comments {
     private Integer user_id;
+    private String user_name;
     private String text;
     private Integer q_id;
     private String q_title;
@@ -34,6 +35,14 @@ public class Comments {
         this.q_id = q_id;
         this.q_title = q_title;
 
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
     public Integer getComment_id() {

@@ -480,6 +480,8 @@ public class RequestServer {
                 String comment_text = comment_json.getString("text");
                 Integer comment_id = Integer.parseInt(comment_json.getString("comment_id"));
                 Comments temp = new Comments(comment_user_id, comment_text, comment_id, forum_id, title);
+                String user_name = comment_json.getString("user_name");
+                temp.setUser_name(user_name);
                 comments.add(temp);
             }
             ForumDetails to_return = new ForumDetails(title, author_name, forum_id, author_id, comments);
