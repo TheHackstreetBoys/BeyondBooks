@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.login:
                 RequestServer rs = new RequestServer();
                 boolean allowed = rs.authenticate(Integer.parseInt(username.getText().toString()),password.getText().toString());
+                System.out.println("Data sent to server");
                 UserData userData = new UserData(Integer.parseInt(username.toString()));
                 if (allowed)
                 {
