@@ -166,7 +166,7 @@ public class RequestServer {
             ArrayList<NewlyAdded> top_rated_list = new ArrayList<NewlyAdded>();
             JSONObject search_answer = new JSONObject(output);
             JSONArray top_rated_json = search_answer.getJSONArray("top_rated");
-            for(int i=0;i<top_rated_json.length();i++){
+            for(int i=0;i<top_rated_json.length();i++) {
                 JSONObject cur_book_obj = top_rated_json.getJSONObject(i);
                 String image_link = cur_book_obj.getString("image_link");
                 String book_name = cur_book_obj.getString("book_name");
@@ -422,6 +422,7 @@ public class RequestServer {
                 ForumOverview temp = new ForumOverview(title, author, author_id, q_id);
                 top_discussions_list.add(temp);
             }
+            System.out.println("behenchod : "+top_discussions_list);
             return top_discussions_list;
         }catch(JSONException e){
             e.printStackTrace();

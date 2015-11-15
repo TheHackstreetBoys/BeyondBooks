@@ -11,5 +11,5 @@ while ($row = pg_fetch_array($result))
     array_push($ret_array, array('q_id'=>$row['qid'], 'author_id' => $row['asker'],
                             'author'=>$row['f_name'], 'title' => $row['title']));
 }
-echo json_encode($ret_array);
+echo json_encode(array('top_rated'=>$ret_array));
 ?>
