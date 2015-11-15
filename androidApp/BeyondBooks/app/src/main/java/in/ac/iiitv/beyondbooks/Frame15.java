@@ -29,6 +29,7 @@ public class Frame15 extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.frame15_question);
         Intent intent = new Intent(this, Frame16.class);
         String question = editText.getText().toString();
+        System.out.println("le liya edit text" +question);
         intent.putExtra("question", question);
         startActivity(intent);
     }

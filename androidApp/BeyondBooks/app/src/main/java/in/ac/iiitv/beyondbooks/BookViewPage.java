@@ -36,7 +36,7 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
     ArrayList<NewlyAdded> topRatedArrayList;
     ImageView iv1;
     RatingBar rb1;
-    private ViewPager newbooks;
+    private ViewPager newbooks,topratedbook;
     private PagerAdapter newbooksadapter;
 
     private int numOfSlides;
@@ -47,11 +47,16 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
         setContentView(R.layout.activity_book_view_page);
         RequestServer rs = new RequestServer();
 
+        // set newly added book
         newbooks = (ViewPager)findViewById(R.id.book_view_newadded_pager);
         newbooksadapter = new NewBooksPagerAdapter(getSupportFragmentManager());
         newbooks.setAdapter(newbooksadapter);
 
+        //set toprated book
+        topratedbook = (ViewPager) findViewById(R.id.book_toprated_pager);
+        topratedbook.setAdapter(new NewBooksPagerAdapter(getSupportFragmentManager()));
 
+        //TODO add image, rating and book title
 
     }
 
@@ -62,7 +67,6 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
 
     private class NewBooksPagerAdapter extends FragmentStatePagerAdapter
     {
-
         public NewBooksPagerAdapter(FragmentManager fm)
         {
             super(fm);

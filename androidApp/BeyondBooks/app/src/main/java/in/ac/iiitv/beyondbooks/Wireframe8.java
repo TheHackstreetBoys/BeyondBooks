@@ -20,21 +20,17 @@ import java.util.Map;
 
 public class Wireframe8 extends AppCompatActivity {
     private ArrayList<String> notifications;
-<<<<<<< HEAD
+
     private ImageView user_image;
     private ListView notification_list ;
     private TextView username,userid,changepass;;
     private ArrayAdapter<String> adapter_notification;
     private Button uploadimage;
 
-=======
-    ImageView user_image;
-    ListView notification_list ;
-    TextView username,userid;
+
     UserData userData;
-    ArrayAdapter<String> adapter_notification;
     private static final int RESULT_LOAD_IMAGE = 1;
->>>>>>> 2082abe285e52229e771a45e5d6f51f79127e6d4
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,13 +50,16 @@ public class Wireframe8 extends AppCompatActivity {
         notifications = requestServer.get_notification(userData.getId());
         //Till here... userData contains every information about the user. Use it to populate the page.
 
+
         //set image of the user
         //TODO changes to set the image of the user
-        user_image = (ImageView) findViewById(R.id.user_image);
+        set_dp();
+
+        /*user_image = (ImageView) findViewById(R.id.user_image);
         Map<String, Integer> map = new HashMap<String, Integer>();
         map.put(userData.getImage_link(), R.drawable.user_image);
         user_image.setImageResource(map.get(userData.getImage_link()));
-
+        */
         //set username
         username = (TextView) findViewById(R.id.user_name);
         username.setText(userData.getUser_name());
@@ -83,6 +82,7 @@ public class Wireframe8 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO set the image picker to choose the image and then sent it to the server
+
             }
         });
 
@@ -92,7 +92,7 @@ public class Wireframe8 extends AppCompatActivity {
         adapter_notification = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,android.R.id.text1,notifications);
         notification_list.setAdapter(adapter_notification);
     }
-    public void set_dp(View v){
+    public void set_dp(){
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, RESULT_LOAD_IMAGE);
         RequestServer requestServer = new RequestServer();
