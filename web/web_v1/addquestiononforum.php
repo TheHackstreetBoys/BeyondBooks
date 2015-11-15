@@ -4,7 +4,7 @@ session_start();
 if($_SERVER['REQUEST_METHOD']=='POST')
 {
 
-$username =$_SESSION['username'];
+$username =$_SESSION["user_id"];
 $title    =$_POST['title'];
 $title    =pg_real_escape_string($username);
 $title    =strip_tags($title);

@@ -1,13 +1,9 @@
 <?php
-$dbconn=null;
-global $dbconn;
-$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-
-echo "Ji";
+include_once "db_conn.php";
 session_start();
 //$username = $_SESSION['current'];
 
-$uid = "201351022";
+$uid = $_SESSION["user_id"];
 $review = $_POST['content'];
 $isbn = $_POST['isbn'];
 
@@ -16,8 +12,8 @@ $isbn = $_POST['isbn'];
 
  $query = pg_query("INSERT INTO review (uid, review, isbn) VALUES ('$uid', '$review', '$isbn')" );
  if($query)
-{	
-  	
+{
+
   header("Location: book_main_page.php");
 
 }
