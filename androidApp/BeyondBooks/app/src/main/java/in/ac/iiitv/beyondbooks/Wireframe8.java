@@ -8,11 +8,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Wireframe8 extends AppCompatActivity {
@@ -24,7 +21,7 @@ public class Wireframe8 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.Wireframe8);
+        setContentView(R.layout.wireframe8);
 
         //Added by Anjul Tyagi
         notifications = new ArrayList<String>();
