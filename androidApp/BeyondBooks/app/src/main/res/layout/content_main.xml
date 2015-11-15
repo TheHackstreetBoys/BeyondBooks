@@ -36,7 +36,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:inputType="textEmailAddress"
+        android:inputType="number"
         android:ems="10"
         android:hint="Your iiitvadodara id here"
         android:id="@+id/username"
@@ -85,6 +85,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="forgot password"
+        android:clickable="true"
         android:id="@+id/textView2"
         android:layout_gravity="center_horizontal"
         android:textColor="#0004f0" />
