@@ -12,6 +12,24 @@ public class ForumDetails {
     private Integer id;
     private ArrayList<Comments> comments;
     private String details;
+    private String tags;
+    private String faculty_tags;
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public String getFaculty_tags() {
+        return faculty_tags;
+    }
+
+    public void setFaculty_tags(String faculty_tags) {
+        this.faculty_tags = faculty_tags;
+    }
 
     public ForumDetails(String title, String author_name, Integer id, Integer author_id, ArrayList<Comments> comments) {
         this.title = title;

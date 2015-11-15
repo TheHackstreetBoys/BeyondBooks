@@ -12,7 +12,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class Wireframe13 extends AppCompatActivity {
-
+    ArrayList<ForumOverview> top_rated, recent_discussions;
     ListView toprated,recent;
     ArrayAdapter<String> adapter_toprated,adapter_recent;
 
@@ -20,7 +20,9 @@ public class Wireframe13 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wireframe13);
-
+        RequestServer requestServer = new RequestServer();
+        top_rated = requestServer.top_rated_discussions();
+        recent_discussions = requestServer.recent_discussions();
         // Get ListView object from xml
         toprated = (ListView) findViewById(R.id.topratedlist);
 

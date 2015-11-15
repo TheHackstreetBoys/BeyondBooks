@@ -201,13 +201,14 @@ public class RequestServer {
             String about_book = book_page_json.getString("about_book");
             Boolean bookshelf = Boolean.parseBoolean(book_page_json.getString("bookshelf"));
             JSONArray sellers_list = book_page_json.getJSONArray("sellers_list");
-            ArrayList<UserData> sellers_id = new ArrayList<UserData>();
+            ArrayList<Pair<UserData, Float>> sellers_id = new ArrayList<Pair<UserData, Float>>();
             for (int i=0;i<sellers_list.length();i++) {
                 UserData userData = new UserData(user_id);
                 JSONObject temp = sellers_list.getJSONObject(i);
                 userData.setId(Integer.parseInt(temp.getString("seller_id")));
                 userData.setUser_name(temp.getString("seller_name"));
-                sellers_id.add(userData);
+                Float price = Float.parseFloat(temp.getString("price"));
+                sellers_id.add(new Pair<UserData, Float>(userData, price));
             }
             ArrayList<Pair<String, String>> comments_list = new ArrayList<Pair<String, String>>();
             JSONArray comments_json = book_page_json.getJSONArray("comments");
@@ -480,6 +481,8 @@ public class RequestServer {
                 String comment_text = comment_json.getString("text");
                 Integer comment_id = Integer.parseInt(comment_json.getString("comment_id"));
                 Comments temp = new Comments(comment_user_id, comment_text, comment_id, forum_id, title);
+                String user_name = comment_json.getString("user_name");
+                temp.setUser_name(user_name);
                 comments.add(temp);
             }
             ForumDetails to_return = new ForumDetails(title, author_name, forum_id, author_id, comments);
@@ -503,6 +506,7 @@ public class RequestServer {
         params.add(new Pair<String, String>("author_id", forumDetails.getAuthor_id().toString()));
         params.add(new Pair<String, String>("question_id", forumDetails.getId().toString()));
         params.add(new Pair<String, String>("details", forumDetails.getDetails()));
+
         try{
             new Setup().execute(params).get();
             JSONObject jsonObject = new JSONObject(output);
@@ -538,13 +542,14 @@ public class RequestServer {
         return false;
     }
 
-    public Boolean sell_book(Long isbn, Integer user_id, Float age, Float price){
+    public Boolean sell_book(Long isbn, Integer user_id, Float age, Float price, String description){
         address = "http://"+ip+"/andy_sell_book.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("isbn", isbn.toString()));
         params.add(new Pair<String, String>("user_id", user_id.toString()));
         params.add(new Pair<String, String>("age", age.toString()));
         params.add(new Pair<String, String>("price", price.toString()));
+        params.add(new Pair<String, String>("description",description));
         try{
             new Setup().execute(params).get();
             JSONObject jsonObject = new JSONObject(output);
@@ -612,6 +617,29 @@ public class RequestServer {
             UserData temp = new UserData(id);
             temp.setUser_name(user_name);
             temp.setImage_link(image_link);
+            return temp;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<String> get_faculty(){
+        address = "http://"+ip+"/andy_get_faculty.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        try{
+            new Setup().execute(params).get();
+            ArrayList<String> temp = new ArrayList<String>();
+            JSONObject jsonObject = new JSONObject(output);
+            JSONArray faculty_list = jsonObject.getJSONArray("faculties");
+            for (int i=0;i<faculty_list.length();i++){
+                JSONObject faculty = faculty_list.getJSONObject(i);
+                temp.add(faculty.toString());
+            }
             return temp;
         }catch(JSONException e){
             e.printStackTrace();
