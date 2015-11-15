@@ -209,7 +209,15 @@ public class RequestServer {
                 userData.setUser_name(temp.getString("seller_name"));
                 sellers_id.add(userData);
             }
-            BookDetails temp = new BookDetails(public_ratings, faculty_ratings, student_ratigns, about_book, bookshelf, isbn, sellers_id );
+            ArrayList<Pair<String, String>> comments_list = new ArrayList<Pair<String, String>>();
+            JSONArray comments_json = book_page_json.getJSONArray("comments");
+            for(int i=0;i<comments_json.length();i++){
+                JSONObject comment = comments_json.getJSONObject(i);
+                String commentor_name = comment.getString("commentor_name");
+                String text = comment.getString("text");
+                comments_list.add(new Pair<String, String>(text, commentor_name));
+            }
+            BookDetails temp = new BookDetails(public_ratings, faculty_ratings, student_ratigns, about_book, bookshelf, isbn, sellers_id, comments_list );
             return temp;
         }catch(JSONException e){
             e.printStackTrace();
