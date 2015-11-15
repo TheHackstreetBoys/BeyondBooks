@@ -231,8 +231,7 @@ include("html.inc");
 
 /* needed description authors title and publisher*/
 $isbn = $_POST['isbn'];
-$url = "https://www.googleapis.com/books/v1/volumes?q=isbn:".$isbn;
-
+$url = 'https://www.googleapis.com/books/v1/volumes?q=isbn:'.$isbn;
 //$respose = http_get("http://www.google.com",array("timeout"=>1),$info);
 
 
@@ -252,43 +251,31 @@ $title  = $res['title'];
 $publisher = $res['publisher'];
 $description = pg_escape_string($res['description']);
 echo "<br/><br/><br/><br/>";
-echo "<b>Authors:</b>".$author."<br/>";
-echo "<b>Title:</b>".$title."<br/>";
-echo "<b>Publisher:</b>".$publisher."<br/>";
-echo "<b>Description:</b>". substr($description, 0, 200)."....<br/><br/><br/><br/>";
 
-
-
-$dbconn=null;
-global $dbconn;
-$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-
-
-$query1 = pg_query("INSERT INTO books(isbn, publisher, description, title) VALUES ('$isbn', '$publisher', '$description', '$title')");
-
- if($query1)
+if(!empty($author) AND !empty($title))
 {
+	echo "<b>Authors:</b>".$author."<br/>";
+	echo "<b>Title:</b>".$title."<br/>";
+	echo "<b>Publisher:</b>".$publisher."<br/>";
+	echo "<b>Description:</b>". substr($description, 0, 200)."....<br/><br/><br/><br/>";
+
+$uid=$_SESSION["user_id"];
+
+$query1 = pg_query("INSERT INTO books(isbn, publisher, description, ts, title , by_user) VALUES ('$isbn', '$publisher', '$description', CURRENT_TIMESTAMP, '$title', '$uid')");
+if(query1)
+{
+	$query = pg_query("INSERT INTO author(isbn, author) VALUES ('$isbn', '$author')");
+	echo "Book added to our ever-growing database";
 }
-else
-{
-  echo "Error".pg_last_error();
+else {
+	echo "This book is Already there.";
 }
-
-
-
-
-
-$query = pg_query("INSERT INTO author(isbn, author) VALUES ('$isbn', '$author')");
-
- if($query)
-{
 
 }
 else
 {
-  echo "Error".pg_last_error();
+	echo "Invalid ISBN.";
 }
-
 ?>
 </center>
 
@@ -296,7 +283,8 @@ else
 						</div>
 
 						<div class="form-group">
-
+							<center>If you only want to add the book to our database, keep the below entries blank.<br>
+							If you want to sell it, go ahead!</center>
 							<label for="inputPassword3" class="col-sm-4 control-label">
 								Enter the Price of Book.
 							</label>
@@ -311,7 +299,7 @@ else
 								Enter the Age of Book.
 							</label>
 							<div class="col-sm-4">
-								<input class="form-control" id="inputPassword3"  name = 'age' type="text">
+								<input class="form-control" id="inputPassword3"  name = 'age' type="text" placeholder  ="Age of the book is in month by default">
 							</div>
 						</div>
 

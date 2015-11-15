@@ -54,7 +54,7 @@ $("document").ready(function(){
 			if(response==1)
 			{
 				document.getElementById("bookshelfbtn").value="Added to Bookshelf";
-
+				
 			}
 		}
 	})
@@ -74,7 +74,7 @@ function insertbookshelf()
 			if(response==1)
 			{
 				document.getElementById("bookshelfbtn").value="Added to Bookshelf";
-
+				
 			}
 			else
 			{
@@ -110,7 +110,7 @@ $(document).ready(function(){
 					var imgobj = $("#rating_panel>img:eq( "+i+" )" );
 					var img = 'full.png';
 					imgobj.attr('src',img);
-
+					
 				}
 				$.ajax({
 					url:'add_rating.php',
@@ -119,9 +119,9 @@ $(document).ready(function(){
 						$('#starloader').hide();
 					}
 				});
-
-
-
+				
+				
+								
 			});
 		});
 </script>
