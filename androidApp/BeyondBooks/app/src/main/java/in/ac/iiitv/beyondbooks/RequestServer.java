@@ -496,8 +496,8 @@ public class RequestServer {
                 System.out.print(" dsfa "+comment_json.get("comment_id"));
                 String comment_id = comment_json.getString("comment_id");
                 Comments temp = new Comments(comment_user_id, comment_text, comment_id, forum_id, title);
-                String user_name = comment_json.getString("user_name");
-                temp.setUser_name(user_name);
+                //String user_name = comment_json.getString("user_name");
+                //temp.setUser_name(user_name);
                 comments.add(temp);
             }
             ForumDetails to_return = new ForumDetails(title, author_name, forum_id, author_id, comments);

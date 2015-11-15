@@ -26,13 +26,11 @@ public class Frame14 extends AppCompatActivity {
         intent = getIntent();
 
         final Integer q_id = Integer.parseInt(intent.getStringExtra("q_id"));
+
         final UserData userData = (UserData)intent.getSerializableExtra("user_data");
         final RequestServer requestServer = new RequestServer();
         ForumDetails forumDetails = requestServer.forumDetails(q_id);
 
-        //System.out.println("forumdeatails :"+requestServer.get_faculty());
-        System.out.println("forumdeatails :"+forumDetails.getComments().size() );
-        System.out.println("forumdeatails :"+forumDetails.getAuthor_name() );
 
 
         //set topic of the discussion
