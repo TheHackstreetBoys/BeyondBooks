@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText username;
     private EditText password;
     private TextView aboutus;
+    private Button loginbtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,9 +29,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
-
+        startActivity(new Intent(this,BookViewPage.class));
         aboutus = (TextView) findViewById(R.id.aboutus);
         aboutus.setOnClickListener(this);
+        loginbtn=(Button)findViewById(R.id.login);
+        loginbtn.setOnClickListener(this);
     }
 
     @Override
