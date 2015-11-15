@@ -380,6 +380,7 @@ public class RequestServer {
                 Integer author_id = Integer.parseInt(cur_book_obj.getString("author_id"));
                 Integer q_id = Integer.parseInt(cur_book_obj.getString("q_id"));
                 ForumOverview temp = new ForumOverview(title, null, author_id, q_id);
+                System.out.println("maakichut : "+author_id+ " "+q_id);
                 questions_started.add(temp);
             }
             JSONArray reviewed = activities.getJSONArray("commented");

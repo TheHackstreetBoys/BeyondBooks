@@ -1,6 +1,6 @@
 <?php
 require 'db_conn.php';
-$username = $_POST['user_id'];
+$username = $_POST['user_id']=201351010;
 $comm_arr = array();
 $start_arr = array();
 // needed title author_id q_id

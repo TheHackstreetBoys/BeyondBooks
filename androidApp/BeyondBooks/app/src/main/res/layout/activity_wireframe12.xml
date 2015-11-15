@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Gaurav Yadav's harkatz on forum"
+            android:text="Your harkatz on forum"
             android:textStyle="bold"
             android:textColor="#000000"
             android:id="@+id/text_forumharkat"

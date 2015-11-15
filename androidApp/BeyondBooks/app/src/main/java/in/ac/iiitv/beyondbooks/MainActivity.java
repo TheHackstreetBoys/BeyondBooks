@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private EditText username;
     private EditText password;
+    private TextView aboutus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,11 +27,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
-
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
+
+        aboutus = (TextView) findViewById(R.id.aboutus);
+        aboutus.setOnClickListener(this);
     }
 
     @Override
@@ -69,16 +71,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        RequestServer rs = new RequestServer();
-        boolean allowed = rs.authenticate(Integer.parseInt(username.getText().toString()),password.getText().toString());
-        UserData userData = new UserData(Integer.parseInt(username.toString()));
-        if (allowed)
+        switch (v.getId())
         {
-            Intent intent = new Intent(this, BookViewPage.class);
-            intent.putExtra("user_data", userData);
-            startActivity(intent);
+            case R.id.login:
+                RequestServer rs = new RequestServer();
+                boolean allowed = rs.authenticate(Integer.parseInt(username.getText().toString()),password.getText().toString());
+                UserData userData = new UserData(Integer.parseInt(username.toString()));
+                if (allowed)
+                {
+                    Intent intent = new Intent(this, BookViewPage.class);
+                    intent.putExtra("user_data", userData);
+                    startActivity(intent);
+                }
+                else
+                    Toast.makeText(this, "Incorrect username or password", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.aboutus:
+                startActivity(new Intent(this,AboutUs.class));
         }
-        else
-            Toast.makeText(this, "Incorrect username or password", Toast.LENGTH_LONG).show();
     }
 }
