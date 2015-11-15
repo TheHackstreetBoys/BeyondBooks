@@ -79,7 +79,7 @@
                 android:paddingTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/sellbook_desc_user"
+                android:id="@+id/book_desc"
                 android:hint="Enter your description of the book"
                 android:editable="true"/>
 
@@ -93,6 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="age"
+                    android:id="@+id/book_age"
                     android:inputType="number"
                     android:gravity="center"
                     android:layout_weight="1"/>
@@ -100,6 +101,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="price"
+                    android:id="@+id/book_price"
                     android:inputType="numberDecimal"
                     android:gravity="center"
                     android:layout_weight="1"/>
@@ -116,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:text="Start Selling!"
                     android:onClick="sell"
-                    android:id="@+id/sellbook_sell"
+                    android:id="@+id/sell_book"
                     />
             </LinearLayout>
         </LinearLayout>

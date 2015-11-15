@@ -3,7 +3,9 @@ package in.ac.iiitv.beyondbooks;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,10 +16,12 @@ import java.util.Map;
 
 public class Wireframe8 extends AppCompatActivity {
     private ArrayList<String> notifications;
-    ImageView user_image;
-    ListView notification_list ;
-    TextView username,userid;;
-    ArrayAdapter<String> adapter_notification;
+    private ImageView user_image;
+    private ListView notification_list ;
+    private TextView username,userid,changepass;;
+    private ArrayAdapter<String> adapter_notification;
+    private Button uploadimage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +43,7 @@ public class Wireframe8 extends AppCompatActivity {
         //Till here... userData contains every information about the user. Use it to populate the page.
 
         //set image of the user
+        //TODO changes to set the image of the user
         user_image = (ImageView) findViewById(R.id.user_image);
         Map<String, Integer> map = new HashMap<String, Integer>();
         map.put(userData.getImage_link(), R.drawable.user_image);
@@ -51,7 +56,27 @@ public class Wireframe8 extends AppCompatActivity {
         userid = (TextView) findViewById(R.id.user_id);
         userid.setText(userData.getId());
 
+        //change password method
+        changepass = (TextView) findViewById(R.id.changepass);
+        changepass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO link to the code to auto generate the password and send to the user email-id
+            }
+        });
+
+        //button upload image
+        uploadimage = (Button) findViewById(R.id.upload_image);
+        uploadimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO set the image picker to choose the image and then sent it to the server
+            }
+        });
+
+
         //set notifications (Already there is a arraylist for arrayadapter)
+        notification_list = (ListView) findViewById(R.id.notification_list);
         adapter_notification = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,android.R.id.text1,notifications);
         notification_list.setAdapter(adapter_notification);
     }
