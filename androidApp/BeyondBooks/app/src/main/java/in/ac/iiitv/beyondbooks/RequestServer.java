@@ -41,9 +41,11 @@ public class RequestServer {
     private String ip;
     private String address;
     private String output=null;
+    String image_link;
     Bitmap image;
     RequestServer(){
         ip = "10.100.91.55:80/beyondbooks";
+        image_link = "10.100.88.235/BeyondBooks/web/book_pics/";
     }
 
     public Boolean authenticate(Integer id, String password){
@@ -660,7 +662,8 @@ public class RequestServer {
         return null;
     }
 
-    public Bitmap getImage(String image_link){
+    public Bitmap getImage(String image_name){
+        String str_link = "http://"+image_link+"/"+image_name;
         DownloadTask downloadTask = new DownloadTask();
         downloadTask.execute(image_link);
         return image;
