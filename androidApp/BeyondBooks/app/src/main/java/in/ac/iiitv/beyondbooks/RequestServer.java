@@ -13,6 +13,7 @@ import org.apache.http.NameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.DOMError;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -659,6 +660,11 @@ public class RequestServer {
         return null;
     }
 
+    public Bitmap getImage(String image_link){
+        DownloadTask downloadTask = new DownloadTask();
+        downloadTask.execute(image_link);
+        return image;
+    }
 
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, Void, String> {
         HttpURLConnection urlConnection;
@@ -695,7 +701,6 @@ public class RequestServer {
         }
     }
     private void return_method(String return_value){
-//        System.out.println("fucker : "+return_value);
         output = return_value;
     }
     private String getQuery(ArrayList<Pair<String, String>> params) throws UnsupportedEncodingException
