@@ -21,8 +21,6 @@ import java.util.Map;
 
 public class Wireframe8 extends AppCompatActivity {
     private ArrayList<String> notifications;
-
-
     private Button uploadimage;
     ImageView user_image;
     ListView notification_list ;
@@ -34,15 +32,13 @@ public class Wireframe8 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("Reaching here ...");
         setContentView(R.layout.wireframe8);
-        System.out.println("Reaching here ...");
         //Added by Anjul Tyagi
         notifications = new ArrayList<String>();
         RequestServer requestServer = new RequestServer();
         Intent intent = getIntent();
 //        changepass = (TextView) findViewById(R.id.changepass);
-//        userData = (UserData)intent.getSerializableExtra("user_data");
+        userData = (UserData)intent.getSerializableExtra("user_data");
 //        userData.setForumActivities(requestServer.get_forum_activities(userData.getId()));
 //        UserData temp = requestServer.get_user_name_image(userData.getId());
 //        userData.setImage_link(temp.getImage_link());
@@ -52,20 +48,21 @@ public class Wireframe8 extends AppCompatActivity {
 //        userData.setUploads(temp2.getUploads());
         userData.setUser_name(requestServer.get_user_name(userData.getId()));
         notifications = requestServer.get_notification(userData.getId());
+        System.out.println("notifications: "+notifications);
         //Till here... userData contains every information about the user. Use it to populate the page.
 
         //set image of the user
         //TODO changes to set the image of the user
         user_image = (ImageView) findViewById(R.id.user_image);
-        user_image.setImageBitmap(requestServer.getImage(userData.getId().toString()+"_dp.jpg"));
-
+        Bitmap temp = requestServer.getImage(userData.getId().toString() + "_dp.jpg");
+        System.out.println("temp : "+temp);
+        user_image.setImageBitmap(temp);
         //set username
         username = (TextView) findViewById(R.id.user_name);
         username.setText(userData.getUser_name());
         //set user id
         userid = (TextView) findViewById(R.id.user_id);
-        userid.setText(userData.getId());
-
+        userid.setText(userData.getId().toString());
         //change password method
 //        changepass = (TextView) findViewById(R.id.changepass);
 //        changepass.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +89,7 @@ public class Wireframe8 extends AppCompatActivity {
         notification_list = (ListView) findViewById(R.id.notification_list);
         adapter_notification = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,android.R.id.text1,notifications);
         notification_list.setAdapter(adapter_notification);
+        System.out.println("Reaching here ....");
     }
     public void set_dp(View v){
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);

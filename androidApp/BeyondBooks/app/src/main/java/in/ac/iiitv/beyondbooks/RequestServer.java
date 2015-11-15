@@ -286,6 +286,7 @@ public class RequestServer {
     }
 
     public ArrayList<String>get_notification(Integer user_id){
+        System.out.println("user_id : "+user_id);
         address = "http://"+ip+"/andy_get_notification.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", user_id.toString()));
@@ -295,8 +296,7 @@ public class RequestServer {
             JSONObject search_answer = new JSONObject(output);
             JSONArray notifications_json = search_answer.getJSONArray("notifications");
             for(int i=0;i<notifications_json.length();i++){
-                JSONObject cur_book_obj = notifications_json.getJSONObject(i);
-                String notification = cur_book_obj.toString();
+                String notification = notifications_json.getString(i);
                 notification_list.add(notification);
             }
             return notification_list;
@@ -687,14 +687,27 @@ public class RequestServer {
 
     public Bitmap getImage(String image_name){
         String str_link = "http://"+image_link+"/"+image_name;
+        System.out.println("image_name: "+str_link);
         DownloadTask downloadTask = new DownloadTask();
-        downloadTask.execute(str_link);
+        try {
+            downloadTask.execute(str_link).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         return image;
     }
 
     public Boolean setImage(Bitmap image, String user_id){
         address = "http://"+ip+"/andy_set_image.php";
-        new UploadImage(image, user_id).execute();
+        try {
+            new UploadImage(image, user_id).execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         try {
             JSONObject jsonObject = new JSONObject(output);
             Boolean result = Boolean.parseBoolean(jsonObject.getString("result"));

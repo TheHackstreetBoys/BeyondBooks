@@ -72,7 +72,7 @@ $(document).ready(function(){
 
 	      <ul class="nav navbar-nav navbar-right">
 
-		<li>
+<li>
 <?php
 $content ='
 <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
@@ -86,7 +86,7 @@ if(searchid!=\'\')
 {
     $.ajax({
     type: "POST",
-    url: "searchforum.php",
+    url: "search.php",
     data: dataString,
     cache: false,
     success: function(html)
@@ -121,7 +121,7 @@ $(\'#searchid\').click(function(){
         width:190px;
         padding:8px;
         font-size:12px;
-	margin-top:-1cm;
+	margin-top:0cm;
 
      margin-left:1cm;
        }
@@ -168,7 +168,7 @@ include("html.inc");
 ?></li>
 
 
-	        <li><br/><a href="homapage.php">Home</a></li>
+	        <li><br/><a href="homepage.php">Home</a></li>
 
 	        <li><br/><a href="buy_sell.php">Buy/Sell</a></li>
 					<li><br/><a href="forum.php">Forum</a></li>
@@ -317,7 +317,13 @@ echo "<a href='forumWelcome.php?page1=$total_pages'>".'-Next'."</a> "; // Goto l
 
 					<?php
 
-$result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid )  DESC LIMIT 4");
+$num_rec_per_page=3;
+
+if (isset($_GET["page2"])) { $page  = $_GET["page2"]; } else { $page=1; };
+$start_from = ($page-1) * $num_rec_per_page;
+
+
+$result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid )  DESC LIMIT $num_rec_per_page OFFSET $start_from");
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No forums is Created Yet.</p>';
@@ -337,7 +343,28 @@ $result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS nu
 					echo '<a href="forumview.php?qid='.$row['qid'].'">Read More</a> | ';
 					echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row1['num'].' comments</a>';
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
-			     }
+			     
+
+
+
+
+$sql = "SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid )  DESC";
+$rs_result = pg_query($sql); //run the query
+$total_records = pg_num_rows($rs_result);  //count number of records
+$total_pages = ceil($total_records / $num_rec_per_page);
+
+
+}
+
+echo "<a href='forumview.php?page2=1'>".'Prev-'."</a> "; // Goto 1st page
+
+for ($i=1; $i<=$total_pages; $i++) {
+            echo "<a href='forumWelcome.php?page2=".$i."'>".$i."</a> ";
+};
+echo "<a href='forumview.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last page
+
+
+
 					}
 
 					?>
