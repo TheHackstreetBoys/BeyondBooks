@@ -64,7 +64,7 @@ $(document).ready(function(){
 	        <span class="icon-bar"></span>
 	      </button>
 
-	      <a class="navbar-brand" href="#">Beyond Books</a>
+	      <a class="navbar-brand" href="homepage.php">Beyond Books</a>
 
 	    </div>
 
@@ -74,36 +74,122 @@ $(document).ready(function(){
 
 	      <ul class="nav navbar-nav navbar-right">
 
-		<li><form action="" class="search-form">
-                <div class="form-group has-feedback" id="search">
+		<li>
+<?php
+$content ='
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript">
+$(function(){
+$(".search").keyup(function()
+{
+var searchid = $(this).val();
+var dataString = \'search=\'+ searchid;
+if(searchid!=\'\')
+{
+    $.ajax({
+    type: "POST",
+    url: "search.php",
+    data: dataString,
+    cache: false,
+    success: function(html)
+    {
+    $("#result").html(html).show();
+    }
+    });
+}return false;
+});
 
-            		<input type="text" class="form-control" name="search" id="search1" placeholder="search">
-              		<span class="glyphicon glyphicon-search form-control-feedback"></span>
-            	</div>
-            </form></li>
+jQuery("#result").live("click",function(e){
+    var $clicked = $(e.target);
+    var $name = $clicked.find(\'.name\').html();
+    var decoded = $("<div/>").html($name).text();
+    $(\'#searchid\').val(decoded);
+});
+jQuery(document).live("click", function(e) {
+    var $clicked = $(e.target);
+    if (! $clicked.hasClass("search")){
+    jQuery("#result").fadeOut();
+    }
+});
+$(\'#searchid\').click(function(){
+    jQuery("#result").fadeIn();
+});
+});
+</script>
 
-	        <li><a href="#home">Home</a></li>
+<style type="text/css">
+    #searchid
+    {
+        width:190px;
+        padding:8px;
+        font-size:12px;
+	margin-top:-1cm;
 
-	        <li><a href="#about">About</a></li>
-		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
-		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
-			<?php
-				 $user_id=$_SESSION["user_id"];
-				 $query="SELECT * FROM user_profile where user_id='$user_id'";
-				 $result=pg_query($query);
-				 $row=pg_fetch_array($result);
-			$filename=$row['user_id'].'_dp';
-			$filename="pictures/".$filename."*";
-			$result1=glob($filename);
-			if (!empty($result1))
-			echo '<img src="'.$result1[0].'"class="img-circle" style="width: 50px">';
-			else
-				echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
-				?></a>
+     margin-left:1cm;
+       }
+    #result
+    {
+        position:absolute;
+        width:190px;
+        padding:10px;
+        display:none;
+     margin-left:1cm;
 
+        margin-top:-1px;
+        border-top: 0px;
+        overflow:hidden;
+        border:1px #CCC solid;
+        background-color: white;
+    }
+    .show
+    {
+        padding:10px;
+        border-bottom:0px #999 ;
+        font-size:12px;
+
+        height:10px;
+
+
+    }
+    .show:hover
+    {
+
+        cursor:pointer;
+    }
+</style>
+<div class="content" style="margin-top: -3%;">
+<input type="text" class="form-control search"  id="searchid" placeholder="Search for Books" />
+	<span class="glyphicon glyphicon-search form-control-feedback" style="padding-top: 15%; color: #3596e0;"></span>
+<div id="result"> </div>
+</div>
+';
+
+
+$pre = 1;
+include("html.inc");
+?></li>
+
+
+	        <li><br/><a href="homapage.php">Home</a></li>
+
+	        <li><br/><a href="buy_sell.php">Buy/Sell</a></li>
+					<li><br/><a href="forum.php">Forum</a></li>
+		<li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
+			<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
+				<?php
+				$filename=$_SESSION["user_id"].'_dp';
+				$filename="pictures/".$filename."*";
+				$result1=glob($filename);
+				if (!empty($result1))
+				echo '<img src="'.$result1[0].'"class="img-circle" style="width: 50px">';
+				else
+					echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
+					?>
+			</a>
 <ul class="dropdown-menu">
-<li><a herf="#">My profile</a></li>
-<li><a href="#">My uploads</a></li>
+<li><a href="yourprofile.php">My Profile</a></li>
+<li><a href="bookshelf.php">My Bookshelf</a></li>
+<li><a href="my_sold_books.php">My Sold Books</a></li>
 </ul></li>
 
 	      </ul>
@@ -113,6 +199,7 @@ $(document).ready(function(){
 	  </div><!-- /.container-fluid -->
 
 	</nav>
+
 
 
 

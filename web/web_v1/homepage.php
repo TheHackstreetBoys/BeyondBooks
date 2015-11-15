@@ -72,8 +72,8 @@ $(document).ready(function(){
 
 	      <ul class="nav navbar-nav navbar-right">
 
-		<li><?php
-
+		<li>
+<?php
 $content ='
 <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
@@ -408,3 +408,5 @@ echo "<a href='homepage.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last 
 <p class="text-right">Copyright &copy; Your Company 2014</p>
 </div>
 </footer>
+</body>
+</html>
