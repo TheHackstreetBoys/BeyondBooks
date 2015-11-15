@@ -7,7 +7,6 @@ function getDetails($isbnl)
     $response = file_get_contents($url);
 
     $decoded = json_decode($response);
-
     $res = array('authors' => $decoded->{'items'}[0]->{'volumeInfo'}->{'authors'},
             "title" => $decoded->{'items'}[0]->{'volumeInfo'}->{'title'},
 
