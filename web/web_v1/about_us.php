@@ -17,19 +17,6 @@ About Us
 <script src="js/bootstrap.min.js"></script>
 
 
-
-
-
-<script type="text/javascript">
-$(document).ready(function(){
-	$(".dropdown, .btn-group").hover(function(){
-		var dropdownMenu = $(this).children(".dropdown-menu");
-		if(dropdownMenu.is(":visible")){
-			dropdownMenu.parent().toggleClass("open");
-		}
-	});
-});
-</script>
 </head>
 
 
@@ -66,14 +53,6 @@ $(document).ready(function(){
 	    <div class="collapse navbar-collapse" id="navbar-collapse-main">
 
 	      <ul class="nav navbar-nav navbar-right">
-
-		<li><form action="" class="search-form">
-                <div class="form-group has-feedback" id="search">
-
-            		<input type="text" class="form-control" name="search" id="search1" placeholder="search">
-              		<span class="glyphicon glyphicon-search form-control-feedback"></span>
-            	</div>
-            </form></li>
 
 	        <li><a href="index.php">Home</a></li>
 

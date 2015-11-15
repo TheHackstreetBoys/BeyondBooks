@@ -32,7 +32,9 @@ else
 
 
 if ($uploadOk == 0) {
-    echo "Sorry, your file was not uploaded.";
+    echo "Sorry, your file was not uploaded. ";
+		echo "You will be automatically redirected";
+		header( "refresh:2; url=yourprofile.php" );
 }
 
 
