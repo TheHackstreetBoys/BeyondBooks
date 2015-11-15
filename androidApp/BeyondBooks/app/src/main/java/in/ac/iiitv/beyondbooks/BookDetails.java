@@ -16,7 +16,7 @@ public class BookDetails {
     private String about_book;
     private Boolean bookshelf;
     private Long isbn;
-    private ArrayList<UserData> sellers;
+    private ArrayList<Pair<UserData, Float>> sellers;
     private ArrayList<Pair<String, String>> comments;
 
     public ArrayList<Pair<String, String>> getComments() {
@@ -27,7 +27,7 @@ public class BookDetails {
         this.comments = comments;
     }
 
-    BookDetails(Float public_ratings, Float faculty_ratings, Float student_ratings, String about_book, Boolean bookshelf, Long isbn, ArrayList<UserData> sellers, ArrayList<Pair<String, String>> comments){
+    BookDetails(Float public_ratings, Float faculty_ratings, Float student_ratings, String about_book, Boolean bookshelf, Long isbn, ArrayList<Pair<UserData, Float>> sellers, ArrayList<Pair<String, String>> comments){
         this.public_ratings = public_ratings;
         this.faculty_ratings = faculty_ratings;
         this.student_ratings = student_ratings;
@@ -87,11 +87,11 @@ public class BookDetails {
         this.isbn = isbn;
     }
 
-    public ArrayList<UserData> getSellers() {
+    public ArrayList<Pair<UserData, Float>> getSellers() {
         return sellers;
     }
 
-    public void setSellers(ArrayList<UserData> sellers) {
+    public void setSellers(ArrayList<Pair<UserData, Float>> sellers) {
         this.sellers = sellers;
     }
 }
