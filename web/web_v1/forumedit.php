@@ -1,11 +1,11 @@
 <!doctype html>
 <?php
 include_once 'db_conn.php';
-session_start();
-if(!isset($_SESSION["user_id"]))
-{
-	header('Location: index.php');
-}
+//session_start();
+//if(!isset($_SESSION["user_id"]))
+//{
+//	header('Location: index.php');
+//}
 ?>
 <html>
 <head>
@@ -208,39 +208,48 @@ $(document).ready(function(){
 <hr>
 
 <?php
-if(!empty($_POST)) {
-$course = $_POST['course'];
+if(!empty($_POST)) 
+{
 $title = $_POST['title'];
-$body = $_POST['body'];
-$date = time();
-$id = $_GET['id'];
+$content = $_POST['content'];
+$htag = $_POST['htag'];
 
-	if(pg_query("UPDATE posts SET course= '$course', title= '$title', body= '$body', date='$date' WHERE id='$id'" ))
-
-       header("Location: forumview.php?id=$id");
-	else
-		echo pg_last_error();
+$qid = $_GET['qid'];
+$result1 = pg_query("UPDATE qtags SET htag = '$htag' WHERE qid='$qid'" );
+$result = pg_query("UPDATE question_forum SET title = '$title', content = '$content', ts = CURRENT_TIMESTAMP WHERE qid='$qid'" );
+//redirect to forumview.php?qid=$qid;
 }
-$id1 = $_GET['id'];
-$result = pg_query("SELECT * FROM posts WHERE id='$id1'" );
+
+$id1 = $_GET['qid'];
+$result = pg_query("SELECT * FROM question_forum WHERE qid='$id1'" );
 
 if(!pg_num_rows($result)) {
-	echo 'Post #'.$_GET['id'].' not found';
+	echo 'Post #'.$_GET['qid'].' not found';
 	exit;
 }
 
 $row = pg_fetch_array($result);
 
+$result1 = pg_query("SELECT * FROM qtags WHERE qid='$id1'" );
+
+if(!pg_num_rows($result1)) {
+	echo 'Post #'.$_GET['qid'].' not found';
+	exit;
+}
+
+$row1 = pg_fetch_array($result1);
+
+
 echo <<<HTML
 
-			<form class="form-horizontal" role="form" method="post" >
+			<form class="form-horizontal" role="form" method="post" action ="" >
 				<div class="form-group">
 
 					<label for="inputEmail3" class="col-sm-4 control-label">
 						Enter the title :
 					</label>
 					<div class="col-sm-5">
-						<input class="form-control" value="{$row['title']}" name = "course" id="inputEmail3" type="text">
+						<input class="form-control" value="{$row['title']}" name = "title" id="inputEmail3" type="text">
 					</div>
 				</div>
 				<div class="form-group">
@@ -249,7 +258,7 @@ echo <<<HTML
 						Enter the Content of the Question :
 					</label>
 					<div class="col-sm-5">
-						<textarea class="form-control" name = "body" id="inputPassword3" rows = "4" type="text">{$row['body']} </textarea>
+						<textarea class="form-control" name = "content" id="inputPassword3" rows = "4" type="text">{$row['content']} </textarea>
 					</div>
 				</div>
 
@@ -259,7 +268,7 @@ echo <<<HTML
 						Enter the Name of the Hash Tag :
 					</label>
 					<div class="col-sm-5">
-						<input class="form-control" value="{$row['course']}" name= "title" id="inputPassword3" type="text">
+						<input class="form-control" name= "htag" value="{$row1['htag']}"  id="inputPassword3" type="text" >
 					</div>
 				</div>
 

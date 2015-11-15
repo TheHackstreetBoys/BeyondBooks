@@ -1,11 +1,11 @@
 <!doctype html>
 <?php
 include_once 'db_conn.php';
-session_start();
-if(!isset($_SESSION["user_id"]))
-{
-	header('Location: index.php');
-}
+//session_start();
+//if(!isset($_SESSION["user_id"]))
+//{
+//	header('Location: index.php');
+//}
 ?>
 <html>
 <head>
@@ -351,12 +351,13 @@ echo "<a href='homepage.php?page=$total_pages'>".'-Next'."</a> "; // Goto last p
 					<?php
 $num_rec_per_page=2;
 
+
 if (isset($_GET["page2"])) { $page2  = $_GET["page2"]; } else { $page2=1; };
 $start_from = ($page2-1) * $num_rec_per_page;
 
 
 
-			$result = pg_query("SELECT * FROM posts ORDER BY num_comments DESC LIMIT $num_rec_per_page OFFSET $start_from");
+			$result = pg_query("SELECT * FROM question_forum ORDER BY ( SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid ) DESC LIMIT $num_rec_per_page OFFSET $start_from");
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No forums is Created Yet.</p>';
@@ -365,13 +366,18 @@ $start_from = ($page2-1) * $num_rec_per_page;
 
 					while($row = pg_fetch_array($result))
 				{
-					echo '<h2>'.$row['title'].'</h2><br/>';
-					$body = substr($row['body'], 0, 10);
-					echo nl2br($body).'...<br/>';
-					echo '<a href="forumview.php?id='.$row['id'].'">Read More</a> | ';
-					echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';
+$qid = $row['qid'];
+			
+		$result1 = pg_query("SELECT COUNT(*) AS num FROM forum_replies WHERE qid = '$qid' ");
+		$row1 = pg_fetch_array($result1);
 
-$sql = "SELECT * FROM posts ORDER BY num_comments";
+					echo '<h2>'.$row['title'].'</h2><br/>';
+					$body = substr($row['content'], 0, 10);
+					echo nl2br($body).'...<br/>';
+					echo '<a href="forumview.php?qid='.$row['qid'].'">Read More</a> | ';
+					echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row1['num'].' comments</a>';
+
+$sql = "SELECT * FROM question_forum ORDER BY  ( SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid )";
 $rs_result = pg_query($sql); //run the query
 $total_records = pg_num_rows($rs_result);  //count number of records
 $total_pages = ceil($total_records / $num_rec_per_page);
@@ -386,10 +392,11 @@ $total_pages = ceil($total_records / $num_rec_per_page);
 echo "<a href='mainpage.php?page2=1'>".'Prev-'."</a> "; // Goto 1st page
 
 for ($i=1; $i<=$total_pages; $i++) {
-            echo "<a href='homepage.php?page2=".$i."'>".$i."</a> ";
+            echo "<a href='mainpage.php?page2=".$i."'>".$i."</a> ";
 };
-echo "<a href='homepage.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last page
+echo "<a href='mainpage.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last page
 ?>
+
 
 				</div>
 
