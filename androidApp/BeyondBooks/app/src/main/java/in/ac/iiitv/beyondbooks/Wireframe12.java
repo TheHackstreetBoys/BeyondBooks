@@ -23,6 +23,7 @@ public class Wireframe12 extends AppCompatActivity {
         Intent intent = getIntent();
         UserData userData = (UserData) intent.getSerializableExtra("user_data");
         RequestServer requestServer = new RequestServer();
+
         ForumActivities forumActivities = requestServer.get_forum_activities(userData.getId());
         // Till here
 
