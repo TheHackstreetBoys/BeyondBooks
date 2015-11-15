@@ -156,7 +156,7 @@ function checkstudent()
 
 
 		        	<button type="button" class="btn btn-success modal-login-btn" onclick="checkstudent()">Sign in</button>
-		            	<a href="forgot-password.php" class="login-link text-center">Lost your password</a>
+		            	<a href="forgotpassword.php" class="login-link text-center">Lost your password</a>
 	        		</form>
 
 				</div>
@@ -202,9 +202,11 @@ function checkstudent()
 
 	      <div class="col-sm-6 text-center">
 
-	        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in sem cras amet.</h2>
+	        <h2></h2>
 
-	        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed interdum metus et ligula venenatis, at rhoncus nisi molestie. Pellentesque porttitor elit suscipit massa laoreet metus.</p>
+	        <p class="lead">BeyondBooks is a project by The Hackstreet Boys done to cope with the problem of availability of books in College. Many a time,
+					students finds themselves helpless with no books inspite of the fact someone in the college is having it but they have no clue.
+				 Similarly, rating and review of books also give us a perfect insight of what might this book be like as they are rated by students themselves.</p>
 
 	      </div>
 

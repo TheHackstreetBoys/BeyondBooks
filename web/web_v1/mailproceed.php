@@ -8,9 +8,9 @@ Interested Buying This Book
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>		
+<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
-<link rel="stylesheet" href="css/font-awesome.min.css"/>	
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -27,7 +27,7 @@ $(document).ready(function(){
 			dropdownMenu.parent().toggleClass("open");
 		}
 	});
-});		
+});
 </script>
 </head>
 
@@ -60,15 +60,15 @@ $(document).ready(function(){
 
 	    </div>
 
-	 
+
 
 	    <div class="collapse navbar-collapse" id="navbar-collapse-main">
 
 	      <ul class="nav navbar-nav navbar-right">
-		
+
 		<li><form action="" class="search-form">
                 <div class="form-group has-feedback" id="search">
-            		
+
             		<input type="text" class="form-control" name="search" id="search1" placeholder="search">
               		<span class="glyphicon glyphicon-search form-control-feedback"></span>
             	</div>
@@ -117,7 +117,7 @@ $(document).ready(function(){
 					<form class="form-horizontal" method = "POST" action = "mail.php" role="form">
 
 <div class="form-group">
-							 
+
 							<label for="inputPassword3" class="col-sm-3 control-label">
 								Reciever:
 							</label>
@@ -127,7 +127,7 @@ $(document).ready(function(){
 						</div>
 
 <div class="form-group">
-							 
+
 							<label for="inputPassword3" class="col-sm-3 control-label">
 ISBN of the Book:
 							</label>
@@ -136,7 +136,7 @@ ISBN of the Book:
 							</div>
 
 <div class="form-group">
-							 
+
 							<label for="inputPassword3" class="col-sm-3 control-label">
 
 							</label>
@@ -148,7 +148,7 @@ ISBN of the Book:
 						</div>
 
 						<div class="form-group">
-							 
+
 							<label for="inputEmail3" class="col-sm-3 control-label">
 								Enter Your Message
 							</label>
@@ -157,7 +157,7 @@ ISBN of the Book:
 							</div>
 						</div>
 						<div class="form-group">
-							 
+
 							<label for="inputPassword3" class="col-sm-3 control-label">
 								Enter Your Contact Number
 							</label>
@@ -167,16 +167,16 @@ ISBN of the Book:
 						</div>
 
 <div class="form-group">
-							 
+
 							<label for="inputPassword3" class="col-sm-3 control-label">
 
 							</label>
 							<div class="col-sm-6">
-								<input class="form-control" type = "Submit" "id="inputPassword3" type="submit">
+								<input class="form-control" type = "Submit" id="inputPassword3" type="submit">
 							</div>
 						</div>
-					
-						
+
+
 					</form>
 				</div>
 			</div> <hr/>
@@ -194,6 +194,3 @@ ISBN of the Book:
 <p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
 </div>
 </footer>
-
-
-

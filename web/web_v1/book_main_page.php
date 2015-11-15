@@ -1,5 +1,12 @@
 <!doctype html>
-
+<?php
+include_once 'db_conn.php';
+session_start();
+if(!isset($_SESSION["user_id"]))
+{
+	header('Location: index.php');
+}
+?>
 <html>
 <head>
 <title>
@@ -32,6 +39,52 @@ $(document).ready(function(){
 	});
 });
 </script>
+
+<script type="text/javascript">
+$("document").ready(function(){
+	var isbn=$('#isbn').val();
+	var userid=$('#userid').val();
+	jQuery.ajax({
+		type: "POST",
+		url: "checkbookshelf-script.php",
+		data: "isbn="+isbn+"&userid="+userid,
+		cache: false,
+		success: function(response)
+		{
+			if(response==1)
+			{
+				document.getElementById("bookshelfbtn").value="Added to Bookshelf";
+				document.getElementById("bookshelfbtn").class="btn-success";
+			}
+		}
+	})
+});
+
+function insertbookshelf()
+{
+	var isbn=$('#isbn').val();
+	var userid=$('#userid').val();
+	jQuery.ajax({
+		type: "POST",
+		url: "insertbookshelf-script.php",
+		data: "isbn="+isbn+"&userid="+userid,
+		cache: false,
+		success: function(response)
+		{
+			if(response==1)
+			{
+				document.getElementById("bookshelfbtn").value="Added to Bookshelf";
+				document.getElementById("bookshelfbtn").class="btn-success";
+			}
+			else
+			{
+				alert("An error occurred while adding book to your bookshelf.");
+			}
+		}
+	})
+}
+</script>
+
 </head>
 
 
@@ -59,7 +112,7 @@ $(document).ready(function(){
 	        <span class="icon-bar"></span>
 	      </button>
 
-	      <a class="navbar-brand" href="#">Beyond Books</a>
+	      <a class="navbar-brand" href="homepage.php">Beyond Books</a>
 
 	    </div>
 
@@ -69,14 +122,14 @@ $(document).ready(function(){
 
 	      <ul class="nav navbar-nav navbar-right">
 
-			<li><?php
-
+			<li>
+<?php
 $content ='
 <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
 $(function(){
-$(".search").keyup(function() 
-{ 
+$(".search").keyup(function()
+{
 var searchid = $(this).val();
 var dataString = \'search=\'+ searchid;
 if(searchid!=\'\')
@@ -91,19 +144,19 @@ if(searchid!=\'\')
     $("#result").html(html).show();
     }
     });
-}return false;    
+}return false;
 });
 
-jQuery("#result").live("click",function(e){ 
+jQuery("#result").live("click",function(e){
     var $clicked = $(e.target);
     var $name = $clicked.find(\'.name\').html();
     var decoded = $("<div/>").html($name).text();
     $(\'#searchid\').val(decoded);
 });
-jQuery(document).live("click", function(e) { 
+jQuery(document).live("click", function(e) {
     var $clicked = $(e.target);
     if (! $clicked.hasClass("search")){
-    jQuery("#result").fadeOut(); 
+    jQuery("#result").fadeOut();
     }
 });
 $(\'#searchid\').click(function(){
@@ -116,7 +169,6 @@ $(\'#searchid\').click(function(){
     #searchid
     {
         width:190px;
-        border:solid 1px #000;
         padding:8px;
         font-size:12px;
 	margin-top:-1cm;
@@ -139,9 +191,9 @@ $(\'#searchid\').click(function(){
     }
     .show
     {
-        padding:10px; 
+        padding:10px;
         border-bottom:0px #999 ;
-        font-size:12px; 
+        font-size:12px;
 
         height:10px;
 
@@ -149,12 +201,13 @@ $(\'#searchid\').click(function(){
     }
     .show:hover
     {
-       
+
         cursor:pointer;
     }
 </style>
 <div class="content">
-<input type="text" class="search" id="searchid" placeholder="Search for Books" />
+<input type="text" class="form-control search" id="searchid" placeholder="Search for Books" />
+	<span class="glyphicon glyphicon-search form-control-feedback" style="padding-top: 17%; color: #3596e0;"></span>
 <div id="result"> </div>
 </div>
 ';
@@ -162,34 +215,33 @@ $(\'#searchid\').click(function(){
 
 $pre = 1;
 include("html.inc");
-?></li>
+?>
+</li>
 
-	        <li><br/><a href="#home">Home</a></li>
+<li><br/><a href="homapage.php">Home</a></li>
 
-	        <li><br/><a href="#about">About</a></li>
-		<li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
-		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
-			<?php
-			
-			   $user_id=$_SESSION["user_id"];
-				 $query="SELECT * FROM user_profile where user_id='$user_id'";
-			   $result=pg_query($query);
-			   $row=pg_fetch_array($result);
-			$filename=$row['user_id'].'_dp';
-			$filename="pictures/".$filename."*";
-			$result1=glob($filename);
-			if (!empty($result1))
-			echo '<img src="'.$result1[0].'"class="img-circle" style="width: 50px">';
-			else
-				echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
-				?></a>
-
+<li><br/><a href="buy_sell.php">Buy/Sell</a></li>
+<li><br/><a href="forum.php">Forum</a></li>
+<li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
+<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
+<?php
+$filename=$_SESSION["user_id"].'_dp';
+$filename="pictures/".$filename."*";
+$result1=glob($filename);
+if (!empty($result1))
+echo '<img src="'.$result1[0].'"class="img-circle" style="width: 50px">';
+else
+echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
+?>
+</a>
 <ul class="dropdown-menu">
-<li><a herf="#">My profile</a></li>
-<li><a href="#">My uploads</a></li>
+<li><a href="yourprofile.php">My Profile</a></li>
+<li><a href="bookshelf.php">My Bookshelf</a></li>
+<li><a href="my_sold_books.php">My Sold Books</a></li>
 </ul></li>
 
-	      </ul>
+</ul>
+
 
 	    </div><!-- /.navbar-collapse -->
 
@@ -205,22 +257,26 @@ include("html.inc");
 			<div class="row">
 				<div class="col-md-6"><br/>
 	<?php
-session_start();
-			$dbconn=null;
-			global $dbconn;
-			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
 			$isbn = $_GET['isbn'];
 			$_SESSION['isbn'] = $isbn;
 
 	$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn WHERE books.isbn = '$isbn'");
 
-
-
-			if(!pg_num_rows($result)) {
-							echo '<p>No Book is available.</p>';
-						     }
-			else {
+	$url = "http://www.librarything.com/devkey/KEY/medium/isbn/".$isbn;
+	$img = 'books_pics/'.$isbn.'.png';
+	$result1=glob($img);
+	if (!empty($result1))
+	echo '<img src="'.$result1[0].'" class="img-responsive" style="width:100px; height:150px">';
+	else
+	{
+		file_put_contents($img, file_get_contents($url));
+		if(file_exists($img))
+			echo '<img src="'.$img.'" class="img-responsive" style="width:100px; height:150px">';
+		else {
+			echo '<img src="books_pics/nan.jpg" class="img-responsive" style="width:100px; height:150px">';
+		}
+	}
 
 					while($row = pg_fetch_array($result))
 				{
@@ -228,22 +284,10 @@ session_start();
 					echo "<b> By :".$row['author']."</b>";
 
 			     }
-					}
-
-echo "	</br></br>				<img src='http://www.librarything.com/devkey/KEY/medium/isbn/$isbn'  alt='Image is not available' >  ";
-					?>
-
-
-
-
-					<br/><br/>
+	?>
+</br></br>
 
 <?php
-			$dbconn=null;
-			global $dbconn;
-			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-
-
 
 	$result = pg_query("SELECT COUNT(uid) AS total FROM rating WHERE isbn = '$isbn'");
 	$result1 = pg_query("SELECT sum(rating) AS totalrating FROM rating WHERE isbn = '$isbn'");
@@ -263,18 +307,19 @@ echo "Rating :";
         echo '<img src="zero.png" />';
         $x++;
     }
+?>
 
-
-					?>
 <br/><br/>
 Your Rating:
 <div id="rating_panel" data-pollid="1" data-rated="0">
 					<img src="zero.png" /> <img src="zero.png" /> <img src="zero.png" /> <img src="zero.png" /> <img src="zero.png" /><div id="starloader"></div>
 				</div>
 
-				<br/><br/><button type="button" class="btn btn-success">
-						 + ADD to wishlist
-					</button>
+				<br/><br/>
+				<input type="hidden" id="isbn" value="<?php echo $isbn; ?> ">
+				<input type="hidden" id="userid" value='<?php echo $_SESSION["user_id"]; ?> '>
+				<input type="button" id="bookshelfbtn" class="btn btn-default btn-primary" value="+Add to my Bookshelf" onclick="insertbookshelf()">
+					</input>
 				</div>
 				<div class="col-md-6">
 				</div>
@@ -287,14 +332,8 @@ Your Rating:
 
 
 <?php
-$dbconn=null;
-global $dbconn;
-$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-session_start();
-//$username = $_SESSION['current'];
-
-$uid = "201351005";
+$uid = $_SESSION["user_id"];
 $review = pg_escape_string($_POST['content']);
 $isbn = $_GET['isbn'];
 
@@ -304,7 +343,7 @@ $isbn = $_GET['isbn'];
 if (!empty($review))
 {
 $result = pg_query("SELECT * FROM review WHERE uid='$uid' AND isbn = '$isbn'");
-if(pg_num_rows($result)!=0 ) 
+if(pg_num_rows($result)!=0 )
 {
  $query = pg_query("UPDATE review SET review = '$review' WHERE uid = '$uid' AND isbn = '$isbn'" );
 }
@@ -320,12 +359,8 @@ else
 	<?php
 		$num_rec_per_page=2;
 
-			$dbconn=null;
-			global $dbconn;
-			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-
-if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; }; 
-$start_from = ($page-1) * $num_rec_per_page; 
+if (isset($_GET["page"])) { $page  = $_GET["page"]; } else { $page=1; };
+$start_from = ($page-1) * $num_rec_per_page;
 
 	$result = pg_query("SELECT * FROM review WHERE isbn = '$isbn' LIMIT $num_rec_per_page OFFSET $start_from");
 
@@ -342,9 +377,9 @@ $start_from = ($page-1) * $num_rec_per_page;
 					$body = $row['review'];
 
 					echo "".nl2br($body).'<br><br/>';
-				
 
-$sql = "SELECT * FROM review WHERE isbn = '$isbn'"; 
+
+$sql = "SELECT * FROM review WHERE isbn = '$isbn'";
 $rs_result = pg_query($sql); //run the query
 $total_records = pg_num_rows($rs_result);  //count number of records
 $total_pages = ceil($total_records / $num_rec_per_page);
@@ -353,11 +388,11 @@ $total_pages = ceil($total_records / $num_rec_per_page);
 
 
 			     }
-echo "<a href='book_main_page.php?isbn=$isbn&page=1'>".'Prev-'."</a> "; // Goto 1st page  
+echo "<a href='book_main_page.php?isbn=$isbn&page=1'>".'Prev-'."</a> "; // Goto 1st page
 
-for ($i=1; $i<=$total_pages; $i++) { 
-            echo "<a href='book_main_page.php?isbn=$isbn&page=".$i."'>".$i."</a> "; 
-}; 
+for ($i=1; $i<=$total_pages; $i++) {
+            echo "<a href='book_main_page.php?isbn=$isbn&page=".$i."'>".$i."</a> ";
+};
 echo "<a href='book_main_page.php?isbn=$isbn&page=$total_pages'>".'-Next'."</a> "; // Goto last page
 
 					}
@@ -368,7 +403,7 @@ echo "<a href='book_main_page.php?isbn=$isbn&page=$total_pages'>".'-Next'."</a> 
  <form class="form-horizontal" role="form" method="post" action="">
 								<div class="form-group">
 
-							
+
 									<div class="col-sm-10">
 
 				<textarea class="form-control" name = "content" rows = "1" id="inputEmail3" type="text"> Add Your Review</textarea>
@@ -378,7 +413,7 @@ echo "<a href='book_main_page.php?isbn=$isbn&page=$total_pages'>".'-Next'."</a> 
 
 <div class="form-group">
 
-							
+
 									<div class="col-sm-4">
 
 				<input class="form-control" type ="hidden" value = "$isbn" name = "isbn" id="inputEmail3" type="text"/>
@@ -390,7 +425,7 @@ echo "<a href='book_main_page.php?isbn=$isbn&page=$total_pages'>".'-Next'."</a> 
 
 	<div class="form-group">
 
-							
+
 									<div class="col-sm-4">
 
 				<input class="form-control" type ="submit" name = "Submit" value =" Add Review" id="inputEmail3" type="text"/>
@@ -399,7 +434,7 @@ echo "<a href='book_main_page.php?isbn=$isbn&page=$total_pages'>".'-Next'."</a> 
 								</div>
 
 
-								
+
 							</form>
 HTML;
 
@@ -411,8 +446,8 @@ HTML;
 
 
 
-							
-				
+
+
 
 
 			<p>
@@ -427,12 +462,7 @@ HTML;
 			</h3>
 			<p>
 				<?php
-session_start();
 				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
-			$dbconn=null;
-			global $dbconn;
-			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-
 			$isbn = $_GET['isbn'];
 			$_SESSION['isbn'] = $isbn;
 
@@ -447,9 +477,9 @@ session_start();
 
 					while($row = pg_fetch_array($result))
 				{
-					
-					
-		
+
+
+
 
 					echo '<b> Title :</b> '.$row['title'].'<br/>';
 					echo "<b> Authors :</b><em>".$row['author']."</em><br/>";
@@ -475,12 +505,8 @@ session_start();
 
 		$num_rec_per_page=1;
 
-			$dbconn=null;
-			global $dbconn;
-			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-
-if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; }; 
-$start_from = ($page-1) * $num_rec_per_page; 
+if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; };
+$start_from = ($page-1) * $num_rec_per_page;
 
 	$result = pg_query("SELECT * FROM pbase JOIN single_sell ON single_sell.prodid = pbase.prodid WHERE single_sell.isbn = '$isbn' AND pbase.prodid = single_sell.prodid LIMIT $num_rec_per_page OFFSET $start_from");
 
@@ -500,7 +526,7 @@ $start_from = ($page-1) * $num_rec_per_page;
 					echo 'Age:&nbsp;'.$row['age'].'<br/>';
 					$body = $row['description'];
 					echo "Description:&nbsp;".nl2br($body).'';
-					$user_id = "201351022";
+					$user_id = $_SESSION["user_id"];
 					echo " <form method = 'POST' action= 'mailproceed.php'>
 
   						<input type='hidden' name = 'isbn' value =".$row['isbn'].">
@@ -510,7 +536,7 @@ $start_from = ($page-1) * $num_rec_per_page;
   						<input type='submit' value = 'Show Interest'>
 						</form><br/> ";
 
-$sql = "SELECT * FROM pbase JOIN single_sell ON single_sell.prodid = pbase.prodid WHERE single_sell.isbn = '$isbn' AND pbase.prodid = single_sell.prodid"; 
+$sql = "SELECT * FROM pbase JOIN single_sell ON single_sell.prodid = pbase.prodid WHERE single_sell.isbn = '$isbn' AND pbase.prodid = single_sell.prodid";
 $rs_result = pg_query($sql); //run the query
 $total_records = pg_num_rows($rs_result);  //count number of records
 $total_pages = ceil($total_records / $num_rec_per_page);
@@ -518,15 +544,15 @@ $total_pages = ceil($total_records / $num_rec_per_page);
 
 			     }
 
-					
-echo "<a href='book_main_page.php?isbn=$isbn&page1=1'>".'Prev-'."</a> "; // Goto 1st page  
 
-for ($i=1; $i<=$total_pages; $i++) { 
-            echo "<a href='book_main_page.php?isbn=$isbn&page1=".$i."'>".$i."</a> "; 
-}; 
+echo "<a href='book_main_page.php?isbn=$isbn&page1=1'>".'Prev-'."</a> "; // Goto 1st page
+
+for ($i=1; $i<=$total_pages; $i++) {
+            echo "<a href='book_main_page.php?isbn=$isbn&page1=".$i."'>".$i."</a> ";
+};
 echo "<a href='book_main_page.php?isbn=$isbn&page1=$total_pages'>".'-Next'."</a> "; // Goto last page
 
-			
+
 }
 
 				echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
