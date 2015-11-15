@@ -324,7 +324,7 @@ $start_from = ($page-1) * $num_rec_per_page;
 					echo 'Date:&nbsp;'.$row['ts'].'<br/>';
 					$body = $row['content'];
 					echo "Description:&nbsp;".nl2br($body).'<br/>';
-					echo '<a href="forumview.php?qid='.$row['qid'].'">'.$row1['num'].' Click Here</a><br/><br/>';
+					echo '<a href="forumview.php?qid='.$row['qid'].'">'.' Click Here</a><br/><br/>';
 
 
 					$i = $i+1;
