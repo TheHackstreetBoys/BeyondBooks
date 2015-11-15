@@ -47,7 +47,7 @@ public class RequestServer {
     Bitmap image;
     RequestServer(){
         ip = "10.100.91.55/beyondbooks";
-        image_link = "10.100.88.235/BeyondBooks/web/book_pics/";
+        image_link = "10.100.91.55/pictures";
     }
 
     public Boolean authenticate(Integer id, String password){
@@ -75,7 +75,7 @@ public class RequestServer {
         params.add(new Pair<String, String>("user_id", id.toString()));
         try {
             new Setup().execute(params).get();
-            System.out.println("Output "+output);
+            System.out.println("Output " + output);
             JSONObject is_authenticated_json = new JSONObject(output);
             return Boolean.parseBoolean(is_authenticated_json.getString("result"));
         }catch(JSONException e){
@@ -401,7 +401,7 @@ public class RequestServer {
                 String text = cur_book.getString("text");
                 Integer q_id = Integer.parseInt(cur_book.getString("q_id"));
                 String q_title = cur_book.getString("q_title");
-                Integer comment_id = Integer.parseInt(cur_book.getString("comment_id"));
+                String comment_id = cur_book.getString("comment_id");
                 Comments temp = new Comments(user_id, text, comment_id, q_id, q_title);
                 commented_list.add(temp);
             }
@@ -493,7 +493,7 @@ public class RequestServer {
                 Integer comment_user_id = Integer.parseInt(comment_json.getString("user_id"));
                 String comment_text = comment_json.getString("text");
                 System.out.print(" dsfa "+comment_json.get("comment_id"));
-                Integer comment_id = Integer.parseInt(comment_json.getString("comment_id"));
+                String comment_id = comment_json.getString("comment_id");
                 Comments temp = new Comments(comment_user_id, comment_text, comment_id, forum_id, title);
                 String user_name = comment_json.getString("user_name");
                 temp.setUser_name(user_name);
@@ -619,7 +619,7 @@ public class RequestServer {
         return null;
     }
 
-    public UserData get_user_name_image(Integer id){
+    public String get_user_name(Integer id){
         address = "http://"+ip+"/andy_get_user_data.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", id.toString()));
@@ -627,11 +627,7 @@ public class RequestServer {
             new Setup().execute(params).get();
             JSONObject jsonObject = new JSONObject(output);
             String user_name = jsonObject.getString("user_name");
-            String image_link = jsonObject.getString("image_link");
-            UserData temp = new UserData(id);
-            temp.setUser_name(user_name);
-            temp.setImage_link(image_link);
-            return temp;
+            return user_name;
         }catch(JSONException e){
             e.printStackTrace();
         }catch(InterruptedException e){
@@ -691,7 +687,7 @@ public class RequestServer {
     public Bitmap getImage(String image_name){
         String str_link = "http://"+image_link+"/"+image_name;
         DownloadTask downloadTask = new DownloadTask();
-        downloadTask.execute(image_link);
+        downloadTask.execute(str_link);
         return image;
     }
 
@@ -707,6 +703,10 @@ public class RequestServer {
         }
         return false;
     }
+
+//    public Boolean setNewPassword(String password, Integer user_id){
+//
+//    }
 
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, Void, String> {
         HttpURLConnection urlConnection;
