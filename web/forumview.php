@@ -2,11 +2,11 @@
 
 <?php
 include_once 'db_conn.php';
-//session_start();
-//if(!isset($_SESSION["user_id"]))
-//{
-//	header('Location: index.php');
-//}
+session_start();
+if(!isset($_SESSION["user_id"]))
+{
+	header('Location: index.php');
+}
 ?>
 <html>
 <head>
@@ -234,13 +234,8 @@ if(!pg_num_rows($result)) {
 
 
 $row = pg_fetch_array($result);
-	session_start();
 
-$str = $_GET['id'] ;
-$v  = strpos("$str"," ");
-$c = substr("$str",$v+1);
 
- $username   = $_SESSION['current'];
 
 $user = $row['asker'];
 $result1 = pg_query("SELECT * FROM user_profile WHERE user_id = '$user'" );
@@ -273,7 +268,6 @@ echo '<div class="row">
 </div>
 </div>';
 while($row = pg_fetch_array($result)) {
-	echo '<li id="post-'.$row['id'].'">';
 	$commenteduser=$row['uid'];
 	$filename1=$row['uid'].'_dp';
 	$filename1="pictures/".$filename1."*";
@@ -299,7 +293,6 @@ while($row = pg_fetch_array($result)) {
     }
     $row2 = pg_fetch_array($result2);
 
-	echo '<br/> <a href = "please.php?id='.$row['id'].'"> <img src = "images/like.png" title = "LIKE" height = "20px">  </a>' . $row2['likes'];
 	echo '</li><br/>';
 		echo '</li><br/>';
 

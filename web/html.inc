@@ -8,10 +8,6 @@
     </style>
   </head>
   <body>
-    <div>
-      <h2><?php echo $heading;?></h2>
-
-
       <p>
 
         <div style="float:left;width:90px">
@@ -38,11 +34,11 @@
       <hr />
 
     <p>
-        <?php if(!isset($pre)) {?>
+        <?php if(!isset($pre)){ ?>
       <pre>
         <?php print_r($content); ?>
       </pre>
-      <?php }else{ ?>
+      <?php } else{ ?>
        <?php print_r($content); ?>
       <?php } ?>
     </p>
