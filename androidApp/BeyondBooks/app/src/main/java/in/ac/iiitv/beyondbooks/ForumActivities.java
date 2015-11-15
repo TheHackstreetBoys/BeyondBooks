@@ -9,9 +9,9 @@ public class ForumActivities {
     private ArrayList<ForumOverview> questions_started;
     private ArrayList<Comments> commented;
 
-    ForumActivities(ArrayList<ForumOverview> questions_started, ArrayList<Comments> commented){
-        this.questions_started = questions_started;
-        this.commented = commented;
+    ForumActivities(ArrayList<ForumOverview> _questions_started, ArrayList<Comments> _commented){
+        this.questions_started = _questions_started;
+        this.commented = _commented;
     }
 
     public ArrayList<ForumOverview> getQuestions_started() {

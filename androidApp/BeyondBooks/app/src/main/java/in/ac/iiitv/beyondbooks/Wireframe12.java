@@ -24,16 +24,19 @@ public class Wireframe12 extends AppCompatActivity {
         UserData userData = (UserData) intent.getSerializableExtra("user_data");
         RequestServer requestServer = new RequestServer();
 
-        ForumActivities forumActivities = requestServer.get_forum_activities(userData.getId());
+        ForumActivities forumActivities = requestServer.get_forum_activities(/*userData.getId()*/201351010);
         // Till here
 
         started_list = (ListView) findViewById(R.id.harkat_startedlist);
         commented_list = (ListView) findViewById(R.id.harkat_commentedlist);
-        ArrayList<String> values = null;
+        ArrayList<String> values = new ArrayList<String>();
+
         for (int i = 0; i < forumActivities.getQuestions_started().size(); i++) {
             values.add(forumActivities.getQuestions_started().get(i).getTitle());
         }
         adapter_started = new ArrayAdapter<String>(this, R.layout.frame10_list_view, values);
+
+        values = new ArrayList<String>();
         for (int i = 0; i < forumActivities.getQuestions_started().size(); i++) {
             values.add(forumActivities.getCommented().get(i).getQ_title());
         }

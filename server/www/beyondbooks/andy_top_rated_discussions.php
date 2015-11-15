@@ -1,7 +1,7 @@
 <?php
 //needed title author author_id q_id
 include ('db_conn.php');
-$query = "select * from (question_forum natural join user_profile) as lund order by (upvote -  downvote) desc limit 4;";
+$query = "select * from user_profile join (select * from question_forum natural join (select  qid from forum_replies group by qid order by count(*) desc) as foo limit 4) as pooku on (user_profile.user_id=pooku.asker);";
 $result = pg_query($query);
 
 $ret_array = array();

@@ -16,12 +16,14 @@ public class Wireframe13 extends AppCompatActivity implements AdapterView.OnItem
     ArrayList<ForumOverview> top_rated, recent_discussions;
     ListView toprated,recent;
     ArrayAdapter<String> adapter_toprated,adapter_recent;
-    private Button newdis; 
+    private Button newdis;
+    private UserData userData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wireframe13);
+        userData = (UserData)getIntent().getSerializableExtra("user_data");
         RequestServer requestServer = new RequestServer();
         top_rated = requestServer.top_rated_discussions();
         recent_discussions = requestServer.recent_discussions();
@@ -72,16 +74,23 @@ public class Wireframe13 extends AppCompatActivity implements AdapterView.OnItem
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         int rid = parent.getId();
+        Intent in;
         switch (rid)
         {
             case R.id.topratedlist:
                 Toast.makeText(this,top_rated.get(position).getAuthor(),Toast.LENGTH_LONG).show();
                 //intent should be checked
-                startActivity(new Intent(getApplicationContext(), Frame14.class));
+                in = new Intent(getApplicationContext(), Frame14.class);
+                in.putExtra("q_id",top_rated.get(position).getQ_id());
+                in.putExtra("user_data",userData);
+                startActivity(in);
                 break;
             case R.id.recentlist:
                 Toast.makeText(this,recent_discussions.get(position).getAuthor(),Toast.LENGTH_LONG).show();
-                startActivity(new Intent(getApplicationContext(), Frame14.class));
+                in = new Intent(getApplicationContext(), Frame14.class);
+                in.putExtra("q_id",recent_discussions.get(position).getQ_id());
+                in.putExtra("user_data", userData);
+                startActivity(in);
                 break;
         }
     }

@@ -50,7 +50,12 @@ public class Wireframe8 extends AppCompatActivity {
 //        userData.setReviewed(temp2.getReviewed());
 //        userData.setUploads(temp2.getUploads());
         userData.setUser_name(requestServer.get_user_name(userData.getId()));
+<<<<<<< HEAD
 
+=======
+        notifications = requestServer.get_notification(userData.getId());
+        System.out.println("notifications: "+notifications);
+>>>>>>> e47df7bf6608047b5da0f728dd1df414a79ee07c
         //Till here... userData contains every information about the user. Use it to populate the page.
 
 
@@ -62,8 +67,14 @@ public class Wireframe8 extends AppCompatActivity {
         */
 
         user_image = (ImageView) findViewById(R.id.user_image);
+<<<<<<< HEAD
         user_image.setImageBitmap(requestServer.getImage(userData.getId().toString() + "_dp.jpg"));
 
+=======
+        Bitmap temp = requestServer.getImage(userData.getId().toString() + "_dp.jpg");
+        System.out.println("temp : "+temp);
+        user_image.setImageBitmap(temp);
+>>>>>>> e47df7bf6608047b5da0f728dd1df414a79ee07c
         //set username
         username = (TextView) findViewById(R.id.user_name);
         username.setText(userData.getUser_name());
@@ -108,8 +119,8 @@ public class Wireframe8 extends AppCompatActivity {
         notifications = requestServer.get_notification(userData.getId());
         notification_list = (ListView) findViewById(R.id.notification_list);
         adapter_notification = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,android.R.id.text1,notifications);
-        System.out.println("Reaching here ....");
         notification_list.setAdapter(adapter_notification);
+        System.out.println("Reaching here ....");
     }
     public void set_dp(){
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);

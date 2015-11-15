@@ -35,7 +35,9 @@ public class MainActivity extends AppCompatActivity  {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        
+
+
+
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
         aboutus = (TextView) findViewById(R.id.aboutus);
