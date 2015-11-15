@@ -10,7 +10,7 @@ public class Comments {
     private String text;
     private Integer q_id;
     private String q_title;
-    private Integer comment_id;
+    private String comment_id;
 
     public Integer getQ_id() {
         return q_id;
@@ -28,7 +28,7 @@ public class Comments {
         this.q_title = q_title;
     }
 
-    Comments(Integer user_id, String text, Integer comment_id, Integer q_id, String q_title){
+    Comments(Integer user_id, String text, String comment_id, Integer q_id, String q_title){
         this.user_id = user_id;
         this.text = text;
         this.comment_id = comment_id;
@@ -45,11 +45,11 @@ public class Comments {
         this.user_name = user_name;
     }
 
-    public Integer getComment_id() {
+    public String getComment_id() {
         return comment_id;
     }
 
-    public void setComment_id(Integer comment_id) {
+    public void setComment_id(String comment_id) {
         this.comment_id = comment_id;
     }
 

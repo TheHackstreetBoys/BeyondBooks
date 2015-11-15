@@ -40,15 +40,17 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
     private PagerAdapter newbooksadapter;
 
     private int numOfSlides;
-
+    ArrayList<NewlyAdded> naa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_view_page);
         RequestServer rs = new RequestServer();
+        naa = rs.newly_added();
 
+        numOfSlides = naa.size();
         newbooks = (ViewPager)findViewById(R.id.book_view_newadded_pager);
-        newbooksadapter = new NewBooksPagerAdapter(getSupportFragmentManager());
+        newbooksadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),naa);
         newbooks.setAdapter(newbooksadapter);
 
 
@@ -62,14 +64,16 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
 
     private class NewBooksPagerAdapter extends FragmentStatePagerAdapter
     {
-
-        public NewBooksPagerAdapter(FragmentManager fm)
+        ArrayList<NewlyAdded> nav;
+        public NewBooksPagerAdapter(FragmentManager fm, ArrayList<NewlyAdded> naa)
         {
             super(fm);
+            nav = naa;
         }
         @Override
-        public Fragment getItem(int position) {
-            return new NewBook();
+        public Fragment getItem(int position)
+        {
+            return new NewBook(naa.get(position));
         }
 
         @Override
