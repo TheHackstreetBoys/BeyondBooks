@@ -14,7 +14,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
+            android:text="Your activity on forum"
+=======
             android:text="Your harkatz on forum"
+>>>>>>> f0bfde0398600d77e00d0f3e50eb54db836352fb
             android:textStyle="bold"
             android:textColor="#000000"
             android:id="@+id/text_forumharkat"
