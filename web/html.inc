@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <style type="text/css">
-    
+
     </style>
   </head>
   <body>
@@ -36,7 +36,7 @@
       </p>
 
       <hr />
-      
+
     <p>
         <?php if(!isset($pre)) {?>
       <pre>

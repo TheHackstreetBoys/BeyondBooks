@@ -244,7 +244,15 @@ $res = array('author' => $decoded->{'items'}[0]->{'volumeInfo'}->{'authors'},
         "title" => $decoded->{'items'}[0]->{'volumeInfo'}->{'title'},
 
         "publisher" => $decoded->{'items'}[0]->{'volumeInfo'}->{'publisher'},
-        "description" => $decoded->{'items'}[0]->{'volumeInfo'}->{'description'});
+        "description" => $decoded->{'items'}[0]->{'volumeInfo'}->{'description'},
+			"image-link"=> $decoded->{'items'}[0]->{'volumeInfo'}->{'imageLinks'}->{'thumbnail'});
+
+			$imagelink= $res['image-link'];
+
+			$content = file_get_contents($imagelink);
+			$fp = fopen("books_pics/$isbn.jpg", "w");
+			fwrite($fp, $content);
+			fclose($fp);
 
 $author = $res['author'][0];
 $title  = $res['title'];

@@ -217,48 +217,8 @@ include("html.inc");
 						<b>Update Book Details</b> <hr/>
 					</h3>
 
-<?php
 
-$isbn = $_GET['isbn'];
-$sellerid = $_SESSION["user_id"];
-
-
-$result = pg_query("SELECT * FROM  pbase JOIN single_sell ON single_sell.prodid = pbase.prodid WHERE single_sell.isbn = '$isbn' AND pbase.sellerid = '$sellerid'");
-
-if(!pg_num_rows($result)) {
-	echo 'No ';
-}
-
-$row = pg_fetch_array($result);
-
-if(!empty($_POST))
-{
-$prodid = $row['prodid'];
-$price = $_POST['price'];
-$age = $_POST['age'];
-$des = $_POST['description'];
-
-$ts = time();
-
-if(pg_query("UPDATE single_sell SET age = '$age', description = '$des', price = '$price' WHERE isbn ='$isbn' AND prodid = '$prodid' " ))
-	{
-
-if(pg_query("UPDATE pbase SET ts = '$ts', price = '$price' WHERE sellerid ='$sellerid' AND prodid = '$prodid' " ))
-	{
-      header("Location: mysells.php");
-
-	}
-}
-	else
-		echo pg_last_error();
-
-
-	}
-?>
-
-
-
-					<form class="form-horizontal" role="form" method = "post" action = "">
+					<form class="form-horizontal" role="form" method = "post" action ="">
 						<div class="form-group">
 
 							<label for="inputEmail3" class="col-sm-4 control-label">
@@ -266,13 +226,27 @@ if(pg_query("UPDATE pbase SET ts = '$ts', price = '$price' WHERE sellerid ='$sel
 							</label>
 							<div class="col-sm-4">
 								<input class="form-control" id="inputEmail3" name = 'isbn' value = "<?php echo $_GET['isbn']?>" readonly type="email">
-<center>
-
-
-</center>
 
 							</div>
 						</div>
+
+						<?php
+
+						$isbn = $_GET['isbn'];
+						$sellerid = $_SESSION["user_id"];
+
+
+						$result = pg_query("SELECT * FROM  pbase JOIN single_sell ON single_sell.prodid = pbase.prodid WHERE single_sell.isbn = '$isbn' AND pbase.sellerid = '$sellerid'");
+
+						$row = pg_fetch_array($result);
+
+						if(!empty($_POST))
+						{
+						$prodid = $row['prodid'];
+						$price = $_POST['price'];
+						$age = $_POST['age'];
+						$des = $_POST['description'];
+						?>
 
 						<div class="form-group">
 
@@ -324,6 +298,24 @@ if(pg_query("UPDATE pbase SET ts = '$ts', price = '$price' WHERE sellerid ='$sel
 		</div>
 	</div>
 </div>
+
+<?php
+if(pg_query("UPDATE single_sell SET age = '$age', description = '$des', price = '$price' WHERE isbn ='$isbn' AND prodid = '$prodid' " ))
+{
+	if(pg_query("UPDATE pbase SET ts = CURRENT_TIMESTAMP WHERE sellerid ='$sellerid' AND prodid = '$prodid' " ))
+	{
+      header("Location: my_sold_books.php");
+	}
+}
+	else
+		echo pg_last_error();
+
+
+	}
+?>
+
+
+
 
 
 
