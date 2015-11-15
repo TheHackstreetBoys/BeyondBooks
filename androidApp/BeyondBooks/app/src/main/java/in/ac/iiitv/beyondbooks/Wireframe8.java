@@ -20,27 +20,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Wireframe8 extends AppCompatActivity {
-    private ArrayList<String> notifications;
-<<<<<<< HEAD
 
+    private ArrayList<String> notifications;
     private ImageView user_image;
     private ListView notification_list ;
-    private TextView username,userid,changepass;;
+    private TextView username,userid,changepass;
     private ArrayAdapter<String> adapter_notification;
     private Button uploadimage;
 
 
     UserData userData;
-    private static final int RESULT_LOAD_IMAGE = 1;
-
-
-    private Button uploadimage;
-    ImageView user_image;
-    ListView notification_list ;
-    TextView username,userid;
-    UserData userData;
-    TextView changepass;
-    ArrayAdapter<String> adapter_notification;
     private static final int RESULT_LOAD_IMAGE = 1;
 
     @Override
@@ -61,15 +50,11 @@ public class Wireframe8 extends AppCompatActivity {
 //        userData.setReviewed(temp2.getReviewed());
 //        userData.setUploads(temp2.getUploads());
         userData.setUser_name(requestServer.get_user_name(userData.getId()));
-        notifications = requestServer.get_notification(userData.getId());
+
         //Till here... userData contains every information about the user. Use it to populate the page.
 
 
         //set image of the user
-        //TODO changes to set the image of the user
-
-        set_dp();
-
         /*user_image = (ImageView) findViewById(R.id.user_image);
         Map<String, Integer> map = new HashMap<String, Integer>();
         map.put(userData.getImage_link(), R.drawable.user_image);
@@ -119,6 +104,8 @@ public class Wireframe8 extends AppCompatActivity {
 
 
         //set notifications (Already there is a arraylist for arrayadapter)
+
+        notifications = requestServer.get_notification(userData.getId());
         notification_list = (ListView) findViewById(R.id.notification_list);
         adapter_notification = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,android.R.id.text1,notifications);
         System.out.println("Reaching here ....");

@@ -1,6 +1,5 @@
 package in.ac.iiitv.beyondbooks;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,9 +18,6 @@ public class Frame17 extends AppCompatActivity implements View.OnClickListener, 
     private ListView faclist;
     private ArrayList<String> facultycopy;
     private TextView facet;
-    Intent intent;
-    String question;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +29,6 @@ public class Frame17 extends AppCompatActivity implements View.OnClickListener, 
         RequestServer requestServer = new RequestServer();
         faculty = requestServer.get_faculty();
         int i;
-
-        intent = getIntent();
-        question = intent.getStringExtra("question");
-        System.out.println("intent recieved");
 
         facultycopy = new ArrayList<String>(faculty);
         facet = (TextView) findViewById(R.id.frame17_fac);
