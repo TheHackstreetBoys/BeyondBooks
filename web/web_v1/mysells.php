@@ -66,8 +66,8 @@ $start_from = ($page-1) * $num_rec_per_page;
 					echo 'Age:&nbsp;'.$row['age'].'<br/>';
 					$body = $row['description'];
 					echo "Description:&nbsp;".nl2br($body).'<br/>';
-					echo "<a href='bookinfoedit.php?isbn=".$row['isbn']."'>Click Here to Edit</a><br/><br/>";
-					echo "<a href='bookinfoedit.php?isbn=".$row['isbn']."'>Click Here to Edit</a><br/><br/>";
+					echo "<a href='bookinfoedit.php?isbn=".$row['isbn']."'>Click Here to Edit</a><br/>";
+					echo "<a href='bookdelete.php?isbn=".$row['isbn']."&sellerid=".$sellerid."&id=".$row['prodid']."'>Delete the link</a><br/><br/>";
 					$i = $i+1;
 				
 
