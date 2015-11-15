@@ -2,7 +2,10 @@ package in.ac.iiitv.beyondbooks;
 
 //use this http://stackoverflow.com/questions/9767952/how-to-add-parameters-to-httpurlconnection-using-post
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.util.Pair;
 import android.widget.ArrayAdapter;
 
@@ -14,6 +17,7 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -36,6 +40,7 @@ public class RequestServer {
     private String ip;
     private String address;
     private String output=null;
+    Bitmap image;
     RequestServer(){
         ip = "10.100.91.55:80/beyondbooks";
     }
@@ -506,9 +511,9 @@ public class RequestServer {
         params.add(new Pair<String, String>("title", forumDetails.getTitle()));
         params.add(new Pair<String, String>("author_name", forumDetails.getAuthor_name()));
         params.add(new Pair<String, String>("author_id", forumDetails.getAuthor_id().toString()));
-        params.add(new Pair<String, String>("question_id", forumDetails.getId().toString()));
         params.add(new Pair<String, String>("details", forumDetails.getDetails()));
-
+        params.add(new Pair<String, String>("tags", forumDetails.getTags()));
+        params.add(new Pair<String, String>("faculty_tags", forumDetails.getFaculty_tags()));
         try{
             new Setup().execute(params).get();
             JSONObject jsonObject = new JSONObject(output);
@@ -630,6 +635,7 @@ public class RequestServer {
         return null;
     }
 
+
     public ArrayList<String> get_faculty(){
         address = "http://"+ip+"/andy_get_faculty.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
@@ -707,5 +713,57 @@ public class RequestServer {
         }
 
         return result.toString();
+    }
+
+    private class DownloadTask extends AsyncTask<String, Integer, Bitmap>{
+        Bitmap bitmap = null;
+
+        public Bitmap getBitmap() {
+            return bitmap;
+        }
+
+        public void setBitmap(Bitmap bitmap) {
+            this.bitmap = bitmap;
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... url) {
+            try{
+                bitmap = download_image(url[0]);
+            }catch(Exception e){
+                Log.d("Background Task", e.toString());
+            }
+            set_image(bitmap);
+
+            return bitmap;
+        }
+    }
+    private Bitmap download_image(String strurl)throws IOException {
+        Bitmap bitmap=null;
+        InputStream iStream = null;
+        try{
+            URL url = new URL(strurl);
+            /** Creating an http connection to communcate with url */
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            /** Connecting to url */
+            urlConnection.connect();
+
+            /** Reading data from url */
+            iStream = urlConnection.getInputStream();
+
+            /** Creating a bitmap from the stream returned from the url */
+            bitmap = BitmapFactory.decodeStream(iStream);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            iStream.close();
+        }
+        return bitmap;
+    }
+
+    public void set_image(Bitmap bitmap){
+        this.image = bitmap;
     }
 }

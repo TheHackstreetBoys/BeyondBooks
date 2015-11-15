@@ -99,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="New Button"
-                android:id="@+id/button2"
+                android:id="@+id/submit"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="center" />
 
@@ -122,7 +122,7 @@
                 android:text="Seller description would appear here"
                 android:id="@+id/seller"
                 android:layout_below="@+id/textView8"
-                android:layout_above="@+id/button2"
+                android:layout_above="@+id/submit"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentRight="true"
