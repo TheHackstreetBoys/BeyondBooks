@@ -92,101 +92,101 @@ $(document).ready(function(){
 	    <div class="collapse navbar-collapse" id="navbar-collapse-main">
 
 	      <ul class="nav navbar-nav navbar-right">
+					<li>
+			<?php
+			$content ='
+			<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+			<script type="text/javascript">
+			$(function(){
+			$(".search").keyup(function()
+			{
+			var searchid = $(this).val();
+			var dataString = \' search= \'+ searchid;
+			if(searchid!=\'\')
+			{
+			    $.ajax({
+			    type: "POST",
+			    url: "search.php",
+			    data: dataString,
+			    cache: false,
+			    success: function(html)
+			    {
+			    $("#result").html(html).show();
+			    }
+			    });
+			}return false;
+			});
 
-		<li>
-<?php
-$content ='
-<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
-<script type="text/javascript">
-$(function(){
-$(".search").keyup(function()
-{
-var searchid = $(this).val();
-var dataString = \'search=\'+ searchid;
-if(searchid!=\'\')
-{
-    $.ajax({
-    type: "POST",
-    url: "search.php",
-    data: dataString,
-    cache: false,
-    success: function(html)
-    {
-    $("#result").html(html).show();
-    }
-    });
-}return false;
-});
+			jQuery("#result").live("click",function(e){
+			    var $clicked = $(e.target);
+			    var $name = $clicked.find(\'.name\').html();
+			    var decoded = $("<div/>").html($name).text();
+			    $(\'#searchid\').val(decoded);
+			});
+			jQuery(document).live("click", function(e) {
+			    var $clicked = $(e.target);
+			    if (! $clicked.hasClass("search")){
+			    jQuery("#result").fadeOut();
+			    }
+			});
+			$(\'#searchid\').click(function(){
+			    jQuery("#result").fadeIn();
+			});
+			});
+			</script>
 
-jQuery("#result").live("click",function(e){
-    var $clicked = $(e.target);
-    var $name = $clicked.find(\'.name\').html();
-    var decoded = $("<div/>").html($name).text();
-    $(\'#searchid\').val(decoded);
-});
-jQuery(document).live("click", function(e) {
-    var $clicked = $(e.target);
-    if (! $clicked.hasClass("search")){
-    jQuery("#result").fadeOut();
-    }
-});
-$(\'#searchid\').click(function(){
-    jQuery("#result").fadeIn();
-});
-});
-</script>
+			<style type="text/css">
+			    #searchid
+			    {
+			        width:190px;
+			        padding:8px;
+			        font-size:12px;
+				margin-top:-1cm;
 
-<style type="text/css">
-    #searchid
-    {
-        width:190px;
-        padding:8px;
-        font-size:12px;
-	margin-top:-1cm;
+			     margin-left:1cm;
+			       }
+			    #result
+			    {
+			        position:absolute;
+			        width:190px;
+			        padding:10px;
+			        display:none;
+			     margin-left:1cm;
 
-     margin-left:1cm;
-       }
-    #result
-    {
-        position:absolute;
-        width:190px;
-        padding:10px;
-        display:none;
-     margin-left:1cm;
+			        margin-top:-1px;
+			        border-top: 0px;
+			        overflow:hidden;
+			        border:1px #CCC solid;
+			        background-color: white;
+			    }
+			    .show
+			    {
+			        padding:10px;
+			        border-bottom:0px #999 ;
+			        font-size:12px;
 
-        margin-top:-1px;
-        border-top: 0px;
-        overflow:hidden;
-        border:1px #CCC solid;
-        background-color: white;
-    }
-    .show
-    {
-        padding:10px;
-        border-bottom:0px #999 ;
-        font-size:12px;
-
-        height:10px;
-
-
-    }
-    .show:hover
-    {
-
-        cursor:pointer;
-    }
-</style>
-<div class="content" style="margin-top: -3%;">
-<input type="text" class="form-control search"  id="searchid" placeholder="Search for Books" />
-	<span class="glyphicon glyphicon-search form-control-feedback" style="padding-top: 15%; color: #3596e0;"></span>
-<div id="result"> </div>
-</div>
-';
+			        height:10px;
 
 
-$pre = 1;
-include("html.inc");
-?></li>
+			    }
+			    .show:hover
+			    {
+
+			        cursor:pointer;
+			    }
+			</style>
+			<div class="content" style="margin-top: -3%;">
+			<input type="text" class="form-control search"  id="searchid" placeholder="Search for Books" />
+				<span class="glyphicon glyphicon-search form-control-feedback" style="padding-top: 15%; color: #3596e0;"></span>
+			<div id="result"> </div>
+			</div>
+			';
+
+
+			$pre = 1;
+			include("html.inc");
+			?></li>
+
 
 
 	        <li><br/><a href="homapage.php">Home</a></li>
@@ -281,7 +281,7 @@ include("html.inc");
 								 </label>
 								  <div class="col-sm-7">
 								 	<?php
-								 		echo '<input type="text" class="form-control" id="fname" placeholder="'.$row['f_name'].'"/>';
+								 		echo '<input type="text" class="form-control" id="fname" name="fname" placeholder="'.$row['f_name'].'"/>';
 								 		?>
 								 	</div>
 								 <label for="lname" class="col-sm-3 control-label">
@@ -289,7 +289,7 @@ include("html.inc");
 								 </label>
 								 	<div class="col-sm-7">
 								 	<?php
-								 		echo '<input type="text" class="form-control" id="lname" placeholder="'.$row['l_name'].'"/>';
+								 		echo '<input type="text" class="form-control" id="lname" name="lname" placeholder="'.$row['l_name'].'"/>';
 								 		?>
 								 	</div>
 							<label for="inputEmail3" class="col-sm-3 control-label">
@@ -303,7 +303,6 @@ include("html.inc");
 						</div>
 						</div>
 				</div>
-			</div>
 <hr/>
 
 			<div class="row">
@@ -313,7 +312,6 @@ include("html.inc");
 					<h3> <b>Change Password</b></h3>
 						<h4>To change your password, enter your current password and then the password you desire!</h4> <hr/>
 
-	<form class="form-horizontal" role="form">
 						<div class="form-group">
 
 							<label for="oldpwd" class="col-sm-3 control-label">
@@ -336,7 +334,7 @@ include("html.inc");
 
 						<div class="form-group">
 							<div class="col-sm-offset-4 col-sm-10">
-
+<br>
 								<button type="submit" class="btn btn-default">
 									Save!
 								</button>

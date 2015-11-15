@@ -14,7 +14,7 @@ $num = $row['lastval'];
 $result = pg_insert($dbconn, "single_sell", array('prodid'=>$num, 'isbn'=>$isbn, 'age'=>$age, 'price'=>$price, 'description'=>$description));
 if($result)
 {
-    
+
     echo json_encode(array('result'=>'true'));
 }
 else

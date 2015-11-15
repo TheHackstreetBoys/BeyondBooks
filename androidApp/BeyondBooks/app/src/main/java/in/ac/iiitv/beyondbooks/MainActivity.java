@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -18,18 +19,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private EditText username;
     private EditText password;
+    private TextView aboutus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
-
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
+
+        aboutus = (TextView) findViewById(R.id.aboutus);
+        aboutus.setOnClickListener(this);
     }
 
     @Override
@@ -49,19 +50,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent in;
         switch(id)
         {
-            case R.id.search:
+            case R.id.option_search:
                 in = new Intent(this,Frame5.class);
-
                 startActivity(in);
                 break;
-            case R.id.home:
+            case R.id.option_home:
 
-                in = new Intent(this, MainActivity.class);
+                in = new Intent(this, BookViewPage.class);
                 startActivity(in);
                 break;
-            case R.id.user_profile:
-                in = new Intent(this,Wireframe8.class);
+            case R.id.option_user_profile:
+                in = new Intent(this, Wireframe8.class);
                 startActivity(in);
+                break;
+            case R.id.option_activity_on_forum:
+                in = new Intent(this,Wireframe12.class);
+                startActivity(in);
+                break;
+            case R.id.option_book_shelf:
+                in = new Intent(this,Frame10.class);
+                startActivity(in);
+                break;
+            case R.id.option_forum:
+                in = new Intent(this,Wireframe13.class);
+                startActivity(in);
+                break;
+            case R.id.option_reviewed_books:
+                in = new Intent(this,Frame11.class);
+                startActivity(in);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -69,16 +86,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        RequestServer rs = new RequestServer();
-        boolean allowed = rs.authenticate(Integer.parseInt(username.getText().toString()),password.getText().toString());
-        UserData userData = new UserData(Integer.parseInt(username.toString()));
-        if (allowed)
+        switch (v.getId())
         {
-            Intent intent = new Intent(this, BookViewPage.class);
-            intent.putExtra("user_data", userData);
-            startActivity(intent);
+            case R.id.login:
+                RequestServer rs = new RequestServer();
+                boolean allowed = rs.authenticate(Integer.parseInt(username.getText().toString()),password.getText().toString());
+                System.out.println("Data sent to server");
+                UserData userData = new UserData(Integer.parseInt(username.toString()));
+                if (allowed)
+                {
+                    Intent intent = new Intent(this, BookViewPage.class);
+                    intent.putExtra("user_data", userData);
+                    startActivity(intent);
+                }
+                else
+                    Toast.makeText(this, "Incorrect username or password", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.aboutus:
+                Intent au = new Intent(this,AboutUs.class);
+                au.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(au);
+                break;
         }
-        else
-            Toast.makeText(this, "Incorrect username or password", Toast.LENGTH_LONG).show();
     }
 }

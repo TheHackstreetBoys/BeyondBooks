@@ -2,7 +2,11 @@ package in.ac.iiitv.beyondbooks;
 
 //use this http://stackoverflow.com/questions/9767952/how-to-add-parameters-to-httpurlconnection-using-post
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Base64;
+import android.util.Log;
 import android.util.Pair;
 import android.widget.ArrayAdapter;
 
@@ -10,10 +14,13 @@ import org.apache.http.NameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.DOMError;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -36,8 +43,11 @@ public class RequestServer {
     private String ip;
     private String address;
     private String output=null;
+    String image_link;
+    Bitmap image;
     RequestServer(){
-        ip = "10.100.91.55:80/beyondbooks";
+        ip = "10.100.91.55/beyondbooks";
+        image_link = "10.100.88.235/BeyondBooks/web/book_pics/";
     }
 
     public Boolean authenticate(Integer id, String password){
@@ -380,6 +390,7 @@ public class RequestServer {
                 Integer author_id = Integer.parseInt(cur_book_obj.getString("author_id"));
                 Integer q_id = Integer.parseInt(cur_book_obj.getString("q_id"));
                 ForumOverview temp = new ForumOverview(title, null, author_id, q_id);
+                System.out.println("maakichut : "+author_id+ " "+q_id);
                 questions_started.add(temp);
             }
             JSONArray reviewed = activities.getJSONArray("commented");
@@ -422,7 +433,7 @@ public class RequestServer {
                 ForumOverview temp = new ForumOverview(title, author, author_id, q_id);
                 top_discussions_list.add(temp);
             }
-            System.out.println("behenchod : "+top_discussions_list);
+            System.out.println("behenchod : " + top_discussions_list);
             return top_discussions_list;
         }catch(JSONException e){
             e.printStackTrace();
@@ -480,6 +491,7 @@ public class RequestServer {
                 JSONObject comment_json = jsonArray.getJSONObject(i);
                 Integer comment_user_id = Integer.parseInt(comment_json.getString("user_id"));
                 String comment_text = comment_json.getString("text");
+                System.out.print(" dsfa "+comment_json.get("comment_id"));
                 Integer comment_id = Integer.parseInt(comment_json.getString("comment_id"));
                 Comments temp = new Comments(comment_user_id, comment_text, comment_id, forum_id, title);
                 String user_name = comment_json.getString("user_name");
@@ -505,9 +517,9 @@ public class RequestServer {
         params.add(new Pair<String, String>("title", forumDetails.getTitle()));
         params.add(new Pair<String, String>("author_name", forumDetails.getAuthor_name()));
         params.add(new Pair<String, String>("author_id", forumDetails.getAuthor_id().toString()));
-        params.add(new Pair<String, String>("question_id", forumDetails.getId().toString()));
         params.add(new Pair<String, String>("details", forumDetails.getDetails()));
-
+        params.add(new Pair<String, String>("tags", forumDetails.getTags()));
+        params.add(new Pair<String, String>("faculty_tags", forumDetails.getFaculty_tags()));
         try{
             new Setup().execute(params).get();
             JSONObject jsonObject = new JSONObject(output);
@@ -629,6 +641,7 @@ public class RequestServer {
         return null;
     }
 
+
     public ArrayList<String> get_faculty(){
         address = "http://"+ip+"/andy_get_faculty.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
@@ -638,9 +651,10 @@ public class RequestServer {
             JSONObject jsonObject = new JSONObject(output);
             JSONArray faculty_list = jsonObject.getJSONArray("faculties");
             for (int i=0;i<faculty_list.length();i++){
-                JSONObject faculty = faculty_list.getJSONObject(i);
-                temp.add(faculty.toString());
+                temp.add(faculty_list.getString(i));
+
             }
+            System.out.println("lund : " + temp);
             return temp;
         }catch(JSONException e){
             e.printStackTrace();
@@ -652,6 +666,46 @@ public class RequestServer {
         return null;
     }
 
+    public Boolean send_comment(Integer user_id, Integer q_id, String text){
+        address = "http://"+ip+"/andy_send_comment.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("user_id", user_id.toString()));
+        params.add(new Pair<String, String>("q_id", q_id.toString()));
+        params.add(new Pair<String, String>("text", text));
+        try{
+            new Setup().execute(params).get();
+            JSONObject jsonObject = new JSONObject(output);
+            Boolean result = Boolean.parseBoolean(jsonObject.getString("result"));
+            return result;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Bitmap getImage(String image_name){
+        String str_link = "http://"+image_link+"/"+image_name;
+        DownloadTask downloadTask = new DownloadTask();
+        downloadTask.execute(image_link);
+        return image;
+    }
+
+    public Boolean setImage(Bitmap image, String user_id){
+        address = "http://"+ip+"/andy_set_image.php";
+        new UploadImage(image, user_id).execute();
+        try {
+            JSONObject jsonObject = new JSONObject(output);
+            Boolean result = Boolean.parseBoolean(jsonObject.getString("result"));
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, Void, String> {
         HttpURLConnection urlConnection;
@@ -688,7 +742,6 @@ public class RequestServer {
         }
     }
     private void return_method(String return_value){
-//        System.out.println("fucker : "+return_value);
         output = return_value;
     }
     private String getQuery(ArrayList<Pair<String, String>> params) throws UnsupportedEncodingException
@@ -706,5 +759,99 @@ public class RequestServer {
         }
 
         return result.toString();
+    }
+
+    private class DownloadTask extends AsyncTask<String, Integer, Bitmap>{
+        Bitmap bitmap = null;
+
+        public Bitmap getBitmap() {
+            return bitmap;
+        }
+
+        public void setBitmap(Bitmap bitmap) {
+            this.bitmap = bitmap;
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... url) {
+            try{
+                bitmap = download_image(url[0]);
+            }catch(Exception e){
+                Log.d("Background Task", e.toString());
+            }
+            set_image(bitmap);
+
+            return bitmap;
+        }
+    }
+    private Bitmap download_image(String strurl)throws IOException {
+        Bitmap bitmap=null;
+        InputStream iStream = null;
+        try{
+            URL url = new URL(strurl);
+            /** Creating an http connection to communcate with url */
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            /** Connecting to url */
+            urlConnection.connect();
+
+            /** Reading data from url */
+            iStream = urlConnection.getInputStream();
+
+            /** Creating a bitmap from the stream returned from the url */
+            bitmap = BitmapFactory.decodeStream(iStream);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            iStream.close();
+        }
+        return bitmap;
+    }
+    private class UploadImage extends AsyncTask <Void, Void, Void>{
+        Bitmap image;
+        String name;
+        public UploadImage(Bitmap image, String name){
+            this.image = image;
+            this.name = name;
+        }
+        @Override
+        protected Void doInBackground(Void... params) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+            ArrayList<Pair<String, String>> data_to_send = new ArrayList<Pair<String, String>>();
+            data_to_send.add(new Pair<String, String>("image", encodedImage));
+            data_to_send.add(new Pair<String, String>("user_id", name));
+            StringBuilder result = null;
+            try {
+                URL url = new URL(address);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setDoInput(true);
+                urlConnection.setDoOutput(true);
+                ArrayList<Pair<String, String>> to_send = data_to_send;
+                OutputStream os = urlConnection.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getQuery(to_send));
+                writer.flush();
+                writer.close();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return_method(result.toString());
+            return null;
+        }
+    }
+
+    public void set_image(Bitmap bitmap){
+        this.image = bitmap;
     }
 }

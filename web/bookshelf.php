@@ -173,7 +173,7 @@ include("html.inc");
 ?></li>
 
 
-	        <li><br/><a href="homapage.php">Home</a></li>
+	        <li><br/><a href="homepage.php">Home</a></li>
 
 	        <li><br/><a href="buy_sell.php">Buy/Sell</a></li>
 					<li><br/><a href="forum.php">Forum</a></li>
@@ -214,23 +214,28 @@ include("html.inc");
 			$class2="book book-umber";
 			$class3="book book-blue";
 			$class4="book book-springer";
-
+			$user_id=$_SESSION["user_id"];
 			$query_bookshelf="SELECT * from book_shelf where user_id='$user_id'";
 			$answer=pg_query($query_bookshelf);
-			$rows=pg_num_rows($query_bookshelf);
+			$rows=pg_num_rows($answer);
 			if($rows==0)
 			{
 				echo '<h3 style="color:blue;">Looks like you are not an avid reader! </h3>';
 			}
-			while($row=pg_fetch_array($answer))
+			while($rows=pg_fetch_array($answer))
 			{
-				$books=pg_query("SELECT * from books where isbn='$row[isbn]'");
+				$books=pg_query("SELECT * from books where isbn='$rows[isbn]'");
 				$bookname=pg_fetch_array($books);
-				$var='$class'.rand(1,3);
-				echo (rand(1,3));
-				echo '<h3>'.$var.'</h3>';
-				echo '<div class="'.$var.'">';
-				echo '<h2><a href="book_main_page.php?isbn='.$row['isbn'].'&page=1">'.$bookname['title'].'</a></h2>';
+				$var=rand(1,4);
+				if($var==1)
+				echo '<div class="'.$class1.'">';
+				else if($var==2)
+				echo '<div class="'.$class2.'">';
+				else if($var==3)
+				echo '<div class="'.$class3.'">';
+				else
+				echo '<div class="'.$class4.'">';
+				echo '<h2><a href="book_main_page.php?isbn='.$rows['isbn'].'&page=1">'.$bookname['title'].'</a></h2>';
 				echo '</div>';
 			}
 		?>

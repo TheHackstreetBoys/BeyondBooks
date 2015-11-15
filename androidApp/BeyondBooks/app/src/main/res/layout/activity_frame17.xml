@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -15,12 +15,15 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/textView2"
         android:layout_alignParentTop="true"
-       />
+        />
 
     <EditText
         android:layout_width="348dp"
         android:layout_height="wrap_content"
-        android:id="@+id/editText" />
+        android:id="@+id/frame17_tag_topics"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,27 +31,61 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Tag Faculties"
         android:id="@+id/textView3"
+        android:layout_below="@+id/frame17_tag_topics"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView7" />
+        android:layout_alignParentStart="true" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout">
+
+    </LinearLayout>
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="315dp"
-        android:id="@+id/expandableListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/frame17_faclist"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView6"
-        android:layout_above="@+id/button2" />
+        android:layout_above="@+id/frame17_submit"
+        android:layout_below="@+id/frame17_clear" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"
-        android:id="@+id/button2"
+        android:id="@+id/frame17_submit"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="clear"
+        android:id="@+id/frame17_clear"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-</LinearLayout>
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView3"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/frame17_clear"
+        android:layout_toLeftOf="@+id/frame17_clear"
+        android:layout_toStartOf="@+id/frame17_clear" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/frame17_fac"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
+    </ScrollView>
+
+</RelativeLayout>

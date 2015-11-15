@@ -6,13 +6,14 @@ function getDetails($isbnl)
     $url = "https://www.googleapis.com/books/v1/volumes?q=isbn:$isbnl";
     $response = file_get_contents($url);
 
-    $decoded = (array)json_decode($response);
-
+    $decoded = json_decode($response);
     $res = array('authors' => $decoded->{'items'}[0]->{'volumeInfo'}->{'authors'},
             "title" => $decoded->{'items'}[0]->{'volumeInfo'}->{'title'},
 
             "publisher" => $decoded->{'items'}[0]->{'volumeInfo'}->{'publisher'},
-            "description" => $decoded->{'items'}[0]->{'volumeInfo'}->{'description'});
+            "description" => $decoded->{'items'}[0]->{'volumeInfo'}->{'description'},
+            "image-link"=> $decoded->{'items'}[0]->{'volumeInfo'}->{'imageLinks'}->{'thumbnail'});
+
     return $res;
 }
 

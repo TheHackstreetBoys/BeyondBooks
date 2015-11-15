@@ -1,11 +1,11 @@
 <!doctype html>
 <?php
 include_once 'db_conn.php';
-//session_start();
-//if(!isset($_SESSION["user_id"]))
-//{
-//	header('Location: index.php');
-//}
+session_start();
+if(!isset($_SESSION["user_id"]))
+{
+	header('Location: index.php');
+}
 ?>
 <html>
 <head>
@@ -171,7 +171,7 @@ include("html.inc");
 	        <li><br/><a href="homapage.php">Home</a></li>
 
 	        <li><br/><a href="buy_sell.php">Buy/Sell</a></li>
-					<li><br/><a href="forum.php">Forum</a></li>
+					<li><br/><a href="forumWelcome.php">Forum</a></li>
 		<li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
 			<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 				<?php
@@ -188,6 +188,7 @@ include("html.inc");
 <li><a href="yourprofile.php">My Profile</a></li>
 <li><a href="bookshelf.php">My Bookshelf</a></li>
 <li><a href="my_sold_books.php">My Sold Books</a></li>
+<li><a href="addbook.php">Add Book</a></li>
 </ul></li>
 
 	      </ul>
@@ -235,19 +236,14 @@ $start_from = ($page-1) * $num_rec_per_page;
 				{
 			echo "<div class='col-md-3'><br/>";
 			echo "<a href='book_main_page.php?isbn=".$row['isbn']."'>";
-			$url = "http://www.librarything.com/devkey/KEY/medium/isbn/".$isbn;
-			$img = 'books_pics/'.$isbn.'.png';
+			$isbn=$row['isbn'];
+			$img = 'books_pics/'.$isbn.'.jpg';
 			$result1=glob($img);
 			if (!empty($result1))
 			echo '<img src="'.$result1[0].'" class="img-responsive" style="width:100px; height:150px">';
 			else
 			{
-				file_put_contents($img, file_get_contents($url));
-				if(file_exists($img))
-					echo '<img src="'.$img.'" class="img-responsive" style="width:100px; height:150px">';
-				else {
 					echo '<img src="books_pics/nan.jpg" class="img-responsive" style="width:100px; height:150px">';
-				}
 			}
 
 echo "<a href='book_main_page.php?isbn=".$row['isbn']."'>".$row['title']."</a>";
@@ -301,20 +297,15 @@ $start_from = ($page1-1) * $num_rec_per_page;
 					while($row = pg_fetch_array($result))
 				{
 					echo "<a href='book_main_page.php?isbn=".$row['isbn']."' style='color:black;'>";
-					$url = "http://www.librarything.com/devkey/KEY/medium/isbn/".$row['isbn'];
-					$img = 'books_pics/'.$row['isbn'].'.png';
+					$img = 'books_pics/'.$row['isbn'].'.jpg';
 					$result1=glob($img);
 					if (!empty($result1))
 					echo '<img src="'.$result1[0].'" class="img-responsive" style="width:100px; height:150px">';
 					else
 					{
-						file_put_contents($img, file_get_contents($url));
-						if(file_exists($img))
-							echo '<img src="'.$img.'" class="img-responsive" style="width:100px; height:150px">';
-						else {
 							echo '<img src="books_pics/nan.jpg" class="img-responsive" style="width:100px; height:150px">';
 						}
-					}
+
 						echo "</a>";
 					echo '<b>'.$row['title'].'<br/></b>';
 					echo "<em>".$row['author']."</em><br/>";
@@ -367,7 +358,7 @@ $start_from = ($page2-1) * $num_rec_per_page;
 					while($row = pg_fetch_array($result))
 				{
 $qid = $row['qid'];
-			
+
 		$result1 = pg_query("SELECT COUNT(*) AS num FROM forum_replies WHERE qid = '$qid' ");
 		$row1 = pg_fetch_array($result1);
 
