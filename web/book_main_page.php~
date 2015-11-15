@@ -23,10 +23,7 @@ Main Page of Book
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
-<link href='css/rating.css' rel='stylesheet' type='text/css' />
-<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-<!--<script type="text/javascript" src="js/rating.js"></script>
--->
+
 
 
 <script type="text/javascript">
@@ -54,7 +51,7 @@ $("document").ready(function(){
 			if(response==1)
 			{
 				document.getElementById("bookshelfbtn").value="Added to Bookshelf";
-				
+
 			}
 		}
 	})
@@ -74,7 +71,7 @@ function insertbookshelf()
 			if(response==1)
 			{
 				document.getElementById("bookshelfbtn").value="Added to Bookshelf";
-				
+
 			}
 			else
 			{
@@ -88,43 +85,6 @@ function insertbookshelf()
 
 
 
-
-
-
-<script>
-$(document).ready(function(){
-			$('#rating_panel>img').click(function(e){
-				var imgindex	=	$(this).index() + 1;
-				var ratingpanel	=	$(this).closest('div');
-				var pollid		=	ratingpanel.attr('data-pollid');
-				var israted		=	ratingpanel.attr('data-rated');
-				if(israted == 1){
-					alert('You have already voted!');
-					return false;
-				}else{
-					ratingpanel.attr('data-rated',1);
-				}
-
-				$('#starloader').show();
-				for( i=0;i<imgindex; i++){
-					var imgobj = $("#rating_panel>img:eq( "+i+" )" );
-					var img = 'full.png';
-					imgobj.attr('src',img);
-					
-				}
-				$.ajax({
-					url:'add_rating.php',
-					data:'rated='+imgindex+'&pid='+pollid,
-					success:function(){
-						$('#starloader').hide();
-					}
-				});
-				
-				
-								
-			});
-		});
-</script>
 
 
 
@@ -307,21 +267,14 @@ echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
 
 	$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn WHERE books.isbn = '$isbn'");
 
-	$url = "http://www.librarything.com/devkey/KEY/medium/isbn/".$isbn;
-	$img = 'books_pics/'.$isbn.'.png';
+	$img = 'books_pics/'.$isbn.'.jpg';
 	$result1=glob($img);
 	if (!empty($result1))
 	echo '<img src="'.$result1[0].'" class="img-responsive" style="width:100px; height:150px">';
 	else
 	{
-		file_put_contents($img, file_get_contents($url));
-		if(file_exists($img))
-			echo '<img src="'.$img.'" class="img-responsive" style="width:100px; height:150px">';
-		else {
 			echo '<img src="books_pics/nan.jpg" class="img-responsive" style="width:100px; height:150px">';
-		}
 	}
-
 					while($row = pg_fetch_array($result))
 				{
 					echo '<h3><b>'.$row['title'].'</b></h3></br>';
@@ -338,6 +291,8 @@ echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
 	$row = pg_fetch_array($result);
 	$row1 = pg_fetch_array($result1);
 
+if($row['total'] != 0)
+{
 $starNumber = $row1['totalrating']/$row['total'];
 echo "Rating :";
     for($x=1;$x<=$starNumber;$x++) {
@@ -351,9 +306,67 @@ echo "Rating :";
         echo '<img src="images/zero.png" />';
         $x++;
     }
+}
+else
+{
+$starNumber = 0;
+echo "Rating :";
+    for($x=1;$x<=$starNumber;$x++) {
+        echo '<img src="images/full.png" />';
+    }
+    if (strpos($starNumber,'.')) {
+        echo '<img src="images/half.png" />';
+        $x++;
+    }
+    while ($x<=5) {
+        echo '<img src="images/zero.png" />';
+        $x++;
+    }
+}
 ?>
 
 <br/><br/>
+<link href='rating.css' rel='stylesheet' type='text/css' />
+<script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+<script>
+
+		$(document).ready(function(){
+			$('#rating_panel>img').click(function(e){
+				var isbn = '<?php echo $isbn; ?>';
+				var imgindex	=	$(this).index() + 1;
+				var ratingpanel	=	$(this).closest('div');
+				var pollid		=	ratingpanel.attr('data-pollid');
+				var israted		=	ratingpanel.attr('data-rated');
+				if(israted == 1){
+					alert('You have already voted!');
+					return false;
+				}else{
+					ratingpanel.attr('data-rated',1);
+				}
+
+				$('#starloader').show();
+				for( i=0;i<imgindex; i++){
+					var imgobj = $("#rating_panel>img:eq( "+i+" )" );
+					var img = 'images/full.png';					
+					imgobj.attr('src',img);
+					
+				}
+				$.ajax({
+					url:'add_rating.php',
+					data:'rated='+imgindex+'&isbn='+isbn,
+					success:function(){
+						$('#starloader').hide();
+						location.reload();
+					}
+				});
+				
+				
+								
+			});
+		});
+</script>
+
+
 Your Rating:
 <div id="rating_panel" name="rating_panel" data-pollid="1" data-rated="0">
 <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /> <img src="images/zero.png" /><div id="starloader">

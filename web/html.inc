@@ -4,14 +4,10 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <style type="text/css">
-    
+
     </style>
   </head>
   <body>
-    <div>
-      <h2><?php echo $heading;?></h2>
-
-
       <p>
 
         <div style="float:left;width:90px">
@@ -36,13 +32,13 @@
       </p>
 
       <hr />
-      
+
     <p>
-        <?php if(!isset($pre)) {?>
+        <?php if(!isset($pre)){ ?>
       <pre>
         <?php print_r($content); ?>
       </pre>
-      <?php }else{ ?>
+      <?php } else{ ?>
        <?php print_r($content); ?>
       <?php } ?>
     </p>

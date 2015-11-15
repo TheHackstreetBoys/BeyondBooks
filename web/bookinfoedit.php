@@ -168,7 +168,7 @@ $(\'#searchid\').click(function(){
 
 
 $pre = 1;
-include("html.inc");
+require ("html.inc");
 ?></li>
 
 
@@ -238,16 +238,15 @@ $price = $_POST['price'];
 $age = $_POST['age'];
 $des = $_POST['description'];
 
-$ts = time();
+//$ts = time();
 
 if(pg_query("UPDATE single_sell SET age = '$age', description = '$des', price = '$price' WHERE isbn ='$isbn' AND prodid = '$prodid' " ))
-	{
+{
 
-if(pg_query("UPDATE pbase SET ts = '$ts', price = '$price' WHERE sellerid ='$sellerid' AND prodid = '$prodid' " ))
+if(pg_query("UPDATE pbase SET ts = CURRENT_TIMESTAMP WHERE sellerid ='$sellerid' AND prodid = '$prodid' " ))
 	{
-      header("Location: mysells.php");
-
-	}
+    //  header("Location: my_sold_books.php");
+          echo "<script>setTimeout(\"location.href = 'my_sold_books.php';\");</script>";	}
 }
 	else
 		echo pg_last_error();

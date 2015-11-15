@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <?php
 include_once 'db_conn.php';
-//session_start();
-//if(!isset($_SESSION["user_id"]))
-//{
-//	header('Location: index.php');
-//}
+session_start();
+if(!isset($_SESSION["user_id"]))
+{
+	header('Location: index.php');
+}
 ?>
 <html lang="en">
   <head>
@@ -205,7 +205,7 @@ include_once 'db_conn.php';
     <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
-			<div class="page-header">
+			<div class="page-header" style="padding-top: 4%;">
 				<h1>
 					My Activities
 				</h1>
@@ -219,9 +219,8 @@ include_once 'db_conn.php';
 <?php
 
 		$num_rec_per_page=2;
+$sellerid = $_SESSION["user_id"];
 
-//$sellerid = $_SESSION["user_id"];
-$sellerid = "201351010";
 
 if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; };
 $start_from = ($page-1) * $num_rec_per_page;
@@ -242,9 +241,21 @@ $start_from = ($page-1) * $num_rec_per_page;
 					$i = 1;
 					while($row = pg_fetch_array($result))
 				{
-
-					echo $i.'. <b>ISBN:&nbsp;'.$row['isbn'].'</b><br/>';
-					echo 'Price:&nbsp;'.$row['price'].'<br/>';
+          $isbn=$row['isbn'];
+          $img = 'books_pics/'.$isbn.'.jpg';
+        	$result1=glob($img);
+        	if (!empty($result1))
+        	echo ' <img src="'.$result1[0].'" class="img-responsive" style="width:100px; height:150px">';
+        	else
+        	{
+        			echo ' <img src="books_pics/nan.jpg" class="img-responsive" style="width:100px; height:150px">';
+        	}
+					echo '<b>ISBN:&nbsp;'.$row['isbn'].'</b><br/>';
+          $sellisbn=$row['isbn'];
+          $sellquery=pg_query("SELECT * from books where isbn='$isbn'");
+          $sellqueryanswer=pg_fetch_array($sellquery);
+					echo '<b>'.$sellqueryanswer['title'].'</b><br/>';
+          echo 'Price:&nbsp;'.$row['price'].'<br/>';
 					echo 'Age:&nbsp;'.$row['age'].'<br/>';
 					$body = $row['description'];
 					echo "Description:&nbsp;".nl2br($body).'<br/>';
@@ -287,7 +298,7 @@ echo "<a href='my_sold_books.php?page1=$total_pages'>".'-Next'."</a> "; // Goto 
 		$num_rec_per_page=2;
 
 
-$user = "201351010";
+$user = $_SESSION["user_id"];
 
 if (isset($_GET["page2"])) { $page  = $_GET["page2"]; } else { $page=1; };
 $start_from = ($page-1) * $num_rec_per_page;
@@ -313,7 +324,7 @@ $start_from = ($page-1) * $num_rec_per_page;
 					echo 'Date:&nbsp;'.$row['ts'].'<br/>';
 					$body = $row['content'];
 					echo "Description:&nbsp;".nl2br($body).'<br/>';
-					echo '<a href="forumview.php?qid='.$row['qid'].'">'.$row1['num'].' Click Here</a><br/><br/>';
+					echo '<a href="forumview.php?qid='.$row['qid'].'">'.' Click Here</a><br/><br/>';
 
 
 					$i = $i+1;
@@ -348,6 +359,15 @@ echo "<a href='my_sold_books.php?page2=$total_pages'>".'-Next'."</a> "; // Goto 
 	</div>
 </div>
 
+<footer>
+<hr />
+<div class="container">
+<hr>Beyond Books Everywhere</hr>
+</br>
+<p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
+<p class="text-right">Copyright &copy; Your Company 2014</p>
+</div>
+</footer>
 
   </body>
 </html>
