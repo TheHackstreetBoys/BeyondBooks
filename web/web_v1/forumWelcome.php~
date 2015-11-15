@@ -1,7 +1,7 @@
 <!doctype html>
 <?php
-//include_once 'db_conn.php';
-//session_start();
+include_once 'db_conn.php';
+session_start();
 //if(!isset($_SESSION["user_id"]))
 //{
 //	header('Location: index.php');
@@ -62,7 +62,7 @@ $(document).ready(function(){
 	        <span class="icon-bar"></span>
 	      </button>
 
-	      <a class="navbar-brand" href="#">Beyond Books</a>
+	      <a class="navbar-brand" href="homepage.php">Beyond Books</a>
 
 	    </div>
 
@@ -72,40 +72,123 @@ $(document).ready(function(){
 
 	      <ul class="nav navbar-nav navbar-right">
 
-		<li><form action="" class="search-form">
-                <div class="form-group has-feedback" id="search">
+		<li>
+<?php
+$content ='
+<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript">
+$(function(){
+$(".search").keyup(function()
+{
+var searchid = $(this).val();
+var dataString = \'search=\'+ searchid;
+if(searchid!=\'\')
+{
+    $.ajax({
+    type: "POST",
+    url: "searchforum.php",
+    data: dataString,
+    cache: false,
+    success: function(html)
+    {
+    $("#result").html(html).show();
+    }
+    });
+}return false;
+});
 
-            		<input type="text" class="form-control" name="search" id="search1" placeholder="search">
-              		<span class="glyphicon glyphicon-search form-control-feedback"></span>
+jQuery("#result").live("click",function(e){
+    var $clicked = $(e.target);
+    var $name = $clicked.find(\'.name\').html();
+    var decoded = $("<div/>").html($name).text();
+    $(\'#searchid\').val(decoded);
+});
+jQuery(document).live("click", function(e) {
+    var $clicked = $(e.target);
+    if (! $clicked.hasClass("search")){
+    jQuery("#result").fadeOut();
+    }
+});
+$(\'#searchid\').click(function(){
+    jQuery("#result").fadeIn();
+});
+});
+</script>
+
+<style type="text/css">
+    #searchid
+    {
+        width:190px;
+        padding:8px;
+        font-size:12px;
+	margin-top:-1cm;
+
+     margin-left:1cm;
+       }
+    #result
+    {
+        position:absolute;
+        width:190px;
+        padding:10px;
+        display:none;
+     margin-left:1cm;
+
+        margin-top:-1px;
+        border-top: 0px;
+        overflow:hidden;
+        border:1px #CCC solid;
+        background-color: white;
+    }
+    .show
+    {
+        padding:10px;
+        border-bottom:0px #999 ;
+        font-size:12px;
+
+        height:10px;
 
 
-            	</div>
-            </form></li>
+    }
+    .show:hover
+    {
 
-	        <li><a href="#home">Home</a></li>
+        cursor:pointer;
+    }
+</style>
+<div class="content" style="margin-top: -3%;">
+<input type="text" class="form-control search"  id="searchid" placeholder="Search for Books" />
+	<span class="glyphicon glyphicon-search form-control-feedback" style="padding-top: 15%; color: #3596e0;"></span>
+<div id="result"> </div>
+</div>
+';
 
-	        <li><a href="#about">About</a></li>
-		<li><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
-		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
-			<?php
-				 $user_id=$_SESSION["user_id"];
-				 $query="SELECT * FROM user_profile where user_id='$user_id'";
-				 $result=pg_query($query);
-				 $row=pg_fetch_array($result);
-			$filename=$row['user_id'].'_dp';
-			$filename="pictures/".$filename."*";
-			$result1=glob($filename);
-			if (!empty($result1))
-			echo '<img src="'.$result1[0].'"class="img-circle" style="width: 50px">';
-			else
-				echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
-				?></a>
 
+$pre = 1;
+include("html.inc");
+?></li>
+
+
+	        <li><br/><a href="homapage.php">Home</a></li>
+
+	        <li><br/><a href="buy_sell.php">Buy/Sell</a></li>
+					<li><br/><a href="forum.php">Forum</a></li>
+		<li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
+			<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
+				<?php
+				$filename=$_SESSION["user_id"].'_dp';
+				$filename="pictures/".$filename."*";
+				$result1=glob($filename);
+				if (!empty($result1))
+				echo '<img src="'.$result1[0].'"class="img-circle" style="width: 50px">';
+				else
+					echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
+					?>
+			</a>
 <ul class="dropdown-menu">
-<li><a herf="#">My profile</a></li>
-<li><a href="#">My uploads</a></li>
+<li><a href="yourprofile.php">My Profile</a></li>
+<li><a href="bookshelf.php">My Bookshelf</a></li>
+<li><a href="my_sold_books.php">My Sold Books</a></li>
 </ul></li>
-
 
 	      </ul>
 
@@ -114,6 +197,7 @@ $(document).ready(function(){
 	  </div><!-- /.container-fluid -->
 
 	</nav>
+
 
 <br/><br/><br/><br/>
  <div class="container-fluid">
@@ -144,10 +228,6 @@ $(document).ready(function(){
 								</div>
 							</div>
 <?php
-												$dbconn=null;
-global $dbconn;
-$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-
 
 //echo "<em>Design Project <b>Kushal Jangid</b></em>";
 
@@ -160,18 +240,24 @@ $username = substr("$str",$v-1);
 session_start();
 
 
-$result = pg_query("SELECT * FROM posts ORDER BY date DESC");
+$result = pg_query("SELECT * FROM question_forum ORDER BY ts DESC");
 
 
 if(!pg_num_rows($result)) {
 	echo '<p>No forums is Created Yet.</p>';
 } else {
 	while($row = pg_fetch_array($result)) {
+
+	$qid = $row['qid'];
+			
+		$result1 = pg_query("SELECT COUNT(*) AS num FROM forum_replies WHERE qid = '$qid' ");
+		$row1 = pg_fetch_array($result1);
+
 		echo '<h2>'.$row['title'].'</h2><br/>';
-		$body = substr($row['body'], 0, 20);
+		$body = substr($row['content'], 0, 20);
 		echo nl2br($body).'...<br/>';
-		echo '<a href="forumview.php?id='.$row['id'].'+'.$_SESSION['mycourse'].'">Read More</a> | ';
-		echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';
+		echo '<a href="forumview.php?qid='.$row['qid'].'">Read More</a> | ';
+		echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row1['num'].' comments</a>';
 		echo '<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 
 	}
@@ -209,7 +295,7 @@ HTML;
 
 					<?php
 
-			$result = pg_query("SELECT * FROM posts ORDER BY num_comments DESC LIMIT 4");
+$result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid )  DESC LIMIT 4");
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No forums is Created Yet.</p>';
@@ -218,11 +304,16 @@ HTML;
 
 					while($row = pg_fetch_array($result))
 				{
+			$qid = $row['qid'];
+			
+		$result1 = pg_query("SELECT COUNT(*) AS num FROM forum_replies WHERE qid = '$qid' ");
+		$row1 = pg_fetch_array($result1);
+
 					echo '<h2>'.$row['title'].'</h2><br/>';
-					$body = substr($row['body'], 0, 10);
+					$body = substr($row['content'], 0, 10);
 					echo nl2br($body).'...<br/>';
-					echo '<a href="forumview.php?id='.$row['id'].'">Read More</a> | ';
-					echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';
+					echo '<a href="forumview.php?qid='.$row['qid'].'">Read More</a> | ';
+					echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row1['num'].' comments</a>';
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 			     }
 					}

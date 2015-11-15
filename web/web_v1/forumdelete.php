@@ -1,16 +1,18 @@
 <?php
-$dbconn=null;
-global $dbconn;
-$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-
+include_once "db_conn.php";
 
 //session_start();
   //  $username   = $_SESSION['current'];
-    //$mycourse = $_SESSION['mycourse']; 
+    //$mycourse = $_SESSION['mycourse'];
 
-    $id = $_GET['id'];
-pg_query("DELETE FROM posts WHERE id= '$id' " );
-pg_query("DELETE FROM reply WHERE post_id= '$id'" );
+$qid = $_GET['qid'];
+
+pg_query("DELETE FROM qtags WHERE qid = '$qid'" );
+pg_query("DELETE FROM forum_replies WHERE qid= '$qid'" );
+pg_query("DELETE FROM question_forum WHERE qid= '$qid' " );
+
+
+
 header("Location: forumWelcome.php");
 
 ?>

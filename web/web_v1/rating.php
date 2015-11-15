@@ -1,13 +1,9 @@
 <?php
-
-$dbconn=null;
-global $dbconn;
-$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
-
-
+session_start();
+include_once "db_conn.php";
 
 if (isset($_POST['rate']) && !empty($_POST['rate'])) {
-    $uid = "201351022";
+    $uid = $_SESSION["user_id"];
     $rate = real_escape_string($_POST['rate']);
 // check if user has already rated
     $sql = "SELECT uid FROM rating WHERE uid = '$uid'";
@@ -19,7 +15,7 @@ if (isset($_POST['rate']) && !empty($_POST['rate'])) {
     } else {
 
         $sql = "INSERT INTO rating (uid, rating) VALUES ('$uid', '$rate'); ";
-        if (pg_query($sql)) 
+        if (pg_query($sql))
 		{
             echo "0".pg_last_error();
         }

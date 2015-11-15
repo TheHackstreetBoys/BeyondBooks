@@ -1,7 +1,7 @@
 <!doctype html>
 <?php
 include_once 'db_conn.php';
-session_start();
+//session_start();
 //if(!isset($_SESSION["user_id"]))
 //{
 //	header('Location: index.php');
@@ -10,7 +10,7 @@ session_start();
 <html>
 <head>
 <title>
-Discussion Forum
+Interested Buying This Book
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -22,6 +22,8 @@ Discussion Forum
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+
+
 
 
 
@@ -42,9 +44,9 @@ $(document).ready(function(){
 
 
 
+
 <body>
 <!--                                                                                -->
-
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	  <div class="container-fluid">
 
@@ -86,7 +88,7 @@ if(searchid!=\'\')
 {
     $.ajax({
     type: "POST",
-    url: "searchforum.php",
+    url: "search.php",
     data: dataString,
     cache: false,
     success: function(html)
@@ -199,143 +201,66 @@ include("html.inc");
 	</nav>
 
 
-<br/><br/><br/><br/>
- <div class="container-fluid">
+
+
+<br/><br/><br/>
+<hr/>
+
+
+<p>
+<div class="container-fluid">
 	<div class="row">
-
-		<div class="col-md-12"><h1>
-<br/>
-<b>Discussion Forums</b>
-<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
-</h1>
-
-
+		<div class="col-md-12">
+			<h3>
+				<b>Interested in Buying this Book</b><hr/>
+			</h3>
 			<div class="row">
-
-				<div class="col-md-8">
+				<div class="col-md-12">
 					<div class="row">
 						<div class="col-md-12">
-
-
-
-
-<div class="row">
-						<div class="col-md-12">
-
-							<div class="row">
-									<div class="col-md-12">
-
-								</div>
-							</div>
-<?php
-
-//echo "<em>Design Project <b>Kushal Jangid</b></em>";
-
-
-$str = $_GET['subject'] ;
-$v  = strpos("$str","I");
-$c = substr("$str",0,$v);
-$username = substr("$str",$v-1);
-
-session_start();
-
-
-$result = pg_query("SELECT * FROM question_forum ORDER BY ts DESC");
-
-
-if(!pg_num_rows($result)) {
-	echo '<p>No forums is Created Yet.</p>';
-} else {
-	while($row = pg_fetch_array($result)) {
-
-	$qid = $row['qid'];
-			
-		$result1 = pg_query("SELECT COUNT(*) AS num FROM forum_replies WHERE qid = '$qid' ");
-		$row1 = pg_fetch_array($result1);
-
-		echo '<h2>'.$row['title'].'</h2><br/>';
-		$body = substr($row['content'], 0, 20);
-		echo nl2br($body).'...<br/>';
-		echo '<a href="forumview.php?qid='.$row['qid'].'">Read More</a> | ';
-		echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row1['num'].' comments</a>';
-		echo '<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
-
-	}
-}
-
-echo <<<HTML
-
-<a style='color: #CC0000'href="addquestion.php">+ Add Your Question Here</a><br/>
-<br/><br/>
-
-HTML;
-
-?>
-
-
-
+							<h3 class="text-center">
+								<b>Send Your Request</b> <hr/>
+							</h3>
 						</div>
 					</div>
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+
+							<label for="inputEmail3" class="col-sm-3 control-label">
+								Enter Your Message
+							</label>
+							<div class="col-sm-6">
+								<textarea class="form-control" rows = "5" id="inputEmail3" type="email" > </textarea>
+							</div>
+						</div>
+						<div class="form-group">
+
+							<label for="inputPassword3" class="col-sm-3 control-label">
+								Enter Your Contact Number
+							</label>
+							<div class="col-sm-6">
+								<input class="form-control" id="inputPassword3" type="password">
+							</div>
+						</div>
+
+
+					</form>
 				</div>
-
-	</div>
-					</div>
-<hr style="height:3px; border:none; color:rgb(60,60,60); background-color:rgb(60,60,60);">
-
-
-
-
-<div class="col-md-4">
-
-
-					<h3>
-						Top Rated Discussions <hr style="height:1px; border:none; color:rgb(60,60,60); background-color:rgb(60,90,180);">
-					</h3>
-
-
-					<?php
-
-$result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid )  DESC LIMIT 4");
-
-			if(!pg_num_rows($result)) {
-							echo '<p>No forums is Created Yet.</p>';
-						     }
-			else {
-
-					while($row = pg_fetch_array($result))
-				{
-			$qid = $row['qid'];
-			
-		$result1 = pg_query("SELECT COUNT(*) AS num FROM forum_replies WHERE qid = '$qid' ");
-		$row1 = pg_fetch_array($result1);
-
-					echo '<h2>'.$row['title'].'</h2><br/>';
-					$body = substr($row['content'], 0, 10);
-					echo nl2br($body).'...<br/>';
-					echo '<a href="forumview.php?qid='.$row['qid'].'">Read More</a> | ';
-					echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row1['num'].' comments</a>';
-					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
-			     }
-					}
-
-					?>
-
-
-
-
-				</div>
-			</div>
+			</div> <hr/> <center>
+			<button type="button" class="btn btn-success">
+				Send Request
+			</button> </center>
 		</div>
 	</div>
 </div>
-
-
+</p>
 
 <footer>
+<hr />
 <div class="container">
-<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">Beyond Books Everywhere</hr>
+<hr>Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys
+<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
 </div>
 </footer>

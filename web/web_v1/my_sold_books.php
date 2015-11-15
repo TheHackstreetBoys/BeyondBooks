@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <?php
 include_once 'db_conn.php';
-session_start();
-if(!isset($_SESSION["user_id"]))
-{
-	header('Location: index.php');
-}
+//session_start();
+//if(!isset($_SESSION["user_id"]))
+//{
+//	header('Location: index.php');
+//}
 ?>
 <html lang="en">
   <head>
@@ -220,7 +220,8 @@ if(!isset($_SESSION["user_id"]))
 
 		$num_rec_per_page=2;
 
-$sellerid = $_SESSION["user_id"];
+//$sellerid = $_SESSION["user_id"];
+$sellerid = "201351010";
 
 if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; };
 $start_from = ($page-1) * $num_rec_per_page;
@@ -261,12 +262,12 @@ $total_pages = ceil($total_records / $num_rec_per_page);
 			     }
 
 
-echo "<a href='mysells.php?page1=1'>".'Prev-'."</a> "; // Goto 1st page
+echo "<a href='my_sold_books.php?page1=1'>".'Prev-'."</a> "; // Goto 1st page
 
 for ($i=1; $i<=$total_pages; $i++) {
-            echo "<a href='mysells.php?&page1=".$i."'>".$i."</a> ";
+            echo "<a href='my_sold_books.php?&page1=".$i."'>".$i."</a> ";
 };
-echo "<a href='mysells.php?page1=$total_pages'>".'-Next'."</a> "; // Goto last page
+echo "<a href='my_sold_books.php?page1=$total_pages'>".'-Next'."</a> "; // Goto last page
 
 
 }
@@ -285,18 +286,14 @@ echo "<a href='mysells.php?page1=$total_pages'>".'-Next'."</a> "; // Goto last p
 
 		$num_rec_per_page=2;
 
-			$dbconn=null;
-			global $dbconn;
-			$dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-
-$user = "201351022";
+$user = "201351010";
 
 if (isset($_GET["page2"])) { $page  = $_GET["page2"]; } else { $page=1; };
 $start_from = ($page-1) * $num_rec_per_page;
 
 
-	$result = pg_query("SELECT * FROM posts WHERE tname = '$user' LIMIT $num_rec_per_page OFFSET $start_from");
+	$result = pg_query("SELECT * FROM question_forum WHERE asker = '$user' LIMIT $num_rec_per_page OFFSET $start_from");
 
 
 
@@ -313,15 +310,16 @@ $start_from = ($page-1) * $num_rec_per_page;
 				{
 
 					echo $i.'. <b>Title:&nbsp;'.$row['title'].'</b><br/>';
-					echo 'Course:&nbsp;'.$row['course'].'<br/>';
-					echo 'Age:&nbsp;'.$row['date'].'<br/>';
-					$body = $row['body'];
-					echo "Description:&nbsp;".nl2br($body).'<br/><br/>';
+					echo 'Date:&nbsp;'.$row['ts'].'<br/>';
+					$body = $row['content'];
+					echo "Description:&nbsp;".nl2br($body).'<br/>';
+					echo '<a href="forumview.php?qid='.$row['qid'].'">'.$row1['num'].' Click Here</a><br/><br/>';
+
 
 					$i = $i+1;
 
 
-$sql = "SELECT * FROM posts WHERE tname = '$user'";
+$sql = "SELECT * FROM question_forum WHERE asker = '$user'";
 $rs_result = pg_query($sql); //run the query
 $total_records = pg_num_rows($rs_result);  //count number of records
 $total_pages = ceil($total_records / $num_rec_per_page);
@@ -330,12 +328,12 @@ $total_pages = ceil($total_records / $num_rec_per_page);
 			     }
 
 
-echo "<a href='mysells.php?page2=1'>".'Prev-'."</a> "; // Goto 1st page
+echo "<a href='my_sold_books.php?page2=1'>".'Prev-'."</a> "; // Goto 1st page
 
 for ($i=1; $i<=$total_pages; $i++) {
-            echo "<a href='mysells.php?&page2=".$i."'>".$i."</a> ";
+            echo "<a href='my_sold_books.php?&page2=".$i."'>".$i."</a> ";
 };
-echo "<a href='mysells.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last page
+echo "<a href='my_sold_books.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last page
 
 
 }

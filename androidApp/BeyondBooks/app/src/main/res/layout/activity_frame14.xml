@@ -15,46 +15,71 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
 
-            >
+            android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/forum_topic"/>
+                android:text="Topic of discussion"
+                android:textColor="@color/colorPrimaryDark"
+                android:id="@+id/forum_topic"
+                android:layout_weight="1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:id="@+id/forumdesc"
+                android:text="forum description"
+                android:layout_weight="1"/>
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/forum_discussion"/>
+                android:layout_height="0dp"
+                android:text="Comments"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/forum_discussion"
+                android:layout_weight="1" />
 
             <ListView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:id="@+id/listView2"
                 android:layout_alignBottom="@+id/scrollView2"
                 android:layout_centerHorizontal="true"
+                android:layout_weight="1"
                 android:layout_marginBottom="176dp"
                 />
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add comments: "/>
+                android:layout_height="0dp"
+                android:text="Add comments: "
+                android:layout_weight="1" />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:layout_weight="1">
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:id="@+id/forumcomment"
+                    android:layout_alignBottom="@+id/scrollView2"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Submit"/>
+                    android:text="Submit"
+                    android:layout_alignBottom="@+id/scrollView2"
+                    android:layout_alignRight="@+id/scrollView2"
+                    android:layout_alignEnd="@+id/scrollView2" />
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
+
+
 
 </RelativeLayout>

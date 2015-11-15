@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,12 +66,15 @@ public class Wireframe7 extends Activity {
                 switch (id) {
                     case R.id.general_rating:
                         rating.setRating(bookDetails.getPublic_ratings());
+                        Toast.makeText(getApplicationContext(),"general rating",Toast.LENGTH_LONG ).show();
                         break;
                     case R.id.student_rating:
                         rating.setRating(bookDetails.getStudent_ratings());
+                        Toast.makeText(getApplicationContext(),"student rating",Toast.LENGTH_LONG ).show();
                         break;
                     case R.id.faculty_rating:
                         rating.setRating(bookDetails.getFaculty_ratings());
+                        Toast.makeText(getApplicationContext(),"faculty rating",Toast.LENGTH_LONG ).show();
                         break;
                     default:
                         System.out.print("Some error : not able to set the rating of different kind(general,student,faculty)");
@@ -78,22 +83,24 @@ public class Wireframe7 extends Activity {
                 }
             }
         };
-
         general.setOnClickListener(cl);
         student.setOnClickListener(cl);
         faculty.setOnClickListener(cl);
 
+        
         //fill the comment list
         //TODO
         comments = (ListView) findViewById(R.id.comments);
         adapter_comments = new CustomAdapter_frame7comment(this,bookDetails.getComments());
         comments.setAdapter(adapter_comments);
+        //sellers.setAdapter(new ArrayAdapter<String>(this , android.R.layout.simple_list_item_1,android.R.id.text1,getcomments(bookDetails)));
         //bookdetail should also contain an arraylist of comments on this book
 
 
         //fill the sellers available listview
         //TODO
-        //sellers.setAdapter(new ArrayAdapter<String>(this , android.R.layout.simple_list_item_1,android.R.id.text1,getsellers(bookDetails)));
+        sellers = (ListView) findViewById(R.id.sellers);
+        sellers.setAdapter(new ArrayAdapter<String>(this , android.R.layout.simple_list_item_1,android.R.id.text1,getsellers(bookDetails)));
 
 
 
@@ -104,11 +111,22 @@ public class Wireframe7 extends Activity {
         ArrayList<String> sellers = new ArrayList<>(0);
 
         for(int i=0;i<bookDetails.getSellers().size();i++){
-            sellers.add(bookDetails.getSellers().get(i).first.getUser_name());
+            sellers.add(bookDetails.getSellers().get(i).first.getUser_name()+"\n"+bookDetails.getSellers().get(i).second);
         }
 
         return sellers;
     }
+
+    /*
+    private ArrayList<String> getcomments(BookDetails bookDetails) {
+        ArrayList<String> sellers = new ArrayList<>(0);
+
+        for(int i=0;i<bookDetails.getComments().size();i++){
+            sellers.add(bookDetails.getComments().get(i).second+"\n"+bookDetails.getComments().get(i).first);
+        }
+
+        return sellers;
+    }*/
 
     public void give_review(View v){
         intent = new Intent(this, Wireframe21.class);
