@@ -14,13 +14,12 @@
 				$('#starloader').show();
 				for( i=0;i<imgindex; i++){
 					var imgobj = $("#rating_panel>img:eq( "+i+" )" );
-					alert("he");
-					var img = 'images/full.png';					
+					var img = '../images/full.png';					
 					imgobj.attr('src',img);
 					
 				}
 				$.ajax({
-					url:'../add_rating.php',
+					url:'add_rating.php',
 					data:'rated='+imgindex+'&pid='+pollid,
 					success:function(){
 						$('#starloader').hide();

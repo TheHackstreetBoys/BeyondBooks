@@ -236,19 +236,14 @@ $start_from = ($page-1) * $num_rec_per_page;
 				{
 			echo "<div class='col-md-3'><br/>";
 			echo "<a href='book_main_page.php?isbn=".$row['isbn']."'>";
-			$url = "http://www.librarything.com/devkey/KEY/medium/isbn/".$isbn;
-			$img = 'books_pics/'.$isbn.'.png';
+			$isbn=$row['isbn'];
+			$img = 'books_pics/'.$isbn.'.jpg';
 			$result1=glob($img);
 			if (!empty($result1))
 			echo '<img src="'.$result1[0].'" class="img-responsive" style="width:100px; height:150px">';
 			else
 			{
-				file_put_contents($img, file_get_contents($url));
-				if(file_exists($img))
-					echo '<img src="'.$img.'" class="img-responsive" style="width:100px; height:150px">';
-				else {
 					echo '<img src="books_pics/nan.jpg" class="img-responsive" style="width:100px; height:150px">';
-				}
 			}
 
 echo "<a href='book_main_page.php?isbn=".$row['isbn']."'>".$row['title']."</a>";
@@ -302,20 +297,15 @@ $start_from = ($page1-1) * $num_rec_per_page;
 					while($row = pg_fetch_array($result))
 				{
 					echo "<a href='book_main_page.php?isbn=".$row['isbn']."' style='color:black;'>";
-					$url = "http://www.librarything.com/devkey/KEY/medium/isbn/".$row['isbn'];
-					$img = 'books_pics/'.$row['isbn'].'.png';
+					$img = 'books_pics/'.$row['isbn'].'.jpg';
 					$result1=glob($img);
 					if (!empty($result1))
 					echo '<img src="'.$result1[0].'" class="img-responsive" style="width:100px; height:150px">';
 					else
 					{
-						file_put_contents($img, file_get_contents($url));
-						if(file_exists($img))
-							echo '<img src="'.$img.'" class="img-responsive" style="width:100px; height:150px">';
-						else {
 							echo '<img src="books_pics/nan.jpg" class="img-responsive" style="width:100px; height:150px">';
 						}
-					}
+
 						echo "</a>";
 					echo '<b>'.$row['title'].'<br/></b>';
 					echo "<em>".$row['author']."</em><br/>";

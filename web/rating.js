@@ -14,7 +14,7 @@
 				$('#starloader').show();
 				for( i=0;i<imgindex; i++){
 					var imgobj = $("#rating_panel>img:eq( "+i+" )" );
-					var img = '../images/full.png';					
+					var img = 'images/full.png';					
 					imgobj.attr('src',img);
 					
 				}
