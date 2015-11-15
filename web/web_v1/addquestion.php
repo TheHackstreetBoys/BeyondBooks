@@ -2,10 +2,10 @@
 <?php
 include_once 'db_conn.php';
 session_start();
-if(!isset($_SESSION["user_id"]))
-{
-	header('Location: index.php');
-}
+//if(!isset($_SESSION["user_id"]))
+//{
+//	header('Location: index.php');
+//}
 ?>
 <html>
 <head>
@@ -213,7 +213,7 @@ $(document).ready(function(){
 						Enter the title :
 					</label>
 					<div class="col-sm-5">
-						<input class="form-control" id="inputEmail3" name = "course" type="text">
+						<input class="form-control" id="inputEmail3" name = "title" type="text">
 					</div>
 				</div>
 				<div class="form-group">
@@ -222,7 +222,7 @@ $(document).ready(function(){
 						Enter the Content of the Question :
 					</label>
 					<div class="col-sm-5">
-						<textarea class="form-control" id="inputPassword3" name = "body" rows = "4" type="text"> </textarea>
+						<textarea class="form-control" id="inputPassword3" name = "content" rows = "4" type="text"> </textarea>
 					</div>
 				</div>
 
@@ -232,7 +232,7 @@ $(document).ready(function(){
 						Enter the Name of the Hash Tag :
 					</label>
 					<div class="col-sm-5">
-						<input class="form-control" name = "title" id="inputPassword3" type="text">
+						<input class="form-control" name = "htag" id="inputPassword3" type="text">
 					</div>
 				</div>
 

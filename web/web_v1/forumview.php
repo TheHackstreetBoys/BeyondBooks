@@ -2,11 +2,11 @@
 
 <?php
 include_once 'db_conn.php';
-session_start();
-if(!isset($_SESSION["user_id"]))
-{
-	header('Location: index.php');
-}
+//session_start();
+//if(!isset($_SESSION["user_id"]))
+//{
+//	header('Location: index.php');
+//}
 ?>
 <html>
 <head>
@@ -215,11 +215,11 @@ include("html.inc");
 
 
 <?php
-$id = $_GET['id'];
-$result = pg_query("SELECT * FROM posts WHERE id= '$id'");
+$qid = $_GET['qid'];
+$result = pg_query("SELECT * FROM question_forum WHERE qid= '$qid'");
 
 if(!pg_num_rows($result)) {
-	echo 'Post #'.$_GET['id'].' not found';
+	echo 'Post #'.$_GET['qid'].' not found';
 	exit;
 }
 
@@ -240,10 +240,9 @@ $str = $_GET['id'] ;
 $v  = strpos("$str"," ");
 $c = substr("$str",$v+1);
 
-    $username   = $_SESSION['current'];
-    $mycourse = $_SESSION['mycourse'];
+ $username   = $_SESSION['current'];
 
-    $user = $row['tname'];
+$user = $row['asker'];
 $result1 = pg_query("SELECT * FROM user_profile WHERE user_id = '$user'" );
 
 if(!pg_num_rows($result1))
@@ -253,13 +252,13 @@ $row1 = pg_fetch_array($result1);
 
 echo '<h2>'.$row['title'].'</h2><br/>';
 echo 'By: <em>'.$row1['f_name'].' '.$row1['l_name'].'</em><br/>';
-echo '<em>Posted '.date('F j<\s\up>S</\s\up>, Y', $row['date']).'</em><br/>';
-echo nl2br($row['body']).'<br/>';
-echo '<a href="forumedit.php?id='.$_GET['id'].'">Edit</a> | <a href="forumdelete.php?id='.$_GET['id'].'">Delete</a> ';
+echo '<em>Posted '.$row['ts'].'</em><br/>';
+echo nl2br($row['content']).'<br/>';
+echo '<a href="forumedit.php?qid='.$_GET['qid'].'">Edit</a> | <a href="forumdelete.php?qid='.$_GET['qid'].'">Delete</a> ';
 echo ' | <a href="forumWelcome.php">View All</a>';
-$id = $_GET['id'];
+$qid = $_GET['qid'];
 echo '<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
-$result = pg_query("SELECT * FROM reply WHERE post_id = '$id' ORDER BY date DESC LIMIT 4" );
+$result = pg_query("SELECT * FROM forum_replies WHERE qid = '$qid' ORDER BY ts DESC LIMIT 4" );
 echo '<ul id="comments">';
 echo '<div class="row">
 						<div class="col-md-12">
@@ -271,12 +270,12 @@ echo '<div class="row">
 </div>';
 while($row = pg_fetch_array($result)) {
 	echo '<li id="post-'.$row['id'].'">';
-	echo (empty($row['website'])?'<strong>'.$row['name'].'</strong>':'<a style="color: blue" href="#" target="_blank">'.$row['name'].'</a>');
-	echo '<br/><small>'.date('j-M-Y g:ia', $row['date']).'</small><br/>';
-	echo nl2br($row['content']);
+	echo (empty($row['website'])?'<strong>'.$row['uid'].'</strong>':'<a style="color: blue" href="#" target="_blank">'.$row['name'].'</a>');
+	echo '<br/><small>'.$row['ts'].'</small><br/>';
+	echo nl2br($row['reply']);
 
 
-		$result2 = pg_query('SELECT COUNT(plike) AS likes FROM commentss WHERE rollno = %s && id = %s', $row['rollno'], $row['id']);
+    $result2 = pg_query('SELECT COUNT(plike) AS likes FROM commentss WHERE rollno = %s && id = %s', $row['rollno'], $row['id']);
 
     if(!pg_num_rows($result2))
     {
@@ -291,7 +290,7 @@ while($row = pg_fetch_array($result)) {
 }
 echo '</ul>';
 
-$str = $_GET['id'];
+$str = $_GET['qid'];
 
 echo <<<HTML
 
@@ -308,7 +307,7 @@ echo <<<HTML
 							<h3>
 								<b>Add Your Comment :</b>
 							</h3>
-							<form class="form-horizontal" role="form" method="post" action="forumcommentadd.php?id={$_GET['id']}">
+							<form class="form-horizontal" role="form" method="post" action="forumcommentadd.php?qid={$_GET['qid']}">
 								<div class="form-group">
 
 									<label for="inputEmail3" class="col-sm-2 control-label">
@@ -351,7 +350,7 @@ HTML;
 
 <?php
 
-			$result = pg_query("SELECT * FROM posts ORDER BY date DESC LIMIT 3");
+			$result = pg_query("SELECT * FROM question_forum ORDER BY ts DESC LIMIT 3");
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No forums is Created Yet.</p>';
@@ -360,11 +359,17 @@ HTML;
 
 					while($row = pg_fetch_array($result))
 				{
+
+$qid = $row['qid'];
+			
+		$result1 = pg_query("SELECT COUNT(*) AS num FROM forum_replies WHERE qid = '$qid' ");
+		$row1 = pg_fetch_array($result1);
+
 					echo '<h2>'.$row['title'].'</h2><br/>';
-					$body = substr($row['body'], 0, 10);
+					$body = substr($row['content'], 0, 10);
 					echo nl2br($body).'...<br/>';
-					echo '<a href="forumview.php?id='.$row['id'].'">Read More</a> | ';
-					echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';
+					echo '<a href="forumview.php?qid='.$row['qid'].'">Read More</a> | ';
+					echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row1['num'].' comments</a>';
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 			     }
 					}
