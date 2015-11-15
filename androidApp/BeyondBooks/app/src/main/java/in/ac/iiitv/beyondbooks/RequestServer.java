@@ -87,6 +87,7 @@ public class RequestServer {
         }
         return false;
     }
+    //
 
     public SearchOutputReturn search(String query){
         address = "http://"+ip+"/andy_search.php";
