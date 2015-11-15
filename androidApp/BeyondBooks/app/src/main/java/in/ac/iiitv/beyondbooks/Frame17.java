@@ -50,6 +50,9 @@ public class Frame17 extends AppCompatActivity implements View.OnClickListener, 
                 facet.setText("");
                 break;
             case R.id.frame17_submit:
+                //TODO  Do it tyagi
+                // send the forum detail to the server and also set intent to the next activity
+
                 break;
         }
     }
