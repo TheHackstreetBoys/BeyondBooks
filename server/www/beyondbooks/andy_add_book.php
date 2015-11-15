@@ -1,9 +1,8 @@
 <?php
 require 'db_conn.php';
-//$username = $_POST['user_id'];
-//$isbn = $_POST['isbn'];
-$username = '201351010';
-$isbn = '9781449615529';
+$username = $_POST['user_id'];
+$isbn = $_POST['isbn'];
+
 require 'bookdetails.php';
 $result = getDetails($isbn);
 $times = date('d-m-Y H:i:s');
