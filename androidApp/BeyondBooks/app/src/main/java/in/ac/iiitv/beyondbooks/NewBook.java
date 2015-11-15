@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 
 /**
@@ -27,6 +29,15 @@ public class NewBook extends Fragment {
     private String mParam1;
     private String mParam2;
 
+
+
+    float rating;
+    String title;
+    String imagelink;
+    TextView tit;
+    RatingBar rat;
+
+
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -38,17 +49,17 @@ public class NewBook extends Fragment {
      * @return A new instance of fragment NewBook.
      */
     // TODO: Rename and change types and number of parameters
-    public static NewBook newInstance(String param1, String param2) {
-        NewBook fragment = new NewBook();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+    public static NewBook newInstance(NewlyAdded naa) {
+        NewBook fragment = new NewBook(naa);
+
         return fragment;
     }
 
-    public NewBook() {
-        // Required empty public constructor
+
+    public NewBook(NewlyAdded newlyAdded) {
+        imagelink = newlyAdded.getImage_link();
+        title = newlyAdded.getBook_name();
+        rating = newlyAdded.getRatings();
     }
 
     @Override
@@ -58,6 +69,7 @@ public class NewBook extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -72,6 +84,15 @@ public class NewBook extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        rat = (RatingBar) getView().findViewById(R.id.frag_new_book_rating);
+        tit = (TextView) getView().findViewById(R.id.frag_new_book_title);
+        tit.setText(title);
+
     }
 
     @Override

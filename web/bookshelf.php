@@ -76,8 +76,7 @@ $(document).ready(function(){
 	    <div class="collapse navbar-collapse" id="navbar-collapse-main">
 
 	      <ul class="nav navbar-nav navbar-right">
-
-		<li>
+<li>
 <?php
 $content ='
 <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
@@ -126,7 +125,7 @@ $(\'#searchid\').click(function(){
         width:190px;
         padding:8px;
         font-size:12px;
-	margin-top:-1cm;
+	margin-top:0cm;
 
      margin-left:1cm;
        }
@@ -172,11 +171,10 @@ $pre = 1;
 include("html.inc");
 ?></li>
 
-
 	        <li><br/><a href="homepage.php">Home</a></li>
 
 	        <li><br/><a href="buy_sell.php">Buy/Sell</a></li>
-					<li><br/><a href="forum.php">Forum</a></li>
+					<li><br/><a href="forumWelcome.php">Forum</a></li>
 		<li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
 			<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 				<?php

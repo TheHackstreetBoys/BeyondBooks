@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 public class Wireframe8 extends AppCompatActivity {
     private ArrayList<String> notifications;
+<<<<<<< HEAD
 
     private ImageView user_image;
     private ListView notification_list ;
@@ -31,6 +33,16 @@ public class Wireframe8 extends AppCompatActivity {
     UserData userData;
     private static final int RESULT_LOAD_IMAGE = 1;
 
+
+    private Button uploadimage;
+    ImageView user_image;
+    ListView notification_list ;
+    TextView username,userid;
+    UserData userData;
+    TextView changepass;
+    ArrayAdapter<String> adapter_notification;
+    private static final int RESULT_LOAD_IMAGE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,20 +51,23 @@ public class Wireframe8 extends AppCompatActivity {
         notifications = new ArrayList<String>();
         RequestServer requestServer = new RequestServer();
         Intent intent = getIntent();
+//        changepass = (TextView) findViewById(R.id.changepass);
         userData = (UserData)intent.getSerializableExtra("user_data");
-        userData.setForumActivities(requestServer.get_forum_activities(userData.getId()));
-        UserData temp = requestServer.get_user_name_image(userData.getId());
-        userData.setImage_link(temp.getImage_link());
-        userData.setUser_name(temp.getUser_name());
-        UserData temp2 = requestServer.get_activities(userData.getId());
-        userData.setReviewed(temp2.getReviewed());
-        userData.setUploads(temp2.getUploads());
+//        userData.setForumActivities(requestServer.get_forum_activities(userData.getId()));
+//        UserData temp = requestServer.get_user_name_image(userData.getId());
+//        userData.setImage_link(temp.getImage_link());
+//        userData.setUser_name(temp.getUser_name());
+//        UserData temp2 = requestServer.get_activities(userData.getId());
+//        userData.setReviewed(temp2.getReviewed());
+//        userData.setUploads(temp2.getUploads());
+        userData.setUser_name(requestServer.get_user_name(userData.getId()));
         notifications = requestServer.get_notification(userData.getId());
         //Till here... userData contains every information about the user. Use it to populate the page.
 
 
         //set image of the user
         //TODO changes to set the image of the user
+
         set_dp();
 
         /*user_image = (ImageView) findViewById(R.id.user_image);
@@ -60,23 +75,30 @@ public class Wireframe8 extends AppCompatActivity {
         map.put(userData.getImage_link(), R.drawable.user_image);
         user_image.setImageResource(map.get(userData.getImage_link()));
         */
+
+        user_image = (ImageView) findViewById(R.id.user_image);
+        user_image.setImageBitmap(requestServer.getImage(userData.getId().toString() + "_dp.jpg"));
+
         //set username
         username = (TextView) findViewById(R.id.user_name);
         username.setText(userData.getUser_name());
         //set user id
         userid = (TextView) findViewById(R.id.user_id);
-        userid.setText(userData.getId());
-
+        userid.setText(userData.getId().toString());
         //change password method
-        changepass = (TextView) findViewById(R.id.changepass);
-        changepass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO link to the code to auto generate the password and send to the user email-id
-            }
-        });
+//        changepass = (TextView) findViewById(R.id.changepass);
+//        changepass.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                EditText new_password = (EditText) findViewById(R.id.changepassword);
+//                new_password.setVisibility(View.VISIBLE);
+//                Button set_pass = (Button) findViewById(R.id.setpassword);
+//                set_pass.setVisibility(View.VISIBLE);
+//            }
+//        });
 
         //button upload image
+
         uploadimage = (Button) findViewById(R.id.upload_image);
         uploadimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,10 +108,20 @@ public class Wireframe8 extends AppCompatActivity {
             }
         });
 
+//        uploadimage = (Button) findViewById(R.id.upload_image);
+//        uploadimage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                set_dp(v);
+//            }
+//        });
+
+
 
         //set notifications (Already there is a arraylist for arrayadapter)
         notification_list = (ListView) findViewById(R.id.notification_list);
         adapter_notification = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,android.R.id.text1,notifications);
+        System.out.println("Reaching here ....");
         notification_list.setAdapter(adapter_notification);
     }
     public void set_dp(){
@@ -99,7 +131,9 @@ public class Wireframe8 extends AppCompatActivity {
         Bitmap bitmap_to_send = ((BitmapDrawable)user_image.getDrawable()).getBitmap();
         requestServer.setImage(bitmap_to_send, userData.getId().toString());
     }
-
+//    public void set_new_password(View v){
+//
+//    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

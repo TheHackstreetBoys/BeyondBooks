@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity  {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
         aboutus = (TextView) findViewById(R.id.aboutus);
@@ -93,10 +94,10 @@ public class MainActivity extends AppCompatActivity  {
 
     public void pass(){
         userData = new UserData(id);
-        Intent intent = new Intent(this, BookViewPage.class);
+        Intent intent = new Intent(getApplicationContext(), Wireframe8.class);
         intent.putExtra("user_data", userData);
         Toast.makeText(this, "Correct details", Toast.LENGTH_LONG).show();
-//        startActivity(intent);
+        startActivity(intent);
     }
 
     public void not_allowed(){

@@ -25,7 +25,6 @@ Main Page of Book
 
 
 
-
 <script type="text/javascript">
 $(document).ready(function(){
 	$(".dropdown, .btn-group").hover(function(){
@@ -38,24 +37,33 @@ $(document).ready(function(){
 </script>
 
 <script type="text/javascript">
-$("document").ready(function(){
+
+
+function deletebookshelf()
+{
 	var isbn=$('#isbn').val();
 	var userid=$('#userid').val();
 	jQuery.ajax({
 		type: "POST",
-		url: "checkbookshelf-script.php",
+		url: "deletebookshelf-script.php",
 		data: "isbn="+isbn+"&userid="+userid,
 		cache: false,
 		success: function(response)
 		{
 			if(response==1)
 			{
-				document.getElementById("bookshelfbtn").value="Added to Bookshelf";
+alert("Removed from your Bookshelf");
+				
 
+
+			}
+			else
+			{
+			alert("It is not in your bookshelf");	
 			}
 		}
 	})
-});
+}
 
 function insertbookshelf()
 {
@@ -70,7 +78,7 @@ function insertbookshelf()
 		{
 			if(response==1)
 			{
-				document.getElementById("bookshelfbtn").value="Added to Bookshelf";
+				alert("Added to Bookshelf");
 
 			}
 			else
@@ -125,7 +133,7 @@ function insertbookshelf()
 
 	      <ul class="nav navbar-nav navbar-right">
 
-			<li>
+<li>
 <?php
 $content ='
 <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
@@ -174,7 +182,7 @@ $(\'#searchid\').click(function(){
         width:190px;
         padding:8px;
         font-size:12px;
-	margin-top:-1cm;
+	margin-top:0cm;
 
      margin-left:1cm;
        }
@@ -208,9 +216,9 @@ $(\'#searchid\').click(function(){
         cursor:pointer;
     }
 </style>
-<div class="content">
-<input type="text" class="form-control search" id="searchid" placeholder="Search for Books" />
-	<span class="glyphicon glyphicon-search form-control-feedback" style="padding-top: 17%; color: #3596e0;"></span>
+<div class="content" style="margin-top: -3%;">
+<input type="text" class="form-control search"  id="searchid" placeholder="Search for Books" />
+	<span class="glyphicon glyphicon-search form-control-feedback" style="padding-top: 15%; color: #3596e0;"></span>
 <div id="result"> </div>
 </div>
 ';
@@ -218,8 +226,9 @@ $(\'#searchid\').click(function(){
 
 $pre = 1;
 include("html.inc");
-?>
-</li>
+?></li>
+
+
 
 <li><br/><a href="homapage.php">Home</a></li>
 
@@ -376,8 +385,9 @@ Your Rating:
 				<br/><br/>
 				<input type="hidden" id="isbn" value="<?php echo $isbn; ?>">
 				<input type="hidden" id="userid" value='<?php echo $_SESSION["user_id"]; ?>'>
-				<input type="button" id="bookshelfbtn" class="btn btn-default btn-primary" value="+Add to my Bookshelf" onclick="insertbookshelf()">
-					</input>
+				<input type="button" id="bookshelfbtn" class="btn btn-default btn-primary" value="+Add to my Bookshelf" onclick="insertbookshelf()"> </br></input>
+<input type="button" id="bookshelfbtn1" class="btn btn-default btn-danger" value="-Remove from my Bookshelf" onclick="deletebookshelf()" style="padding-top:5px; margin-top:5px;"></input>
+
 				</div>
 				<div class="col-md-6">
 				</div>
