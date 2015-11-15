@@ -22,9 +22,10 @@
                 android:id="@+id/user_image"
                 />
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="148dp"
                 android:layout_height="wrap_content"
-                android:text="Upload Image"
+                android:text="Set new picture"
+                android:onClick="set_dp"
                 android:background="#4169e1"
                 android:id="@+id/upload"/>
         </LinearLayout>
