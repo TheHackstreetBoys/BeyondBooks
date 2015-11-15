@@ -20,21 +20,17 @@ import java.util.Map;
 
 public class Wireframe8 extends AppCompatActivity {
     private ArrayList<String> notifications;
-<<<<<<< HEAD
-    private ImageView user_image;
-    private ListView notification_list ;
-    private TextView username,userid,changepass;;
-    private ArrayAdapter<String> adapter_notification;
+
+    private TextView changepass;;
     private Button uploadimage;
 
-=======
     ImageView user_image;
     ListView notification_list ;
     TextView username,userid;
     UserData userData;
     ArrayAdapter<String> adapter_notification;
     private static final int RESULT_LOAD_IMAGE = 1;
->>>>>>> 2082abe285e52229e771a45e5d6f51f79127e6d4
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
