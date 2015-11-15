@@ -24,6 +24,7 @@ public class Frame14 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frame14);
         intent = getIntent();
+<<<<<<< HEAD
         //Integer q_id = Integer.parseInt(intent.getStringExtra("q_id"));
         RequestServer requestServer = new RequestServer();
         ForumDetails forumDetails = requestServer.forumDetails(/*q_id*/ 3);
@@ -31,6 +32,12 @@ public class Frame14 extends AppCompatActivity {
         //System.out.println("forumdeatails :"+requestServer.get_faculty());
         System.out.println("forumdeatails :"+forumDetails.getComments().size() );
         System.out.println("forumdeatails :"+forumDetails.getAuthor_name() );
+=======
+        final Integer q_id = Integer.parseInt(intent.getStringExtra("q_id"));
+        final UserData userData = (UserData)intent.getSerializableExtra("user_data");
+        final RequestServer requestServer = new RequestServer();
+        ForumDetails forumDetails = requestServer.forumDetails(q_id);
+>>>>>>> 7104c41df1ae869507ec91a8249447f9cd5f7218
 
         //set topic of the discussion
         topic = (TextView) findViewById(R.id.forum_topic);
@@ -54,9 +61,7 @@ public class Frame14 extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO Do it tyagi
-                //TODO code to send the user comment to server
-
+                requestServer.send_comment(q_id,userData.getId(),usercomment);
             }
         });
 
