@@ -24,8 +24,9 @@ public class Frame14 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frame14);
         intent = getIntent();
-        Integer q_id = Integer.parseInt(intent.getStringExtra("q_id"));
-        RequestServer requestServer = new RequestServer();
+        final Integer q_id = Integer.parseInt(intent.getStringExtra("q_id"));
+        final UserData userData = (UserData)intent.getSerializableExtra("user_data");
+        final RequestServer requestServer = new RequestServer();
         ForumDetails forumDetails = requestServer.forumDetails(q_id);
 
         //set topic of the discussion
@@ -50,9 +51,7 @@ public class Frame14 extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO Do it tyagi
-                //TODO code to send the user comment to server
-
+                requestServer.send_comment(q_id,userData.getId(),usercomment);
             }
         });
 

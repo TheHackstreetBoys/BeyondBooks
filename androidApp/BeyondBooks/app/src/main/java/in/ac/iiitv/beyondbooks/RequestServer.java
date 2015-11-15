@@ -663,6 +663,27 @@ public class RequestServer {
         return null;
     }
 
+    public Boolean send_comment(Integer user_id, Integer q_id, String text){
+        address = "http://"+ip+"/andy_send_comment.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("user_id", user_id.toString()));
+        params.add(new Pair<String, String>("q_id", q_id.toString()));
+        params.add(new Pair<String, String>("text", text));
+        try{
+            new Setup().execute(params).get();
+            JSONObject jsonObject = new JSONObject(output);
+            Boolean result = Boolean.parseBoolean(jsonObject.getString("result"));
+            return result;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public Bitmap getImage(String image_name){
         String str_link = "http://"+image_link+"/"+image_name;
         DownloadTask downloadTask = new DownloadTask();
