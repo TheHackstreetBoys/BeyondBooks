@@ -231,6 +231,10 @@ include("html.inc");
 
 //echo "<em>Design Project <b>Kushal Jangid</b></em>";
 
+$num_rec_per_page=4;
+
+if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; };
+$start_from = ($page-1) * $num_rec_per_page;
 
 $str = $_GET['subject'] ;
 $v  = strpos("$str","I");
@@ -240,7 +244,7 @@ $username = substr("$str",$v-1);
 session_start();
 
 
-$result = pg_query("SELECT * FROM question_forum ORDER BY ts DESC");
+$result = pg_query("SELECT * FROM question_forum ORDER BY ts DESC LIMIT $num_rec_per_page OFFSET $start_from");
 
 
 if(!pg_num_rows($result)) {
@@ -260,7 +264,14 @@ if(!pg_num_rows($result)) {
 		echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row1['num'].' comments</a>';
 		echo '<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 
-	}
+	
+
+$sql = "SELECT * FROM question_forum ORDER BY ts ";
+$rs_result = pg_query($sql); //run the query
+$total_records = pg_num_rows($rs_result);  //count number of records
+$total_pages = ceil($total_records / $num_rec_per_page);
+
+}
 }
 
 echo <<<HTML
@@ -269,6 +280,15 @@ echo <<<HTML
 <br/><br/>
 
 HTML;
+
+echo "<a href='forumWelcome.php?page1=1'>".'Prev-'."</a> "; // Goto 1st page
+
+for ($i=1; $i<=$total_pages; $i++) {
+            echo "<a href='forumWelcome.php?page1=".$i."'>".$i."</a> ";
+};
+echo "<a href='forumWelcome.php?page1=$total_pages'>".'-Next'."</a> "; // Goto last page
+
+
 
 ?>
 
