@@ -1,12 +1,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <item android:id="@+id/home" android:title="Home"
+    <item android:id="@+id/option_home" android:title="Home"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/search" android:title="Search"
+    <item android:id="@+id/option_search" android:title="Search"
         android:orderInCategory="100" app:showAsAction="always"
         android:icon="@android:drawable/ic_menu_search"/>
-    <item android:id="@+id/user_profile" android:title="User Profile"
+    <item android:id="@+id/option_user_profile" android:title="User Profile"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/option_buy_sell" android:title="Buy sell"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/option_forum" android:title="Forum"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/option_book_shelf" android:title="Book shelf"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/option_activity_on_forum" android:title="Activities on forum"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/option_reviewed_books" android:title="Reviewed Books"
+        android:orderInCategory="100" app:showAsAction="never" />
+
 
 </menu>

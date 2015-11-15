@@ -11,8 +11,9 @@ import java.util.List;
 
 public class Wireframe12 extends AppCompatActivity {
 
-    ListView started_list,commented_list;
-    ArrayAdapter<String> adapter_started,adapter_commented;
+    ListView started_list, commented_list;
+    ArrayAdapter<String> adapter_started, adapter_commented;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,30 +28,18 @@ public class Wireframe12 extends AppCompatActivity {
 
         started_list = (ListView) findViewById(R.id.harkat_startedlist);
         commented_list = (ListView) findViewById(R.id.harkat_commentedlist);
-
-        adapter_started = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,android.R.id.text1,setstarted_listitem(forumActivities));
-        adapter_commented = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,android.R.id.text1,setstarted_listitem(forumActivities));
+        ArrayList<String> values = null;
+        for (int i = 0; i < forumActivities.getQuestions_started().size(); i++) {
+            values.add(forumActivities.getQuestions_started().get(i).getTitle());
+        }
+        adapter_started = new ArrayAdapter<String>(this, R.layout.frame10_list_view, values);
+        for (int i = 0; i < forumActivities.getQuestions_started().size(); i++) {
+            values.add(forumActivities.getCommented().get(i).getQ_title());
+        }
+        adapter_commented = new ArrayAdapter<String>(this, R.layout.frame10_list_view, values);
 
         started_list.setAdapter(adapter_started);
         commented_list.setAdapter(adapter_commented);
     }
 
-
-    public ArrayList<String> setstarted_listitem( ForumActivities fa){
-        ArrayList<String> values = new ArrayList<String>(0);
-
-        for(int i=0;i<fa.getQuestions_started().size();i++){
-            values.add(fa.getQuestions_started().get(i).getTitle());
-        }
-        return values;
-    }
-
-    public ArrayList<String> setcommented_listitem( ForumActivities fa){
-        ArrayList<String> values = new ArrayList<String>(0);
-
-        for(int i=0;i<fa.getCommented().size();i++){
-            values.add(fa.getCommented().get(i).getQ_title());
-        }
-        return values;
-    }
 }

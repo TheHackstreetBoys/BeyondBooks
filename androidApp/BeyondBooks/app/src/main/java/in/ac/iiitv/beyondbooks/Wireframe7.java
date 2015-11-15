@@ -40,8 +40,9 @@ public class Wireframe7 extends Activity {
         //set image of the book
         bookimage = (ImageView) findViewById(R.id.book_image);
         Map<String, Integer> map = new HashMap<String, Integer>();
-        map.put(userData.getImage_link(), R.drawable.book_image);
-        bookimage.setImageResource(map.get(userData.getImage_link()));
+        //bookdetails should contain bookimage link
+       // map.put(bookDetails.get, R.drawable.book_image);
+       // bookimage.setImageResource(map.get(bookDetails.getImagelink()));
 
         //set ratings of the book
         bookrating = (RatingBar) findViewById(R.id.book_rating);

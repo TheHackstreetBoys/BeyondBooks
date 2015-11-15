@@ -21,7 +21,7 @@ public class Frame11 extends AppCompatActivity {
         intent = getIntent();
         UserData userData = (UserData)intent.getSerializableExtra("user_data");
         RequestServer requestServer = new RequestServer();
-        UserData temp = requestServer.get_activities(userData.getId());
+        UserData temp = requestServer.get_activities(/*userData.getId()*/201351010);
         uploads = temp.getUploads();
         reviewed_books = temp.getReviewed();
         //Till here
@@ -30,11 +30,9 @@ public class Frame11 extends AppCompatActivity {
         list_review = (ListView) findViewById(R.id.list_review);
 
         //fill list_upload
-        list_upload.setAdapter(new ArrayAdapter<String>(this,android.R.layout.
-                simple_list_item_1,android.R.id.text1,get_uploads(uploads)));
+        list_upload.setAdapter(new ArrayAdapter<String>(this,R.layout.frame10_list_view,get_uploads(uploads)));
 
-        list_upload.setAdapter(new ArrayAdapter<String>(this,android.R.layout.
-                simple_list_item_1,android.R.id.text1,get_reviews(reviewed_books)));
+        list_upload.setAdapter(new ArrayAdapter<String>(this,R.layout.frame10_list_view,get_reviews(reviewed_books)));
 
     }
 
@@ -54,7 +52,6 @@ public class Frame11 extends AppCompatActivity {
         for(int i=0;i<uploads.size();i++){
             value.add(reviewed_books.get(i).getBook_name());
         }
-
         return value;
     }
 }

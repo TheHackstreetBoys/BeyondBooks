@@ -14,7 +14,7 @@ public class Frame15 extends AppCompatActivity {
         setContentView(R.layout.activity_frame15);
     }
     public void next(View v){
-        EditText editText = (EditText) findViewById(R.id.question);
+        EditText editText = (EditText) findViewById(R.id.frame15_question);
         Intent intent = new Intent(this, Frame16.class);
         String question = editText.getText().toString();
         intent.putExtra("question", question);

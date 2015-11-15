@@ -24,9 +24,9 @@ public class Frame5 extends AppCompatActivity {
         buysell_list = (ListView) findViewById(R.id.buy_sell);
         forum_list = (ListView) findViewById(R.id.forum);
 
-        adapter_review = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,android.R.id.text1,setreview_listitem(searchOutputReturn));
-        adapter_buysell = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,android.R.id.text1,setbuysell_listitem(searchOutputReturn));
-        adapter_forum = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,android.R.id.text1,setforum_listitem(searchOutputReturn));
+        adapter_review = new ArrayAdapter<String>(this, R.layout.activity_frame5,setreview_listitem(searchOutputReturn));
+        adapter_buysell = new ArrayAdapter<String>(this, R.layout.activity_frame5,setbuysell_listitem(searchOutputReturn));
+        adapter_forum = new ArrayAdapter<String>(this, R.layout.activity_frame5,setforum_listitem(searchOutputReturn));
 
         review_list.setAdapter(adapter_review);
         buysell_list.setAdapter(adapter_buysell);
@@ -38,9 +38,9 @@ public class Frame5 extends AppCompatActivity {
 
     public ArrayList<String> setreview_listitem( SearchOutputReturn sr){
         ArrayList<String> values = new ArrayList<String>(0);
-        ArrayList<NewlyAdded> values_review = sr.getReview();
-        for(int reviews=0;reviews<values_review.size();reviews++){
-            values.add(values_review.get(reviews).getBook_name());
+
+        for(int reviews=0;reviews<sr.getReview().size();reviews++){
+            values.add(sr.getReview().get(reviews).getBook_name());
         }
         return values;
     }
@@ -49,9 +49,8 @@ public class Frame5 extends AppCompatActivity {
 
     public ArrayList<String> setbuysell_listitem(SearchOutputReturn sr){
         ArrayList<String> values = new ArrayList<String>(0);
-        ArrayList<NewlyAdded> values_buysell = sr.getBuy_sell();
-        for(int i=0;i<values_buysell.size();i++){
-            values.add(values_buysell.get(i).getBook_name());
+        for(int i=0;i<sr.getBuy_sell().size();i++){
+            values.add(sr.getBuy_sell().get(i).getBook_name());
         }
         return values;
     }

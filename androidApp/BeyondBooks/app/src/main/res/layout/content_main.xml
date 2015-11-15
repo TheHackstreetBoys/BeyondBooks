@@ -94,7 +94,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="About Us"
-        android:id="@+id/textView3"
+        android:id="@+id/aboutus"
+        android:clickable="true"
         android:layout_gravity="center_horizontal"
         android:textColor="#0004f0" />
 
