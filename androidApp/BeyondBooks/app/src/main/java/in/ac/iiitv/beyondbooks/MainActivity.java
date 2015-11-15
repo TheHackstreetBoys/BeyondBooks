@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
 
         //to check the different activity
-        startActivity(new Intent(this,Wireframe21.class));
+        startActivity(new Intent(this,Wireframe7.class));
 
 
         username = (EditText)findViewById(R.id.username);
