@@ -8,7 +8,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	$fname=$_POST['fname'];
 	$lname=$_POST['lname'];
 	$pwd=$_POST['newpwd'];
-
+	echo $fname;
 
 	$result=pg_query("SELECT * FROM user_profile where user_id='$user_id'");
     $row=pg_fetch_array($result);

@@ -253,9 +253,13 @@ $row1 = pg_fetch_array($result1);
 echo '<h2>'.$row['title'].'</h2><br/>';
 echo 'By: <em>'.$row1['f_name'].' '.$row1['l_name'].'</em><br/>';
 echo '<em>Posted '.$row['ts'].'</em><br/>';
-echo nl2br($row['content']).'<br/>';
-echo '<a href="forumedit.php?qid='.$_GET['qid'].'">Edit</a> | <a href="forumdelete.php?qid='.$_GET['qid'].'">Delete</a> ';
-echo ' | <a href="forumWelcome.php">View All</a>';
+echo '<textarea name="textarea" rows="10" cols="50" style="overflow:hidden;" disabled>'.nl2br($row['content']).'</textarea><br/>';
+$currentid=$_SESSION["user_id"];
+
+if($row1['user_id']==$currentid)
+{
+	echo '<a href="forumedit.php?qid='.$_GET['qid'].'">Edit</a> | <a href="forumdelete.php?qid='.$_GET['qid'].'">Delete</a> ';
+}
 $qid = $_GET['qid'];
 echo '<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 $result = pg_query("SELECT * FROM forum_replies WHERE qid = '$qid' ORDER BY ts DESC LIMIT 4" );
@@ -270,19 +274,32 @@ echo '<div class="row">
 </div>';
 while($row = pg_fetch_array($result)) {
 	echo '<li id="post-'.$row['id'].'">';
-	echo (empty($row['website'])?'<strong>'.$row['uid'].'</strong>':'<a style="color: blue" href="#" target="_blank">'.$row['name'].'</a>');
+	$commenteduser=$row['uid'];
+	$filename1=$row['uid'].'_dp';
+	$filename1="pictures/".$filename1."*";
+	$result2=glob($filename1);
+	if (!empty($result2))
+	echo '<img src="'.$result2[0].'"class="img-circle" style="width: 50px">';
+	else
+	echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
+
+	$namequery=pg_query("SELECT * from user_profile where user_id='$commenteduser'");
+	$namequery_answer=pg_fetch_array($namequery);
+
+
+	echo (empty($row['website'])?'<strong>  '.$namequery_answer['f_name'].' '.$namequery_answer['l_name'].'</strong>':'<a style="color: blue" href="#" target="_blank">'.$row['name'].'</a>');
 	echo '<br/><small>'.$row['ts'].'</small><br/>';
 	echo nl2br($row['reply']);
 
 
-    $result2 = pg_query('SELECT COUNT(plike) AS likes FROM commentss WHERE rollno = %s && id = %s', $row['rollno'], $row['id']);
+  $result2 = pg_query('SELECT COUNT(plike) AS likes FROM commentss WHERE rollno = %s && id = %s', $row['rollno'], $row['id']);
 
     if(!pg_num_rows($result2))
     {
     }
     $row2 = pg_fetch_array($result2);
 
-	echo '<br/> <a href = "please.php?id='.$row['id'].'"> <img src = "like.png" title = "LIKE" height = "20px">  </a>' . $row2['likes'];
+	echo '<br/> <a href = "please.php?id='.$row['id'].'"> <img src = "images/like.png" title = "LIKE" height = "20px">  </a>' . $row2['likes'];
 	echo '</li><br/>';
 		echo '</li><br/>';
 
@@ -361,7 +378,7 @@ HTML;
 				{
 
 $qid = $row['qid'];
-			
+
 		$result1 = pg_query("SELECT COUNT(*) AS num FROM forum_replies WHERE qid = '$qid' ");
 		$row1 = pg_fetch_array($result1);
 

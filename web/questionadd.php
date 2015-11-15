@@ -14,11 +14,12 @@ $query = pg_query("INSERT INTO question_forum (ts, asker, title, content) VALUES
 $qid = pg_fetch_array($query)[0];
 if($query)
 {
-  echo 'Post is Successfully Created. Click here to <a href="forumWelcome.php">View</a>';
+  echo 'Post is Successfully Created.';
+  header('Refresh:1; url=forumWelcome.php');
 }
 else
 {
-  echo "Error".pg_last_error();
+  echo "Error adding your question ".pg_last_error();
 }
 
 

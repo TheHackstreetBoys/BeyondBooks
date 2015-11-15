@@ -253,7 +253,7 @@ if(!pg_num_rows($result)) {
 	while($row = pg_fetch_array($result)) {
 
 	$qid = $row['qid'];
-			
+
 		$result1 = pg_query("SELECT COUNT(*) AS num FROM forum_replies WHERE qid = '$qid' ");
 		$row1 = pg_fetch_array($result1);
 
@@ -264,7 +264,7 @@ if(!pg_num_rows($result)) {
 		echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row1['num'].' comments</a>';
 		echo '<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 
-	
+
 
 $sql = "SELECT * FROM question_forum ORDER BY ts ";
 $rs_result = pg_query($sql); //run the query
@@ -275,8 +275,10 @@ $total_pages = ceil($total_records / $num_rec_per_page);
 }
 
 echo <<<HTML
-
-<a style='color: #CC0000'href="addquestion.php">+ Add Your Question Here</a><br/>
+<a href="addquestion.php" style="color:#FFFFFF">
+<button class="btn btn-primary">+ Add Your Question Here</button>
+</a>
+<br/>
 <br/><br/>
 
 HTML;
@@ -325,7 +327,7 @@ $result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS nu
 					while($row = pg_fetch_array($result))
 				{
 			$qid = $row['qid'];
-			
+
 		$result1 = pg_query("SELECT COUNT(*) AS num FROM forum_replies WHERE qid = '$qid' ");
 		$row1 = pg_fetch_array($result1);
 

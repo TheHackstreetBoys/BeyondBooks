@@ -1,4 +1,4 @@
-﻿--- Author: krupo
+﻿-- Author: krupo
 
 -- For the User profile
 create table user_profile (
@@ -23,8 +23,6 @@ create table question_forum(
        asker varchar,
        title text,
        content text,
-       upvote int,
-       downvote int,
        primary key(qid),
        foreign key (asker) references user_profile(user_id)
 );
@@ -55,8 +53,6 @@ create table forum_replies(
        ts timestamp,
        uid varchar,
        reply text,
-       upvote int,
-       downvote int,
        primary key (qid,ts,uid),
 
        foreign key (qid) references question_forum(qid),
@@ -71,7 +67,6 @@ create table books(
 
        ts timestamp,
        title varchar,
-       image_link varchar,
        by_user varchar not null,
        primary key (isbn),
        foreign key (by_user) references user_profile(user_id)
