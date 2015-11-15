@@ -2,10 +2,8 @@
 require 'db_conn.php';
 $username = $_POST['user_id'];
 $isbn = $_POST['isbn'];
-
 require 'bookdetails.php';
 $result = getDetails($isbn);
-$times = date('d-m-Y H:i:s');
 
 $title = $result['title'];
 $description = $result['description'];
@@ -13,6 +11,8 @@ $publisher = $result['publisher'];
 $query = "insert into books (isbn, title, publisher,description, by_user, ts) values ('$isbn', '$title',
                                 '$publisher', '$description', '$username', CURRENT_TIMESTAMP);";
 $imagelink= $result['image-link'];
+
+
 
 $content = file_get_contents($imagelink);
 $fp = fopen("../books_pics/$isbn.jpg", "w");
