@@ -8,7 +8,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	$fname=$_POST['fname'];
 	$lname=$_POST['lname'];
 	$pwd=$_POST['newpwd'];
-	
+
 
 	$result=pg_query("SELECT * FROM user_profile where email_id='$mail'");
     $row=pg_fetch_array($result);
@@ -19,7 +19,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
     	$lname=$row['lname'];
     if($fname=="")
     	$fname=$row['fname'];
-    
+
     if($pwd=="")
     {
     	$password=$row['password'];
