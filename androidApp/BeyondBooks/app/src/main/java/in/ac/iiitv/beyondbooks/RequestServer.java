@@ -481,6 +481,7 @@ public class RequestServer {
                 JSONObject comment_json = jsonArray.getJSONObject(i);
                 Integer comment_user_id = Integer.parseInt(comment_json.getString("user_id"));
                 String comment_text = comment_json.getString("text");
+                System.out.print(" dsfa "+comment_json.get("comment_id"));
                 Integer comment_id = Integer.parseInt(comment_json.getString("comment_id"));
                 Comments temp = new Comments(comment_user_id, comment_text, comment_id, forum_id, title);
                 String user_name = comment_json.getString("user_name");

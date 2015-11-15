@@ -24,9 +24,13 @@ public class Frame14 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frame14);
         intent = getIntent();
-        Integer q_id = Integer.parseInt(intent.getStringExtra("q_id"));
+        //Integer q_id = Integer.parseInt(intent.getStringExtra("q_id"));
         RequestServer requestServer = new RequestServer();
-        ForumDetails forumDetails = requestServer.forumDetails(q_id);
+        ForumDetails forumDetails = requestServer.forumDetails(/*q_id*/ 3);
+
+        //System.out.println("forumdeatails :"+requestServer.get_faculty());
+        System.out.println("forumdeatails :"+forumDetails.getComments().size() );
+        System.out.println("forumdeatails :"+forumDetails.getAuthor_name() );
 
         //set topic of the discussion
         topic = (TextView) findViewById(R.id.forum_topic);
@@ -55,7 +59,6 @@ public class Frame14 extends AppCompatActivity {
 
             }
         });
-
 
     }
 
