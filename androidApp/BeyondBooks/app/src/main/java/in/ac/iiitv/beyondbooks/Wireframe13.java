@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class Wireframe13 extends AppCompatActivity {
+public class Wireframe13 extends AppCompatActivity implements AdapterView.OnItemClickListener {
     ArrayList<ForumOverview> top_rated, recent_discussions;
     ListView toprated,recent;
     ArrayAdapter<String> adapter_toprated,adapter_recent;
@@ -28,10 +28,10 @@ public class Wireframe13 extends AppCompatActivity {
 
         // Defined Array values to show in ListView
         ArrayList<String> values_toprated = new ArrayList<String>(0) ;
-        for(int i=0;i<10;i++){
-            values_toprated.add("item"+i);
+        for(int i=0;i<top_rated.size();i++){
+            values_toprated.add(top_rated.get(i).getTitle()+"\n"+top_rated.get(i).getAuthor());
         }
-        adapter_toprated = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, android.R.id.text1, values_toprated);
+        adapter_toprated = new ArrayAdapter<String>(this,R.layout.frame10_list_view, values_toprated);
 
         // Assign adapter to ListView
         toprated.setAdapter(adapter_toprated);
@@ -43,18 +43,32 @@ public class Wireframe13 extends AppCompatActivity {
 
         // Defined Array values to show in ListView
         ArrayList<String> values_recent = new ArrayList<String>(0);
-        for (int i=0;i<10;i++){
-            values_recent.add("string"+i);
+        for (int i=0;i<recent_discussions.size();i++){
+            values_recent.add(recent_discussions.get(i).getTitle()+"\n"+recent_discussions.get(i).getAuthor());
         }
-        adapter_recent = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, android.R.id.text1, values_recent);
+        adapter_recent = new ArrayAdapter<String>(this,R.layout.frame10_list_view, values_recent);
 
         // Assign adapter to ListView
         recent.setAdapter(adapter_recent);
 
+        toprated.setOnItemClickListener(this);
+        recent.setOnItemClickListener(this);
+
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-
+        int rid = parent.getId();
+        switch (rid)
+        {
+            case R.id.topratedlist:
+                Toast.makeText(this,top_rated.get(position).getAuthor(),Toast.LENGTH_LONG).show();
+                break;
+            case R.id.recentlist:
+                Toast.makeText(this,recent_discussions.get(position).getAuthor(),Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
 }

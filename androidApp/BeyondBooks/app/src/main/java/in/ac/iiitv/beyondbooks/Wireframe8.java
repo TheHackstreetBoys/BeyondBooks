@@ -24,7 +24,7 @@ public class Wireframe8 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.Wireframe8);
+        setContentView(R.layout.wireframe8);
 
         //Added by Anjul Tyagi
         notifications = new ArrayList<String>();
