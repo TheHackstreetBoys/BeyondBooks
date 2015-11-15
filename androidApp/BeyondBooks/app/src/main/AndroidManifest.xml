@@ -49,8 +49,8 @@
         </activity>
         <activity android:name=".Wireframe21" >
         </activity>
-        <!--<activity android:name=".Wireframe8" >-->
-        <!--</activity>-->
+        <activity android:name=".Wireframe8" >
+        </activity>
         <activity android:name=".AboutUs" >
         </activity>
     </application>
