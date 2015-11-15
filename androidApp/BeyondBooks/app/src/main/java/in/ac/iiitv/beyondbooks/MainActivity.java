@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        startActivity(new Intent(this, Frame17.class));
-
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
 

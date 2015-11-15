@@ -49,7 +49,6 @@ public class Frame5 extends AppCompatActivity {
 
     public ArrayList<String> setbuysell_listitem(SearchOutputReturn sr){
         ArrayList<String> values = new ArrayList<String>(0);
-
         for(int i=0;i<sr.getBuy_sell().size();i++){
             values.add(sr.getBuy_sell().get(i).getBook_name());
         }
