@@ -1,7 +1,7 @@
 <!doctype html>
 <?php
 include_once 'db_conn.php';
-//session_start();
+session_start();
 //if(!isset($_SESSION["user_id"]))
 //{
 //	header('Location: index.php');
@@ -10,7 +10,7 @@ include_once 'db_conn.php';
 <html>
 <head>
 <title>
-Welcome to Beyond Books
+Discussion Forum
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -42,9 +42,9 @@ $(document).ready(function(){
 
 
 
-
 <body>
 <!--                                                                                -->
+
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	  <div class="container-fluid">
 
@@ -62,7 +62,7 @@ $(document).ready(function(){
 	        <span class="icon-bar"></span>
 	      </button>
 
-	      <a class="navbar-brand" href="#">Beyond Books</a>
+	      <a class="navbar-brand" href="homepage.php">Beyond Books</a>
 
 	    </div>
 
@@ -86,7 +86,7 @@ if(searchid!=\'\')
 {
     $.ajax({
     type: "POST",
-    url: "search.php",
+    url: "searchforum.php",
     data: dataString,
     cache: false,
     success: function(html)
@@ -199,165 +199,123 @@ include("html.inc");
 	</nav>
 
 
-
-
-
-<br/><br/><br/>
-
-    <div class="container-fluid">
+<br/><br/><br/><br/>
+ <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-12">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="page-header">
-						<h1>
-							<br/>New Uploads!
-						</h1>
-			<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
 
+		<div class="col-md-12"><h1>
+<br/>
+<b>Discussion Forums</b>
+<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
+</h1>
+
+
+			<div class="row">
+
+				<div class="col-md-8">
+					<div class="row">
+						<div class="col-md-12">
+
+
+
+
+<div class="row">
+						<div class="col-md-12">
+
+							<div class="row">
+									<div class="col-md-12">
+
+								</div>
+							</div>
 <?php
+
+//echo "<em>Design Project <b>Kushal Jangid</b></em>";
 
 $num_rec_per_page=4;
 
 if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; };
 $start_from = ($page-1) * $num_rec_per_page;
 
-			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn LIMIT $num_rec_per_page OFFSET $start_from");
+$str = $_GET['subject'] ;
+$v  = strpos("$str","I");
+$c = substr("$str",0,$v);
+$username = substr("$str",$v-1);
+
+session_start();
 
 
+$result = pg_query("SELECT * FROM question_forum ORDER BY ts DESC LIMIT $num_rec_per_page OFFSET $start_from");
 
-			if(!pg_num_rows($result)) {
-							echo '<p>No Book is available.</p>';
-						     }
-			else {
 
-					while($row = pg_fetch_array($result))
-				{
-			echo "<div class='col-md-3'><br/>";
-			echo "<a href='book_main_page.php?isbn=".$row['isbn']."'>";
-			$url = "http://www.librarything.com/devkey/KEY/medium/isbn/".$isbn;
-			$img = 'books_pics/'.$isbn.'.png';
-			$result1=glob($img);
-			if (!empty($result1))
-			echo '<img src="'.$result1[0].'" class="img-responsive" style="width:100px; height:150px">';
-			else
-			{
-				file_put_contents($img, file_get_contents($url));
-				if(file_exists($img))
-					echo '<img src="'.$img.'" class="img-responsive" style="width:100px; height:150px">';
-				else {
-					echo '<img src="books_pics/nan.jpg" class="img-responsive" style="width:100px; height:150px">';
-				}
-			}
+if(!pg_num_rows($result)) {
+	echo '<p>No forums is Created Yet.</p>';
+} else {
+	while($row = pg_fetch_array($result)) {
 
-echo "<a href='book_main_page.php?isbn=".$row['isbn']."'>".$row['title']."</a>";
-echo "<br/>";
-echo "By: ".$row['author']."<br/>".$row['publisher']."</div>";
+	$qid = $row['qid'];
+			
+		$result1 = pg_query("SELECT COUNT(*) AS num FROM forum_replies WHERE qid = '$qid' ");
+		$row1 = pg_fetch_array($result1);
 
-$sql = "SELECT * FROM books JOIN author ON books.isbn = author.isbn";
+		echo '<h2>'.$row['title'].'</h2><br/>';
+		$body = substr($row['content'], 0, 20);
+		echo nl2br($body).'...<br/>';
+		echo '<a href="forumview.php?qid='.$row['qid'].'">Read More</a> | ';
+		echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row1['num'].' comments</a>';
+		echo '<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
+
+	
+
+$sql = "SELECT * FROM question_forum ORDER BY ts ";
 $rs_result = pg_query($sql); //run the query
 $total_records = pg_num_rows($rs_result);  //count number of records
 $total_pages = ceil($total_records / $num_rec_per_page);
- }
+
 }
-?>
-</div>
-</div>
-</div>
+}
 
-<?php
-echo "<hr>";
-echo "<a href='homepage.php?page1=1'>".'Prev-'."</a> "; // Goto 1st page
+echo <<<HTML
+
+<a style='color: #CC0000'href="addquestion.php">+ Add Your Question Here</a><br/>
+<br/><br/>
+
+HTML;
+
+echo "<a href='forumWelcome.php?page1=1'>".'Prev-'."</a> "; // Goto 1st page
 
 for ($i=1; $i<=$total_pages; $i++) {
-            echo "<a href='homepage.php?page1=".$i."'>".$i."</a> ";
+            echo "<a href='forumWelcome.php?page1=".$i."'>".$i."</a> ";
 };
-echo "<a href='homepage.php?page1=$total_pages'>".'-Next'."</a> "; // Goto last page
+echo "<a href='forumWelcome.php?page1=$total_pages'>".'-Next'."</a> "; // Goto last page
 
-		?>
-			<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="page-header">
-						<h1>
-							Popular/Top Rated Books!
-						</h1>
+
+
+?>
+
+
+
+						</div>
 					</div>
-					<?php
-		$num_rec_per_page=3;
-if (isset($_GET["page"])) { $page1  = $_GET["page"]; } else { $page1=1; };
-$start_from = ($page1-1) * $num_rec_per_page;
-
-
-			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn LIMIT $num_rec_per_page OFFSET $start_from");
-
-
-
-			if(!pg_num_rows($result)) {
-							echo '<p>No Book is available.</p>';
-						     }
-			else {
-
-					while($row = pg_fetch_array($result))
-				{
-					echo "<a href='book_main_page.php?isbn=".$row['isbn']."' style='color:black;'>";
-					$url = "http://www.librarything.com/devkey/KEY/medium/isbn/".$row['isbn'];
-					$img = 'books_pics/'.$row['isbn'].'.png';
-					$result1=glob($img);
-					if (!empty($result1))
-					echo '<img src="'.$result1[0].'" class="img-responsive" style="width:100px; height:150px">';
-					else
-					{
-						file_put_contents($img, file_get_contents($url));
-						if(file_exists($img))
-							echo '<img src="'.$img.'" class="img-responsive" style="width:100px; height:150px">';
-						else {
-							echo '<img src="books_pics/nan.jpg" class="img-responsive" style="width:100px; height:150px">';
-						}
-					}
-						echo "</a>";
-					echo '<b>'.$row['title'].'<br/></b>';
-					echo "<em>".$row['author']."</em><br/>";
-					echo '<em>'.substr($row['description'], 0, 200).'</em><br/>';
-					echo '<em>'.$row['publisher'].'</em><br/>';
-
-
-$sql = "SELECT * FROM books JOIN author ON books.isbn = author.isbn";
-$rs_result = pg_query($sql); //run the query
-$total_records = pg_num_rows($rs_result);  //count number of records
-$total_pages = ceil($total_records / $num_rec_per_page);
-
-					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
-			     }
-					}
-
-					?>
-				<?php
-
-echo "<a href='homepage.php?page=1'>".'Prev-'."</a> "; // Goto 1st page
-
-for ($i=1; $i<=$total_pages; $i++) {
-            echo "<a href='homepage.php?page=".$i."'>".$i."</a> ";
-};
-echo "<a href='homepage.php?page=$total_pages'>".'-Next'."</a> "; // Goto last page
-?>
 				</div>
-				<div class="col-md-6">
-					<div class="page-header">
-						<h1>
-							Top Discussions on Forum!
-						</h1>
+
+	</div>
 					</div>
+<hr style="height:3px; border:none; color:rgb(60,60,60); background-color:rgb(60,60,60);">
+
+
+
+
+<div class="col-md-4">
+
+
+					<h3>
+						Top Rated Discussions <hr style="height:1px; border:none; color:rgb(60,60,60); background-color:rgb(60,90,180);">
+					</h3>
+
+
 					<?php
-$num_rec_per_page=2;
 
-
-if (isset($_GET["page2"])) { $page2  = $_GET["page2"]; } else { $page2=1; };
-$start_from = ($page2-1) * $num_rec_per_page;
-
-
-
-			$result = pg_query("SELECT * FROM question_forum ORDER BY ( SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid ) DESC LIMIT $num_rec_per_page OFFSET $start_from");
+$result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid )  DESC LIMIT 4");
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No forums is Created Yet.</p>';
@@ -366,7 +324,7 @@ $start_from = ($page2-1) * $num_rec_per_page;
 
 					while($row = pg_fetch_array($result))
 				{
-$qid = $row['qid'];
+			$qid = $row['qid'];
 			
 		$result1 = pg_query("SELECT COUNT(*) AS num FROM forum_replies WHERE qid = '$qid' ");
 		$row1 = pg_fetch_array($result1);
@@ -376,44 +334,28 @@ $qid = $row['qid'];
 					echo nl2br($body).'...<br/>';
 					echo '<a href="forumview.php?qid='.$row['qid'].'">Read More</a> | ';
 					echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row1['num'].' comments</a>';
-
-$sql = "SELECT * FROM question_forum ORDER BY  ( SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid )";
-$rs_result = pg_query($sql); //run the query
-$total_records = pg_num_rows($rs_result);  //count number of records
-$total_pages = ceil($total_records / $num_rec_per_page);
-
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 			     }
 					}
 
 					?>
-					<?php
 
-echo "<a href='mainpage.php?page2=1'>".'Prev-'."</a> "; // Goto 1st page
 
-for ($i=1; $i<=$total_pages; $i++) {
-            echo "<a href='mainpage.php?page2=".$i."'>".$i."</a> ";
-};
-echo "<a href='mainpage.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last page
-?>
 
 
 				</div>
-
 			</div>
 		</div>
 	</div>
 </div>
 
 
+
 <footer>
-<hr />
 <div class="container">
-<hr>Beyond Books Everywhere</hr>
+<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; Your Company 2014</p>
+<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys
 </div>
 </footer>
-</body>
-</html>

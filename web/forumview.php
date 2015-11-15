@@ -1,4 +1,5 @@
 <!doctype html>
+
 <?php
 include_once 'db_conn.php';
 //session_start();
@@ -10,7 +11,7 @@ include_once 'db_conn.php';
 <html>
 <head>
 <title>
-Welcome to Beyond Books
+Discussion Forum
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -62,7 +63,7 @@ $(document).ready(function(){
 	        <span class="icon-bar"></span>
 	      </button>
 
-	      <a class="navbar-brand" href="#">Beyond Books</a>
+	      <a class="navbar-brand" href="homepage.php">Beyond Books</a>
 
 	    </div>
 
@@ -86,7 +87,7 @@ if(searchid!=\'\')
 {
     $.ajax({
     type: "POST",
-    url: "search.php",
+    url: "searchforum.php",
     data: dataString,
     cache: false,
     success: function(html)
@@ -199,165 +200,157 @@ include("html.inc");
 	</nav>
 
 
-
-
-
-<br/><br/><br/>
-
-    <div class="container-fluid">
+<br/><br/><br/><br/>
+ <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-12"><h1>
+<br/>
+<b>Discussion Forums</b>
+<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
+</h1>
 			<div class="row">
-				<div class="col-md-12">
-					<div class="page-header">
-						<h1>
-							<br/>New Uploads!
-						</h1>
-			<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
+				<div class="col-md-8">
+					<div class="row">
+						<div class="col-md-12">
+
 
 <?php
+$qid = $_GET['qid'];
+$result = pg_query("SELECT * FROM question_forum WHERE qid= '$qid'");
 
-$num_rec_per_page=4;
-
-if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; };
-$start_from = ($page-1) * $num_rec_per_page;
-
-			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn LIMIT $num_rec_per_page OFFSET $start_from");
-
-
-
-			if(!pg_num_rows($result)) {
-							echo '<p>No Book is available.</p>';
-						     }
-			else {
-
-					while($row = pg_fetch_array($result))
-				{
-			echo "<div class='col-md-3'><br/>";
-			echo "<a href='book_main_page.php?isbn=".$row['isbn']."'>";
-			$url = "http://www.librarything.com/devkey/KEY/medium/isbn/".$isbn;
-			$img = 'books_pics/'.$isbn.'.png';
-			$result1=glob($img);
-			if (!empty($result1))
-			echo '<img src="'.$result1[0].'" class="img-responsive" style="width:100px; height:150px">';
-			else
-			{
-				file_put_contents($img, file_get_contents($url));
-				if(file_exists($img))
-					echo '<img src="'.$img.'" class="img-responsive" style="width:100px; height:150px">';
-				else {
-					echo '<img src="books_pics/nan.jpg" class="img-responsive" style="width:100px; height:150px">';
-				}
-			}
-
-echo "<a href='book_main_page.php?isbn=".$row['isbn']."'>".$row['title']."</a>";
-echo "<br/>";
-echo "By: ".$row['author']."<br/>".$row['publisher']."</div>";
-
-$sql = "SELECT * FROM books JOIN author ON books.isbn = author.isbn";
-$rs_result = pg_query($sql); //run the query
-$total_records = pg_num_rows($rs_result);  //count number of records
-$total_pages = ceil($total_records / $num_rec_per_page);
- }
+if(!pg_num_rows($result)) {
+	echo 'Post #'.$_GET['qid'].' not found';
+	exit;
 }
+
+
+
+	/*$result1 = mysql_safe_query('SELECT username FROM comments ');
+	$row1 = mysql_fetch_assoc($result1);
+
+	foreach ($row1 as $date) {
+    echo $date['username'];
+}*/
+
+
+$row = pg_fetch_array($result);
+	session_start();
+
+$str = $_GET['id'] ;
+$v  = strpos("$str"," ");
+$c = substr("$str",$v+1);
+
+ $username   = $_SESSION['current'];
+
+$user = $row['asker'];
+$result1 = pg_query("SELECT * FROM user_profile WHERE user_id = '$user'" );
+
+if(!pg_num_rows($result1))
+{
+}
+$row1 = pg_fetch_array($result1);
+
+echo '<h2>'.$row['title'].'</h2><br/>';
+echo 'By: <em>'.$row1['f_name'].' '.$row1['l_name'].'</em><br/>';
+echo '<em>Posted '.$row['ts'].'</em><br/>';
+echo nl2br($row['content']).'<br/>';
+echo '<a href="forumedit.php?qid='.$_GET['qid'].'">Edit</a> | <a href="forumdelete.php?qid='.$_GET['qid'].'">Delete</a> ';
+echo ' | <a href="forumWelcome.php">View All</a>';
+$qid = $_GET['qid'];
+echo '<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
+$result = pg_query("SELECT * FROM forum_replies WHERE qid = '$qid' ORDER BY ts DESC LIMIT 4" );
+echo '<ul id="comments">';
+echo '<div class="row">
+						<div class="col-md-12">
+							<h3>
+								<b> Comments : </b>
+<hr style="height:1px; border:none; color:rgb(60,60,60); background-color:rgb(60,60,60);">
+							</h3>
+</div>
+</div>';
+while($row = pg_fetch_array($result)) {
+	echo '<li id="post-'.$row['id'].'">';
+	echo (empty($row['website'])?'<strong>'.$row['uid'].'</strong>':'<a style="color: blue" href="#" target="_blank">'.$row['name'].'</a>');
+	echo '<br/><small>'.$row['ts'].'</small><br/>';
+	echo nl2br($row['reply']);
+
+
+    $result2 = pg_query('SELECT COUNT(plike) AS likes FROM commentss WHERE rollno = %s && id = %s', $row['rollno'], $row['id']);
+
+    if(!pg_num_rows($result2))
+    {
+    }
+    $row2 = pg_fetch_array($result2);
+
+	echo '<br/> <a href = "please.php?id='.$row['id'].'"> <img src = "like.png" title = "LIKE" height = "20px">  </a>' . $row2['likes'];
+	echo '</li><br/>';
+		echo '</li><br/>';
+
+
+}
+echo '</ul>';
+
+$str = $_GET['qid'];
+
+echo <<<HTML
+
+<div class="row">
+						<div class="col-md-12">
+
+							<div class="row">
+									<div class="col-md-12">
+									<button type="button" class="btn btn-success active btn-block">
+										Load More
+									</button>
+								</div>
+							</div>
+							<h3>
+								<b>Add Your Comment :</b>
+							</h3>
+							<form class="form-horizontal" role="form" method="post" action="forumcommentadd.php?qid={$_GET['qid']}">
+								<div class="form-group">
+
+									<label for="inputEmail3" class="col-sm-2 control-label">
+
+									</label>
+									<div class="col-sm-10">
+
+								<textarea class="form-control" name = "content" rows = "4" id="inputEmail3" type="text"> </textarea>
+
+									</div>
+								</div>
+
+
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+
+										<button type="submit" class="btn btn-default">
+											Post Comment
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+</form>
+HTML;
+
 ?>
-</div>
-</div>
-</div>
+						</div>
+					</div>
+<hr style="height:3px; border:none; color:rgb(60,60,60); background-color:rgb(60,60,60);">
+
+				<div class="col-md-4">
+					<h3>
+						Recently Created Discussions <hr style="height:1px; border:none; color:rgb(60,60,60); background-color:rgb(60,90,180);">
+					</h3>
+
 
 <?php
-echo "<hr>";
-echo "<a href='homepage.php?page1=1'>".'Prev-'."</a> "; // Goto 1st page
 
-for ($i=1; $i<=$total_pages; $i++) {
-            echo "<a href='homepage.php?page1=".$i."'>".$i."</a> ";
-};
-echo "<a href='homepage.php?page1=$total_pages'>".'-Next'."</a> "; // Goto last page
-
-		?>
-			<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="page-header">
-						<h1>
-							Popular/Top Rated Books!
-						</h1>
-					</div>
-					<?php
-		$num_rec_per_page=3;
-if (isset($_GET["page"])) { $page1  = $_GET["page"]; } else { $page1=1; };
-$start_from = ($page1-1) * $num_rec_per_page;
-
-
-			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn LIMIT $num_rec_per_page OFFSET $start_from");
-
-
-
-			if(!pg_num_rows($result)) {
-							echo '<p>No Book is available.</p>';
-						     }
-			else {
-
-					while($row = pg_fetch_array($result))
-				{
-					echo "<a href='book_main_page.php?isbn=".$row['isbn']."' style='color:black;'>";
-					$url = "http://www.librarything.com/devkey/KEY/medium/isbn/".$row['isbn'];
-					$img = 'books_pics/'.$row['isbn'].'.png';
-					$result1=glob($img);
-					if (!empty($result1))
-					echo '<img src="'.$result1[0].'" class="img-responsive" style="width:100px; height:150px">';
-					else
-					{
-						file_put_contents($img, file_get_contents($url));
-						if(file_exists($img))
-							echo '<img src="'.$img.'" class="img-responsive" style="width:100px; height:150px">';
-						else {
-							echo '<img src="books_pics/nan.jpg" class="img-responsive" style="width:100px; height:150px">';
-						}
-					}
-						echo "</a>";
-					echo '<b>'.$row['title'].'<br/></b>';
-					echo "<em>".$row['author']."</em><br/>";
-					echo '<em>'.substr($row['description'], 0, 200).'</em><br/>';
-					echo '<em>'.$row['publisher'].'</em><br/>';
-
-
-$sql = "SELECT * FROM books JOIN author ON books.isbn = author.isbn";
-$rs_result = pg_query($sql); //run the query
-$total_records = pg_num_rows($rs_result);  //count number of records
-$total_pages = ceil($total_records / $num_rec_per_page);
-
-					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
-			     }
-					}
-
-					?>
-				<?php
-
-echo "<a href='homepage.php?page=1'>".'Prev-'."</a> "; // Goto 1st page
-
-for ($i=1; $i<=$total_pages; $i++) {
-            echo "<a href='homepage.php?page=".$i."'>".$i."</a> ";
-};
-echo "<a href='homepage.php?page=$total_pages'>".'-Next'."</a> "; // Goto last page
-?>
-				</div>
-				<div class="col-md-6">
-					<div class="page-header">
-						<h1>
-							Top Discussions on Forum!
-						</h1>
-					</div>
-					<?php
-$num_rec_per_page=2;
-
-
-if (isset($_GET["page2"])) { $page2  = $_GET["page2"]; } else { $page2=1; };
-$start_from = ($page2-1) * $num_rec_per_page;
-
-
-
-			$result = pg_query("SELECT * FROM question_forum ORDER BY ( SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid ) DESC LIMIT $num_rec_per_page OFFSET $start_from");
+			$result = pg_query("SELECT * FROM question_forum ORDER BY ts DESC LIMIT 3");
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No forums is Created Yet.</p>';
@@ -366,6 +359,7 @@ $start_from = ($page2-1) * $num_rec_per_page;
 
 					while($row = pg_fetch_array($result))
 				{
+
 $qid = $row['qid'];
 			
 		$result1 = pg_query("SELECT COUNT(*) AS num FROM forum_replies WHERE qid = '$qid' ");
@@ -376,44 +370,26 @@ $qid = $row['qid'];
 					echo nl2br($body).'...<br/>';
 					echo '<a href="forumview.php?qid='.$row['qid'].'">Read More</a> | ';
 					echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row1['num'].' comments</a>';
-
-$sql = "SELECT * FROM question_forum ORDER BY  ( SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid )";
-$rs_result = pg_query($sql); //run the query
-$total_records = pg_num_rows($rs_result);  //count number of records
-$total_pages = ceil($total_records / $num_rec_per_page);
-
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 			     }
 					}
 
 					?>
-					<?php
-
-echo "<a href='mainpage.php?page2=1'>".'Prev-'."</a> "; // Goto 1st page
-
-for ($i=1; $i<=$total_pages; $i++) {
-            echo "<a href='mainpage.php?page2=".$i."'>".$i."</a> ";
-};
-echo "<a href='mainpage.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last page
-?>
 
 
 				</div>
-
 			</div>
 		</div>
 	</div>
 </div>
 
 
+
 <footer>
-<hr />
 <div class="container">
-<hr>Beyond Books Everywhere</hr>
+<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; Your Company 2014</p>
+<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys
 </div>
 </footer>
-</body>
-</html>
