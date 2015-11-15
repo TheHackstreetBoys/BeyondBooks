@@ -8,9 +8,9 @@ Welcome to Beyond Books
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>		
+<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/bootstrap.min.css"/>
-<link rel="stylesheet" href="css/font-awesome.min.css"/>	
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -25,7 +25,7 @@ $(document).ready(function(){
 			dropdownMenu.parent().toggleClass("open");
 		}
 	});
-});		
+});
 </script>
 </head>
 
@@ -58,20 +58,20 @@ $(document).ready(function(){
 
 	    </div>
 
-	 
+
 
 	    <div class="collapse navbar-collapse" id="navbar-collapse-main">
 
 	      <ul class="nav navbar-nav navbar-right">
-		
+
 		<li><?php
 
 $content ='
 <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
 $(function(){
-$(".search").keyup(function() 
-{ 
+$(".search").keyup(function()
+{
 var searchid = $(this).val();
 var dataString = \'search=\'+ searchid;
 if(searchid!=\'\')
@@ -86,19 +86,19 @@ if(searchid!=\'\')
     $("#result").html(html).show();
     }
     });
-}return false;    
+}return false;
 });
 
-jQuery("#result").live("click",function(e){ 
+jQuery("#result").live("click",function(e){
     var $clicked = $(e.target);
     var $name = $clicked.find(\'.name\').html();
     var decoded = $("<div/>").html($name).text();
     $(\'#searchid\').val(decoded);
 });
-jQuery(document).live("click", function(e) { 
+jQuery(document).live("click", function(e) {
     var $clicked = $(e.target);
     if (! $clicked.hasClass("search")){
-    jQuery("#result").fadeOut(); 
+    jQuery("#result").fadeOut();
     }
 });
 $(\'#searchid\').click(function(){
@@ -134,9 +134,9 @@ $(\'#searchid\').click(function(){
     }
     .show
     {
-        padding:10px; 
+        padding:10px;
         border-bottom:0px #999 ;
-        font-size:12px; 
+        font-size:12px;
 
         height:10px;
 
@@ -144,7 +144,7 @@ $(\'#searchid\').click(function(){
     }
     .show:hover
     {
-       
+
         cursor:pointer;
     }
 </style>
@@ -167,7 +167,7 @@ include("html.inc");
 		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="/var/www/html/BeyondBooks/web/images/user.png" class="img-circle" style="width: 50px"></a>
 
 <ul class="dropdown-menu">
-<li><a herf="#">My profile</a></li>
+<li><a herf="#">My Profile</a></li>
 <li><a href="#">My uploads</a></li>
 </ul></li>
 
@@ -192,20 +192,20 @@ include("html.inc");
 				<div class="col-md-12">
 					<div class="page-header">
 						<h1>
-							<br/>New Uploads! 
+							<br/>New Uploads!
 						</h1>
 			<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
 
 <?php
-		
+
 $num_rec_per_page=4;
 
 $dbconn=null;
 global $dbconn;
 $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; }; 
-$start_from = ($page-1) * $num_rec_per_page; 
+if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; };
+$start_from = ($page-1) * $num_rec_per_page;
 
 			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn LIMIT $num_rec_per_page OFFSET $start_from");
 
@@ -213,9 +213,9 @@ $start_from = ($page-1) * $num_rec_per_page;
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No Book is available.</p>';
-						     } 
-			else {	
-			
+						     }
+			else {
+
 					while($row = pg_fetch_array($result))
 				{
 			echo "<div class='col-md-3'><br/>
@@ -223,33 +223,33 @@ $start_from = ($page-1) * $num_rec_per_page;
 <br/>
 By:".$row['author']."<br/>
 ".$row['publisher']."</div>
-";				
+";
 
-$sql = "SELECT * FROM books JOIN author ON books.isbn = author.isbn"; 
+$sql = "SELECT * FROM books JOIN author ON books.isbn = author.isbn";
 $rs_result = pg_query($sql); //run the query
 $total_records = pg_num_rows($rs_result);  //count number of records
 $total_pages = ceil($total_records / $num_rec_per_page);
 
 
 
-		
+
 			     }
 					}
 
 					?>
-					
+
 
 					</div>
 	</div>
-				
-</div>
-	<?php	
-echo "<hr>";			
-echo "<a href='mainpage.php?page1=1'>".'Prev-'."</a> "; // Goto 1st page  
 
-for ($i=1; $i<=$total_pages; $i++) { 
-            echo "<a href='mainpage.php?page1=".$i."'>".$i."</a> "; 
-}; 
+</div>
+	<?php
+echo "<hr>";
+echo "<a href='mainpage.php?page1=1'>".'Prev-'."</a> "; // Goto 1st page
+
+for ($i=1; $i<=$total_pages; $i++) {
+            echo "<a href='mainpage.php?page1=".$i."'>".$i."</a> ";
+};
 echo "<a href='mainpage.php?page1=$total_pages'>".'-Next'."</a> "; // Goto last page
 
 		?>
@@ -267,8 +267,8 @@ echo "<a href='mainpage.php?page1=$total_pages'>".'-Next'."</a> "; // Goto last 
 global $dbconn;
 $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-if (isset($_GET["page"])) { $page1  = $_GET["page"]; } else { $page1=1; }; 
-$start_from = ($page1-1) * $num_rec_per_page; 
+if (isset($_GET["page"])) { $page1  = $_GET["page"]; } else { $page1=1; };
+$start_from = ($page1-1) * $num_rec_per_page;
 
 
 			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn LIMIT $num_rec_per_page OFFSET $start_from");
@@ -277,9 +277,9 @@ $start_from = ($page1-1) * $num_rec_per_page;
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No Book is available.</p>';
-						     } 
-			else {	
-			
+						     }
+			else {
+
 					while($row = pg_fetch_array($result))
 				{
 			//echo "<img src='http://www.librarything.com/devkey/KEY/medium/isbn/".$row['isbn']."'alt='Image is not available' > <br/> ";
@@ -289,25 +289,25 @@ $start_from = ($page1-1) * $num_rec_per_page;
 					echo '<em>'.$row['publisher'].'</em><br/>';
 					echo "<a href='book_main_page.php?isbn=".$row['isbn']."'>Click Here</a>";
 
-			
-$sql = "SELECT * FROM books JOIN author ON books.isbn = author.isbn"; 
+
+$sql = "SELECT * FROM books JOIN author ON books.isbn = author.isbn";
 $rs_result = pg_query($sql); //run the query
 $total_records = pg_num_rows($rs_result);  //count number of records
 $total_pages = ceil($total_records / $num_rec_per_page);
 
-					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';	
+					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 			     }
 					}
 
 					?>
 				<?php
 
-echo "<a href='mainpage.php?page=1'>".'Prev-'."</a> "; // Goto 1st page  
+echo "<a href='mainpage.php?page=1'>".'Prev-'."</a> "; // Goto 1st page
 
-for ($i=1; $i<=$total_pages; $i++) { 
-            echo "<a href='mainpage.php?page=".$i."'>".$i."</a> "; 
-}; 
-echo "<a href='mainpage.php?page=$total_pages'>".'-Next'."</a> "; // Goto last page	
+for ($i=1; $i<=$total_pages; $i++) {
+            echo "<a href='mainpage.php?page=".$i."'>".$i."</a> ";
+};
+echo "<a href='mainpage.php?page=$total_pages'>".'-Next'."</a> "; // Goto last page
 ?>
 				</div>
 				<div class="col-md-6">
@@ -318,13 +318,13 @@ echo "<a href='mainpage.php?page=$total_pages'>".'-Next'."</a> "; // Goto last p
 					</div>
 					<?php
 $num_rec_per_page=2;
-		
+
 												$dbconn=null;
 global $dbconn;
 $dbconn=pg_connect("host=localhost dbname=BeyondBooks user=postgres password=password") or die("could not connect!!!");
 
-if (isset($_GET["page2"])) { $page2  = $_GET["page2"]; } else { $page2=1; }; 
-$start_from = ($page2-1) * $num_rec_per_page; 
+if (isset($_GET["page2"])) { $page2  = $_GET["page2"]; } else { $page2=1; };
+$start_from = ($page2-1) * $num_rec_per_page;
 
 
 
@@ -332,35 +332,35 @@ $start_from = ($page2-1) * $num_rec_per_page;
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No forums is Created Yet.</p>';
-						     } 
-			else {	
-			
+						     }
+			else {
+
 					while($row = pg_fetch_array($result))
 				{
 					echo '<h2>'.$row['title'].'</h2><br/>';
 					$body = substr($row['body'], 0, 10);
-					echo nl2br($body).'...<br/>';	
+					echo nl2br($body).'...<br/>';
 					echo '<a href="forumview.php?id='.$row['id'].'">Read More</a> | ';
-					echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';	
+					echo '<a href="forumview.php?id='.$row['id'].'#comments">'.$row['num_comments'].' comments</a>';
 
-$sql = "SELECT * FROM posts ORDER BY num_comments"; 
+$sql = "SELECT * FROM posts ORDER BY num_comments";
 $rs_result = pg_query($sql); //run the query
 $total_records = pg_num_rows($rs_result);  //count number of records
 $total_pages = ceil($total_records / $num_rec_per_page);
 
-					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';	
+					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 			     }
 					}
 
 					?>
 					<?php
 
-echo "<a href='mainpage.php?page2=1'>".'Prev-'."</a> "; // Goto 1st page  
+echo "<a href='mainpage.php?page2=1'>".'Prev-'."</a> "; // Goto 1st page
 
-for ($i=1; $i<=$total_pages; $i++) { 
-            echo "<a href='mainpage.php?page2=".$i."'>".$i."</a> "; 
-}; 
-echo "<a href='mainpage.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last page	
+for ($i=1; $i<=$total_pages; $i++) {
+            echo "<a href='mainpage.php?page2=".$i."'>".$i."</a> ";
+};
+echo "<a href='mainpage.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last page
 ?>
 
 				</div>
@@ -380,6 +380,3 @@ echo "<a href='mainpage.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last 
 <p class="text-right">Copyright &copy; Your Company 2014</p>
 </div>
 </footer>
-
-
-

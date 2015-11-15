@@ -209,7 +209,15 @@ public class RequestServer {
                 userData.setUser_name(temp.getString("seller_name"));
                 sellers_id.add(userData);
             }
-            BookDetails temp = new BookDetails(public_ratings, faculty_ratings, student_ratigns, about_book, bookshelf, isbn, sellers_id );
+            ArrayList<Pair<String, String>> comments_list = new ArrayList<Pair<String, String>>();
+            JSONArray comments_json = book_page_json.getJSONArray("comments");
+            for(int i=0;i<comments_json.length();i++){
+                JSONObject comment = comments_json.getJSONObject(i);
+                String commentor_name = comment.getString("commentor_name");
+                String text = comment.getString("text");
+                comments_list.add(new Pair<String, String>(text, commentor_name));
+            }
+            BookDetails temp = new BookDetails(public_ratings, faculty_ratings, student_ratigns, about_book, bookshelf, isbn, sellers_id, comments_list );
             return temp;
         }catch(JSONException e){
             e.printStackTrace();
@@ -472,6 +480,8 @@ public class RequestServer {
                 String comment_text = comment_json.getString("text");
                 Integer comment_id = Integer.parseInt(comment_json.getString("comment_id"));
                 Comments temp = new Comments(comment_user_id, comment_text, comment_id, forum_id, title);
+                String user_name = comment_json.getString("user_name");
+                temp.setUser_name(user_name);
                 comments.add(temp);
             }
             ForumDetails to_return = new ForumDetails(title, author_name, forum_id, author_id, comments);
@@ -530,13 +540,14 @@ public class RequestServer {
         return false;
     }
 
-    public Boolean sell_book(Long isbn, Integer user_id, Float age, Float price){
+    public Boolean sell_book(Long isbn, Integer user_id, Float age, Float price, String description){
         address = "http://"+ip+"/andy_sell_book.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("isbn", isbn.toString()));
         params.add(new Pair<String, String>("user_id", user_id.toString()));
         params.add(new Pair<String, String>("age", age.toString()));
         params.add(new Pair<String, String>("price", price.toString()));
+        params.add(new Pair<String, String>("description",description));
         try{
             new Setup().execute(params).get();
             JSONObject jsonObject = new JSONObject(output);
