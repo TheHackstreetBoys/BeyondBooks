@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,12 +66,15 @@ public class Wireframe7 extends Activity {
                 switch (id) {
                     case R.id.general_rating:
                         rating.setRating(bookDetails.getPublic_ratings());
+                        Toast.makeText(getApplicationContext(),"general rating",Toast.LENGTH_LONG ).show();
                         break;
                     case R.id.student_rating:
                         rating.setRating(bookDetails.getStudent_ratings());
+                        Toast.makeText(getApplicationContext(),"student rating",Toast.LENGTH_LONG ).show();
                         break;
                     case R.id.faculty_rating:
                         rating.setRating(bookDetails.getFaculty_ratings());
+                        Toast.makeText(getApplicationContext(),"faculty rating",Toast.LENGTH_LONG ).show();
                         break;
                     default:
                         System.out.print("Some error : not able to set the rating of different kind(general,student,faculty)");
