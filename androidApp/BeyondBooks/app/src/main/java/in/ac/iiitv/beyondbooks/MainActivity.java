@@ -27,10 +27,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+<<<<<<< HEAD
         //to check the different activity
         startActivity(new Intent(this,Frame5.class));
 
 
+=======
+>>>>>>> a57e35d85ec5c6a16f5c3d5f68aa4c419a8ee316
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
 
@@ -55,19 +58,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent in;
         switch(id)
         {
-            case R.id.search:
+            case R.id.option_search:
                 in = new Intent(this,Frame5.class);
-
                 startActivity(in);
                 break;
-            case R.id.home:
+            case R.id.option_home:
 
-                in = new Intent(this, MainActivity.class);
+                in = new Intent(this, BookViewPage.class);
                 startActivity(in);
                 break;
-            case R.id.user_profile:
-                in = new Intent(this,Wireframe8.class);
+            case R.id.option_user_profile:
+                in = new Intent(this, Wireframe8.class);
                 startActivity(in);
+                break;
+            case R.id.option_activity_on_forum:
+                in = new Intent(this,Wireframe12.class);
+                startActivity(in);
+                break;
+            case R.id.option_book_shelf:
+                in = new Intent(this,Frame10.class);
+                startActivity(in);
+                break;
+            case R.id.option_forum:
+                in = new Intent(this,Wireframe13.class);
+                startActivity(in);
+                break;
+            case R.id.option_reviewed_books:
+                in = new Intent(this,Frame11.class);
+                startActivity(in);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -91,7 +110,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(this, "Incorrect username or password", Toast.LENGTH_LONG).show();
                 break;
             case R.id.aboutus:
-                startActivity(new Intent(this,AboutUs.class));
+                Intent au = new Intent(this,AboutUs.class);
+                au.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(au);
+                break;
         }
     }
 }

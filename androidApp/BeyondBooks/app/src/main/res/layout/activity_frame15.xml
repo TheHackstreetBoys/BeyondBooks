@@ -11,7 +11,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/question"
+        android:id="@+id/frame15_question"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
@@ -27,7 +27,7 @@
         android:onClick="next"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/next" />
+        android:id="@+id/frame15_next" />
 
     <TextView
         android:layout_width="wrap_content"
