@@ -639,9 +639,10 @@ public class RequestServer {
             JSONObject jsonObject = new JSONObject(output);
             JSONArray faculty_list = jsonObject.getJSONArray("faculties");
             for (int i=0;i<faculty_list.length();i++){
-                JSONObject faculty = faculty_list.getJSONObject(i);
-                temp.add(faculty.toString());
+                temp.add(faculty_list.getString(i));
+
             }
+            System.out.println("lund : "+temp);
             return temp;
         }catch(JSONException e){
             e.printStackTrace();
