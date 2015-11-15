@@ -2,6 +2,7 @@ package in.ac.iiitv.beyondbooks;
 
 //use this http://stackoverflow.com/questions/9767952/how-to-add-parameters-to-httpurlconnection-using-post
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -72,9 +73,10 @@ public class RequestServer {
     public Boolean authenticate_forget(Integer id){
         address = "http://"+ip+"/andy_authenticate_forget.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
-        params.add(new Pair<String, String>("id", id.toString()));
+        params.add(new Pair<String, String>("user_id", id.toString()));
         try {
             new Setup().execute(params).get();
+            System.out.println("Output "+output);
             JSONObject is_authenticated_json = new JSONObject(output);
             return Boolean.parseBoolean(is_authenticated_json.getString("result"));
         }catch(JSONException e){
@@ -706,6 +708,7 @@ public class RequestServer {
         }
         return false;
     }
+
 
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, Void, String> {
         HttpURLConnection urlConnection;
