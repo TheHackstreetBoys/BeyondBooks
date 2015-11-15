@@ -19,7 +19,7 @@ public class Frame16 extends AppCompatActivity {
     public void next(View v){
         intent = new Intent(this, Frame17.class);
         intent.putExtra("question", question);
-        EditText editText = (EditText) findViewById(R.id.question);
+        EditText editText = (EditText) findViewById(R.id.frame16_question);
         String details = editText.getText().toString();
         intent.putExtra("details", details);
         startActivity(intent);
