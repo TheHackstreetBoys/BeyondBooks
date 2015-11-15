@@ -1,11 +1,11 @@
 <!doctype html>
 <?php
 include_once 'db_conn.php';
-//session_start();
-//if(!isset($_SESSION["user_id"]))
-//{
-//	header('Location: index.php');
-//}
+session_start();
+if(!isset($_SESSION["user_id"]))
+{
+	header('Location: index.php');
+}
 ?>
 <html>
 <head>
@@ -171,7 +171,7 @@ include("html.inc");
 	        <li><br/><a href="homapage.php">Home</a></li>
 
 	        <li><br/><a href="buy_sell.php">Buy/Sell</a></li>
-					<li><br/><a href="forum.php">Forum</a></li>
+					<li><br/><a href="forumWelcome.php">Forum</a></li>
 		<li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
 			<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 				<?php
@@ -188,6 +188,7 @@ include("html.inc");
 <li><a href="yourprofile.php">My Profile</a></li>
 <li><a href="bookshelf.php">My Bookshelf</a></li>
 <li><a href="my_sold_books.php">My Sold Books</a></li>
+<li><a href="addbook.php">Add Book</a></li>
 </ul></li>
 
 	      </ul>
@@ -367,7 +368,7 @@ $start_from = ($page2-1) * $num_rec_per_page;
 					while($row = pg_fetch_array($result))
 				{
 $qid = $row['qid'];
-			
+
 		$result1 = pg_query("SELECT COUNT(*) AS num FROM forum_replies WHERE qid = '$qid' ");
 		$row1 = pg_fetch_array($result1);
 

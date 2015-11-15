@@ -489,6 +489,7 @@ public class RequestServer {
                 JSONObject comment_json = jsonArray.getJSONObject(i);
                 Integer comment_user_id = Integer.parseInt(comment_json.getString("user_id"));
                 String comment_text = comment_json.getString("text");
+                System.out.print(" dsfa "+comment_json.get("comment_id"));
                 Integer comment_id = Integer.parseInt(comment_json.getString("comment_id"));
                 Comments temp = new Comments(comment_user_id, comment_text, comment_id, forum_id, title);
                 String user_name = comment_json.getString("user_name");
@@ -661,6 +662,27 @@ public class RequestServer {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Boolean send_comment(Integer user_id, Integer q_id, String text){
+        address = "http://"+ip+"/andy_send_comment.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("user_id", user_id.toString()));
+        params.add(new Pair<String, String>("q_id", q_id.toString()));
+        params.add(new Pair<String, String>("text", text));
+        try{
+            new Setup().execute(params).get();
+            JSONObject jsonObject = new JSONObject(output);
+            Boolean result = Boolean.parseBoolean(jsonObject.getString("result"));
+            return result;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public Bitmap getImage(String image_name){

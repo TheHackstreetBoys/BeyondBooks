@@ -47,7 +47,7 @@
 			#starloader{
 				width:32px;
 				height:32px;
-				background:url(images/starloader.GIF);
+				background:url(../images/starloader.gif);
 				float:right;
 			}
 			
