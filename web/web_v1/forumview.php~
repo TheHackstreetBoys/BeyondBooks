@@ -87,7 +87,7 @@ if(searchid!=\'\')
 {
     $.ajax({
     type: "POST",
-    url: "search.php",
+    url: "searchforum.php",
     data: dataString,
     cache: false,
     success: function(html)
