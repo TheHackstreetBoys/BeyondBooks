@@ -72,8 +72,8 @@ $(document).ready(function(){
 
 	      <ul class="nav navbar-nav navbar-right">
 
-		<li>
-<?php
+		<li><?php
+
 $content ='
 <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
@@ -119,6 +119,7 @@ $(\'#searchid\').click(function(){
     #searchid
     {
         width:190px;
+        border:solid 1px #000;
         padding:8px;
         font-size:12px;
 	margin-top:-1cm;
@@ -155,9 +156,8 @@ $(\'#searchid\').click(function(){
         cursor:pointer;
     }
 </style>
-<div class="content" style="margin-top: -3%;">
-<input type="text" class="form-control search"  id="searchid" placeholder="Search for Books" />
-	<span class="glyphicon glyphicon-search form-control-feedback" style="padding-top: 15%; color: #3596e0;"></span>
+<div class="content">
+<input type="text" class="search" id="searchid" placeholder="Search for Books" />
 <div id="result"> </div>
 </div>
 ';
@@ -168,26 +168,15 @@ include("html.inc");
 ?></li>
 
 
-	        <li><br/><a href="homapage.php">Home</a></li>
+	        <li><br/><a href="#home">Home</a></li>
 
-	        <li><br/><a href="buy_sell.php">Buy/Sell</a></li>
-					<li><br/><a href="forum.php">Forum</a></li>
-		<li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
-			<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
-				<?php
-				$filename=$_SESSION["user_id"].'_dp';
-				$filename="pictures/".$filename."*";
-				$result1=glob($filename);
-				if (!empty($result1))
-				echo '<img src="'.$result1[0].'"class="img-circle" style="width: 50px">';
-				else
-					echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
-					?>
-			</a>
+	        <li><br/><a href="#about">About</a></li>
+		<li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></li>
+		<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle"><img src="/var/www/html/BeyondBooks/web/images/user.png" class="img-circle" style="width: 50px"></a>
+
 <ul class="dropdown-menu">
-<li><a href="yourprofile.php">My Profile</a></li>
-<li><a href="bookshelf.php">My Bookshelf</a></li>
-<li><a href="my_sold_books.php">My Sold Books</a></li>
+<li><a herf="#">My Profile</a></li>
+<li><a href="#">My uploads</a></li>
 </ul></li>
 
 	      </ul>
@@ -219,6 +208,8 @@ include("html.inc");
 
 $num_rec_per_page=4;
 
+
+
 if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; };
 $start_from = ($page-1) * $num_rec_per_page;
 
@@ -233,46 +224,39 @@ $start_from = ($page-1) * $num_rec_per_page;
 
 					while($row = pg_fetch_array($result))
 				{
-			echo "<div class='col-md-3'><br/>";
-			echo "<a href='book_main_page.php?isbn=".$row['isbn']."'>";
-			$url = "http://www.librarything.com/devkey/KEY/medium/isbn/".$isbn;
-			$img = 'books_pics/'.$isbn.'.png';
-			$result1=glob($img);
-			if (!empty($result1))
-			echo '<img src="'.$result1[0].'" class="img-responsive" style="width:100px; height:150px">';
-			else
-			{
-				file_put_contents($img, file_get_contents($url));
-				if(file_exists($img))
-					echo '<img src="'.$img.'" class="img-responsive" style="width:100px; height:150px">';
-				else {
-					echo '<img src="books_pics/nan.jpg" class="img-responsive" style="width:100px; height:150px">';
-				}
-			}
-
-echo "<a href='book_main_page.php?isbn=".$row['isbn']."'>".$row['title']."</a>";
-echo "<br/>";
-echo "By: ".$row['author']."<br/>".$row['publisher']."</div>";
+			echo "<div class='col-md-3'><br/>
+<a href='book_main_page.php?isbn=".$row['isbn']."'>".$row['title']."</a>
+<br/>
+By:".$row['author']."<br/>
+".$row['publisher']."</div>
+";
 
 $sql = "SELECT * FROM books JOIN author ON books.isbn = author.isbn";
 $rs_result = pg_query($sql); //run the query
 $total_records = pg_num_rows($rs_result);  //count number of records
 $total_pages = ceil($total_records / $num_rec_per_page);
- }
-}
-?>
-</div>
-</div>
-</div>
 
-<?php
+
+
+
+			     }
+					}
+
+					?>
+
+
+					</div>
+	</div>
+
+</div>
+	<?php
 echo "<hr>";
-echo "<a href='homepage.php?page1=1'>".'Prev-'."</a> "; // Goto 1st page
+echo "<a href='mainpage.php?page1=1'>".'Prev-'."</a> "; // Goto 1st page
 
 for ($i=1; $i<=$total_pages; $i++) {
-            echo "<a href='homepage.php?page1=".$i."'>".$i."</a> ";
+            echo "<a href='mainpage.php?page1=".$i."'>".$i."</a> ";
 };
-echo "<a href='homepage.php?page1=$total_pages'>".'-Next'."</a> "; // Goto last page
+echo "<a href='mainpage.php?page1=$total_pages'>".'-Next'."</a> "; // Goto last page
 
 		?>
 			<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
@@ -285,6 +269,7 @@ echo "<a href='homepage.php?page1=$total_pages'>".'-Next'."</a> "; // Goto last 
 					</div>
 					<?php
 		$num_rec_per_page=3;
+
 if (isset($_GET["page"])) { $page1  = $_GET["page"]; } else { $page1=1; };
 $start_from = ($page1-1) * $num_rec_per_page;
 
@@ -300,26 +285,12 @@ $start_from = ($page1-1) * $num_rec_per_page;
 
 					while($row = pg_fetch_array($result))
 				{
-					echo "<a href='book_main_page.php?isbn=".$row['isbn']."' style='color:black;'>";
-					$url = "http://www.librarything.com/devkey/KEY/medium/isbn/".$row['isbn'];
-					$img = 'books_pics/'.$row['isbn'].'.png';
-					$result1=glob($img);
-					if (!empty($result1))
-					echo '<img src="'.$result1[0].'" class="img-responsive" style="width:100px; height:150px">';
-					else
-					{
-						file_put_contents($img, file_get_contents($url));
-						if(file_exists($img))
-							echo '<img src="'.$img.'" class="img-responsive" style="width:100px; height:150px">';
-						else {
-							echo '<img src="books_pics/nan.jpg" class="img-responsive" style="width:100px; height:150px">';
-						}
-					}
-						echo "</a>";
+			//echo "<img src='http://www.librarything.com/devkey/KEY/medium/isbn/".$row['isbn']."'alt='Image is not available' > <br/> ";
 					echo '<b>'.$row['title'].'<br/></b>';
 					echo "<em>".$row['author']."</em><br/>";
 					echo '<em>'.substr($row['description'], 0, 200).'</em><br/>';
 					echo '<em>'.$row['publisher'].'</em><br/>';
+					echo "<a href='book_main_page.php?isbn=".$row['isbn']."'>Click Here</a>";
 
 
 $sql = "SELECT * FROM books JOIN author ON books.isbn = author.isbn";
@@ -334,12 +305,12 @@ $total_pages = ceil($total_records / $num_rec_per_page);
 					?>
 				<?php
 
-echo "<a href='homepage.php?page=1'>".'Prev-'."</a> "; // Goto 1st page
+echo "<a href='mainpage.php?page=1'>".'Prev-'."</a> "; // Goto 1st page
 
 for ($i=1; $i<=$total_pages; $i++) {
-            echo "<a href='homepage.php?page=".$i."'>".$i."</a> ";
+            echo "<a href='mainpage.php?page=".$i."'>".$i."</a> ";
 };
-echo "<a href='homepage.php?page=$total_pages'>".'-Next'."</a> "; // Goto last page
+echo "<a href='mainpage.php?page=$total_pages'>".'-Next'."</a> "; // Goto last page
 ?>
 				</div>
 				<div class="col-md-6">
@@ -397,7 +368,6 @@ for ($i=1; $i<=$total_pages; $i++) {
 echo "<a href='mainpage.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last page
 ?>
 
-
 				</div>
 
 			</div>
@@ -415,5 +385,3 @@ echo "<a href='mainpage.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last 
 <p class="text-right">Copyright &copy; Your Company 2014</p>
 </div>
 </footer>
-</body>
-</html>
