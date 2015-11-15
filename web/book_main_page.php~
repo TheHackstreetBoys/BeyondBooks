@@ -24,6 +24,19 @@ Main Page of Book
 <script src="js/bootstrap.min.js"></script>
 
 
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/bootstrap.min.css"/>
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
+<script src="js/modernizr-2.6.2.min.js"></script>
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+
+
 
 
 <script type="text/javascript">
@@ -134,7 +147,7 @@ function insertbookshelf()
 
 	      <ul class="nav navbar-nav navbar-right">
 
-			<li>
+<li>
 <?php
 $content ='
 <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
@@ -183,7 +196,7 @@ $(\'#searchid\').click(function(){
         width:190px;
         padding:8px;
         font-size:12px;
-	margin-top:-1cm;
+	margin-top:0cm;
 
      margin-left:1cm;
        }
@@ -217,9 +230,9 @@ $(\'#searchid\').click(function(){
         cursor:pointer;
     }
 </style>
-<div class="content">
-<input type="text" class="form-control search" id="searchid" placeholder="Search for Books" />
-	<span class="glyphicon glyphicon-search form-control-feedback" style="padding-top: 17%; color: #3596e0;"></span>
+<div class="content" style="margin-top: -3%;">
+<input type="text" class="form-control search"  id="searchid" placeholder="Search for Books" />
+	<span class="glyphicon glyphicon-search form-control-feedback" style="padding-top: 15%; color: #3596e0;"></span>
 <div id="result"> </div>
 </div>
 ';
@@ -227,8 +240,9 @@ $(\'#searchid\').click(function(){
 
 $pre = 1;
 include("html.inc");
-?>
-</li>
+?></li>
+
+
 
 <li><br/><a href="homapage.php">Home</a></li>
 

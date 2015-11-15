@@ -41,7 +41,7 @@ Forgot Password
 	    <!-- Brand and toggle get grouped for better mobile display -->
 
 	    <div class="navbar-header">
-
+	<b>Forgot Password</b><hr/>
 	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
 	        <span class="sr-only">Toggle navigation</span>
 

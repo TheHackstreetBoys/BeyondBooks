@@ -4,7 +4,7 @@ include_once "db_conn.php";
 if($_POST)
 {
     $q = pg_escape_string($_POST['search']);
-    $strSQL_Result = pg_query("select isbn, title from books where title like '$q%' or isbn like '$q%'LIMIT 1");
+    $strSQL_Result = pg_query("select isbn, title from books where title like '$q%' LIMIT 1");
     while($row=pg_fetch_array($strSQL_Result))
     {
         $title   = $row['title'];

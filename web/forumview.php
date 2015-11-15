@@ -87,7 +87,7 @@ if(searchid!=\'\')
 {
     $.ajax({
     type: "POST",
-    url: "searchforum.php",
+    url: "search.php",
     data: dataString,
     cache: false,
     success: function(html)
@@ -122,7 +122,7 @@ $(\'#searchid\').click(function(){
         width:190px;
         padding:8px;
         font-size:12px;
-	margin-top:-1cm;
+	margin-top:0cm;
 
      margin-left:1cm;
        }
@@ -169,10 +169,10 @@ include("html.inc");
 ?></li>
 
 
-	        <li><br/><a href="homapage.php">Home</a></li>
+	        <li><br/><a href="homepage.php">Home</a></li>
 
 	        <li><br/><a href="buy_sell.php">Buy/Sell</a></li>
-					<li><br/><a href="forum.php">Forum</a></li>
+					<li><br/><a href="forumWelcome.php">Forum</a></li>
 		<li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
 			<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 				<?php
@@ -215,6 +215,12 @@ include("html.inc");
 
 
 <?php
+$num_rec_per_page=4;
+
+if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; };
+$start_from = ($page-1) * $num_rec_per_page;
+
+
 $qid = $_GET['qid'];
 $result = pg_query("SELECT * FROM question_forum WHERE qid= '$qid'");
 
@@ -257,7 +263,7 @@ if($row1['user_id']==$currentid)
 }
 $qid = $_GET['qid'];
 echo '<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
-$result = pg_query("SELECT * FROM forum_replies WHERE qid = '$qid' ORDER BY ts DESC LIMIT 4" );
+$result = pg_query("SELECT * FROM forum_replies WHERE qid = '$qid' ORDER BY ts DESC LIMIT $num_rec_per_page OFFSET $start_from" );
 echo '<ul id="comments">';
 echo '<div class="row">
 						<div class="col-md-12">
@@ -294,10 +300,27 @@ while($row = pg_fetch_array($result)) {
     $row2 = pg_fetch_array($result2);
 
 	echo '</li><br/>';
+
 		echo '</li><br/>';
 
 
+$sql = "SELECT * FROM forum_replies WHERE qid = '$qid' ORDER BY ts DESC";
+$rs_result = pg_query($sql); //run the query
+$total_records = pg_num_rows($rs_result);  //count number of records
+$total_pages = ceil($total_records / $num_rec_per_page);
+
+
 }
+
+echo "<a href='forumview.php?qid=$qid&page1=1'>".'Prev-'."</a> "; // Goto 1st page
+
+for ($i=1; $i<=$total_pages; $i++) {
+            echo "<a href='forumview.php?qid=$qid&page1=".$i."'>".$i."</a> ";
+};
+echo "<a href='forumview.php?qid=$qid&page1=$total_pages'>".'-Next'."</a> "; // Goto last page
+
+
+
 echo '</ul>';
 
 $str = $_GET['qid'];
@@ -359,8 +382,12 @@ HTML;
 
 
 <?php
+$num_rec_per_page=2;
 
-			$result = pg_query("SELECT * FROM question_forum ORDER BY ts DESC LIMIT 3");
+if (isset($_GET["page2"])) { $page  = $_GET["page2"]; } else { $page=1; };
+$start_from = ($page-1) * $num_rec_per_page;
+
+			$result = pg_query("SELECT * FROM question_forum ORDER BY ts DESC LIMIT $num_rec_per_page OFFSET $start_from");
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No forums is Created Yet.</p>';
@@ -381,7 +408,22 @@ $qid = $row['qid'];
 					echo '<a href="forumview.php?qid='.$row['qid'].'">Read More</a> | ';
 					echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row1['num'].' comments</a>';
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
-			     }
+			
+$sql = "SELECT * FROM question_forum ORDER BY ts DESC";
+$rs_result = pg_query($sql); //run the query
+$total_records = pg_num_rows($rs_result);  //count number of records
+$total_pages = ceil($total_records / $num_rec_per_page);
+
+
+     }
+echo "<a href='forumview.php?qid=$qid&page2=1'>".'Prev-'."</a> "; // Goto 1st page
+
+for ($i=1; $i<=$total_pages; $i++) {
+            echo "<a href='forumview.php?qid=$qid&page2=".$i."'>".$i."</a> ";
+};
+echo "<a href='forumview.php?qid=$qid&page2=$total_pages'>".'-Next'."</a> "; // Goto last page
+
+
 					}
 
 					?>
