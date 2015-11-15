@@ -189,7 +189,7 @@ include("html.inc");
 
 
 
-	        <li><br/><a href="homepage.php">Home</a></li>
+	        <li><br/><a href="homapage.php">Home</a></li>
 
 	        <li><br/><a href="buy_sell.php">Buy/Sell</a></li>
 					<li><br/><a href="forumWelcome.php">Forum</a></li>

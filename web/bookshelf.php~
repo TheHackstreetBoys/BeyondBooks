@@ -76,7 +76,8 @@ $(document).ready(function(){
 	    <div class="collapse navbar-collapse" id="navbar-collapse-main">
 
 	      <ul class="nav navbar-nav navbar-right">
-<li>
+
+		<li>
 <?php
 $content ='
 <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
@@ -125,7 +126,7 @@ $(\'#searchid\').click(function(){
         width:190px;
         padding:8px;
         font-size:12px;
-	margin-top:0cm;
+	margin-top:-1cm;
 
      margin-left:1cm;
        }
@@ -170,6 +171,7 @@ $(\'#searchid\').click(function(){
 $pre = 1;
 include("html.inc");
 ?></li>
+
 
 	        <li><br/><a href="homepage.php">Home</a></li>
 

@@ -25,7 +25,6 @@ Main Page of Book
 
 
 
-
 <script type="text/javascript">
 $(document).ready(function(){
 	$(".dropdown, .btn-group").hover(function(){
@@ -134,7 +133,7 @@ function insertbookshelf()
 
 	      <ul class="nav navbar-nav navbar-right">
 
-			<li>
+<li>
 <?php
 $content ='
 <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
@@ -183,7 +182,7 @@ $(\'#searchid\').click(function(){
         width:190px;
         padding:8px;
         font-size:12px;
-	margin-top:-1cm;
+	margin-top:0cm;
 
      margin-left:1cm;
        }
@@ -217,9 +216,9 @@ $(\'#searchid\').click(function(){
         cursor:pointer;
     }
 </style>
-<div class="content">
-<input type="text" class="form-control search" id="searchid" placeholder="Search for Books" />
-	<span class="glyphicon glyphicon-search form-control-feedback" style="padding-top: 17%; color: #3596e0;"></span>
+<div class="content" style="margin-top: -3%;">
+<input type="text" class="form-control search"  id="searchid" placeholder="Search for Books" />
+	<span class="glyphicon glyphicon-search form-control-feedback" style="padding-top: 15%; color: #3596e0;"></span>
 <div id="result"> </div>
 </div>
 ';
@@ -227,8 +226,9 @@ $(\'#searchid\').click(function(){
 
 $pre = 1;
 include("html.inc");
-?>
-</li>
+?></li>
+
+
 
 <li><br/><a href="homapage.php">Home</a></li>
 
