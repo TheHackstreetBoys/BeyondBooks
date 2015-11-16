@@ -47,7 +47,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add comment: "
+        android:text="Add comments: "
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/addcomment"
         android:layout_above="@+id/linearLayout2"
@@ -79,7 +79,7 @@
             android:layout_alignBottom="@+id/scrollView2"
             android:layout_alignRight="@+id/scrollView2"
             android:layout_alignEnd="@+id/scrollView2"
-            android:id="@+id/submit"
+            android:id="@+id/frame14_submit"
             android:layout_gravity="bottom" />
     </LinearLayout>
 

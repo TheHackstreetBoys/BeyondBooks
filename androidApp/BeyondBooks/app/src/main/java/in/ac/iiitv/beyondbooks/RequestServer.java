@@ -667,14 +667,17 @@ public class RequestServer {
 
     public Boolean send_comment(Integer user_id, Integer q_id, String text){
         address = "http://"+ip+"/andy_send_comment.php";
+        System.out.println("I was called");
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", user_id.toString()));
         params.add(new Pair<String, String>("q_id", q_id.toString()));
         params.add(new Pair<String, String>("text", text));
+        System.out.println(text+" "+q_id.toString()+" "+user_id.toString());
         try{
             new Setup().execute(params).get();
             JSONObject jsonObject = new JSONObject(output);
             Boolean result = Boolean.parseBoolean(jsonObject.getString("result"));
+            System.out.println(result);
             return result;
         }catch(JSONException e){
             e.printStackTrace();

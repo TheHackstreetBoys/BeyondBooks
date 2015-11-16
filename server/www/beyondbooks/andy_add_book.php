@@ -5,8 +5,9 @@ $isbn = $_POST['isbn'];
 require 'bookdetails.php';
 $result = getDetails($isbn);
 
+
 $title = $result['title'];
-$description = $result['description'];
+$description = pg_escape_string($result['description']);;
 $publisher = $result['publisher'];
 $query = "insert into books (isbn, title, publisher,description, by_user, ts) values ('$isbn', '$title',
                                 '$publisher', '$description', '$username', CURRENT_TIMESTAMP);";

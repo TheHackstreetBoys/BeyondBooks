@@ -10,7 +10,7 @@ $ftags = $_POST['faculty_tags'];
 $logf = fopen('logfile.txt','w');
 fwrite($logf,"$author_id $title $author_name $details $tags $ftags");
 fclose($logf);
-$query = "insert into question_forum (ts,asker, title, content ) values (CURRENT_TIMESTAMP,'$author_id','$title','$details'); select lastval()";
+$query = "insert into question_forum (ts,asker, title, content ) values (CURRENT_TIMESTAMP,'$author_id','$title','$details'); select lastval();";
 
 $result = pg_query($query);
 $row = pg_fetch_array($result);
