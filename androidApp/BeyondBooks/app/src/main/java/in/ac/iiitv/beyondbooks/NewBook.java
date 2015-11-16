@@ -94,7 +94,9 @@ public class NewBook extends Fragment {
         tit.setText(title);
         imageView = (ImageView)getView().findViewById(R.id.frag_new_book_image);
         RequestServer requestServer = new RequestServer();
+        System.out.println("image isbn is " +imagelink.toString()+"adsgafafsa");
         imageView.setImageBitmap(requestServer.getImage(imagelink.toString()+".jpg"));
+        rat.setRating(rating);
     }
 
     @Override
