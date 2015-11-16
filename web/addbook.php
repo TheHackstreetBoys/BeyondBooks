@@ -238,7 +238,7 @@ include("html.inc");
 							</label>
 							<div class="col-sm-4">
 
-								<input class="form-control" id="inputEmail3" type="text" name = 'isbn'>
+								<input class="form-control" id="inputEmail3" type="text" name = 'isbn' required="required">
 							</div>
 						</div>
 

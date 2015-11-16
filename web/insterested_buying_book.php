@@ -230,7 +230,7 @@ include("html.inc");
 								Enter Your Message
 							</label>
 							<div class="col-sm-6">
-								<textarea class="form-control" rows = "5" id="inputEmail3" type="email" > </textarea>
+								<textarea class="form-control" rows = "5" id="inputEmail3" required="required"> </textarea>
 							</div>
 						</div>
 						<div class="form-group">
@@ -239,7 +239,7 @@ include("html.inc");
 								Enter Your Contact Number
 							</label>
 							<div class="col-sm-6">
-								<input class="form-control" id="inputPassword3" type="password">
+								<input class="form-control" id="inputPassword3" type="number" required="required">
 							</div>
 						</div>
 
