@@ -690,7 +690,7 @@ public class RequestServer {
     }
 
     public Bitmap getImage(String image_name){
-        String str_link = "http://10.100.91.55/book_pics/"+image_name;
+        String str_link = "http://10.100.91.55/books_pics/"+image_name;
         System.out.println("image_name: "+str_link);
         DownloadTask downloadTask = new DownloadTask();
         try {

@@ -3,7 +3,7 @@
     package="in.ac.iiitv.beyondbooks" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -54,6 +54,8 @@
         <activity android:name=".Wireframe8" >
         </activity>
         <activity android:name=".AboutUs" >
+        </activity>
+        <activity android:name=".Search" >
         </activity>
     </application>
 

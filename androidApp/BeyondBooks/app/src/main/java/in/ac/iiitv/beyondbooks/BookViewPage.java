@@ -54,58 +54,51 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
     private Button addbook;
 
     private int numOfSlides;
-    ArrayList<NewlyAdded> naa;
+    ArrayList<NewlyAdded> naa,top;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_view_page);
         RequestServer rs = new RequestServer();
         naa = rs.newly_added();
+        top = rs.top_rated();
 
         // set newly added book
         numOfSlides = naa.size();
 
         newbooks = (ViewPager)findViewById(R.id.book_view_newadded_pager);
-        newbooksadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),naa);
-
+        newbooksadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),naa,naa.size());
         newbooks.setAdapter(newbooksadapter);
+
+
         addbook = (Button) findViewById(R.id.book_view_btn);
         addbook.setOnClickListener(this);
 
         //top rated books
 
 
+        numOfSlides = top.size();
         topratedbook = (ViewPager)findViewById(R.id.book_toprated_pager);
-        topratedadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),naa);
-
+        topratedadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),top,top.size());
         topratedbook.setAdapter(topratedadapter);
-        addbook = (Button) findViewById(R.id.book_view_btn);
-        addbook.setOnClickListener(this);
+
+
     }
 
 
     @Override
     public void onFragmentInteraction(Uri uri) {
 
-        //set toprated book
-        topratedbook = (ViewPager) findViewById(R.id.book_toprated_pager);
-        topratedbook.setAdapter(new NewBooksPagerAdapter(getSupportFragmentManager()));
-
-        //TODO add image, rating and book title
 
 
-        //addbook button
-        addbook = (Button) findViewById(R.id.addBook);
-        addbook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),AddBook.class));
-            }
-        });
+
+
     }
 
     @Override
     public void onClick(View v) {
+        startActivity(new Intent(getApplicationContext(),AddBook.class));
+
 
     }
 
@@ -117,11 +110,13 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
        }
 
         ArrayList<NewlyAdded> nav;
-        public NewBooksPagerAdapter(FragmentManager fm, ArrayList<NewlyAdded> naa)
+        int size;
+        public NewBooksPagerAdapter(FragmentManager fm, ArrayList<NewlyAdded> nax, int siz)
 
         {
             super(fm);
-            nav = naa;
+            size= siz;
+            nav = nax;
         }
 
         @Override
@@ -132,7 +127,7 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
 
         @Override
         public int getCount() {
-            return numOfSlides;
+            return size;
         }
     }
 
