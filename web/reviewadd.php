@@ -20,7 +20,8 @@ $isbn = $_POST['isbn'];
 
 else
 {
-  echo "Error".pg_last_error();
+  echo "Error addign your review.";
+  header("refresh:2;Location: book_main_page.php");
 }
 
 

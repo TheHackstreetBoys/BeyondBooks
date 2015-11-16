@@ -5,7 +5,7 @@ include_once "db_conn.php";
 $title = $_POST['title'];
 $htag   = $_POST['htag'];
 $content  = $_POST['content'];
-$asker  = $_SESSION['user_id'];
+$asker  = $_SESSION["user_id"];
 
 
 
@@ -20,6 +20,7 @@ if($query)
 else
 {
   echo "Error adding your question ".pg_last_error();
+  header('Refresh:1; url=forumWelcome.php');
 }
 
 

@@ -2,15 +2,15 @@
 <?php
 include_once 'db_conn.php';
 session_start();
-//if(!isset($_SESSION["user_id"]))
-//{
-//	header('Location: index.php');
-//}
+if(!isset($_SESSION["user_id"]))
+{
+	header('Location: index.php');
+}
 ?>
 <html>
 <head>
 <title>
-Discussion Forum
+Welcome to Forum
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -168,10 +168,9 @@ include("html.inc");
 ?></li>
 
 
-	        <li><br/><a href="homapage.php">Home</a></li>
+	        <li><br/><a href="homepage.php">Home</a></li>
 
-	        <li><br/><a href="buy_sell.php">Buy/Sell</a></li>
-					<li><br/><a href="forum.php">Forum</a></li>
+					<li><br/><a href="forumWelcome.php">Forum</a></li>
 		<li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
 			<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 				<?php
@@ -188,6 +187,7 @@ include("html.inc");
 <li><a href="yourprofile.php">My Profile</a></li>
 <li><a href="bookshelf.php">My Bookshelf</a></li>
 <li><a href="my_sold_books.php">My Sold Books</a></li>
+<li><a href="addbook.php">Add a Book</a></li>
 </ul></li>
 
 	      </ul>
@@ -253,7 +253,7 @@ if(!pg_num_rows($result)) {
 	while($row = pg_fetch_array($result)) {
 
 	$qid = $row['qid'];
-			
+
 		$result1 = pg_query("SELECT COUNT(*) AS num FROM forum_replies WHERE qid = '$qid' ");
 		$row1 = pg_fetch_array($result1);
 
@@ -264,7 +264,7 @@ if(!pg_num_rows($result)) {
 		echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row1['num'].' comments</a>';
 		echo '<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 
-	
+
 
 $sql = "SELECT * FROM question_forum ORDER BY ts ";
 $rs_result = pg_query($sql); //run the query
@@ -325,7 +325,7 @@ $result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS nu
 					while($row = pg_fetch_array($result))
 				{
 			$qid = $row['qid'];
-			
+
 		$result1 = pg_query("SELECT COUNT(*) AS num FROM forum_replies WHERE qid = '$qid' ");
 		$row1 = pg_fetch_array($result1);
 
@@ -356,6 +356,5 @@ $result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS nu
 <hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys
-</div>
+<p class="text-right">Copyright &copy; BeyondBooks</p></div>
 </footer>

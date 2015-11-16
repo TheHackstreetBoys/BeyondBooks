@@ -24,23 +24,22 @@ $password=md5($rand);
 
 		$headers = "From: The hackstreetboys";
 
-if (mail($to, $subject, $message, $headers)) 
+if (mail($to, $subject, $message, $headers))
 {
-echo "Thanks for submitting.";
-} 
-else 
+echo "A mail has been sent to you.";
+ header("refresh:2; url=index.php" );
+}
+else
 {
    echo("<p>Email delivery failed</p>");
    header( "refresh:2; url=homepage.php" );
 }
 
 
-	
+
 }
 
 
 
 
 	?>
-
-

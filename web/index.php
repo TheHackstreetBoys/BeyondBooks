@@ -16,7 +16,7 @@ if (isset($_SESSION["user_id"]))
 <HTML>
 <HEAD>
 <TITLE>
-Index Page
+BeyondBooks
 </TITLE>
 
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
