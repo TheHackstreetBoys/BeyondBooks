@@ -139,6 +139,7 @@ public class Wireframe13 extends AppCompatActivity implements AdapterView.OnItem
                 break;
             case R.id.option_forum:
                 in = new Intent(this,Wireframe13.class);
+
                 startActivity(in);
                 break;
             case R.id.option_reviewed_books:

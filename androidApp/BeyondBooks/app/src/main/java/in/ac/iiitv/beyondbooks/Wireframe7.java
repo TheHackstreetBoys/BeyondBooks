@@ -49,11 +49,11 @@ public class Wireframe7 extends Activity {
 
         //set ratings of the book
         bookrating = (RatingBar) findViewById(R.id.book_rating);
-        bookrating.setRating(bookDetails.getPublic_ratings());
+        //bookrating.setRating(bookDetails.getPublic_ratings());
 
         //set description of the book
         bookdesc = (TextView) findViewById(R.id.book_description);
-        bookdesc.setText(bookDetails.getAbout_book());
+//        bookdesc.setText(bookDetails.getAbout_book());
 
         //set ratings general student and faculty on click of textview
         general = (TextView)findViewById(R.id.general_rating);

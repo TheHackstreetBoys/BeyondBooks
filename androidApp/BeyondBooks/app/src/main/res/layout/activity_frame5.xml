@@ -11,20 +11,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Reviewed"
+            android:text="Books"
             android:id="@+id/textView10" />
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/frame5_review"
             android:layout_weight="1"/>
-        <TextView
+        TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Buy/Sell"
             android:id="@+id/textView11" />
-        <ListView
+        ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/frame5_buy_sell"

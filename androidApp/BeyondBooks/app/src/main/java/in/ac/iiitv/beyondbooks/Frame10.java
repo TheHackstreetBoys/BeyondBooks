@@ -97,7 +97,7 @@ public class Frame10 extends AppCompatActivity implements AdapterView.OnItemClic
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         long isbn = myshelf.get(position).getId();
         Intent in = new Intent(this,Wireframe7.class);
-        in.putExtra("isbn",isbn);
+        in.putExtra("isbn",(new Long(isbn)).toString() );
         in.putExtra("user_data",userData);
         startActivity(in);
     }

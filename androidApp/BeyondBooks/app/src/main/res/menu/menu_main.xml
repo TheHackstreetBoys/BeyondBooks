@@ -8,7 +8,7 @@
         android:icon="@android:drawable/ic_menu_search"/>
     <item android:id="@+id/option_user_profile" android:title="User Profile"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/option_buy_sell" android:title="Buy sell"
+    <item android:id="@+id/option_buy_sell" android:title="Sell Book"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/option_forum" android:title="Forum"
         android:orderInCategory="100" app:showAsAction="never" />
@@ -16,8 +16,5 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/option_activity_on_forum" android:title="Activities on forum"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/option_reviewed_books" android:title="Reviewed Books"
-        android:orderInCategory="100" app:showAsAction="never" />
-
 
 </menu>
