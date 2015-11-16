@@ -55,10 +55,7 @@ public class Wireframe20 extends Activity {
                 in = new Intent(this,Wireframe13.class);
                 startActivity(in);
                 break;
-            case R.id.option_reviewed_books:
-                in = new Intent(this,Frame11.class);
-                startActivity(in);
-                break;
+
         }
 
         return super.onOptionsItemSelected(item);

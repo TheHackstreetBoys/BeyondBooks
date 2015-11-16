@@ -50,7 +50,7 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
     private ImageView iv1;
     private RatingBar rb1;
     private ViewPager newbooks,topratedbook;
-    private PagerAdapter newbooksadapter;
+    private PagerAdapter newbooksadapter,topratedadapter;
     private Button addbook;
 
     private int numOfSlides;
@@ -69,6 +69,16 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
         newbooksadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),naa);
 
         newbooks.setAdapter(newbooksadapter);
+        addbook = (Button) findViewById(R.id.book_view_btn);
+        addbook.setOnClickListener(this);
+
+        //top rated books
+
+
+        topratedbook = (ViewPager)findViewById(R.id.book_toprated_pager);
+        topratedadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),naa);
+
+        topratedbook.setAdapter(topratedadapter);
         addbook = (Button) findViewById(R.id.book_view_btn);
         addbook.setOnClickListener(this);
     }
@@ -114,44 +124,6 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
             nav = naa;
         }
 
-        //@Override
-        public Object instantiateItem(ViewGroup container, Bitmap image,int position) {
-
-            LinearLayout ly = (LinearLayout)findViewById(R.id.pagerview);
-            LinearLayout ly1,ly2;
-            ly1 = new LinearLayout(getApplicationContext());
-            ly2 = new LinearLayout(getApplicationContext());
-
-            TextView tv = new TextView(getApplicationContext());
-            RatingBar rb = new RatingBar(getApplicationContext());
-
-            //to set the image
-            ImageView iv = new ImageView(BookViewPage.this);
-            iv.setImageBitmap(image);
-            ly1.addView(iv);
-
-            tv.setText(naa.get(position).getBook_name());
-            rb.setRating(naa.get(position).getRatings());
-            ly2.addView(tv);
-            ly2.addView(rb);
-
-            ly.addView(ly1);
-            ly.addView(ly2);
-
-
-
-
-
-            ly.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(getApplicationContext(),Wireframe7.class));
-                }
-            });
-
-            container.addView(ly);
-            return ly;
-        }
         @Override
         public Fragment getItem(int position)
         {
@@ -206,7 +178,6 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
                 in = new Intent(this,Wireframe13.class);
                 startActivity(in);
                 break;
-
         }
 
         return super.onOptionsItemSelected(item);

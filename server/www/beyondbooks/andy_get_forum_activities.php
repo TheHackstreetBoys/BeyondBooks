@@ -18,8 +18,8 @@ $result = pg_query($query);
 
 while ($row = pg_fetch_array($result))
 {
-    array_push($comm_arr, array('title'=>$row['title'], 'q_id'=>$row['qid'],
-                            'author_id'=>$row['uid'], 'comment_id'=>$row['ts'] ));
+    array_push($comm_arr, array('text'=>$row['content'], 'q_id'=>$row['qid'],
+                            'q_title'=>$row['title'], 'comment_id'=>$row['ts'] ));
 }
 
 echo json_encode(array('questions_started' => $start_arr, 'commented'=>$comm_arr));

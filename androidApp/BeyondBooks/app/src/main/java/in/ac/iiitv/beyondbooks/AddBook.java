@@ -24,20 +24,21 @@ public class AddBook extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 add_book(v);
+                startActivity(new Intent(getApplicationContext(), BookViewPage.class));
             }
         });
     }
 
     public void add_book(View v) {
         RequestServer requestServer = new RequestServer();
+        System.out.println("adfa "+addBook_isbn);
         Long isbn = Long.parseLong(addBook_isbn.getText().toString());
         Intent intent = getIntent();
-        UserData userData = (UserData) intent.getSerializableExtra("user_data");
-        Boolean result = requestServer.add_book(isbn, userData.getId());
+        Boolean result = requestServer.add_book(isbn, MainActivity.userData.getId());
         if(result){
             Toast.makeText(this, "Book successfully added to the database", Toast.LENGTH_LONG).show();
             intent = new Intent(this, BookViewPage.class);
-            intent.putExtra("user_data", userData);
+            intent.putExtra("user_data", MainActivity.userData);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
@@ -88,10 +89,7 @@ public class AddBook extends AppCompatActivity{
                 in = new Intent(this,Wireframe13.class);
                 startActivity(in);
                 break;
-            case R.id.option_reviewed_books:
-                in = new Intent(this,Frame11.class);
-                startActivity(in);
-                break;
+
         }
 
         return super.onOptionsItemSelected(item);

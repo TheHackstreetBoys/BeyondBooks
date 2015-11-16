@@ -116,6 +116,7 @@ create table bid(
        prodid int,
        ts timestamp,
        bidder varchar,
+       description text,
        primary key (prodid,bidder),
        foreign key (bidder) references user_profile(user_id),
        foreign key (prodid) references pbase(prodid)
@@ -156,15 +157,6 @@ create table combo_sell(
 );
 
 
--- For the notification
-create table notify(
-       whom varchar,
-       des varchar,
-       link int,
-       primary key (whom,des),
-       foreign key (whom) references user_profile(user_id),
-       foreign key (link) references pbase(prodid)
-);
 
 
 -- The bookshelf table
