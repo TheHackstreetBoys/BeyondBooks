@@ -81,14 +81,16 @@ public class Wireframe13 extends AppCompatActivity implements AdapterView.OnItem
                 Toast.makeText(this,top_rated.get(position).getAuthor(),Toast.LENGTH_LONG).show();
                 //intent should be checked
                 in = new Intent(getApplicationContext(), Frame14.class);
-                in.putExtra("q_id",top_rated.get(position).getQ_id());
+
+                in.putExtra("q_id", top_rated.get(position).getQ_id().toString());
                 in.putExtra("user_data",userData);
                 startActivity(in);
                 break;
             case R.id.recentlist:
                 Toast.makeText(this,recent_discussions.get(position).getAuthor(),Toast.LENGTH_LONG).show();
                 in = new Intent(getApplicationContext(), Frame14.class);
-                in.putExtra("q_id",recent_discussions.get(position).getQ_id());
+                System.out.println(recent_discussions.get(position).getQ_id().toString());
+                in.putExtra("q_id",recent_discussions.get(position).getQ_id().toString());
                 in.putExtra("user_data", userData);
                 startActivity(in);
                 break;

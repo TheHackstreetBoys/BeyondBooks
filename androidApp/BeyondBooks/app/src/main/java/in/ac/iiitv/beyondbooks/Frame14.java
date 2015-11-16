@@ -26,7 +26,7 @@ public class Frame14 extends AppCompatActivity {
         intent = getIntent();
 
         final Integer q_id = Integer.parseInt(intent.getStringExtra("q_id"));
-
+        System.out.println("frame14 is : "+q_id);
         final UserData userData = (UserData)intent.getSerializableExtra("user_data");
         final RequestServer requestServer = new RequestServer();
         ForumDetails forumDetails = requestServer.forumDetails(q_id);
