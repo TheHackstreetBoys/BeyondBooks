@@ -55,14 +55,14 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/user_id"/>
 
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="Change Password"-->
-                <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
-                <!--android:clickable="true"-->
-                <!--android:id="@+id/changepass"-->
-                <!--android:textColor="@color/colorPrimaryDark"/>-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Change Password"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:clickable="true"
+                android:id="@+id/changepass"
+                android:textColor="@color/colorPrimaryDark"/>
 
             <Space
                 android:layout_width="match_parent"

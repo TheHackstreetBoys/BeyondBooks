@@ -46,9 +46,8 @@ public class RequestServer {
     String image_link;
     Bitmap image;
     RequestServer(){
-//        ip = "beyondbooks.iiitv.ac.in/andy";
         ip = "10.100.91.55/beyondbooks";
-        image_link = "10.100.91.55/pictures";
+        image_link = "10.100.91.55";
     }
 
     public Boolean authenticate(Integer id, String password){
@@ -93,7 +92,7 @@ public class RequestServer {
     public SearchOutputReturn search(String query){
         address = "http://"+ip+"/andy_search.php";
         ArrayList<NewlyAdded> review_list = new ArrayList<NewlyAdded>();
-        ArrayList<NewlyAdded> buy_sell_list = new ArrayList<NewlyAdded>();
+//        ArrayList<NewlyAdded> buy_sell_list = new ArrayList<NewlyAdded>();
         ArrayList<ForumOverview> forum_list = new ArrayList<ForumOverview>();
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("query", query));
@@ -101,7 +100,7 @@ public class RequestServer {
             new Setup().execute(params).get();
             JSONObject search_answer = new JSONObject(output);
             JSONArray review = search_answer.getJSONArray("review");
-            JSONArray buy_sell = search_answer.getJSONArray("buy_sell");
+            //JSONArray buy_sell = search_answer.getJSONArray("buy_sell");
             JSONArray forum = search_answer.getJSONArray("forum");
             for(int i=0;i<review.length();i++){
                 JSONObject cur_book_obj = review.getJSONObject(i);
@@ -112,15 +111,15 @@ public class RequestServer {
                 NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
                 review_list.add(temp);
             }
-            for(int i=0;i<buy_sell.length();i++){
-                JSONObject cur_book_obj = buy_sell.getJSONObject(i);
-                String image_link = cur_book_obj.getString("image_link");
-                String book_name = cur_book_obj.getString("book_name");
-                Float ratings = Float.parseFloat(cur_book_obj.getString("ratings"));
-                Long isbn = Long.parseLong(cur_book_obj.getString("isbn"));
-                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
-                buy_sell_list.add(temp);
-            }
+//            for(int i=0;i<buy_sell.length();i++){
+//                JSONObject cur_book_obj = buy_sell.getJSONObject(i);
+//                String image_link = cur_book_obj.getString("image_link");
+//                String book_name = cur_book_obj.getString("book_name");
+//                Float ratings = Float.parseFloat(cur_book_obj.getString("ratings"));
+//                Long isbn = Long.parseLong(cur_book_obj.getString("isbn"));
+//                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
+//                buy_sell_list.add(temp);
+//            }
             for(int i=0;i<forum.length();i++){
                 JSONObject cur_forum_obj = forum.getJSONObject(i);
                 String title = cur_forum_obj.getString("title");
@@ -130,7 +129,7 @@ public class RequestServer {
                 ForumOverview temp = new ForumOverview(title, author, author_id, q_id);
                 forum_list.add(temp);
             }
-            SearchOutputReturn temp = new SearchOutputReturn(review_list, buy_sell_list, forum_list);
+            SearchOutputReturn temp = new SearchOutputReturn(review_list, null, forum_list);
             return temp;
         }catch(JSONException e){
             e.printStackTrace();
@@ -208,29 +207,63 @@ public class RequestServer {
         try {
             new Setup().execute(params).get();
             JSONObject book_page_json = new JSONObject(output);
-            Float public_ratings = Float.parseFloat(book_page_json.getString("public_ratings"));
-            Float faculty_ratings = Float.parseFloat(book_page_json.getString("faculty_ratings"));
-            Float student_ratigns = Float.parseFloat(book_page_json.getString("student_ratings"));
+            String public_ratings_string = book_page_json.getString("public_ratings");
+            String faculty_ratings_string = book_page_json.getString("faculty_ratings");
+            String student_ratings_string = book_page_json.getString("student_ratings");
+            Float public_ratings;
+            Float faculty_ratings;
+            Float student_ratigns;
+            if (public_ratings_string != null)
+                public_ratings = Float.parseFloat(public_ratings_string);
+            else
+                public_ratings = (float) 0;
+            if (faculty_ratings_string != null){
+                faculty_ratings = Float.parseFloat(faculty_ratings_string);
+            }
+            else{
+                faculty_ratings = (float)0;
+            }
+            if (student_ratings_string != null)
+                student_ratigns = Float.parseFloat(student_ratings_string);
+            else
+                student_ratigns = (float)0;
             String about_book = book_page_json.getString("about_book");
-            Boolean bookshelf = Boolean.parseBoolean(book_page_json.getString("bookshelf"));
+            Boolean bookshelf;
+            String bookshelf_string = book_page_json.getString("bookshelf");
+            if (bookshelf_string != null)
+                bookshelf = Boolean.parseBoolean(bookshelf_string);
+            else
+                bookshelf = false;
             JSONArray sellers_list = book_page_json.getJSONArray("sellers_list");
             ArrayList<Pair<UserData, Float>> sellers_id = new ArrayList<Pair<UserData, Float>>();
             for (int i=0;i<sellers_list.length();i++) {
                 UserData userData = new UserData(user_id);
                 JSONObject temp = sellers_list.getJSONObject(i);
-                userData.setId(Integer.parseInt(temp.getString("seller_id")));
+                String seller_id_string = temp.getString("seller_id");
+                if (seller_id_string != null)
+                    userData.setId(Integer.parseInt(seller_id_string));
+                else
+                    userData.setId(0);
+
                 userData.setUser_name(temp.getString("seller_name"));
-                Float price = Float.parseFloat(temp.getString("price"));
+                String price_string = temp.getString("price");
+                Float price;
+                if (price_string != null)
+                    price = Float.parseFloat(price_string);
+                else
+                    price = (float)0;
                 sellers_id.add(new Pair<UserData, Float>(userData, price));
             }
             ArrayList<Pair<String, String>> comments_list = new ArrayList<Pair<String, String>>();
             JSONArray comments_json = book_page_json.getJSONArray("comments");
+            System.out.println("Entering here...");
             for(int i=0;i<comments_json.length();i++){
                 JSONObject comment = comments_json.getJSONObject(i);
                 String commentor_name = comment.getString("commentor_name");
                 String text = comment.getString("text");
                 comments_list.add(new Pair<String, String>(text, commentor_name));
             }
+            System.out.println("Entering here1...");
             BookDetails temp = new BookDetails(public_ratings, faculty_ratings, student_ratigns, about_book, bookshelf, isbn, sellers_id, comments_list );
             return temp;
         }catch(JSONException e){
@@ -265,6 +298,7 @@ public class RequestServer {
     }
 
     public Boolean review_submit(Integer user_id,Long isbn, Float ratings, String comment){
+        System.out.println(user_id+" "+isbn+" "+ratings+" "+comment);
         address = "http://"+ip+"/andy_review_submit.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", user_id.toString()));
@@ -287,7 +321,7 @@ public class RequestServer {
     }
 
     public ArrayList<String>get_notification(Integer user_id){
-        System.out.println("user_id : "+user_id);
+        System.out.println("user_id : " + user_id);
         address = "http://"+ip+"/andy_get_notification.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", user_id.toString()));
@@ -687,8 +721,8 @@ public class RequestServer {
     }
 
     public Bitmap getImage(String image_name){
-        String str_link = "http://10.100.91.55/books_pics/"+image_name;
-        System.out.println("image_name: "+str_link);
+        String str_link = "http://"+image_link+"/"+image_name;
+        System.out.println("image_name: " + str_link);
         DownloadTask downloadTask = new DownloadTask();
         try {
             downloadTask.execute(str_link).get();
@@ -719,9 +753,98 @@ public class RequestServer {
         return false;
     }
 
-//    public Boolean setNewPassword(String password, Integer user_id){
-//
-//    }
+    public String get_seller_description(Long isbn, Integer seller_id){
+        address = "http://"+ip+"/andy_get_seller_description.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("seller_id", seller_id.toString()));
+        params.add(new Pair<String, String>("isbn", isbn.toString()));
+        try{
+            new Setup().execute(params).get();
+            JSONObject jsonObject = new JSONObject(output);
+            String result = jsonObject.getString("review");
+            return result;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Integer get_age(Long isbn, Integer seller_id){
+        address = "http://"+ip+"/andy_get_age.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("seller_id", seller_id.toString()));
+        params.add(new Pair<String, String>("isbn", isbn.toString()));
+        try{
+            new Setup().execute(params).get();
+            JSONObject jsonObject = new JSONObject(output);
+            System.out.println("output: "+output);
+            String result = jsonObject.getString("age");
+            Integer to_return;
+            if (result != null){
+                to_return = Integer.parseInt(result);
+            }
+            else {
+                to_return = 0;
+            }
+            System.out.println("to_return "+to_return);
+            return to_return;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public ArrayList<String> get_selling_list(Integer user_id){
+        address = "http://"+ip+"/andy_get_selling_list.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("user_id", user_id.toString()));
+        try{
+            new Setup().execute(params).get();
+            JSONObject jsonObject = new JSONObject(output);
+            JSONArray jsonArray = jsonObject.getJSONArray("selling_list");
+            ArrayList<String> to_return = new ArrayList<String>();
+            for(int i=0;i<jsonArray.length();i++){
+                String temp = jsonArray.getString(i);
+                to_return.add(temp);
+            }
+            return to_return;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Boolean set_new_password(Integer user_id, String password){
+        address = "http://"+ip+"/andy_set_new_password.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("user_id", user_id.toString()));
+        params.add(new Pair<String, String>("password", password));
+        try{
+            new Setup().execute(params).get();
+            JSONObject jsonObject = new JSONObject(output);
+            Boolean to_return = Boolean.parseBoolean(jsonObject.getString("result"));
+            return to_return;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, Void, String> {
         HttpURLConnection urlConnection;

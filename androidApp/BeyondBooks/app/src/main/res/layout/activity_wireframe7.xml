@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -20,13 +21,14 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
                     android:id="@+id/book_image"
                     android:layout_weight="1"/>
                 <RatingBar
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:numStars="5"
                     style="?android:attr/ratingBarStyleSmall"
                     android:id="@+id/book_rating"
                     />
@@ -108,6 +110,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:textColor="#0000EE"
+                    android:onClick="get_general_rating"
                     android:id="@+id/general_rating"
                     />
                 <TextView
@@ -147,7 +150,7 @@
 
                <ListView
                    android:layout_width="match_parent"
-                   android:layout_height="match_parent"
+                   android:layout_height="200dp"
                    android:id="@+id/comments"
                    android:layout_weight="1">
                </ListView>
@@ -162,7 +165,7 @@
 
                <ListView
                    android:layout_width="match_parent"
-                   android:layout_height="match_parent"
+                   android:layout_height="200dp"
                    android:id="@+id/sellers"
                    android:layout_weight="1"></ListView>
 
