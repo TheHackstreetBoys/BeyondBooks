@@ -18,7 +18,6 @@ public class Wireframe13 extends AppCompatActivity implements AdapterView.OnItem
     ArrayList<ForumOverview> top_rated, recent_discussions;
     ListView toprated,recent;
     ArrayAdapter<String> adapter_toprated,adapter_recent;
-    private Button newdis;
     private UserData userData;
 
     @Override
@@ -31,14 +30,15 @@ public class Wireframe13 extends AppCompatActivity implements AdapterView.OnItem
         recent_discussions = requestServer.recent_discussions();
         
         //Button to start a new discussion
-        newdis = (Button) findViewById(R.id.startdiscussion);
+        Button newdis = (Button) findViewById(R.id.startdiscussion);
         newdis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //intent should be checked
-                Intent in = new Intent(getApplicationContext(),Frame15.class);
-                in.putExtra("user_data",userData);
-                startActivity(new Intent(getApplicationContext(),Frame15.class));
+                Intent in = new Intent(getApplicationContext(), Frame15.class);
+                in.putExtra("user_data", userData);
+
+                startActivity(in);
             }
         });
         
@@ -142,10 +142,6 @@ public class Wireframe13 extends AppCompatActivity implements AdapterView.OnItem
             case R.id.option_forum:
                 in = new Intent(this,Wireframe13.class);
 
-                startActivity(in);
-                break;
-            case R.id.option_reviewed_books:
-                in = new Intent(this,Frame11.class);
                 startActivity(in);
                 break;
         }

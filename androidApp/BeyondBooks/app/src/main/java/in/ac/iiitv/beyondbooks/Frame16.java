@@ -13,13 +13,14 @@ public class Frame16 extends AppCompatActivity {
     Intent intent;
     String question;
     private Button next;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frame16);
         intent = getIntent();
         question = intent.getStringExtra("question");
-
+        System.out.println(question);
         //submit the question description
         next = (Button) findViewById(R.id.frame16_next);
         next.setOnClickListener(new View.OnClickListener() {
@@ -33,9 +34,11 @@ public class Frame16 extends AppCompatActivity {
 
 
     public void next(View v){
+
         UserData userData = (UserData) intent.getSerializableExtra("user_data");
         intent = new Intent(this, Frame17.class);
         intent.putExtra("question", question);
+
         EditText editText = (EditText) findViewById(R.id.frame16_question);
         String details = editText.getText().toString();
         intent.putExtra("details", details);
@@ -83,10 +86,6 @@ public class Frame16 extends AppCompatActivity {
                 break;
             case R.id.option_forum:
                 in = new Intent(this,Wireframe13.class);
-                startActivity(in);
-                break;
-            case R.id.option_reviewed_books:
-                in = new Intent(this,Frame11.class);
                 startActivity(in);
                 break;
         }

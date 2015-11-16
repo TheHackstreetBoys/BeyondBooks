@@ -21,6 +21,10 @@ public class Frame17 extends AppCompatActivity implements View.OnClickListener, 
     private ListView faclist;
     private ArrayList<String> facultycopy;
     private TextView facet;
+
+    private TextView tags;
+    private String question;
+    private String details;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +35,19 @@ public class Frame17 extends AppCompatActivity implements View.OnClickListener, 
         clear.setOnClickListener(this);
         RequestServer requestServer = new RequestServer();
         faculty = requestServer.get_faculty();
-        int i;
+
+
+        System.out.println("user id from main activity : "+MainActivity.userData.getId());
+        question = getIntent().getStringExtra("question");
+        details = getIntent().getStringExtra("details");
+
+        System.out.println(question);
+        System.out.println(details);
+
+
 
         facultycopy = new ArrayList<String>(faculty);
+        tags = (TextView)findViewById(R.id.frame17_tag_topics);
         facet = (TextView) findViewById(R.id.frame17_fac);
         facultyadapter = new ArrayAdapter<String>(this,R.layout.frame10_list_view,facultycopy);
         faclist = (ListView) findViewById(R.id.frame17_faclist);
@@ -53,10 +67,16 @@ public class Frame17 extends AppCompatActivity implements View.OnClickListener, 
                 facet.setText("");
                 break;
             case R.id.frame17_submit:
-                ForumDetails fd = new ForumDetails(getIntent().getStringExtra("question"),((UserData)getIntent().getSerializableExtra("user_data")).getUser_name(),null,((UserData)getIntent().getSerializableExtra("user_data")).getId(),null);
-                fd.setDetails(getIntent().getStringExtra("details"));
+                ForumDetails fd = new ForumDetails(question,MainActivity.userData.getUser_name(),null,MainActivity.userData.getId(),null);
+                fd.setDetails(details);
+                fd.setFaculty_tags(facet.getText().toString());
+                fd.setTags(tags.getText().toString());
+//                System.out.println(MainActivity.userData.getUser_name());
+                System.out.println(MainActivity.userData.getId());
                 new RequestServer().add_forum_question(fd);
+
                 Intent in = new Intent(this,Wireframe13.class);
+                in.putExtra("user_data",MainActivity.userData);
                 in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(in);
                 break;
@@ -71,7 +91,7 @@ public class Frame17 extends AppCompatActivity implements View.OnClickListener, 
         }
         else
         {
-            facet.setText(facet.getText()+", "+facultycopy.get(position));
+            facet.setText(facet.getText()+" "+facultycopy.get(position));
         }
         facultycopy.remove(position);
         facultyadapter.notifyDataSetChanged();
@@ -119,10 +139,7 @@ public class Frame17 extends AppCompatActivity implements View.OnClickListener, 
                 in = new Intent(this,Wireframe13.class);
                 startActivity(in);
                 break;
-            case R.id.option_reviewed_books:
-                in = new Intent(this,Frame11.class);
-                startActivity(in);
-                break;
+
         }
 
         return super.onOptionsItemSelected(item);
