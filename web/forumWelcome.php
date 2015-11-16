@@ -276,7 +276,7 @@ $total_pages = ceil($total_records / $num_rec_per_page);
 
 echo <<<HTML
 
-<a style='color: #CC0000'href="addquestion.php">+ Add Your Question Here</a><br/>
+<a style='color: #FFFFFF'href="addquestion.php"><button class="btn btn-primary">+ Add Your Question Here</button></a><br/>
 <br/><br/>
 
 HTML;
