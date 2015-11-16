@@ -10,7 +10,7 @@ $result = pg_query($query);
 $row = pg_fetch_array($result);
 $final_arr['about_book'] = $row['description'] ;
 
-$query = "select * from book_shelf where isbn='$isbn' and user_id='$username';";
+$query = "select * from book_shelf where isbn='$isbn' and user_id='$username'";
 $rnum = pg_num_rows(pg_query($query));
 if($rnum > 0)
 {
