@@ -91,7 +91,7 @@ About Us
               <figure>
                 <img src="images/chirag.jpg" alt="" class="img-responsive">
                 <figcaption>
-                  <p> Chirag a tech-geek. A good critics and a great leader. </p>
+                  <p> Chirag is a tech-geek. A good critic and a great leader. </p>
                 </figcaption>
               </figure>
               <h4>Chirag Panpalia</h4>
@@ -116,7 +116,7 @@ About Us
 							<figure>
 								<img src="images/akhil.jpg" alt="" class="img-responsive">
 								<figcaption>
-									<p> Akhilesh is a dedicated and smart guy. His english profeciency and technological knowledge are superb. He is known as a "Good Boy" in IIITV. </p>
+									<p> Akhilesh is a dedicated and smart guy. His english profeciency and technological knowledge are superb. He is known as the "Good Boy" in IIITV. </p>
 								</figcaption>
 							</figure>
 							<h4>Akhilesh Kumar</h4>
@@ -130,7 +130,7 @@ About Us
 			<figure>
 				<img src="images/anjul.jpg" alt="" class="img-responsive">
 				<figcaption>
-					<p> 	This over talkative boy has an intricate mixture of curiosity and dedication. He has an enormous amount of energy which flows around and thrill everybody. He is smart and always planned.
+					<p> 	This over talkative boy has an intricate mixture of curiosity and dedication. He has an enormous amount of energy which flows around and thrills everybody. He is smart and always planned.
 					</p></figcaption>
 			</figure>
 			<h4>Anjul Tyagi</h4>
@@ -171,7 +171,7 @@ About Us
 				<img src="images/krupo.jpg" alt="" class="img-responsive">
 				<figcaption>
 					<p>
-						This guy is a universal set, he knows everything. Much talked-about in college for his technical brilliancy. He is pro-active and smart.
+						This guy is a universal set. He knows everything. He is much talked-about in college for his technical brilliancy. He is pro-active and smart.
 				</p></figcaption>
 			</figure>
 			<h4>Harish Krupo</h4>
@@ -216,7 +216,7 @@ About Us
 				<img src="images/sonu.jpg" alt="" class="img-responsive">
 				<figcaption>
 					<p>
-						This guy is different from all. He is a careful thinker and good observer. Always interested in details, helpful, hardworker and has a passion for photography.
+						This guy is different from all. He is a careful thinker and good observer. Always interested in details, helpful, hardworking and has a passion for photography.
 					</p></figcaption>
 			</figure>
 			<h4>Sonu Patidar</h4>
@@ -239,6 +239,5 @@ About Us
 <hr>Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
-</div>
+<p class="text-right">Copyright &copy; BeyondBooks</p></div>
 </footer>

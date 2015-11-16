@@ -168,9 +168,8 @@ include("html.inc");
 ?></li>
 
 
-	        <li><br/><a href="homapage.php">Home</a></li>
+	        <li><br/><a href="homepage.php">Home</a></li>
 
-	        <li><br/><a href="buy_sell.php">Buy/Sell</a></li>
 					<li><br/><a href="forumWelcome.php">Forum</a></li>
 		<li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
 			<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
@@ -403,7 +402,7 @@ echo "<a href='mainpage.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last 
 <hr>Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; Your Company 2014</p>
+<p class="text-right">Copyright &copy; BeyondBooks</p>
 </div>
 </footer>
 </body>

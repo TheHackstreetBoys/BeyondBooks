@@ -1,11 +1,11 @@
 <!doctype html>
 <?php
 include_once 'db_conn.php';
-//session_start();
-//if(!isset($_SESSION["user_id"]))
-//{
-//	header('Location: index.php');
-//}
+session_start();
+if(!isset($_SESSION["user_id"]))
+{
+	header('Location: index.php');
+}
 ?>
 <html>
 <head>
@@ -165,10 +165,9 @@ $(document).ready(function(){
 		?></li>
 
 
-			        <li><br/><a href="homapage.php">Home</a></li>
+			        <li><br/><a href="homepage.php">Home</a></li>
 
-			        <li><br/><a href="buy_sell.php">Buy/Sell</a></li>
-							<li><br/><a href="forum.php">Forum</a></li>
+							<li><br/><a href="forumWelcome.php">Forum</a></li>
 				<li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
 					<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 						<?php
@@ -185,6 +184,7 @@ $(document).ready(function(){
 		<li><a href="yourprofile.php">My Profile</a></li>
 		<li><a href="bookshelf.php">My Bookshelf</a></li>
 		<li><a href="my_sold_books.php">My Sold Books</a></li>
+		<li><a href="addbook.php">Add a book</a></li>
 		</ul></li>
 
 			      </ul>
@@ -208,7 +208,7 @@ $(document).ready(function(){
 <hr>
 
 <?php
-if(!empty($_POST)) 
+if(!empty($_POST))
 {
 $title = $_POST['title'];
 $content = $_POST['content'];
@@ -298,8 +298,7 @@ HTML;
 <hr>Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
-</div>
+<p class="text-right">Copyright &copy; BeyondBooks</p></div>
 </footer>
 
 

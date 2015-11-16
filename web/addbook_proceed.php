@@ -66,7 +66,7 @@ $(document).ready(function(){
 	        <span class="icon-bar"></span>
 	      </button>
 
-	      <a class="navbar-brand" href="#">Beyond Books</a>
+	      <a class="navbar-brand" href="homepage.php">Beyond Books</a>
 
 	    </div>
 
@@ -172,10 +172,8 @@ include("html.inc");
 ?></li>
 
 
-	        <li><br/><a href="homapage.php">Home</a></li>
-
-	        <li><br/><a href="buy_sell.php">Buy/Sell</a></li>
-					<li><br/><a href="forum.php">Forum</a></li>
+	        <li><br/><a href="homepage.php">Home</a></li>
+					<li><br/><a href="forumWelcome.php">Forum</a></li>
 		<li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
 			<li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 				<?php
@@ -348,6 +346,5 @@ else
 <hr>Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
-</div>
+<p class="text-right">Copyright &copy; BeyondBooks</p></div>
 </footer>

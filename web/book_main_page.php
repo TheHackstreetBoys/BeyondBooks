@@ -10,7 +10,7 @@ if(!isset($_SESSION["user_id"]))
 <html>
 <head>
 <title>
-Main Page of Book
+BeyondBooks Book Page
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -53,13 +53,13 @@ function deletebookshelf()
 			if(response==1)
 			{
 alert("Removed from your Bookshelf");
-				
+
 
 
 			}
 			else
 			{
-			alert("It is not in your bookshelf");	
+			alert("It is not in your bookshelf");
 			}
 		}
 	})
@@ -230,10 +230,9 @@ include("html.inc");
 
 
 
-<li><br/><a href="homapage.php">Home</a></li>
+<li><br/><a href="homepage.php">Home</a></li>
 
-<li><br/><a href="buy_sell.php">Buy/Sell</a></li>
-<li><br/><a href="forum.php">Forum</a></li>
+<li><br/><a href="forumWelcome.php">Forum</a></li>
 <li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
 <li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 <?php
@@ -356,9 +355,9 @@ echo "Rating :";
 				$('#starloader').show();
 				for( i=0;i<imgindex; i++){
 					var imgobj = $("#rating_panel>img:eq( "+i+" )" );
-					var img = 'images/full.png';					
+					var img = 'images/full.png';
 					imgobj.attr('src',img);
-					
+
 				}
 				$.ajax({
 					url:'add_rating.php',
@@ -368,9 +367,9 @@ echo "Rating :";
 						location.reload();
 					}
 				});
-				
-				
-								
+
+
+
 			});
 		});
 </script>
@@ -667,6 +666,5 @@ echo "<a href='book_main_page.php?isbn=$isbn&page1=$total_pages'>".'-Next'."</a>
 <hr>Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
-</div>
+<p class="text-right">Copyright &copy; BeyondBooks</p></div>
 </footer>

@@ -16,7 +16,7 @@ if (isset($_SESSION["user_id"]))
 <HTML>
 <HEAD>
 <TITLE>
-Index Page
+BeyondBooks
 </TITLE>
 
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -204,9 +204,9 @@ function checkstudent()
 
 	        <h2></h2>
 
-	        <p class="lead">BeyondBooks is a project by The Hackstreet Boys done to cope with the problem of availability of books in College. Many a time,
+	        <p class="lead">BeyondBooks is a project by The Hackstreet Boys done in order to cope with the problem of availability of books in College. Many times,
 					students finds themselves helpless with no books inspite of the fact someone in the college is having it but they have no clue.
-				 Similarly, rating and review of books also give us a perfect insight of what might this book be like as they are rated by students themselves.</p>
+				 Similarly, rating and review of books also gives students a perfect insight of what might this book be like as they are rated by students themselves.</p>
 
 	      </div>
 
