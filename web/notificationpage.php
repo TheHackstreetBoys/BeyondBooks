@@ -10,7 +10,7 @@ if(!isset($_SESSION["user_id"]))
 <html>
 <head>
 <title>
-Interested in buying this Book
+Welcome to Forum
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -22,8 +22,6 @@ Interested in buying this Book
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-
-
 
 
 
@@ -44,9 +42,9 @@ $(document).ready(function(){
 
 
 
-
 <body>
 <!--                                                                                -->
+
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	  <div class="container-fluid">
 
@@ -89,7 +87,7 @@ if(searchid!=\'\')
 {
     $.ajax({
     type: "POST",
-    url: "search.php",
+    url: "searchforum.php",
     data: dataString,
     cache: false,
     success: function(html)
@@ -190,7 +188,7 @@ include("html.inc");
 <li><a href="yourprofile.php">My Profile</a></li>
 <li><a href="bookshelf.php">My Bookshelf</a></li>
 <li><a href="my_sold_books.php">My Sold Books</a></li>
-<li><a href="addbook.php">Add a Book</a><li>
+<li><a href="addbook.php">Add a Book</a></li>
 </ul></li>
 
 	      </ul>
@@ -202,108 +200,115 @@ include("html.inc");
 	</nav>
 
 
-
-
-<br/><br/><br/>
-<hr/>
-
-
-<p>
-<div class="container-fluid">
+<br/><br/><br/><br/>
+ <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-12">
-			<h3>
-				<b>Interested in Buying this Book</b><hr/>
-			</h3>
+
+		<div class="col-md-12"><h1>
+<br/>
+<b>Notifications From the Interested Buyer:</b>
+<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">
+</h1>
+
+
 			<div class="row">
-				<div class="col-md-12">
+
+				<div class="col-md-8">
 					<div class="row">
 						<div class="col-md-12">
-							<h3 class="text-center">
-								<b>Send Your Request</b> <hr/>
-							</h3>
+
+
+
+
+<div class="row">
+						<div class="col-md-12">
+
+							<div class="row">
+									<div class="col-md-12">
+
+								</div>
+							</div>
+<?php
+
+
+
+$num_rec_per_page=2;
+
+if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; };
+$start_from = ($page-1) * $num_rec_per_page;
+
+session_start();
+$user_id = $_SESSION['user_id'];
+
+$result = pg_query("SELECT * FROM notify JOIN bid ON bid.prodid = notify.link WHERE notify.whom = '201351010' LIMIT $num_rec_per_page OFFSET $start_from");
+echo pg_last_error();
+
+
+if(!pg_num_rows($result)) {
+	echo '<p>No Notifications</p>';
+} else {
+	while($row = pg_fetch_array($result)) {
+
+	
+		echo '<h2>'.$row['bidder'].'</h2><br/>';
+		echo $row['ts'].'<br/>';
+		$body = substr($row['description'], 0, 20);
+		echo nl2br($body).'...<br/>';
+		echo '<a href="notificationdelete.php?prodid='.$row['prodid'].'&bidder='.$row['bidder'].'&des='.$row['description'].'">Delete this Notification</a>';
+	
+
+
+
+$sql = "SELECT * FROM notify JOIN bid ON bid.prodid = notify.link WHERE notify.whom = '201351010'";
+$rs_result = pg_query($sql); //run the query
+$total_records = pg_num_rows($rs_result);  //count number of records
+$total_pages = ceil($total_records / $num_rec_per_page);
+
+}
+}
+
+
+
+echo "<br/><br/><a href='forumWelcome.php?page1=1'>".'Prev-'."</a> "; // Goto 1st page
+
+for ($i=1; $i<=$total_pages; $i++) {
+            echo "<a href='forumWelcome.php?page1=".$i."'>".$i."</a> ";
+};
+echo "<a href='forumWelcome.php?page1=$total_pages'>".'-Next'."</a> "; // Goto last page
+
+
+
+?>
+
+
+
 						</div>
 					</div>
-					<form class="form-horizontal" method = "POST" action = "mail.php?prodid=<?php echo $_GET['prodid']?>" role="form">
-
-<div class="form-group">
-
-							<label for="inputPassword3" class="col-sm-3 control-label">
-								Reciever:
-							</label>
-							<div class="col-sm-6">
-								<input class="form-control" name = "sellerid" value = "<?php echo $_GET['sellerid']?>" id="inputPassword3" type="text" readonly>
-							</div>
-						</div>
-
-<div class="form-group">
-
-							<label for="inputPassword3" class="col-sm-3 control-label">
-ISBN of the Book:
-							</label>
-							<div class="col-sm-6">
-								<input class="form-control" name = "isbn" value = "<?php echo $_GET['isbn']; ?>" id="inputPassword3" type="text" readonly>
-							</div>
-
-<div class="form-group">
-
-							<label for="inputPassword3" class="col-sm-3 control-label">
-
-							</label>
-							<div class="col-sm-6">
-								<input type = "hidden" name = "user_id" class="form-control" value = "<?php echo $_GET['user_id']?>" id="inputPassword3" type="text" readonly>
-							</div>
-						</div>
-
-						</div>
-
-						<div class="form-group">
-
-							<label for="inputEmail3" class="col-sm-3 control-label">
-								Enter Your Message
-							</label>
-							<div class="col-sm-6">
-								<textarea  class="form-control" name = "message" rows = "5" id="inputEmail3" type="text" required="required"> </textarea>
-							</div>
-						</div>
-						<div class="form-group">
-
-							<label for="inputPassword3" class="col-sm-3 control-label">
-								Enter Your Contact Number
-							</label>
-							<div class="col-sm-6">
-								<input class="form-control" name = "contactno" id="inputPassword3" type="text" required="required">
-							</div>
-						</div>
-
-<div class="form-group">
-
-							<label for="inputPassword3" class="col-sm-3 control-label">
-
-							</label>
-
-							<div class="col-sm-6">
-<center>
-								<input class="form-control" type = "Submit" value = "Click here to send notification" id="inputPassword3" type="submit">
-							
-</center>
-</div>
-
-						</div>
-
-
-					</form>
 				</div>
-			</div> <hr/>
+
+	</div>
+					</div>
+
+
+
+
+
+<div class="col-md-4">
+
+
+
+
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
-</p>
+
+
 
 <footer>
-<hr />
 <div class="container">
-<hr>Beyond Books Everywhere</hr>
+<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
 <p class="text-right">Copyright &copy; BeyondBooks</p></div>

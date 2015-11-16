@@ -1,6 +1,6 @@
 INSERT INTO user_profile VALUES ('Aditya','Prakash','201351010','5f4dcc3b5aa765d61d8327deb882cf99','201351010@iiitvadodara.ac.in','blah_blah',FALSE,'9810435438','2038-01-19 03:14:07');
 INSERT INTO user_profile VALUES ('Pratik','Shaaaaaaaaah','20135','5f4dcc3b5aa765d61d8327deb882cf99','20135@pratikshah.ac.in','bluh_bluh',TRUE,'8128229077','2000-11-11 03:14:19');
-INSERT INTO user_profile VALUES ('Choubey','Ji','201351006','lelelele','201351006@iiitvadodara.ac.in','5f4dcc3b5aa765d61d8327deb882cf99',FALSE,'8140234164','2118-11-15 05:16:11');
+INSERT INTO user_profile VALUES ('Choubey','Ji','201351006','lelelele','201351006@iiitvadodara.ac.in','blee_blee',FALSE,'8140234164','2118-11-15 05:16:11');
 
 
 

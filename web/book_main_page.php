@@ -623,15 +623,8 @@ $start_from = ($page-1) * $num_rec_per_page;
 					$body = $row['description'];
 					echo "Description:&nbsp;".nl2br($body).'';
 					$user_id = $_SESSION["user_id"];
-					echo " <form method = 'POST' action= 'mailproceed.php'>
-
-  						<input type='hidden' name = 'isbn' value =".$row['isbn'].">
-  						<input type='hidden' name = 'sellerid' value =".$row['sellerid'].">
-  						<input type='hidden' name = 'user_id' value =".$user_id.">
-
-  						<button type='submit' class='btn btn-primary'>Show Interest</button>
-						</form><br/> ";
-
+		echo "<a href='mailproceed.php?isbn=".$row['isbn']."&sellerid=".$row['sellerid']."&user_id=".$user_id."&prodid=".$row['prodid']."'><br/>Show Interest</a><br/>";
+				
 $sql = "SELECT * FROM pbase JOIN single_sell ON single_sell.prodid = pbase.prodid WHERE single_sell.isbn = '$isbn' AND pbase.prodid = single_sell.prodid";
 $rs_result = pg_query($sql); //run the query
 $total_records = pg_num_rows($rs_result);  //count number of records
@@ -641,7 +634,7 @@ $total_pages = ceil($total_records / $num_rec_per_page);
 			     }
 
 
-echo "<a href='book_main_page.php?isbn=$isbn&page1=1'>".'Prev-'."</a> "; // Goto 1st page
+echo "<br/><a href='book_main_page.php?isbn=$isbn&page1=1'>".'Prev-'."</a> "; // Goto 1st page
 
 for ($i=1; $i<=$total_pages; $i++) {
             echo "<a href='book_main_page.php?isbn=$isbn&page1=".$i."'>".$i."</a> ";

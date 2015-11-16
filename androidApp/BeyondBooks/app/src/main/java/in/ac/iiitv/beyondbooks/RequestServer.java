@@ -46,6 +46,7 @@ public class RequestServer {
     String image_link;
     Bitmap image;
     RequestServer(){
+//        ip = "beyondbooks.iiitv.ac.in/andy";
         ip = "10.100.91.55/beyondbooks";
         image_link = "10.100.91.55/pictures";
     }
@@ -686,7 +687,7 @@ public class RequestServer {
     }
 
     public Bitmap getImage(String image_name){
-        String str_link = "http://"+image_link+"/"+image_name;
+        String str_link = "http://10.100.91.55/book_pics/"+image_name;
         System.out.println("image_name: "+str_link);
         DownloadTask downloadTask = new DownloadTask();
         try {

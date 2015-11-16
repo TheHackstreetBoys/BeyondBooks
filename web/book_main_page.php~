@@ -10,7 +10,7 @@ if(!isset($_SESSION["user_id"]))
 <html>
 <head>
 <title>
-Main Page of Book
+BeyondBooks Book Page
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -22,20 +22,6 @@ Main Page of Book
 <script src="js/modernizr-2.6.2.min.js"></script>
 <script src="js/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-
-
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<link href="css/style.css" rel="stylesheet" type="text/css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="css/bootstrap.min.css"/>
-<link rel="stylesheet" href="css/font-awesome.min.css"/>
-<script src="js/modernizr-2.6.2.min.js"></script>
-<script src="js/jquery-1.10.2.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-
-
 
 
 
@@ -67,13 +53,13 @@ function deletebookshelf()
 			if(response==1)
 			{
 alert("Removed from your Bookshelf");
-				
+
 
 
 			}
 			else
 			{
-			alert("It is not in your bookshelf");	
+			alert("It is not in your bookshelf");
 			}
 		}
 	})
@@ -244,10 +230,9 @@ include("html.inc");
 
 
 
-<li><br/><a href="homapage.php">Home</a></li>
+<li><br/><a href="homepage.php">Home</a></li>
 
-<li><br/><a href="buy_sell.php">Buy/Sell</a></li>
-<li><br/><a href="forum.php">Forum</a></li>
+<li><br/><a href="forumWelcome.php">Forum</a></li>
 <li><br/><a href="logout-script.php">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
 <li class="dropdown"><a href="#" data-toggle="dropdown"  class="dropdown-toggle">
 <?php
@@ -370,9 +355,9 @@ echo "Rating :";
 				$('#starloader').show();
 				for( i=0;i<imgindex; i++){
 					var imgobj = $("#rating_panel>img:eq( "+i+" )" );
-					var img = 'images/full.png';					
+					var img = 'images/full.png';
 					imgobj.attr('src',img);
-					
+
 				}
 				$.ajax({
 					url:'add_rating.php',
@@ -382,9 +367,9 @@ echo "Rating :";
 						location.reload();
 					}
 				});
-				
-				
-								
+
+
+
 			});
 		});
 </script>
@@ -505,7 +490,7 @@ echo "<a href='book_main_page.php?isbn=$isbn&page=$total_pages'>".'-Next'."</a> 
 
 									<div class="col-sm-10">
 
-				<textarea class="form-control" name = "content" rows = "1" id="inputEmail3" type="text"> Add Your Review</textarea>
+				<textarea class="form-control" name = "content" rows = "1" id="inputEmail3" type="text" required="required"> Add Your Review</textarea>
 
 									</div>
 								</div>
@@ -638,15 +623,8 @@ $start_from = ($page-1) * $num_rec_per_page;
 					$body = $row['description'];
 					echo "Description:&nbsp;".nl2br($body).'';
 					$user_id = $_SESSION["user_id"];
-					echo " <form method = 'POST' action= 'mailproceed.php'>
-
-  						<input type='hidden' name = 'isbn' value =".$row['isbn'].">
-  						<input type='hidden' name = 'sellerid' value =".$row['sellerid'].">
-  						<input type='hidden' name = 'user_id' value =".$user_id.">
-
-  						<button type='submit' class='btn btn-primary'>Show Interest</button>
-						</form><br/> ";
-
+		echo "<a href='mailproceed.php?isbn=".$row['isbn']."&sellerid=".$row['sellerid']."&user_id=".$user_id."&prodid=".$row['prodid']."'><br/>Show Interest</a><br/>";
+				
 $sql = "SELECT * FROM pbase JOIN single_sell ON single_sell.prodid = pbase.prodid WHERE single_sell.isbn = '$isbn' AND pbase.prodid = single_sell.prodid";
 $rs_result = pg_query($sql); //run the query
 $total_records = pg_num_rows($rs_result);  //count number of records
@@ -656,7 +634,7 @@ $total_pages = ceil($total_records / $num_rec_per_page);
 			     }
 
 
-echo "<a href='book_main_page.php?isbn=$isbn&page1=1'>".'Prev-'."</a> "; // Goto 1st page
+echo "<br/><a href='book_main_page.php?isbn=$isbn&page1=1'>".'Prev-'."</a> "; // Goto 1st page
 
 for ($i=1; $i<=$total_pages; $i++) {
             echo "<a href='book_main_page.php?isbn=$isbn&page1=".$i."'>".$i."</a> ";
@@ -681,6 +659,5 @@ echo "<a href='book_main_page.php?isbn=$isbn&page1=$total_pages'>".'-Next'."</a>
 <hr>Beyond Books Everywhere</hr>
 </br>
 <p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; <img class="img-thumbnail" alt="Bootstrap Image Preview" src="images/hackstreetboys.png" height="42" width="42"> The Hackstreet Boys </p>
-</div>
+<p class="text-right">Copyright &copy; BeyondBooks</p></div>
 </footer>

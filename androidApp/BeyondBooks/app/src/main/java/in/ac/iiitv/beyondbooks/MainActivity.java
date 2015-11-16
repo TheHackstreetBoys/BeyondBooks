@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity  {
         setSupportActionBar(toolbar);
 
 
-
         username = (EditText)findViewById(R.id.username);
         password = (EditText)findViewById(R.id.password);
         aboutus = (TextView) findViewById(R.id.aboutus);
@@ -96,9 +95,9 @@ public class MainActivity extends AppCompatActivity  {
 
     public void pass(){
         userData = new UserData(id);
-        Intent intent = new Intent(getApplicationContext(), Wireframe8.class);
+        Intent intent = new Intent(getApplicationContext(), Frame10.class);
         intent.putExtra("user_data", userData);
-        Toast.makeText(this, "Correct details", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "OK allowed", Toast.LENGTH_LONG).show();
         startActivity(intent);
     }
 
@@ -125,81 +124,6 @@ public class MainActivity extends AppCompatActivity  {
     public void change_pass_cancel(){
         Toast.makeText(this, "Enter your id first", Toast.LENGTH_LONG).show();
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        Intent in;
-        switch(id)
-        {
-            case R.id.option_search:
-                in = new Intent(this,Frame5.class);
-                startActivity(in);
-                break;
-            case R.id.option_home:
-
-                in = new Intent(this, BookViewPage.class);
-                startActivity(in);
-                break;
-            case R.id.option_user_profile:
-                in = new Intent(this, Wireframe8.class);
-                startActivity(in);
-                break;
-            case R.id.option_activity_on_forum:
-                in = new Intent(this,Wireframe12.class);
-                startActivity(in);
-                break;
-            case R.id.option_book_shelf:
-                in = new Intent(this,Frame10.class);
-                startActivity(in);
-                break;
-            case R.id.option_forum:
-                in = new Intent(this,Wireframe13.class);
-                startActivity(in);
-                break;
-            case R.id.option_reviewed_books:
-                in = new Intent(this,Frame11.class);
-                startActivity(in);
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-//    @Override
-//    public void onClick(View v) {
-//        switch (v.getId())
-//        {
-//            case R.id.login:
-//                System.out.println("Entering here");
-//                RequestServer rs = new RequestServer();
-//                boolean allowed = rs.authenticate(Integer.parseInt(username.getText().toString()),password.getText().toString());
-//                System.out.println("Data sent to server");
-//                UserData userData = new UserData(Integer.parseInt(username.toString()));
-//                if (allowed)
-//                {
-//                    Intent intent = new Intent(this, BookViewPage.class);
-//                    intent.putExtra("user_data", userData);
-//                    startActivity(intent);
-//                }
-//                else
-//                    Toast.makeText(this, "Incorrect username or password", Toast.LENGTH_LONG).show();
-//                break;
-//            case R.id.aboutus:
-//                Intent au = new Intent(this,AboutUs.class);
-//                au.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(au);
-//                break;
-//        }
-//    }
 }
