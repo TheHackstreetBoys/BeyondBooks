@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="in.ac.iiitv.beyondbooks.NewBook"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:id="@+id/frag_new_book_ll">
 
     <ImageView
         android:layout_width="match_parent"

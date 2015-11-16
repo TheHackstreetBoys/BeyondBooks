@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -83,23 +84,20 @@ public class BookViewPage extends AppCompatActivity implements NewBook.OnFragmen
         topratedbook.setAdapter(topratedadapter);
 
 
+
     }
 
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
-
-
-
-
+    public void onFragmentInteraction(Long isbn) {
+        Intent in = new Intent(this,Wireframe7.class);
+        in.putExtra("isbn",isbn.toString());
+        startActivity(in);
     }
 
     @Override
     public void onClick(View v) {
         startActivity(new Intent(getApplicationContext(),AddBook.class));
-
-
     }
 
     private class NewBooksPagerAdapter extends FragmentStatePagerAdapter

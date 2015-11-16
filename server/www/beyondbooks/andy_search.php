@@ -8,7 +8,7 @@ $result = pg_query($query);
 
 $for_ret=array();
 while ($row = pg_fetch_array($result)) {
-    array_push($for_ret,array("qid"=>$row['qid'], "author_id"=>$row['asker'], "author"=> $row['f_name'], "title"=>$row['title']));
+    array_push($for_ret,array("q_id"=>$row['qid'], "author_id"=>$row['asker'], "author"=> $row['f_name'], "title"=>$row['title']));
 }
 
 

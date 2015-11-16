@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -20,7 +21,7 @@ import android.widget.TextView;
  * Use the {@link NewBook#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewBook extends Fragment {
+public class NewBook extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,7 +38,9 @@ public class NewBook extends Fragment {
     Long imagelink;
     TextView tit;
     RatingBar rat;
+    Long isbn1;
     ImageView imageView;
+    LinearLayout ll;
 
     private OnFragmentInteractionListener mListener;
 
@@ -61,6 +64,7 @@ public class NewBook extends Fragment {
         imagelink = newlyAdded.getId();
         title = newlyAdded.getBook_name();
         rating = newlyAdded.getRatings();
+        isbn1 = newlyAdded.getId();
     }
 
     @Override
@@ -82,7 +86,7 @@ public class NewBook extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction(isbn1);
         }
     }
 
@@ -95,8 +99,11 @@ public class NewBook extends Fragment {
         imageView = (ImageView)getView().findViewById(R.id.frag_new_book_image);
         RequestServer requestServer = new RequestServer();
         System.out.println("image isbn is " +imagelink.toString()+"adsgafafsa");
-        imageView.setImageBitmap(requestServer.getImage(imagelink.toString()+".jpg"));
+        imageView.setImageBitmap(requestServer.getImage(imagelink.toString() + ".jpg"));
         rat.setRating(rating);
+        ll = (LinearLayout)getView().findViewById(R.id.frag_new_book_ll);
+        ll.setOnClickListener(this);
+
     }
 
     @Override
@@ -116,6 +123,11 @@ public class NewBook extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onClick(View v) {
+        mListener.onFragmentInteraction(isbn1);
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -128,7 +140,7 @@ public class NewBook extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        public void onFragmentInteraction(Long isbn);
     }
 
 }
