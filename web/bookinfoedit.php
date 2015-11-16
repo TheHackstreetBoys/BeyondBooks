@@ -281,7 +281,7 @@ if(pg_query("UPDATE pbase SET ts = CURRENT_TIMESTAMP WHERE sellerid ='$sellerid'
 								Enter the Price of Book.
 							</label>
 							<div class="col-sm-4">
-								<input class="form-control" value = "<?php echo $row['price']?>" id="inputPassword3" name = 'price' type="text">
+								<input class="form-control" value = "<?php echo $row['price']?>" id="inputPassword3" name = 'price' type="text" required="required">
 							</div>
 						</div>
 
@@ -291,7 +291,7 @@ if(pg_query("UPDATE pbase SET ts = CURRENT_TIMESTAMP WHERE sellerid ='$sellerid'
 								Enter the Age of Book.
 							</label>
 							<div class="col-sm-4">
-								<input class="form-control" placeholder = "This is showing the age of the book in months" value = "<?php echo $row['age']?>" id="inputPassword3"  name = 'age' type="text">
+								<input class="form-control" placeholder = "This is showing the age of the book in months" value = "<?php echo $row['age']?>" id="inputPassword3"  name = 'age' type="text" required="required">
 							</div>
 						</div>
 

@@ -262,7 +262,7 @@ ISBN of the Book:
 								Enter Your Message
 							</label>
 							<div class="col-sm-6">
-								<textarea  class="form-control" name = "message" rows = "5" id="inputEmail3" type="text" > </textarea>
+								<textarea  class="form-control" name = "message" rows = "5" id="inputEmail3" type="text" required="required"> </textarea>
 							</div>
 						</div>
 						<div class="form-group">
@@ -271,7 +271,7 @@ ISBN of the Book:
 								Enter Your Contact Number
 							</label>
 							<div class="col-sm-6">
-								<input class="form-control" name = "contactno" id="inputPassword3" type="text">
+								<input class="form-control" name = "contactno" id="inputPassword3" type="text" required="required">
 							</div>
 						</div>
 
