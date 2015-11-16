@@ -178,7 +178,7 @@ include("html.inc");
 				$filename="pictures/".$filename."*";
 				$result1=glob($filename);
 				if (!empty($result1))
-				echo '<img src="'.$result1[0].'"class="img-circle" style="width: 50px">';
+				echo '<img src="'.$result1[0].'"class="img-circle" style="width: 50px; image-orientation: from-image;">';
 				else
 					echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
 					?>
@@ -187,17 +187,18 @@ include("html.inc");
 <li><a href="yourprofile.php">My Profile</a></li>
 <li><a href="bookshelf.php">My Bookshelf</a></li>
 <li><a href="my_sold_books.php">My Sold Books</a></li>
-<li><a href="notificationpage.php">My Notifications<?php 
+<li><a href="notificationpage.php">My Notifications <div class="circle">
+<?php
 
 session_start();
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION["user_id"];
 
 $query1 = pg_query("SELECT COUNT(*) AS num FROM notify WHERE whom = '$user_id'");
 
 $row = pg_fetch_array($query1);
-echo "(".$row['num'].")";
+echo $row['num'];
 
-?></a></li>
+?></div></a></li>
 <li><a href="addbook.php">Add Book</a></li>
 </ul></li>
 

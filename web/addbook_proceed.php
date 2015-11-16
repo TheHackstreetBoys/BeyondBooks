@@ -189,7 +189,18 @@ include("html.inc");
 <ul class="dropdown-menu">
 <li><a href="yourprofile.php">My Profile</a></li>
 <li><a href="bookshelf.php">My Bookshelf</a></li>
-<li><a href="my_sold_books.php">My Sold Books</a></li>
+<li><a href="my_sold_books.php">My Sold Books</a></li><li><a href="notificationpage.php">My Notifications <div class="circle">
+<?php
+
+session_start();
+$user_id = $_SESSION["user_id"];
+
+$query1 = pg_query("SELECT COUNT(*) AS num FROM notify WHERE whom = '$user_id'");
+
+$row = pg_fetch_array($query1);
+echo $row['num'];
+
+?></div></a></li>
 </ul></li>
 
 	      </ul>

@@ -74,7 +74,7 @@ $(document).ready(function(){
 
 	      <ul class="nav navbar-nav navbar-right">
 
-		
+
 		<li>
 <?php
 $content ='
@@ -191,6 +191,18 @@ include("html.inc");
 <li><a href="bookshelf.php">My Bookshelf</a></li>
 <li><a href="my_sold_books.php">My Sold Books</a></li>
 <li><a href="addbook.php">Add a Book</a><li>
+<li><a href="notificationpage.php">My Notifications <div class="circle">
+<?php
+
+session_start();
+$user_id = $_SESSION["user_id"];
+
+$query1 = pg_query("SELECT COUNT(*) AS num FROM notify WHERE whom = '$user_id'");
+
+$row = pg_fetch_array($query1);
+echo $row['num'];
+
+?></div></a></li>
 </ul></li>
 
 	      </ul>
@@ -285,7 +297,7 @@ ISBN of the Book:
 							<div class="col-sm-6">
 <center>
 								<input class="form-control" type = "Submit" value = "Click here to send notification" id="inputPassword3" type="submit">
-							
+
 </center>
 </div>
 

@@ -21,7 +21,7 @@ else
     $final_arr['bookshelf'] = "false";
 }
 
-$query = "select * from (rating join user_profile on (rating.uid = user_profile.user_id)) as lund where isbn='$isbn' and isFaculty='true';";
+$query = "select * from (rating join user_profile on (rating.uid = user_profile.user_id)) as lund where isbn='$isbn' and isfaculty='t';";
 $result = pg_query($query);
 $rnum = pg_num_rows($result);
 
@@ -30,6 +30,8 @@ if ($rnum>0)
     $row = pg_fetch_array($result);
     $fac_rat = $row['rating'];
 }
+else
+$fac_rat=0;
 
 $query = "select * from (rating join user_profile on (rating.uid = user_profile.user_id)) as lund where isbn='$isbn' and isFaculty='false';";
 $result = pg_query($query);
@@ -40,17 +42,21 @@ if ($rnum>0)
     $row = pg_fetch_array($result);
     $stud_rat = $row['rating'];
 }
+else {
+  $stud_rat=0;
+}
 
+$final_arr['public_ratings']=(0.6*$fac_rat + 0.4*$stud_rat);
+$final_arr['student_ratings']=strval($stud_rat);
+$final_arr['faculty_ratings']=strval($fac_rat);
+$final_arr['public_ratings']=strval($final_arr['public_ratings']);
 
-$final_arr['student_ratings']=$stud_rat;
-$final_arr['faculty_ratings']=$fac_rat;
-$final_arr['public_ratings']=(0.6*$fac_rat + 0.4*$student_ratings);
 $query = "select * from ((pbase natural join single_sell) as lund join user_profile on (lund.sellerid=user_profile.user_id))as chut where isbn ='$isbn';";
 $result = pg_query($query);
 $ret_array = array();
 while ($row = pg_fetch_array($result))
 {
-    array_push($ret_array,array('seller_id'=>$row['sellerid'],'seller_name'=>$row['f_name']));
+    array_push($ret_array,array('seller_id'=>$row['sellerid'],'seller_name'=>$row['f_name'],'price'=>$row['price']));
 }
 
 $final_arr['sellers_list']=$ret_array;
