@@ -2,7 +2,6 @@
 $author_id = $_POST['author_id'];
 $title = $_POST['title'];
 $author_name = $_POST['author_name'];
-$question_id = $_POST['question_id'];
 $details = $_POST['details'];
 $times = date('d-m-Y H:i:s');
 

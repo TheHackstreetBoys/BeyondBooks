@@ -32,9 +32,7 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Intent in=new Intent(this,Wireframe13.class);
-        in.putExtra("user_data",userData);
-        startActivity(in);
+
 
 
         username = (EditText)findViewById(R.id.username);
