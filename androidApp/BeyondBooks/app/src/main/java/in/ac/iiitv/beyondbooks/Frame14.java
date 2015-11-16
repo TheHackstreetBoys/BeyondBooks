@@ -29,7 +29,7 @@ public class Frame14 extends AppCompatActivity {
 
         final Integer q_id = Integer.parseInt(intent.getStringExtra("q_id"));
         System.out.println("frame14 is : "+q_id);
-        final UserData userData = (UserData)intent.getSerializableExtra("user_data");
+
         final RequestServer requestServer = new RequestServer();
         ForumDetails forumDetails = requestServer.forumDetails(q_id);
 
@@ -57,7 +57,7 @@ public class Frame14 extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestServer.send_comment(q_id,userData.getId(),usercomment);
+                requestServer.send_comment(q_id,MainActivity.userData.getId(),usercomment);
             }
         });
 

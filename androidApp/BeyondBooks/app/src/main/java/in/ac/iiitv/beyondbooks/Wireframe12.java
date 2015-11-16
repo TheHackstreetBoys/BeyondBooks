@@ -5,28 +5,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Wireframe12 extends AppCompatActivity {
+public class Wireframe12 extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     ListView started_list, commented_list;
     ArrayAdapter<String> adapter_started, adapter_commented;
+    ForumActivities forumActivities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wireframe12);
+        System.out.println(MainActivity.userData.getId());
 
-        //Added by anjul
-        Intent intent = getIntent();
-        UserData userData = (UserData) intent.getSerializableExtra("user_data");
         RequestServer requestServer = new RequestServer();
 
-        ForumActivities forumActivities = requestServer.get_forum_activities(/*userData.getId()*/201351010);
+        forumActivities = requestServer.get_forum_activities(MainActivity.userData.getId());
         // Till here
 
         started_list = (ListView) findViewById(R.id.harkat_startedlist);
@@ -45,7 +46,10 @@ public class Wireframe12 extends AppCompatActivity {
         adapter_commented = new ArrayAdapter<String>(this, R.layout.frame10_list_view, values);
 
         started_list.setAdapter(adapter_started);
+        started_list.setOnItemClickListener(this);
         commented_list.setAdapter(adapter_commented);
+        commented_list.setOnItemClickListener(this);
+        System.out.println(adapter_commented.getItem(0));
     }
 
     @Override
@@ -97,4 +101,13 @@ public class Wireframe12 extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        int vid = parent.getId();
+        switch (vid)
+        {
+            case R.id.harkat_startedlist :
+                int qid = forumActivities.getQuestions_started().get(position).getQ_id();
+        }
+    }
 }
