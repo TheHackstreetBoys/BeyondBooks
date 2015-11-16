@@ -1,8 +1,8 @@
 <?php
 require 'db_conn.php';
-$isbn = $_POST['isbn'];
+$isbn = $_POST['isbn']='1001';
 $result = null;
-if(pg_num_rows(pg_query("select * from books where isbn=$isbn")) == 0)
+if(pg_num_rows(pg_query("select * from books where isbn='$isbn'")) == 0)
 {
     require 'bookdetails.php';
     $result = getDetails($isbn);
@@ -20,6 +20,10 @@ if(pg_num_rows(pg_query("select * from books where isbn=$isbn")) == 0)
     fclose($fp);
     $res1 = pg_query($query);
 
+}
+else {
+    $result = pg_query("select * from books where isbn='$isbn'");
+    $result = pg_fetch_array($result);
 }
 
 echo json_encode(array('book_name'=>$result['title']));

@@ -39,7 +39,7 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-public class BookViewPage extends FragmentActivity implements NewBook.OnFragmentInteractionListener, View.OnClickListener {
+public class BookViewPage extends AppCompatActivity implements NewBook.OnFragmentInteractionListener, View.OnClickListener {
 
 
     private HorizontalScrollView hsv_new,hsv_top;
@@ -122,7 +122,7 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
         @Override
         public Fragment getItem(int position)
         {
-            return new NewBook(naa.get(position));
+            return new NewBook(nav.get(position));
         }
 
         @Override

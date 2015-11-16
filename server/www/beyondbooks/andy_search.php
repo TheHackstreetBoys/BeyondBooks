@@ -3,7 +3,7 @@
 include 'db_conn.php';
 
 $qs = $_POST['query'];
-$query = "select * from (((question_forum natural join user_profile) as lauda natural join qtags) as chut natural join faculty_tags) as pooku where title like '%$qs%' or htag like '%$qs%' or uid like '%$qs%';";
+$query = "select * from question_forum where title like '%$qs%';";
 $result = pg_query($query);
 
 $for_ret=array();
@@ -30,5 +30,5 @@ while ($row = pg_fetch_array($result)) {
     "ratings"=> $row['rating'], "isbn"=>$row['isbn']));
 }
 
-echo json_encode(array('forum' => $for_ret, 'review' => $review_ret, 'buy_sell'=>$bs_ret ));
+echo json_encode(array('forum' => $for_ret, 'review' => $review_ret ));
 ?>
