@@ -224,7 +224,7 @@ include("html.inc");
 							</h3>
 						</div>
 					</div>
-					<form class="form-horizontal" method = "POST" action = "mail.php?prodid=<?php echo $_GET['prodid']?>" role="form">
+					<form class="form-horizontal" method = "POST" action = "mail.php?<?php echo $_GET['prodid']?>" role="form">
 
 <div class="form-group">
 
