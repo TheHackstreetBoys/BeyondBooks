@@ -2,7 +2,6 @@
 // needed title author_name author_id id details
 require 'db_conn.php';
 $qid = $_POST['q_id'];
-$qid = "1";
 $query = "select * from (question_forum join user_profile on (question_forum.asker = user_profile.user_id)) as lund where qid='$qid';";
 $result = pg_query($query);
 

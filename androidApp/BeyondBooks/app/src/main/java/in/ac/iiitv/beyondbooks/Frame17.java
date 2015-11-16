@@ -1,5 +1,6 @@
 package in.ac.iiitv.beyondbooks;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -50,9 +51,12 @@ public class Frame17 extends AppCompatActivity implements View.OnClickListener, 
                 facet.setText("");
                 break;
             case R.id.frame17_submit:
-                //TODO  Do it tyagi
-                // send the forum detail to the server and also set intent to the next activity
-
+                ForumDetails fd = new ForumDetails(getIntent().getStringExtra("question"),((UserData)getIntent().getSerializableExtra("user_data")).getUser_name(),null,((UserData)getIntent().getSerializableExtra("user_data")).getId(),null);
+                fd.setDetails(getIntent().getStringExtra("details"));
+                new RequestServer().add_forum_question(fd);
+                Intent in = new Intent(this,Wireframe13.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(in);
                 break;
         }
     }

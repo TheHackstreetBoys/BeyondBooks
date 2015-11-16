@@ -6,14 +6,14 @@ import java.util.ArrayList;
  * Created by anjul on 13/11/15.
  */
 public class ForumDetails {
-    private String title;
-    private String author_name;
-    private Integer author_id;
-    private Integer id;
-    private ArrayList<Comments> comments;
-    private String details;
-    private String tags;
-    private String faculty_tags;
+    private String title=null;
+    private String author_name=null;
+    private Integer author_id=null;
+    private Integer id=null;
+    private ArrayList<Comments> comments=null;
+    private String details=null;
+    private String tags=null;
+    private String faculty_tags=null;
 
     public String getTags() {
         return tags;
