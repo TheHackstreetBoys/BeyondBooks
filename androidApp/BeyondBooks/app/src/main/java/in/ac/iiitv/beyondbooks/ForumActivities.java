@@ -29,4 +29,5 @@ public class ForumActivities {
     public void setCommented(ArrayList<Comments> commented) {
         this.commented = commented;
     }
+
 }
