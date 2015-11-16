@@ -1,7 +1,7 @@
 <?php
 require('db_conn.php');
-$username = $_POST['user_id']='201351010';
-$isbn = $_POST['isbn']='1001';
+$username = $_POST['user_id'];
+$isbn = $_POST['isbn'];
 
 $final_arr = array();
 $query = "select * from books where isbn='$isbn';";
@@ -10,7 +10,7 @@ $result = pg_query($query);
 $row = pg_fetch_array($result);
 $final_arr['about_book'] = $row['description'] ;
 
-$query = "select * from book_shelf where isbn='$isbn' and user_id='$username';";
+$query = "select * from book_shelf where isbn='$isbn' and user_id='$username'";
 $rnum = pg_num_rows(pg_query($query));
 if($rnum > 0)
 {
