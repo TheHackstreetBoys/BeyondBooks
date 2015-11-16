@@ -155,8 +155,8 @@ function checkstudent()
 		              		<i class="fa fa-lock login-field-icon"></i>
 
 
-		        	<button type="button" class="btn btn-success modal-login-btn" onclick="checkstudent()">Sign in</button>
-		            	<a href="forgotpassword.php" class="login-link text-center">Lost your password</a>
+		        	<button type="button" class="btn btn-success modal-login-btn" onclick="checkstudent()" style="margin-top:5px">Sign in</button>
+		            	<center><a href="forgotpassword.php" class="login-link text-center">Lost your password</a></center>
 	        		</form>
 
 				</div>
