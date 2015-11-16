@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -33,10 +34,10 @@ public class NewBook extends Fragment {
 
     float rating;
     String title;
-    String imagelink;
+    Long imagelink;
     TextView tit;
     RatingBar rat;
-
+    ImageView imageView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -57,7 +58,7 @@ public class NewBook extends Fragment {
 
 
     public NewBook(NewlyAdded newlyAdded) {
-        imagelink = newlyAdded.getImage_link();
+        imagelink = newlyAdded.getId();
         title = newlyAdded.getBook_name();
         rating = newlyAdded.getRatings();
     }
@@ -69,7 +70,6 @@ public class NewBook extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
@@ -92,7 +92,9 @@ public class NewBook extends Fragment {
         rat = (RatingBar) getView().findViewById(R.id.frag_new_book_rating);
         tit = (TextView) getView().findViewById(R.id.frag_new_book_title);
         tit.setText(title);
-
+        imageView = (ImageView)getView().findViewById(R.id.frag_new_book_image);
+        RequestServer requestServer = new RequestServer();
+        imageView.setImageBitmap(requestServer.getImage(imagelink.toString()+".jpg"));
     }
 
     @Override
