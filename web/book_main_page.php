@@ -250,6 +250,18 @@ echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
 <li><a href="bookshelf.php">My Bookshelf</a></li>
 <li><a href="my_sold_books.php">My Sold Books</a></li>
 <li><a href="addbook.php">Add Book</a></li>
+<li><a href="notificationpage.php">My Notifications <div class="circle">
+<?php
+
+session_start();
+$user_id = $_SESSION["user_id"];
+
+$query1 = pg_query("SELECT COUNT(*) AS num FROM notify WHERE whom = '$user_id'");
+
+$row = pg_fetch_array($query1);
+echo $row['num'];
+
+?></div></a></li>
 </ul></li>
 
 </ul>
@@ -623,8 +635,8 @@ $start_from = ($page-1) * $num_rec_per_page;
 					$body = $row['description'];
 					echo "Description:&nbsp;".nl2br($body).'';
 					$user_id = $_SESSION["user_id"];
-		echo "<a href='mailproceed.php?isbn=".$row['isbn']."&sellerid=".$row['sellerid']."&user_id=".$user_id."&prodid=".$row['prodid']."'><br/>Show Interest</a><br/>";
-				
+		echo "<a href='mailproceed.php?isbn=".$row['isbn']."&sellerid=".$row['sellerid']."&user_id=".$user_id."&prodid=".$row['prodid']."'><br/><button class='btn btn-primary' style='margin-top:5px'>Show Interest</button></a><br/>";
+
 $sql = "SELECT * FROM pbase JOIN single_sell ON single_sell.prodid = pbase.prodid WHERE single_sell.isbn = '$isbn' AND pbase.prodid = single_sell.prodid";
 $rs_result = pg_query($sql); //run the query
 $total_records = pg_num_rows($rs_result);  //count number of records
