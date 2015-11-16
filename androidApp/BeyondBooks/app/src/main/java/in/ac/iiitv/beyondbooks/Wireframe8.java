@@ -50,12 +50,9 @@ public class Wireframe8 extends AppCompatActivity {
 //        userData.setReviewed(temp2.getReviewed());
 //        userData.setUploads(temp2.getUploads());
         userData.setUser_name(requestServer.get_user_name(userData.getId()));
-<<<<<<< HEAD
 
-=======
         notifications = requestServer.get_notification(userData.getId());
         System.out.println("notifications: "+notifications);
->>>>>>> e47df7bf6608047b5da0f728dd1df414a79ee07c
         //Till here... userData contains every information about the user. Use it to populate the page.
 
 
@@ -67,14 +64,11 @@ public class Wireframe8 extends AppCompatActivity {
         */
 
         user_image = (ImageView) findViewById(R.id.user_image);
-<<<<<<< HEAD
         user_image.setImageBitmap(requestServer.getImage(userData.getId().toString() + "_dp.jpg"));
 
-=======
         Bitmap temp = requestServer.getImage(userData.getId().toString() + "_dp.jpg");
         System.out.println("temp : "+temp);
         user_image.setImageBitmap(temp);
->>>>>>> e47df7bf6608047b5da0f728dd1df414a79ee07c
         //set username
         username = (TextView) findViewById(R.id.user_name);
         username.setText(userData.getUser_name());
@@ -111,9 +105,6 @@ public class Wireframe8 extends AppCompatActivity {
 //                set_dp(v);
 //            }
 //        });
-
-
-
         //set notifications (Already there is a arraylist for arrayadapter)
 
         notifications = requestServer.get_notification(userData.getId());
