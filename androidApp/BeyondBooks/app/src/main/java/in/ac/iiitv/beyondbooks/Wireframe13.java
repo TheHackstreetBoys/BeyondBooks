@@ -36,6 +36,8 @@ public class Wireframe13 extends AppCompatActivity implements AdapterView.OnItem
             @Override
             public void onClick(View v) {
                 //intent should be checked
+                Intent in = new Intent(getApplicationContext(),Frame15.class);
+                in.putExtra("user_data",userData);
                 startActivity(new Intent(getApplicationContext(),Frame15.class));
             }
         });

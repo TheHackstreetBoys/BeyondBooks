@@ -13,11 +13,13 @@ public class Frame15 extends AppCompatActivity {
 
     private Button next;
 
+    UserData userData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frame15);
 
+        userData = (UserData) getIntent().getSerializableExtra("user_data");
         // to submit the question title
         next = (Button) findViewById(R.id.frame15_next);
         next.setOnClickListener(new View.OnClickListener() {
@@ -31,6 +33,7 @@ public class Frame15 extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.frame15_question);
         Intent intent = new Intent(this, Frame16.class);
         String question = editText.getText().toString();
+        intent.putExtra("user_data",userData);
         intent.putExtra("question", question);
         startActivity(intent);
     }

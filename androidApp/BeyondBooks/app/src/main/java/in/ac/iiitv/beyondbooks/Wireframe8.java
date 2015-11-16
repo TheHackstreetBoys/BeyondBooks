@@ -22,16 +22,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemClickListener {
+
     private ArrayList<String> notifications;
+    private ImageView user_image;
+    private ListView notification_list ;
+    private TextView username,userid,changepass;
+    private ArrayAdapter<String> adapter_notification;
     private Button uploadimage;
-    ImageView user_image;
-    ListView notification_list ;
-    TextView username,userid;
+
+
     UserData userData;
-    TextView changepass;
-    ArrayAdapter<String> adapter_notification;
     private static final int RESULT_LOAD_IMAGE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,13 +54,22 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
 //        userData.setReviewed(temp2.getReviewed());
 //        userData.setUploads(temp2.getUploads());
         userData.setUser_name(requestServer.get_user_name(userData.getId()));
+
         notifications = requestServer.get_notification(userData.getId());
         System.out.println("notifications: "+notifications);
         //Till here... userData contains every information about the user. Use it to populate the page.
 
+
         //set image of the user
-        //TODO changes to set the image of the user
+        /*user_image = (ImageView) findViewById(R.id.user_image);
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        map.put(userData.getImage_link(), R.drawable.user_image);
+        user_image.setImageResource(map.get(userData.getImage_link()));
+        */
+
         user_image = (ImageView) findViewById(R.id.user_image);
+        user_image.setImageBitmap(requestServer.getImage(userData.getId().toString() + "_dp.jpg"));
+
         Bitmap temp = requestServer.getImage(userData.getId().toString() + "_dp.jpg");
         System.out.println("temp : "+temp);
         user_image.setImageBitmap(temp);
@@ -81,6 +94,16 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
 //        });
 
         //button upload image
+
+        uploadimage = (Button) findViewById(R.id.upload_image);
+        uploadimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO set the image picker to choose the image and then sent it to the server
+
+            }
+        });
+
 //        uploadimage = (Button) findViewById(R.id.upload_image);
 //        uploadimage.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -88,15 +111,15 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
 //                set_dp(v);
 //            }
 //        });
-
-
         //set notifications (Already there is a arraylist for arrayadapter)
+
+        notifications = requestServer.get_notification(userData.getId());
         notification_list = (ListView) findViewById(R.id.notification_list);
         adapter_notification = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,android.R.id.text1,notifications);
         notification_list.setAdapter(adapter_notification);
         System.out.println("Reaching here ....");
     }
-    public void set_dp(View v){
+    public void set_dp(){
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, RESULT_LOAD_IMAGE);
         RequestServer requestServer = new RequestServer();

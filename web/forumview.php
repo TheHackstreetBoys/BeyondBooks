@@ -348,7 +348,7 @@ echo <<<HTML
 									</label>
 									<div class="col-sm-10">
 
-								<textarea class="form-control" name = "content" rows = "4" id="inputEmail3" type="text"> </textarea>
+								<textarea class="form-control" name = "content" rows = "4" id="inputEmail3" type="text" required="required"> </textarea>
 
 									</div>
 								</div>

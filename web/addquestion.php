@@ -214,7 +214,7 @@ include("html.inc");
 						Enter the title :
 					</label>
 					<div class="col-sm-5">
-						<input class="form-control" id="inputEmail3" name = "title" type="text">
+						<input class="form-control" id="inputEmail3" name = "title" type="text" required="required">
 					</div>
 				</div>
 				<div class="form-group">
@@ -223,7 +223,7 @@ include("html.inc");
 						Enter the Content of the Question :
 					</label>
 					<div class="col-sm-5">
-						<textarea class="form-control" id="inputPassword3" name = "content" rows = "4" type="text"> </textarea>
+						<textarea class="form-control" id="inputPassword3" name = "content" rows = "4" type="text" required="required"> </textarea>
 					</div>
 				</div>
 
@@ -233,7 +233,7 @@ include("html.inc");
 						Enter the Name of the Hash Tag :
 					</label>
 					<div class="col-sm-5">
-						<input class="form-control" name = "htag" id="inputPassword3" type="text">
+						<input class="form-control" name = "htag" id="inputPassword3" type="text" required="required">
 					</div>
 				</div>
 

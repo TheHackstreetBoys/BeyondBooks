@@ -490,7 +490,7 @@ echo "<a href='book_main_page.php?isbn=$isbn&page=$total_pages'>".'-Next'."</a> 
 
 									<div class="col-sm-10">
 
-				<textarea class="form-control" name = "content" rows = "1" id="inputEmail3" type="text"> Add Your Review</textarea>
+				<textarea class="form-control" name = "content" rows = "1" id="inputEmail3" type="text" required="required"> Add Your Review</textarea>
 
 									</div>
 								</div>

@@ -249,7 +249,7 @@ echo <<<HTML
 						Enter the title :
 					</label>
 					<div class="col-sm-5">
-						<input class="form-control" value="{$row['title']}" name = "title" id="inputEmail3" type="text">
+						<input class="form-control" value="{$row['title']}" name = "title" id="inputEmail3" type="text" required="required">
 					</div>
 				</div>
 				<div class="form-group">
@@ -268,7 +268,7 @@ echo <<<HTML
 						Enter the Name of the Hash Tag :
 					</label>
 					<div class="col-sm-5">
-						<input class="form-control" name= "htag" value="{$row1['htag']}"  id="inputPassword3" type="text" >
+						<input class="form-control" name= "htag" value="{$row1['htag']}"  id="inputPassword3" type="text" required="required" >
 					</div>
 				</div>
 
