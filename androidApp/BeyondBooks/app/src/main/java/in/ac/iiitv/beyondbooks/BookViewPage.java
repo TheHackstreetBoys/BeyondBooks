@@ -54,21 +54,29 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
     private Button addbook;
 
     private int numOfSlides;
-    ArrayList<NewlyAdded> naa;
+    ArrayList<NewlyAdded> naa,top;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_view_page);
         RequestServer rs = new RequestServer();
         naa = rs.newly_added();
+        top = rs.top_rated();
 
         // set newly added book
         numOfSlides = naa.size();
 
         newbooks = (ViewPager)findViewById(R.id.book_view_newadded_pager);
         newbooksadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),naa);
-
         newbooks.setAdapter(newbooksadapter);
+
+        newbooks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),AddBook.class));
+            }
+        });
+
         addbook = (Button) findViewById(R.id.book_view_btn);
         addbook.setOnClickListener(this);
 
@@ -76,11 +84,17 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
 
 
         topratedbook = (ViewPager)findViewById(R.id.book_toprated_pager);
-        topratedadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),naa);
-
+        topratedadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),top);
         topratedbook.setAdapter(topratedadapter);
+
+        //addbook button
         addbook = (Button) findViewById(R.id.book_view_btn);
-        addbook.setOnClickListener(this);
+        addbook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),AddBook.class));
+            }
+        });
     }
 
 
@@ -94,18 +108,13 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
         //TODO add image, rating and book title
 
 
-        //addbook button
-        addbook = (Button) findViewById(R.id.addBook);
-        addbook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),AddBook.class));
-            }
-        });
+
     }
 
     @Override
     public void onClick(View v) {
+        startActivity(new Intent(getApplicationContext(),AddBook.class));
+
 
     }
 

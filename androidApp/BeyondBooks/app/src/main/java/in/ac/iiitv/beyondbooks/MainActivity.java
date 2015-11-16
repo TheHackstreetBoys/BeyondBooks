@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity  {
 
     public void pass(){
         MainActivity.userData = new UserData(id);
-        Intent intent = new Intent(getApplicationContext(), AddBook.class);
+        Intent intent = new Intent(getApplicationContext(), BookViewPage.class);
         intent.putExtra("user_data", userData);
         Toast.makeText(this, "OK allowed", Toast.LENGTH_LONG).show();
         startActivity(intent);
