@@ -12,7 +12,11 @@ $publisher = $result['publisher'];
 $query = "insert into books (isbn, title, publisher,description, by_user, ts) values ('$isbn', '$title',
                                 '$publisher', '$description', '$username', CURRENT_TIMESTAMP);";
 $imagelink= $result['image-link'];
+if($title==null)
+{
 
+    echo json_encode(array('result'=>'true'));
+}
 
 
 $content = file_get_contents($imagelink);
