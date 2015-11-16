@@ -59,6 +59,18 @@ while ($row = pg_fetch_array($result))
     array_push($ret_array,array('seller_id'=>$row['sellerid'],'seller_name'=>$row['f_name'],'price'=>$row['price']));
 }
 
+$query = "select * from (review join user_profile on (review.uid = user_profile.user_id)) as lund where isbn='$isbn'";
+$result = pg_query($query);
+$ret_array1=array();
+while ($row = pg_fetch_array($result))
+{
+    array_push($ret_array1,array('commentor_name'=>$row['f_name'].' '.$row['l_name'],'text'=>$row['review']));
+}
+
+
+$final_arr['comments']=$ret_array1;
+
+
 $final_arr['sellers_list']=$ret_array;
 
 echo json_encode($final_arr);
