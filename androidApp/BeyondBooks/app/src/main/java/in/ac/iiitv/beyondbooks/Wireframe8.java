@@ -65,7 +65,6 @@ public class Wireframe8 extends AppCompatActivity {
 
         user_image = (ImageView) findViewById(R.id.user_image);
         user_image.setImageBitmap(requestServer.getImage(userData.getId().toString() + "_dp.jpg"));
-
         Bitmap temp = requestServer.getImage(userData.getId().toString() + "_dp.jpg");
         System.out.println("temp : "+temp);
         user_image.setImageBitmap(temp);

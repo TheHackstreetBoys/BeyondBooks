@@ -18,6 +18,12 @@ public class AddBook extends AppCompatActivity{
         setContentView(R.layout.activity_add_book);
         addBook = (Button) findViewById(R.id.addBook);
         addBook_isbn = (EditText) findViewById(R.id.addBook_isbn);
+        addBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_book(v);
+            }
+        });
     }
 
     public void add_book(View v) {
