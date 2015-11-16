@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startActivity(new Intent(this,Frame17.class));
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity  {
 
     public void pass(){
         userData = new UserData(id);
-        Intent intent = new Intent(getApplicationContext(), Frame10.class);
+        Intent intent = new Intent(getApplicationContext(), Wireframe13.class);
         intent.putExtra("user_data", userData);
         Toast.makeText(this, "OK allowed", Toast.LENGTH_LONG).show();
         startActivity(intent);

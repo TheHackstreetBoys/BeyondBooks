@@ -23,7 +23,7 @@ public class Frame5 extends AppCompatActivity {
         searchOutputReturn = (SearchOutputReturn) intent.getSerializableExtra("search_results");
 
         review_list = (ListView) findViewById(R.id.frame5_review);
-        buysell_list = (ListView) findViewById(R.id.frame5_buy_sell);
+
         forum_list = (ListView) findViewById(R.id.frame5_forum);
 
         adapter_review = new ArrayAdapter<String>(this, R.layout.frame10_list_view,setreview_listitem(searchOutputReturn));
@@ -108,10 +108,7 @@ public class Frame5 extends AppCompatActivity {
                 in = new Intent(this,Wireframe13.class);
                 startActivity(in);
                 break;
-            case R.id.option_reviewed_books:
-                in = new Intent(this,Frame11.class);
-                startActivity(in);
-                break;
+
         }
 
         return super.onOptionsItemSelected(item);
