@@ -21,7 +21,7 @@ public class Frame17 extends AppCompatActivity implements View.OnClickListener, 
     private ListView faclist;
     private ArrayList<String> facultycopy;
     private TextView facet;
-    private UserData userData;
+
     private TextView tags;
     private String question;
     private String details;
@@ -37,7 +37,7 @@ public class Frame17 extends AppCompatActivity implements View.OnClickListener, 
         faculty = requestServer.get_faculty();
 
 
-        userData = (UserData)getIntent().getSerializableExtra("user_data");
+        System.out.println("user id from main activity : "+MainActivity.userData.getId());
         question = getIntent().getStringExtra("question");
         details = getIntent().getStringExtra("details");
 
@@ -67,16 +67,16 @@ public class Frame17 extends AppCompatActivity implements View.OnClickListener, 
                 facet.setText("");
                 break;
             case R.id.frame17_submit:
-                ForumDetails fd = new ForumDetails(question,userData.getUser_name(),null,userData.getId(),null);
+                ForumDetails fd = new ForumDetails(question,MainActivity.userData.getUser_name(),null,MainActivity.userData.getId(),null);
                 fd.setDetails(details);
                 fd.setFaculty_tags(facet.getText().toString());
                 fd.setTags(tags.getText().toString());
-                System.out.println(userData.getUser_name());
-                System.out.println(userData.getId());
+//                System.out.println(MainActivity.userData.getUser_name());
+                System.out.println(MainActivity.userData.getId());
                 new RequestServer().add_forum_question(fd);
 
                 Intent in = new Intent(this,Wireframe13.class);
-                in.putExtra("user_data",userData);
+                in.putExtra("user_data",MainActivity.userData);
                 in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(in);
                 break;

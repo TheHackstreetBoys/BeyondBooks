@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity  {
     private TextView forgot_pass;
     Integer id;
     String password_string;
-    UserData userData;
+    public static UserData userData;
     private Button LogIn;
 
     @Override
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     public void pass(){
-        userData = new UserData(id);
+        MainActivity.userData = new UserData(id);
         Intent intent = new Intent(getApplicationContext(), Wireframe13.class);
         intent.putExtra("user_data", userData);
         Toast.makeText(this, "OK allowed", Toast.LENGTH_LONG).show();
