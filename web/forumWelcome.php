@@ -72,6 +72,7 @@ $(document).ready(function(){
 
 	      <ul class="nav navbar-nav navbar-right">
 
+		
 		<li>
 <?php
 $content ='
@@ -121,7 +122,7 @@ $(\'#searchid\').click(function(){
         width:190px;
         padding:8px;
         font-size:12px;
-	margin-top:-1cm;
+	margin-top:0cm;
 
      margin-left:1cm;
        }

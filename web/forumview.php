@@ -254,7 +254,7 @@ $row1 = pg_fetch_array($result1);
 echo '<h2>'.$row['title'].'</h2><br/>';
 echo 'By: <em>'.$row1['f_name'].' '.$row1['l_name'].'</em><br/>';
 echo '<em>Posted '.$row['ts'].'</em><br/>';
-echo '<textarea name="textarea" rows="10" cols="50" style="overflow:hidden;" disabled>'.nl2br($row['content']).'</textarea><br/>';
+echo '<textarea name="textarea" rows="10" cols="50" style="overflow:hidden;" disabled>'.nl2br(pg_escape_string($row['content'])).'</textarea><br/>';
 $currentid=$_SESSION["user_id"];
 
 if($row1['user_id']==$currentid)
