@@ -26,12 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add your Book"
-<<<<<<< HEAD
-            android:id="@+id/addbook"
-=======
             android:id="@+id/book_view_btn"
             android:padding="10dp"
->>>>>>> e2ae5cfdd6630901551f836e14eac2ae3a1e708a
             android:background="@android:color/holo_blue_dark"/>
     </LinearLayout>
 

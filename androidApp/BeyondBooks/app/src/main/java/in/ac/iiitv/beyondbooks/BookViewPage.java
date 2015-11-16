@@ -1,15 +1,12 @@
 package in.ac.iiitv.beyondbooks;
 
 import android.app.ActionBar;
-<<<<<<< HEAD
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
-=======
 import android.content.Intent;
->>>>>>> e2ae5cfdd6630901551f836e14eac2ae3a1e708a
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.os.Build;
@@ -44,7 +41,7 @@ import java.util.NoSuchElementException;
 
 public class BookViewPage extends FragmentActivity implements NewBook.OnFragmentInteractionListener, View.OnClickListener {
 
-<<<<<<< HEAD
+
     private HorizontalScrollView hsv_new,hsv_top;
     private LinearLayout topbook,newbook;
     private TextView tv1;
@@ -52,16 +49,7 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
     private ArrayList<NewlyAdded> topRatedArrayList;
     private ImageView iv1;
     private RatingBar rb1;
-=======
-    HorizontalScrollView hsv_new,hsv_top;
-    LinearLayout topbook,newbook;
-    TextView tv1;
-    ArrayList<NewlyAdded> newlyAddedArrayList;
-    ArrayList<NewlyAdded> topRatedArrayList;
->>>>>>> e2ae5cfdd6630901551f836e14eac2ae3a1e708a
     private ViewPager newbooks,topratedbook;
-
-
     private PagerAdapter newbooksadapter;
     private Button addbook;
 
@@ -95,7 +83,7 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
 
         //TODO add image, rating and book title
 
-<<<<<<< HEAD
+
         //addbook button
         addbook = (Button) findViewById(R.id.addBook);
         addbook.setOnClickListener(new View.OnClickListener() {
@@ -104,10 +92,6 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
                 startActivity(new Intent(getApplicationContext(),AddBook.class));
             }
         });
-
-=======
->>>>>>> e2ae5cfdd6630901551f836e14eac2ae3a1e708a
-
     }
 
     @Override
@@ -222,10 +206,7 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
                 in = new Intent(this,Wireframe13.class);
                 startActivity(in);
                 break;
-            case R.id.option_reviewed_books:
-                in = new Intent(this,Frame11.class);
-                startActivity(in);
-                break;
+
         }
 
         return super.onOptionsItemSelected(item);
