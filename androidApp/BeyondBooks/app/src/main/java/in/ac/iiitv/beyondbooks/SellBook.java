@@ -44,9 +44,7 @@ public class SellBook extends AppCompatActivity {
             sellbook.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO Do it tyagi
-                    // send the data to the server and intent to the next class
-                    //getstring from all edittext and send them to the server
+                    sell(v);
                 }
             });
         }

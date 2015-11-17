@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,8 +45,8 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
         notifications = new ArrayList<String>();
         RequestServer requestServer = new RequestServer();
         Intent intent = getIntent();
-//        changepass = (TextView) findViewById(R.id.changepass);
-        userData = (UserData)intent.getSerializableExtra("user_data");
+        changepass = (TextView) findViewById(R.id.changepass);
+        userData = MainActivity.userData;
 //        userData.setForumActivities(requestServer.get_forum_activities(userData.getId()));
 //        UserData temp = requestServer.get_user_name_image(userData.getId());
 //        userData.setImage_link(temp.getImage_link());
@@ -82,15 +83,15 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
         notification_list.setOnItemClickListener(this);
         //change password method
 //        changepass = (TextView) findViewById(R.id.changepass);
-//        changepass.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                EditText new_password = (EditText) findViewById(R.id.changepassword);
-//                new_password.setVisibility(View.VISIBLE);
-//                Button set_pass = (Button) findViewById(R.id.setpassword);
-//                set_pass.setVisibility(View.VISIBLE);
-//            }
-//        });
+        changepass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText new_password = (EditText) findViewById(R.id.changepassword);
+                new_password.setVisibility(View.VISIBLE);
+                Button set_pass = (Button) findViewById(R.id.setpassword);
+                set_pass.setVisibility(View.VISIBLE);
+            }
+        });
 
         //button upload image
 
@@ -125,9 +126,24 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
         Bitmap bitmap_to_send = ((BitmapDrawable)user_image.getDrawable()).getBitmap();
         requestServer.setImage(bitmap_to_send, userData.getId().toString());
     }
-//    public void set_new_password(View v){
-//
-//    }
+    public void set_new_password(View v){
+        TextView textView = (TextView)findViewById(R.id.changepassword);
+        String new_pass = textView.getText().toString();
+        if(new_pass.length() == 0){
+            Toast.makeText(this, "Set some password", Toast.LENGTH_LONG).show();
+        }
+        else{
+            RequestServer requestServer = new RequestServer();
+            Boolean result = requestServer.set_new_password(MainActivity.userData.getId(), new_pass);
+            if(result){
+                Toast.makeText(this, "New password set successful", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(this, "Some error occured", Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

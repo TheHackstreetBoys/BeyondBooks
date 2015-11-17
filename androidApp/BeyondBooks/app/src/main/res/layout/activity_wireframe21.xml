@@ -53,4 +53,12 @@
         android:id="@+id/comment"
         />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit review"
+        android:onClick="submit_review"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal" />
+
 </LinearLayout>

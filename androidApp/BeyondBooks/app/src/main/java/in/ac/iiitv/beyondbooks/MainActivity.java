@@ -30,7 +30,13 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //Temporary testing
+//        Intent to_delete = new Intent(this, Wireframe7.class);
+//        userData = new UserData(201351010);
+//        to_delete.putExtra("user_data", userData);
+//        to_delete.putExtra("isbn","1001");
+//        startActivity(to_delete);
+        //till here
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -92,11 +98,13 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     public void pass(){
+
         MainActivity.userData = new UserData(id);
 
         Intent intent = new Intent(this, BookViewPage.class);
         intent.putExtra("user_data", userData);
-        Toast.makeText(this, "OK allowed", Toast.LENGTH_LONG).show();
+        intent.putExtra("isbn", "1001");
+        Toast.makeText(this, "Correct details", Toast.LENGTH_LONG).show();
         startActivity(intent);
     }
 
@@ -123,6 +131,12 @@ public class MainActivity extends AppCompatActivity  {
     public void change_pass_cancel(){
         Toast.makeText(this, "Enter your id first", Toast.LENGTH_LONG).show();
     }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
 
 
 }
