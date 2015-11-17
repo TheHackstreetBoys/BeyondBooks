@@ -21,6 +21,11 @@ foreach (explode(" ",$tags) as $value) {
     pg_insert($dbconn,"qtags", array('qid'=>$row, 'htag'=>$value));
 }
 
+foreach (explode(",",$ftags) as $value) {
+
+    pg_insert($dbconn,"qtags", array('qid'=>$row, 'htag'=>$value));
+}
+
 
 echo json_encode(array('result' => "true" ));
 

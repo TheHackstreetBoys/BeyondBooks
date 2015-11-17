@@ -91,7 +91,7 @@ public class Frame17 extends AppCompatActivity implements View.OnClickListener, 
         }
         else
         {
-            facet.setText(facet.getText()+" "+facultycopy.get(position));
+            facet.setText(facet.getText()+","+facultycopy.get(position));
         }
         facultycopy.remove(position);
         facultyadapter.notifyDataSetChanged();

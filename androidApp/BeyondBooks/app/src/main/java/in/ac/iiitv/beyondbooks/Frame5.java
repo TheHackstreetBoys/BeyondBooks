@@ -5,12 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class Frame5 extends AppCompatActivity {
+public class Frame5 extends AppCompatActivity implements AdapterView.OnItemClickListener {
     SearchOutputReturn searchOutputReturn;
     ListView review_list,forum_list;
     ArrayAdapter<String> adapter_review,adapter_forum;
@@ -39,6 +41,8 @@ public class Frame5 extends AppCompatActivity {
 
         review_list.setAdapter(adapter_review);
         forum_list.setAdapter(adapter_forum);
+        review_list.setOnItemClickListener(this);
+        forum_list.setOnItemClickListener(this);
 
     }
 
@@ -50,6 +54,10 @@ public class Frame5 extends AppCompatActivity {
         for(int reviews=0;reviews<sr.getReview().size();reviews++){
             values.add(sr.getReview().get(reviews).getBook_name());
         }
+        if(values.size()==0)
+        {
+            values.add("No Books related to query");
+        }
         return values;
     }
 
@@ -60,6 +68,10 @@ public class Frame5 extends AppCompatActivity {
         ArrayList<ForumOverview> values_forum = sr.getForum();
         for(int i=0;i<values_forum.size();i++){
             values.add(values_forum.get(i).getTitle());
+        }
+        if(values.size()==0)
+        {
+            values.add("No forum questions related to query");
         }
         return values;
     }
@@ -111,6 +123,30 @@ public class Frame5 extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        int pid = parent.getId();
+
+        switch (pid)
+        {
+            case R.id.frame5_review:
+                if(reviewarr.get(position).compareTo("No Books related to query")!=0)
+                {
+                    Intent in = new Intent(this, Wireframe7.class);
+                    in.putExtra("isbn",searchOutputReturn.getReview().get(position).getId().toString());
+                    startActivity(in);
+                }
+                break;
+            case R.id.frame5_forum:
+                if(reviewarr.get(position).compareTo("No forum questions related to query")!=0)
+                {
+                    Intent in = new Intent(this, Wireframe7.class);
+                    in.putExtra("isbn",searchOutputReturn.getReview().get(position).getId().toString());
+                    startActivity(in);
+                }
+                break;
+        }
+    }
 }
 
 
