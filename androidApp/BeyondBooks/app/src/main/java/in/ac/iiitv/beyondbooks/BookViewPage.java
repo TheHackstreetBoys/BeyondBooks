@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -39,7 +40,7 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-public class BookViewPage extends FragmentActivity implements NewBook.OnFragmentInteractionListener, View.OnClickListener {
+public class BookViewPage extends AppCompatActivity implements NewBook.OnFragmentInteractionListener, View.OnClickListener {
 
 
     private HorizontalScrollView hsv_new,hsv_top;
@@ -67,15 +68,9 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
         numOfSlides = naa.size();
 
         newbooks = (ViewPager)findViewById(R.id.book_view_newadded_pager);
-        newbooksadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),naa);
+        newbooksadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),naa,naa.size());
         newbooks.setAdapter(newbooksadapter);
 
-        newbooks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),AddBook.class));
-            }
-        });
 
         addbook = (Button) findViewById(R.id.book_view_btn);
         addbook.setOnClickListener(this);
@@ -83,39 +78,28 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
         //top rated books
 
 
+        numOfSlides = top.size();
         topratedbook = (ViewPager)findViewById(R.id.book_toprated_pager);
-        topratedadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),top);
+        topratedadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),top,top.size());
         topratedbook.setAdapter(topratedadapter);
 
-        //addbook button
-        addbook = (Button) findViewById(R.id.book_view_btn);
-        addbook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),AddBook.class));
-            }
-        });
+        newbooks.setPageTransformer(true, new ZoomOutPageTransformer());
+        topratedbook.setPageTransformer(true,new ZoomOutPageTransformer());
+
+
     }
 
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
-        //set toprated book
-        topratedbook = (ViewPager) findViewById(R.id.book_toprated_pager);
-        topratedbook.setAdapter(new NewBooksPagerAdapter(getSupportFragmentManager()));
-
-        //TODO add image, rating and book title
-
-
-
+    public void onFragmentInteraction(Long isbn) {
+        Intent in = new Intent(this,Wireframe7.class);
+        in.putExtra("isbn",isbn.toString());
+        startActivity(in);
     }
 
     @Override
     public void onClick(View v) {
         startActivity(new Intent(getApplicationContext(),AddBook.class));
-
-
     }
 
     private class NewBooksPagerAdapter extends FragmentStatePagerAdapter
@@ -126,22 +110,24 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
        }
 
         ArrayList<NewlyAdded> nav;
-        public NewBooksPagerAdapter(FragmentManager fm, ArrayList<NewlyAdded> naa)
+        int size;
+        public NewBooksPagerAdapter(FragmentManager fm, ArrayList<NewlyAdded> nax, int siz)
 
         {
             super(fm);
-            nav = naa;
+            size= siz;
+            nav = nax;
         }
 
         @Override
         public Fragment getItem(int position)
         {
-            return new NewBook(naa.get(position));
+            return new NewBook(nav.get(position));
         }
 
         @Override
         public int getCount() {
-            return numOfSlides;
+            return size;
         }
     }
 
@@ -163,7 +149,7 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
         switch(id)
         {
             case R.id.option_search:
-                in = new Intent(this,Frame5.class);
+                in = new Intent(this,Search.class);
                 startActivity(in);
                 break;
             case R.id.option_home:
@@ -190,6 +176,45 @@ public class BookViewPage extends FragmentActivity implements NewBook.OnFragment
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class ZoomOutPageTransformer implements ViewPager.PageTransformer {
+        private static final float MIN_SCALE = 0.85f;
+        private static final float MIN_ALPHA = 0.5f;
+
+        public void transformPage(View view, float position) {
+            int pageWidth = view.getWidth();
+            int pageHeight = view.getHeight();
+
+            if (position < -1) { // [-Infinity,-1)
+                // This page is way off-screen to the left.
+                view.setAlpha(0);
+
+            } else if (position <= 1) { // [-1,1]
+                // Modify the default slide transition to shrink the page as well
+                float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
+                float vertMargin = pageHeight * (1 - scaleFactor) / 2;
+                float horzMargin = pageWidth * (1 - scaleFactor) / 2;
+                if (position < 0) {
+                    view.setTranslationX(horzMargin - vertMargin / 2);
+                } else {
+                    view.setTranslationX(-horzMargin + vertMargin / 2);
+                }
+
+                // Scale the page down (between MIN_SCALE and 1)
+                view.setScaleX(scaleFactor);
+                view.setScaleY(scaleFactor);
+
+                // Fade the page relative to its size.
+                view.setAlpha(MIN_ALPHA +
+                        (scaleFactor - MIN_SCALE) /
+                                (1 - MIN_SCALE) * (1 - MIN_ALPHA));
+
+            } else { // (1,+Infinity]
+                // This page is way off-screen to the right.
+                view.setAlpha(0);
+            }
+        }
     }
 
 }

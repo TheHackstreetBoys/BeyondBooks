@@ -21,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SellingList" />
         <activity android:name=".Wireframe7" >
         </activity>
         <activity android:name=".Wireframe12" >
@@ -43,7 +44,9 @@
         </activity>
         <activity android:name=".Frame17" >
         </activity>
-        <activity android:name=".Frame14" >
+        <activity android:name=".Frame14"
+            android:windowSoftInputMode="adjustPan">
+
         </activity>
         <activity android:name=".BookViewPage" >
         </activity>
@@ -54,6 +57,10 @@
         <activity android:name=".AboutUs" >
         </activity>
         <activity android:name=".Search" >
+        </activity>
+        <activity android:name=".MyDialog" >
+        </activity>
+        <activity android:name=".ChangePassword" >
         </activity>
     </application>
 

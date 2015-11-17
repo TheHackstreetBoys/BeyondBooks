@@ -14,24 +14,24 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class Frame14 extends AppCompatActivity {
+public class Frame14 extends AppCompatActivity implements View.OnClickListener {
     private Intent intent;
     private TextView topic,description;
     private ListView comments;
-    private EditText yourcomment;
+    private EditText yc;
     private Button submit;
     private String usercomment;
+    private int q_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frame14);
         intent = getIntent();
 
-        final Integer q_id = Integer.parseInt(intent.getStringExtra("q_id"));
-        System.out.println("frame14 is : "+q_id);
+        q_id = Integer.parseInt(intent.getStringExtra("q_id"));
+        System.out.println("frame14 is : " + q_id);
 
-        final RequestServer requestServer = new RequestServer();
-        ForumDetails forumDetails = requestServer.forumDetails(q_id);
+        ForumDetails forumDetails = (new RequestServer()).forumDetails(q_id);
 
 
 
@@ -45,21 +45,15 @@ public class Frame14 extends AppCompatActivity {
 
         //populate the listview
         comments = (ListView) findViewById(R.id.comment_list);
-        comments.setAdapter(new ArrayAdapter<String>(this,android.R.layout.
-                simple_list_item_1,android.R.id.text1,getcomentlist(forumDetails)));
+        comments.setAdapter(new ArrayAdapter<String>(this,R.layout.frame10_list_view,getcomentlist(forumDetails)));
 
         //get user comment
-        yourcomment = (EditText) findViewById(R.id.yourcomment);
-        usercomment = String.valueOf(yourcomment.getText());
+        yc = (EditText) findViewById(R.id.yourcomment);
+        usercomment = yc.getText().toString();
 
         //implement button - send user comment on clicking the button
-        submit = (Button) findViewById(R.id.submit);
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requestServer.send_comment(q_id,MainActivity.userData.getId(),usercomment);
-            }
-        });
+        submit = (Button) findViewById(R.id.frame14_submit);
+        submit.setOnClickListener(this);
 
     }
 
@@ -89,7 +83,7 @@ public class Frame14 extends AppCompatActivity {
         switch(id)
         {
             case R.id.option_search:
-                in = new Intent(this,Frame5.class);
+                in = new Intent(this,Search.class);
                 startActivity(in);
                 break;
             case R.id.option_home:
@@ -120,5 +114,9 @@ public class Frame14 extends AppCompatActivity {
     }
 
 
-
+    @Override
+    public void onClick(View v) {
+        System.out.println(usercomment);
+        new RequestServer().send_comment(q_id,MainActivity.userData.getId(),usercomment);
+    }
 }

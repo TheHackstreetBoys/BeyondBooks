@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,8 +45,8 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
         notifications = new ArrayList<String>();
         RequestServer requestServer = new RequestServer();
         Intent intent = getIntent();
-//        changepass = (TextView) findViewById(R.id.changepass);
-        userData = (UserData)intent.getSerializableExtra("user_data");
+        changepass = (TextView) findViewById(R.id.changepass);
+        userData = MainActivity.userData;
 //        userData.setForumActivities(requestServer.get_forum_activities(userData.getId()));
 //        UserData temp = requestServer.get_user_name_image(userData.getId());
 //        userData.setImage_link(temp.getImage_link());
@@ -68,8 +69,8 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
         */
 
         user_image = (ImageView) findViewById(R.id.user_image);
-        user_image.setImageBitmap(requestServer.getImage(userData.getId().toString() + "_dp.jpg"));
-        Bitmap temp = requestServer.getImage(userData.getId().toString() + "_dp.jpg");
+        user_image.setImageBitmap(requestServer.getImage("pictures/"+userData.getId().toString() + "_dp.jpg"));
+        Bitmap temp = requestServer.getImage("pictures/"+userData.getId().toString() + "_dp.jpg");
         System.out.println("temp : "+temp);
         user_image.setImageBitmap(temp);
         //set username
@@ -79,18 +80,16 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
         userid = (TextView) findViewById(R.id.user_id);
         userid.setText(userData.getId().toString());
 
-        notification_list.setOnItemClickListener(this);
+//        notification_list.setOnItemClickListener(this);
         //change password method
 //        changepass = (TextView) findViewById(R.id.changepass);
-//        changepass.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                EditText new_password = (EditText) findViewById(R.id.changepassword);
-//                new_password.setVisibility(View.VISIBLE);
-//                Button set_pass = (Button) findViewById(R.id.setpassword);
-//                set_pass.setVisibility(View.VISIBLE);
-//            }
-//        });
+        changepass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent change_pass_intent = new Intent(getApplicationContext(), ChangePassword.class);
+                startActivity(change_pass_intent);
+            }
+        });
 
         //button upload image
 
@@ -98,7 +97,7 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
         uploadimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO set the image picker to choose the image and then sent it to the server
+                set_dp(v);
 
             }
         });
@@ -118,14 +117,26 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
         notification_list.setAdapter(adapter_notification);
         System.out.println("Reaching here ....");
     }
-    public void set_dp(){
+    public void set_dp(View v){
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, RESULT_LOAD_IMAGE);
-        RequestServer requestServer = new RequestServer();
-        Bitmap bitmap_to_send = ((BitmapDrawable)user_image.getDrawable()).getBitmap();
-        requestServer.setImage(bitmap_to_send, userData.getId().toString());
     }
 //    public void set_new_password(View v){
+//        TextView textView = (TextView)findViewById(R.id.changepassword);
+//        String new_pass = textView.getText().toString();
+//        if(new_pass.length() == 0){
+//            Toast.makeText(this, "Set some password", Toast.LENGTH_LONG).show();
+//        }
+//        else{
+//            RequestServer requestServer = new RequestServer();
+//            Boolean result = requestServer.set_new_password(MainActivity.userData.getId(), new_pass);
+//            if(result){
+//                Toast.makeText(this, "New password set successful", Toast.LENGTH_LONG).show();
+//            }
+//            else{
+//                Toast.makeText(this, "Some error occured", Toast.LENGTH_LONG).show();
+//            }
+//        }
 //
 //    }
     @Override
@@ -134,6 +145,10 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
         if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null){
             Uri selected_image = data.getData();
             user_image.setImageURI(selected_image);
+            RequestServer requestServer = new RequestServer();
+            Bitmap bitmap_to_send = ((BitmapDrawable)user_image.getDrawable()).getBitmap();
+            requestServer.setImage(bitmap_to_send, userData.getId().toString());
+            System.out.println("mounica ");
         }
     }
     @Override
@@ -154,7 +169,7 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
         switch(id)
         {
             case R.id.option_search:
-                in = new Intent(this,Frame5.class);
+                in = new Intent(this,Search.class);
                 startActivity(in);
                 break;
             case R.id.option_home:

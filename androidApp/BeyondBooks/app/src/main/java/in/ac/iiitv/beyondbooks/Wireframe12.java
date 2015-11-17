@@ -70,7 +70,7 @@ public class Wireframe12 extends AppCompatActivity implements AdapterView.OnItem
         switch(id)
         {
             case R.id.option_search:
-                in = new Intent(this,Frame5.class);
+                in = new Intent(this,Search.class);
                 startActivity(in);
                 break;
             case R.id.option_home:
@@ -104,10 +104,21 @@ public class Wireframe12 extends AppCompatActivity implements AdapterView.OnItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         int vid = parent.getId();
+        int qid;
+        Intent in;
         switch (vid)
         {
             case R.id.harkat_startedlist :
-                int qid = forumActivities.getQuestions_started().get(position).getQ_id();
+                qid = forumActivities.getQuestions_started().get(position).getQ_id();
+                in = new Intent(this, Frame14.class);
+                in.putExtra("q_id",(new Integer(qid)).toString());
+                startActivity(in);
+                break;
+            case R.id.harkat_commentedlist :
+                qid = forumActivities.getQuestions_started().get(position).getQ_id();
+                in = new Intent(this, Frame14.class);
+                in.putExtra("q_id", (new Integer(qid)).toString());
+                startActivity(in);
         }
     }
 }

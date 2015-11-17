@@ -91,7 +91,7 @@ public class Frame17 extends AppCompatActivity implements View.OnClickListener, 
         }
         else
         {
-            facet.setText(facet.getText()+" "+facultycopy.get(position));
+            facet.setText(facet.getText()+","+facultycopy.get(position));
         }
         facultycopy.remove(position);
         facultyadapter.notifyDataSetChanged();
@@ -115,7 +115,7 @@ public class Frame17 extends AppCompatActivity implements View.OnClickListener, 
         switch(id)
         {
             case R.id.option_search:
-                in = new Intent(this,Frame5.class);
+                in = new Intent(this,Search.class);
                 startActivity(in);
                 break;
             case R.id.option_home:

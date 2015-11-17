@@ -37,7 +37,7 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="124dp"
-                    android:layout_weight="0.70"
+                    android:layout_weight="0.54"
                     android:weightSum="1">
 
                     <ImageView
@@ -50,7 +50,7 @@
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="117dp"
+                    android:layout_height="wrap_content"
                     android:weightSum="1">
 
                     <TextView
@@ -66,6 +66,20 @@
                         android:layout_height="wrap_content"
                         android:text="Price to be retrieved"
                         android:id="@+id/textView6"
+                        android:layout_weight="0.51" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:text="age"
+                        android:textStyle="bold"
+                        android:textColor="#000000"
+                        android:id="@+id/age" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="age"
+                        android:id="@+id/age2"
                         android:layout_weight="0.51" />
                 </LinearLayout>
             </LinearLayout>
@@ -90,16 +104,15 @@
         <RelativeLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="244dp"
-            android:layout_weight="1"
-            >
+            android:layout_height="170dp">
 
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Click to bid"
+                android:text="Bid for this book"
                 android:id="@+id/submit"
+                android:onClick="bid"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="center" />
 
@@ -110,9 +123,9 @@
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:id="@+id/textView8"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
@@ -121,12 +134,12 @@
                 android:layout_height="wrap_content"
                 android:text="Seller description would appear here"
                 android:id="@+id/seller"
-                android:layout_below="@+id/textView8"
                 android:layout_above="@+id/submit"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/textView8" />
 
 
         </RelativeLayout>
