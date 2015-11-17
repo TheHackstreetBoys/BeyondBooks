@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity  {
                         boolean allowed = rs.authenticate(id, password_string);
                         if (allowed)
                         {
-                            password.setText("");
                             pass();
                         }
                         else
@@ -99,10 +98,8 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     public void pass(){
-
-        MainActivity.userData = new UserData(id);
-
-        Intent intent = new Intent(this, BookViewPage.class);
+        userData = new UserData(id);
+        Intent intent = new Intent(this, Wireframe8.class);
         intent.putExtra("user_data", userData);
         intent.putExtra("isbn", "1001");
         Toast.makeText(this, "Correct details", Toast.LENGTH_LONG).show();

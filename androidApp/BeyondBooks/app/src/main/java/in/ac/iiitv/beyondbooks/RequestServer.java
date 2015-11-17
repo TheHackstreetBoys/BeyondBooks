@@ -740,13 +740,7 @@ public class RequestServer {
     public Boolean setImage(Bitmap image, String user_id){
         address = "http://"+ip+"/andy_set_image.php";
         try {
-            new UploadImage(image, user_id).execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        try {
+            new UploadImage(image, user_id).execute();
             JSONObject jsonObject = new JSONObject(output);
             Boolean result = Boolean.parseBoolean(jsonObject.getString("result"));
             return result;
@@ -805,7 +799,7 @@ public class RequestServer {
         return 0;
     }
 
-    public ArrayList<String> get_selling_list(Integer user_id){
+    public ArrayList<Pair<String, Long>> get_selling_list(Integer user_id){
         address = "http://"+ip+"/andy_get_selling_list.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", user_id.toString()));
@@ -813,10 +807,12 @@ public class RequestServer {
             new Setup().execute(params).get();
             JSONObject jsonObject = new JSONObject(output);
             JSONArray jsonArray = jsonObject.getJSONArray("selling_list");
-            ArrayList<String> to_return = new ArrayList<String>();
+            ArrayList<Pair<String, Long>> to_return = new ArrayList<Pair<String, Long>>();
             for(int i=0;i<jsonArray.length();i++){
-                String temp = jsonArray.getString(i);
-                to_return.add(temp);
+                JSONObject temp= jsonArray.getJSONObject(i);
+                String name = temp.getString("name");
+                Long isbn = Long.parseLong(temp.getString("isbn"));
+                to_return.add(new Pair<String, Long>(name, isbn));
             }
             return to_return;
         }catch(JSONException e){
@@ -834,6 +830,26 @@ public class RequestServer {
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", user_id.toString()));
         params.add(new Pair<String, String>("password", password));
+        try{
+            new Setup().execute(params).get();
+            JSONObject jsonObject = new JSONObject(output);
+            Boolean to_return = Boolean.parseBoolean(jsonObject.getString("result"));
+            return to_return;
+        }catch(JSONException e){
+            e.printStackTrace();
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Boolean delete_selling_list_item(Integer user_id, Long isbn){
+        address = "http://"+ip+"/andy_delete_selling_list_item.php";
+        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+        params.add(new Pair<String, String>("user_id", user_id.toString()));
+        params.add(new Pair<String, String>("isbn", isbn.toString()));
         try{
             new Setup().execute(params).get();
             JSONObject jsonObject = new JSONObject(output);
