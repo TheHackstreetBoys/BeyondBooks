@@ -46,6 +46,7 @@ public class Wireframe21 extends AppCompatActivity {
             Toast.makeText( getApplicationContext(),"Your reviews have been submitted successfully" , Toast.LENGTH_LONG).show();
             Intent new_intent = new Intent(this, Wireframe7.class);
             new_intent.putExtra("isbn", isbn.toString());
+            new_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(new_intent);
         }
         else{
@@ -70,7 +71,7 @@ public class Wireframe21 extends AppCompatActivity {
         switch(id)
         {
             case R.id.option_search:
-                in = new Intent(this,Frame5.class);
+                in = new Intent(this,Search.class);
                 startActivity(in);
                 break;
             case R.id.option_home:

@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity  {
                         boolean allowed = rs.authenticate(id, password_string);
                         if (allowed)
                         {
+                            password.setText("");
                             pass();
                         }
                         else

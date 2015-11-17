@@ -12,26 +12,32 @@ import java.util.ArrayList;
 
 public class Frame5 extends AppCompatActivity {
     SearchOutputReturn searchOutputReturn;
-    ListView review_list,buysell_list,forum_list;
-    ArrayAdapter<String> adapter_review,adapter_buysell,adapter_forum;
+    ListView review_list,forum_list;
+    ArrayAdapter<String> adapter_review,adapter_forum;
+    ArrayList<String> reviewarr,forumarr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frame5);
         Intent intent = getIntent();
-        searchOutputReturn = (SearchOutputReturn) intent.getSerializableExtra("search_results");
+
+        String qs = getIntent().getStringExtra("qs");
+
+        searchOutputReturn = (new RequestServer()).search(qs);
 
         review_list = (ListView) findViewById(R.id.frame5_review);
 
         forum_list = (ListView) findViewById(R.id.frame5_forum);
 
-        adapter_review = new ArrayAdapter<String>(this, R.layout.frame10_list_view,setreview_listitem(searchOutputReturn));
-        adapter_buysell = new ArrayAdapter<String>(this, R.layout.frame10_list_view,setbuysell_listitem(searchOutputReturn));
-        adapter_forum = new ArrayAdapter<String>(this, R.layout.frame10_list_view,setforum_listitem(searchOutputReturn));
+        reviewarr = setreview_listitem(searchOutputReturn);
+        forumarr = setforum_listitem(searchOutputReturn);
+
+        adapter_review = new ArrayAdapter<String>(this, R.layout.frame10_list_view,reviewarr);
+
+        adapter_forum = new ArrayAdapter<String>(this, R.layout.frame10_list_view,forumarr);
 
         review_list.setAdapter(adapter_review);
-        buysell_list.setAdapter(adapter_buysell);
         forum_list.setAdapter(adapter_forum);
 
     }
@@ -47,15 +53,6 @@ public class Frame5 extends AppCompatActivity {
         return values;
     }
 
-
-
-    public ArrayList<String> setbuysell_listitem(SearchOutputReturn sr){
-        ArrayList<String> values = new ArrayList<String>(0);
-        for(int i=0;i<sr.getBuy_sell().size();i++){
-            values.add(sr.getBuy_sell().get(i).getBook_name());
-        }
-        return values;
-    }
 
 
     public ArrayList<String> setforum_listitem(SearchOutputReturn sr){
@@ -84,7 +81,7 @@ public class Frame5 extends AppCompatActivity {
         switch(id)
         {
             case R.id.option_search:
-                in = new Intent(this,Frame5.class);
+                in = new Intent(this,Search.class);
                 startActivity(in);
                 break;
             case R.id.option_home:

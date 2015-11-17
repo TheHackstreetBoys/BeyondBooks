@@ -60,7 +60,7 @@ public class Frame10 extends AppCompatActivity implements AdapterView.OnItemClic
         switch(id)
         {
             case R.id.option_search:
-                in = new Intent(this,Frame5.class);
+                in = new Intent(this,Search.class);
                 startActivity(in);
                 break;
             case R.id.option_home:
