@@ -1016,9 +1016,9 @@ public class RequestServer {
                     result.append(line);
                 }
             }catch (Exception e){
-                e.printStackTrace();
+                System.out.println("fuddi");
             }
-            return_method(result.toString());
+//            return_method(result.toString());
             return null;
         }
     }

@@ -3,6 +3,7 @@ package in.ac.iiitv.beyondbooks;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Wireframe7 extends Activity {
+public class Wireframe7 extends AppCompatActivity {
 
     ListView comments, sellers;
     CustomAdapter_frame7comment adapter_comments, adapter_sellers;
@@ -47,7 +48,7 @@ public class Wireframe7 extends Activity {
         //set image of the book
         //TODO get image from server to set the image of the book
         bookimage = (ImageView) findViewById(R.id.book_image);
-        Bitmap image_to_set = requestServer.getImage("books_pics/" + intent.getStringExtra("isbn") + ".jpg");
+        Bitmap image_to_set = requestServer.getImage("/" + intent.getStringExtra("isbn") + ".jpg");
         bookimage.setImageBitmap(image_to_set);
         System.out.println("Entering here...");
         //bookdetails should contain bookimage link
