@@ -39,6 +39,9 @@
             android:orderInCategory="100" app:showAsAction="never" />
         <item android:id="@+id/option_activity_on_forum" android:title="Activities on forum"
             android:orderInCategory="100" app:showAsAction="never" />
+        <item android:id="@+id/option_logout" android:title="logout"
+            android:orderInCategory="100" app:showAsAction="never" />
+
     </menu>
     </item>
 >>>>>>> a0de765ee859695a0978aea2c4fc654a99593074

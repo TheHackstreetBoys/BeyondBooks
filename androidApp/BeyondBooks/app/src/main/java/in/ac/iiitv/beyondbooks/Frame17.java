@@ -148,6 +148,11 @@ public class Frame17 extends AppCompatActivity implements View.OnClickListener, 
                 in = new Intent(this,SellingList.class);
                 startActivity(in);
                 break;
+            case R.id.option_logout:
+                in = new Intent(this,MainActivity.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(in);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

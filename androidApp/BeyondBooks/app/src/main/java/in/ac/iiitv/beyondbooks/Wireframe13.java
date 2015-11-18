@@ -144,6 +144,11 @@ public class Wireframe13 extends AppCompatActivity implements AdapterView.OnItem
 
                 startActivity(in);
                 break;
+            case R.id.option_logout:
+                in = new Intent(this,MainActivity.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(in);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

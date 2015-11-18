@@ -95,6 +95,11 @@ public class Wireframe21 extends AppCompatActivity {
                 in = new Intent(this,Wireframe13.class);
                 startActivity(in);
                 break;
+            case R.id.option_logout:
+                in = new Intent(this,MainActivity.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(in);
+                break;
 
         }
 

@@ -104,10 +104,18 @@ public class AboutUs extends AppCompatActivity {
                 startActivity(in);
                 break;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 =======
 >>>>>>> a0de765ee859695a0978aea2c4fc654a99593074
+=======
+            case R.id.option_logout:
+                in = new Intent(this,MainActivity.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(in);
+                break;
+>>>>>>> 14de733b003cb9d6fd14d1046d4577bbe5485505
         }
 
         return super.onOptionsItemSelected(item);

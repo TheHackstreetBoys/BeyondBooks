@@ -21,7 +21,7 @@ public class Frame14 extends AppCompatActivity implements View.OnClickListener {
     private EditText yc;
     private Button submit;
     private String usercomment;
-    private int q_id;
+    private Integer q_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +48,7 @@ public class Frame14 extends AppCompatActivity implements View.OnClickListener {
         comments.setAdapter(new ArrayAdapter<String>(this,R.layout.frame10_list_view,getcomentlist(forumDetails)));
 
         //get user comment
-        yc = (EditText) findViewById(R.id.yourcomment);
-        usercomment = yc.getText().toString();
+        yc = (EditText) findViewById(R.id.frame14_comment);
 
         //implement button - send user comment on clicking the button
         submit = (Button) findViewById(R.id.frame14_submit);
@@ -116,6 +115,11 @@ public class Frame14 extends AppCompatActivity implements View.OnClickListener {
                 in = new Intent(this,SellingList.class);
                 startActivity(in);
                 break;
+            case R.id.option_logout:
+                in = new Intent(this,MainActivity.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(in);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -125,7 +129,12 @@ public class Frame14 extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        usercomment = yc.getText().toString();
         System.out.println(usercomment);
-        new RequestServer().send_comment(q_id,MainActivity.userData.getId(),usercomment);
+        new RequestServer().send_comment(MainActivity.userData.getId(), q_id, usercomment);
+        Intent in = new Intent(this,Frame14.class);
+        in.putExtra("q_id",q_id.toString());
+        in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(in);
     }
 }
