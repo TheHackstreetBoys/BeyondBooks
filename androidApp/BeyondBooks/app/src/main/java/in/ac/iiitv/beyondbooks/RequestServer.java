@@ -46,8 +46,10 @@ public class RequestServer {
     String image_link;
     Bitmap image;
     RequestServer(){
-        ip = "10.100.88.235/BeyondBooks/web/andy";
-        image_link = "10.100.88.235/BeyondBooks/web";
+        //ip = "10.100.88.235/BeyondBooks/web/andy";
+        //image_link = "10.100.88.235/BeyondBooks/web";
+        ip = "10.100.91.55/beyondbooks";
+        image_link="10.100.91.55";
     }
 
     public Boolean authenticate(Integer id, String password){
@@ -552,11 +554,11 @@ public class RequestServer {
         address = "http://"+ip+"/andy_add_forum_question.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("title", forumDetails.getTitle()));
-        params.add(new Pair<String, String>("author_name", forumDetails.getAuthor_name()));
         params.add(new Pair<String, String>("author_id", forumDetails.getAuthor_id().toString()));
         params.add(new Pair<String, String>("details", forumDetails.getDetails()));
         params.add(new Pair<String, String>("tags", forumDetails.getTags()));
         params.add(new Pair<String, String>("faculty_tags", forumDetails.getFaculty_tags()));
+        System.out.println(forumDetails.getTitle()+" "+  forumDetails.getAuthor_id()+" "+forumDetails.getDetails()+" "+forumDetails.getTags()+" "+forumDetails.getFaculty_tags());
         try{
             new Setup().execute(params).get();
             JSONObject jsonObject = new JSONObject(output);
