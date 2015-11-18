@@ -93,9 +93,14 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     public void pass(){
+<<<<<<< HEAD
 
         MainActivity.userData = new UserData(id);
 
+=======
+        userData = new UserData(id);
+        password.setText("");
+>>>>>>> a0de765ee859695a0978aea2c4fc654a99593074
         Intent intent = new Intent(this, BookViewPage.class);
         intent.putExtra("user_data", userData);
         intent.putExtra("isbn", "1001");

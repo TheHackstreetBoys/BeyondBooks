@@ -69,8 +69,13 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
         */
 
         user_image = (ImageView) findViewById(R.id.user_image);
+<<<<<<< HEAD
         user_image.setImageBitmap(requestServer.getImage(userData.getId().toString() + "_dp.jpg"));
         Bitmap temp = requestServer.getImage(userData.getId().toString() + "_dp.jpg");
+=======
+        user_image.setImageBitmap(requestServer.getDpImage("/pictures/"+userData.getId().toString() + "_dp.jpg"));
+        Bitmap temp = requestServer.getDpImage("/pictures/"+userData.getId().toString() + "_dp.jpg");
+>>>>>>> a0de765ee859695a0978aea2c4fc654a99593074
         System.out.println("temp : "+temp);
         user_image.setImageBitmap(temp);
         //set username
@@ -80,7 +85,11 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
         userid = (TextView) findViewById(R.id.user_id);
         userid.setText(userData.getId().toString());
 
+<<<<<<< HEAD
         notification_list.setOnItemClickListener(this);
+=======
+
+>>>>>>> a0de765ee859695a0978aea2c4fc654a99593074
         //change password method
 //        changepass = (TextView) findViewById(R.id.changepass);
         changepass.setOnClickListener(new View.OnClickListener() {
@@ -152,6 +161,7 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
             user_image.setImageURI(selected_image);
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -176,6 +186,7 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
             case R.id.option_home:
 
                 in = new Intent(this, BookViewPage.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(in);
                 break;
             case R.id.option_user_profile:
@@ -194,7 +205,14 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
                 in = new Intent(this,Wireframe13.class);
                 startActivity(in);
                 break;
-
+            case R.id.option_sell:
+                in = new Intent(this,SellBook.class);
+                startActivity(in);
+                break;
+            case R.id.option_sell_list:
+                in = new Intent(this,SellingList.class);
+                startActivity(in);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

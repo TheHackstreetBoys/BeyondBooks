@@ -157,7 +157,7 @@ $(\'#searchid\').click(function(){
     }
 </style>
 <div class="content" style="margin-top: -3%;">
-<input type="text" class="form-control search"  id="searchid" placeholder="Search for Books" />
+<input type="text" class="form-control search"  id="searchid" placeholder="Search for Forums" />
 	<span class="glyphicon glyphicon-search form-control-feedback" style="padding-top: 15%; color: #3596e0;"></span>
 <div id="result"> </div>
 </div>
@@ -336,7 +336,7 @@ echo "<a href='forumWelcome.php?page1=$total_pages'>".'-Next'."</a> "; // Goto l
 
 
 
-$result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid )  DESC LIMIT 4");
+$result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid ) LIMIT $num_rec_per_page OFFSET $start_from");
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No forums is Created Yet.</p>';
@@ -358,7 +358,7 @@ $result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS nu
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
 
 
-					$sql = "SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid";
+					$sql = "SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid)";
 					$rs_result = pg_query($sql); //run the query
 					$total_records = pg_num_rows($rs_result);  //count number of records
 					$total_pages = ceil($total_records / $num_rec_per_page);

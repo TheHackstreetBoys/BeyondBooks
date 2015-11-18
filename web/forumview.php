@@ -157,7 +157,7 @@ $(\'#searchid\').click(function(){
     }
 </style>
 <div class="content" style="margin-top: -3%;">
-<input type="text" class="form-control search"  id="searchid" placeholder="Search for Books" />
+<input type="text" class="form-control search"  id="searchid" placeholder="Search for Froums" />
 	<span class="glyphicon glyphicon-search form-control-feedback" style="padding-top: 15%; color: #3596e0;"></span>
 <div id="result"> </div>
 </div>
@@ -391,7 +391,7 @@ HTML;
 
 
 <?php
-$num_rec_per_page=2;
+$num_rec_per_page=4;
 
 if (isset($_GET["page2"])) { $page  = $_GET["page2"]; } else { $page=1; };
 $start_from = ($page-1) * $num_rec_per_page;

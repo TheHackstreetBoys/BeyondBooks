@@ -3,6 +3,7 @@ package in.ac.iiitv.beyondbooks;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,15 +24,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Wireframe7 extends Activity {
+public class Wireframe7 extends AppCompatActivity {
 
-    ListView comments,sellers ;
-    CustomAdapter_frame7comment adapter_comments,adapter_sellers;
+    ListView comments, sellers;
+    CustomAdapter_frame7comment adapter_comments, adapter_sellers;
     Intent intent;
     ImageView bookimage;
-    RatingBar bookrating,rating;
+    RatingBar bookrating, rating;
     Long isbn;
-    TextView bookdesc,general,student,faculty;
+    TextView bookdesc, general, student, faculty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +48,12 @@ public class Wireframe7 extends Activity {
         //set image of the book
         //TODO get image from server to set the image of the book
         bookimage = (ImageView) findViewById(R.id.book_image);
-        Bitmap image_to_set = requestServer.getImage("books_pics/"+intent.getStringExtra("isbn")+".jpg");
+        Bitmap image_to_set = requestServer.getImage("/" + intent.getStringExtra("isbn") + ".jpg");
         bookimage.setImageBitmap(image_to_set);
         System.out.println("Entering here...");
         //bookdetails should contain bookimage link
-       // map.put(bookDetails.get, R.drawable.book_image);
-       // bookimage.setImageResource(map.get(bookDetails.getImagelink()));
+        // map.put(bookDetails.get, R.drawable.book_image);
+        // bookimage.setImageResource(map.get(bookDetails.getImagelink()));
 
         //set ratings of the book
         bookrating = (RatingBar) findViewById(R.id.book_rating);
@@ -63,7 +64,7 @@ public class Wireframe7 extends Activity {
         bookdesc.setText(bookDetails.getAbout_book());
         System.out.println("Entering here2...");
         //set ratings general student and faculty on click of textview
-        general = (TextView)findViewById(R.id.general_rating);
+        general = (TextView) findViewById(R.id.general_rating);
         student = (TextView) findViewById(R.id.student_rating);
         faculty = (TextView) findViewById(R.id.faculty_rating);
         System.out.println("Entering here3...");
@@ -77,15 +78,15 @@ public class Wireframe7 extends Activity {
                 switch (id) {
                     case R.id.general_rating:
                         rating.setRating(bookDetails.getPublic_ratings());
-                        Toast.makeText(getApplicationContext(),"general rating",Toast.LENGTH_LONG ).show();
+                        Toast.makeText(getApplicationContext(), "general rating", Toast.LENGTH_LONG).show();
                         break;
                     case R.id.student_rating:
                         rating.setRating(bookDetails.getStudent_ratings());
-                        Toast.makeText(getApplicationContext(),"student rating",Toast.LENGTH_LONG ).show();
+                        Toast.makeText(getApplicationContext(), "student rating", Toast.LENGTH_LONG).show();
                         break;
                     case R.id.faculty_rating:
                         rating.setRating(bookDetails.getFaculty_ratings());
-                        Toast.makeText(getApplicationContext(),"faculty rating",Toast.LENGTH_LONG ).show();
+                        Toast.makeText(getApplicationContext(), "faculty rating", Toast.LENGTH_LONG).show();
                         break;
                     default:
                         System.out.print("Some error : not able to set the rating of different kind(general,student,faculty)");
@@ -98,7 +99,7 @@ public class Wireframe7 extends Activity {
         student.setOnClickListener(cl);
         faculty.setOnClickListener(cl);
         System.out.println("Entering here5...");
-        
+
         //fill the comment list
         //TODO
         comments = (ListView) findViewById(R.id.comments);
@@ -109,7 +110,7 @@ public class Wireframe7 extends Activity {
         System.out.println("Entering here7...");
         System.out.println("Entering here9...");
         comments.setAdapter(new MyNewAdapter(this, comments_temp));
-                System.out.println("Entering here10...");
+        System.out.println("Entering here10...");
         //sellers.setAdapter(new ArrayAdapter<String>(this , android.R.layout.simple_list_item_1,android.R.id.text1,getcomments(bookDetails)));
         //bookdetail should also contain an arraylist of comments on this book
 
@@ -122,7 +123,7 @@ public class Wireframe7 extends Activity {
         System.out.println("Entering here12...");
         final Intent seller_intent = new Intent(this, Wireframe20.class);
         System.out.println("Entering here13...");
-        sellers.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        sellers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Integer seller_pos = position;
@@ -136,7 +137,6 @@ public class Wireframe7 extends Activity {
                 startActivity(seller_intent);
             }
         });
-
 
 
     }
@@ -153,13 +153,14 @@ public class Wireframe7 extends Activity {
         return sellers;
     }*/
 
-    public void give_review(View v){
+    public void give_review(View v) {
         intent = new Intent(this, Wireframe21.class);
 
         intent.putExtra("isbn", isbn.toString());
 
         startActivity(intent);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -175,37 +176,44 @@ public class Wireframe7 extends Activity {
         int id = item.getItemId();
 
         Intent in;
-        switch(id)
-        {
+        switch (id) {
             case R.id.option_search:
-                in = new Intent(this,Search.class);
-
+                in = new Intent(this, Search.class);
                 startActivity(in);
                 break;
             case R.id.option_home:
 
-                in = new Intent(this, MainActivity.class);
+                in = new Intent(this, BookViewPage.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(in);
                 break;
             case R.id.option_user_profile:
-                in = new Intent(this,Wireframe8.class);
+                in = new Intent(this, Wireframe8.class);
                 startActivity(in);
                 break;
             case R.id.option_activity_on_forum:
-                in = new Intent(this,Wireframe8.class);
+                in = new Intent(this, Wireframe12.class);
                 startActivity(in);
                 break;
             case R.id.option_book_shelf:
-                in = new Intent(this,Wireframe8.class);
+                in = new Intent(this, Frame10.class);
                 startActivity(in);
                 break;
             case R.id.option_forum:
-                in = new Intent(this,Wireframe8.class);
+                in = new Intent(this, Wireframe13.class);
                 startActivity(in);
                 break;
-
+            case R.id.option_sell:
+                in = new Intent(this, SellBook.class);
+                startActivity(in);
+                break;
+            case R.id.option_sell_list:
+                in = new Intent(this, SellingList.class);
+                startActivity(in);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 }

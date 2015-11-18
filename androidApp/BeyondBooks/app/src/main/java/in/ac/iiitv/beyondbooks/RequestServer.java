@@ -46,8 +46,13 @@ public class RequestServer {
     String image_link;
     Bitmap image;
     RequestServer(){
+<<<<<<< HEAD
         ip = "beyondbooks.iiitv.ac.in/andy";
         image_link = "beyondbooks.iiitv.ac.in";
+=======
+        ip = "10.100.88.235/BeyondBooks/web/andy";
+        image_link = "10.100.88.235/BeyondBooks/web";
+>>>>>>> a0de765ee859695a0978aea2c4fc654a99593074
     }
 
     public Boolean authenticate(Integer id, String password){
@@ -737,6 +742,20 @@ public class RequestServer {
         return image;
     }
 
+    public Bitmap getDpImage(String image_name){
+        String str_link = "http://"+image_link+image_name;
+        System.out.println("image_name: " + str_link);
+        DownloadTask downloadTask = new DownloadTask();
+        try {
+            downloadTask.execute(str_link).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
     public Boolean setImage(Bitmap image, String user_id){
         address = "http://"+ip+"/andy_set_image.php";
         try {
@@ -986,9 +1005,9 @@ public class RequestServer {
                     result.append(line);
                 }
             }catch (Exception e){
-                e.printStackTrace();
+                System.out.println("fuddi");
             }
-            return_method(result.toString());
+//            return_method(result.toString());
             return null;
         }
     }
