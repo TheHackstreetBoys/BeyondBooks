@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity  {
                         boolean allowed = rs.authenticate(id, password_string);
                         if (allowed)
                         {
-                            password.setText("");
                             pass();
                         }
                         else
@@ -93,9 +92,8 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     public void pass(){
-
-        MainActivity.userData = new UserData(id);
-
+        userData = new UserData(id);
+        password.setText("");
         Intent intent = new Intent(this, BookViewPage.class);
         intent.putExtra("user_data", userData);
         intent.putExtra("isbn", "1001");

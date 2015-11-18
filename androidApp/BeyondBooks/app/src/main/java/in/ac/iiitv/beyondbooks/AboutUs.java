@@ -26,15 +26,9 @@ public class AboutUs extends AppCompatActivity {
 
         //getOverflowMenu();
         wv = (WebView)findViewById(R.id.wv);
-        wv.loadUrl("http://10.100.5.226/BeyondBooks/web/about_us.php");
+        wv.loadUrl("http://10.100.88.235/BeyondBooks/web/about_us.php");
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
 
     private void getOverflowMenu() {
@@ -52,6 +46,13 @@ public class AboutUs extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -62,35 +63,42 @@ public class AboutUs extends AppCompatActivity {
         switch(id)
         {
             case R.id.option_search:
-                in = new Intent(this,Frame5.class);
-
+                in = new Intent(this,Search.class);
                 startActivity(in);
                 break;
             case R.id.option_home:
 
-                in = new Intent(this, MainActivity.class);
+                in = new Intent(this, BookViewPage.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(in);
                 break;
             case R.id.option_user_profile:
-                in = new Intent(this,Wireframe8.class);
+                in = new Intent(this, Wireframe8.class);
                 startActivity(in);
                 break;
             case R.id.option_activity_on_forum:
-                in = new Intent(this,Wireframe8.class);
+                in = new Intent(this,Wireframe12.class);
                 startActivity(in);
                 break;
             case R.id.option_book_shelf:
-                in = new Intent(this,Wireframe8.class);
+                in = new Intent(this,Frame10.class);
                 startActivity(in);
                 break;
             case R.id.option_forum:
-                in = new Intent(this,Wireframe8.class);
+                in = new Intent(this,Wireframe13.class);
                 startActivity(in);
                 break;
-
-
+            case R.id.option_sell:
+                in = new Intent(this,SellBook.class);
+                startActivity(in);
+                break;
+            case R.id.option_sell_list:
+                in = new Intent(this,SellingList.class);
+                startActivity(in);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 }

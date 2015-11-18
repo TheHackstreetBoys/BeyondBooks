@@ -14,7 +14,9 @@
             android:orderInCategory="100" app:showAsAction="never" />
         <item android:id="@+id/option_user_profile" android:title="User Profile"
             android:orderInCategory="100" app:showAsAction="never" />
-        <item android:id="@+id/option_buy_sell" android:title="Sell Book"
+        <item android:id="@+id/option_sell" android:title="Sell Book"
+            android:orderInCategory="100" app:showAsAction="never" />
+        <item android:id="@+id/option_sell_list" android:title="Selling List"
             android:orderInCategory="100" app:showAsAction="never" />
         <item android:id="@+id/option_forum" android:title="Forum"
             android:orderInCategory="100" app:showAsAction="never" />

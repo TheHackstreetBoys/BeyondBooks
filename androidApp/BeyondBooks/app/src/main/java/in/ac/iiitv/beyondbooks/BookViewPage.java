@@ -155,6 +155,7 @@ public class BookViewPage extends AppCompatActivity implements NewBook.OnFragmen
             case R.id.option_home:
 
                 in = new Intent(this, BookViewPage.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(in);
                 break;
             case R.id.option_user_profile:
@@ -173,10 +174,19 @@ public class BookViewPage extends AppCompatActivity implements NewBook.OnFragmen
                 in = new Intent(this,Wireframe13.class);
                 startActivity(in);
                 break;
+            case R.id.option_sell:
+                in = new Intent(this,SellBook.class);
+                startActivity(in);
+                break;
+            case R.id.option_sell_list:
+                in = new Intent(this,SellingList.class);
+                startActivity(in);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     private class ZoomOutPageTransformer implements ViewPager.PageTransformer {
         private static final float MIN_SCALE = 0.85f;

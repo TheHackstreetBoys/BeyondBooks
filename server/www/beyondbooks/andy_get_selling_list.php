@@ -6,7 +6,6 @@ $query = "select isbn, title from
 ( books natural join ( select distinct isbn from
 (single_sell natural join (select distinct prodid from pbase where sellerid = '$username') as lund) as pooku ) as pp ) as m ;";
 
-
 $result = pg_query($query);
 $fin_arr = array();
 while ($row = pg_fetch_array($result))

@@ -75,6 +75,7 @@ public class Frame5 extends AppCompatActivity implements AdapterView.OnItemClick
         }
         return values;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -99,6 +100,7 @@ public class Frame5 extends AppCompatActivity implements AdapterView.OnItemClick
             case R.id.option_home:
 
                 in = new Intent(this, BookViewPage.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(in);
                 break;
             case R.id.option_user_profile:
@@ -117,11 +119,19 @@ public class Frame5 extends AppCompatActivity implements AdapterView.OnItemClick
                 in = new Intent(this,Wireframe13.class);
                 startActivity(in);
                 break;
-
+            case R.id.option_sell:
+                in = new Intent(this,SellBook.class);
+                startActivity(in);
+                break;
+            case R.id.option_sell_list:
+                in = new Intent(this,SellingList.class);
+                startActivity(in);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

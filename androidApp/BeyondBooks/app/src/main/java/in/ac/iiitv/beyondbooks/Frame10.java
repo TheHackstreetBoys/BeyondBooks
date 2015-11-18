@@ -19,16 +19,16 @@ public class Frame10 extends AppCompatActivity implements AdapterView.OnItemClic
     ListView lv;
     RequestServer rs;
     ArrayList<NewlyAdded> myshelf;
-    UserData userData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frame10);
         rs = new RequestServer();
         intent = getIntent();
-        userData = (UserData) intent.getSerializableExtra("user_data");
 
-        myshelf = rs.get_bookshelf(userData.getId());
+
+        myshelf = rs.get_bookshelf(MainActivity.userData.getId());
 
         lv = (ListView) findViewById(R.id.frame10_bookshelf);
         ArrayList<String> sl = new ArrayList<String>();
@@ -66,6 +66,7 @@ public class Frame10 extends AppCompatActivity implements AdapterView.OnItemClic
             case R.id.option_home:
 
                 in = new Intent(this, BookViewPage.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(in);
                 break;
             case R.id.option_user_profile:
@@ -84,17 +85,26 @@ public class Frame10 extends AppCompatActivity implements AdapterView.OnItemClic
                 in = new Intent(this,Wireframe13.class);
                 startActivity(in);
                 break;
+            case R.id.option_sell:
+                in = new Intent(this,SellBook.class);
+                startActivity(in);
+                break;
+            case R.id.option_sell_list:
+                in = new Intent(this,SellingList.class);
+                startActivity(in);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         long isbn = myshelf.get(position).getId();
         Intent in = new Intent(this,Wireframe7.class);
         in.putExtra("isbn",(new Long(isbn)).toString() );
-        in.putExtra("user_data",userData);
+        in.putExtra("user_data",MainActivity.userData);
         startActivity(in);
     }
 }
