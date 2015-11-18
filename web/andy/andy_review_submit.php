@@ -1,4 +1,5 @@
 <?php
+require 'db_conn.php';
 $username = $_POST['user_id'];
 $isbn = $_POST['isbn'];
 $ratings = $_POST['ratings'];

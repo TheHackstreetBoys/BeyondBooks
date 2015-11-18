@@ -284,7 +284,8 @@ if(query1)
 	$query = pg_query("INSERT INTO author(isbn, author) VALUES ('$isbn', '$author')");
 	echo "Book added to our ever-growing database";
 }
-else {
+else
+{
 	echo "This book is Already there.";
 }
 
@@ -306,7 +307,7 @@ else
 								Enter the Price of Book.
 							</label>
 							<div class="col-sm-4">
-								<input class="form-control" id="inputPassword3" name = 'price' type="text">
+								<input class="form-control" id="inputPassword3" name = 'price' type="number" min="0">
 							</div>
 						</div>
 
@@ -316,7 +317,7 @@ else
 								Enter the Age of Book.
 							</label>
 							<div class="col-sm-4">
-								<input class="form-control" id="inputPassword3"  name = 'age' type="text" placeholder  ="Age of the book is in month by default">
+								<input class="form-control" id="inputPassword3"  name = 'age' type="number" placeholder  ="Age of the book is in month by default" min="0">
 							</div>
 						</div>
 

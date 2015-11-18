@@ -336,7 +336,7 @@ echo "<a href='forumWelcome.php?page1=$total_pages'>".'-Next'."</a> "; // Goto l
 
 
 
-$result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid ) LIMIT $num_rec_per_page OFFSET $start_from");
+$result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid ) DESC LIMIT $num_rec_per_page OFFSET $start_from");
 
 			if(!pg_num_rows($result)) {
 							echo '<p>No forums is Created Yet.</p>';

@@ -234,7 +234,7 @@ $num_rec_per_page=4;
 if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; };
 $start_from = ($page-1) * $num_rec_per_page;
 
-			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn LIMIT $num_rec_per_page OFFSET $start_from");
+			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn ORDER BY books.ts DESC LIMIT $num_rec_per_page OFFSET $start_from");
 
 
 
