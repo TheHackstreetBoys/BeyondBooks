@@ -328,6 +328,14 @@ echo "<a href='forumWelcome.php?page1=$total_pages'>".'-Next'."</a> "; // Goto l
 
 					<?php
 
+
+					$num_rec_per_page=4;
+
+					if (isset($_GET["page2"])) { $page  = $_GET["page2"]; } else { $page=1; };
+					$start_from = ($page-1) * $num_rec_per_page;
+
+
+
 $result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid )  DESC LIMIT 4");
 
 			if(!pg_num_rows($result)) {
@@ -348,7 +356,21 @@ $result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS nu
 					echo '<a href="forumview.php?qid='.$row['qid'].'">Read More</a> | ';
 					echo '<a href="forumview.php?qid='.$row['qid'].'#comments">'.$row1['num'].' comments</a>';
 					echo '<hr style="height:1px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">';
+
+
+					$sql = "SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS num FROM forum_replies WHERE qid = question_forum.qid";
+					$rs_result = pg_query($sql); //run the query
+					$total_records = pg_num_rows($rs_result);  //count number of records
+					$total_pages = ceil($total_records / $num_rec_per_page);
+
 			     }
+					 echo "<a href='forumWelcome.php?page2=1'>".'Prev-'."</a> "; // Goto 1st page
+
+					 for ($i=1; $i<=$total_pages; $i++) {
+					             echo "<a href='forumWelcome.php?page2=".$i."'>".$i."</a> ";
+					 };
+					 echo "<a href='forumWelcome.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last page
+
 					}
 
 					?>

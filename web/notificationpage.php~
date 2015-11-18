@@ -234,8 +234,8 @@ include("html.inc");
 
 $num_rec_per_page=2;
 
-if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; };
-$start_from = ($page-1) * $num_rec_per_page;
+if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page1=1; };
+$start_from = ($page1-1) * $num_rec_per_page;
 
 session_start();
 $user_id = $_SESSION['user_id'];

@@ -444,7 +444,7 @@ $start_from = ($page-1) * $num_rec_per_page;
 	$result = pg_query("SELECT * FROM review WHERE isbn = '$isbn' LIMIT $num_rec_per_page OFFSET $start_from");
 
 			if(!pg_num_rows($result)) {
-							echo '<p>No forums is Created Yet.</p>';
+							echo '<p>No Review is given</p>';
 						     }
 			else {
 

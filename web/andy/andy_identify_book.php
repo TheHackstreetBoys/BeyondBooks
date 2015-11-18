@@ -1,6 +1,6 @@
 <?php
 require 'db_conn.php';
-$isbn = $_POST['isbn']='1001';
+$isbn = $_POST['isbn'];
 $result = null;
 if(pg_num_rows(pg_query("select * from books where isbn='$isbn'")) == 0)
 {
