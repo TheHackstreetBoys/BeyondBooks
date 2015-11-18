@@ -16,5 +16,8 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/option_activity_on_forum" android:title="Activities on forum"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/option_options" android:title="Options"
+        android:icon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
+        android:orderInCategory="100" app:showAsAction="always" />
 
 </menu>

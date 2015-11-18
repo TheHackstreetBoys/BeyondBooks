@@ -1,11 +1,17 @@
 package in.ac.iiitv.beyondbooks;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
+import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.support.v7.widget.Toolbar;
 
 public class AboutUs extends AppCompatActivity {
 
@@ -14,6 +20,7 @@ public class AboutUs extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
+
 
         wv = (WebView)findViewById(R.id.wv);
         wv.loadUrl("http://10.100.5.226/BeyondBooks/web/about_us.php");
@@ -62,6 +69,7 @@ public class AboutUs extends AppCompatActivity {
                 in = new Intent(this,Wireframe8.class);
                 startActivity(in);
                 break;
+
 
         }
 

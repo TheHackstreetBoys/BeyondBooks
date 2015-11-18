@@ -21,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SellingList" />
         <activity android:name=".Wireframe7" >
         </activity>
         <activity android:name=".Wireframe12" >
@@ -54,13 +53,10 @@
         </activity>
         <activity android:name=".Wireframe8" >
         </activity>
-        <activity android:name=".AboutUs" >
+        <activity android:name=".AboutUs">
+
         </activity>
         <activity android:name=".Search" >
-        </activity>
-        <activity android:name=".MyDialog" >
-        </activity>
-        <activity android:name=".ChangePassword" >
         </activity>
     </application>
 

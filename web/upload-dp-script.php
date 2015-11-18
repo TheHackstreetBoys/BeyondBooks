@@ -6,7 +6,7 @@ session_start();
 $userid=$_SESSION["user_id"];
 $id=$userid;
 
-$valid_formats = array("jpg", "png", "gif");
+$valid_formats = array("jpg", "png", "gif", "jpeg");
 
 $temp=explode(".",$_FILES["images"]["name"]);
 $newfilename = $id.'_dp'.'.'.end($temp);

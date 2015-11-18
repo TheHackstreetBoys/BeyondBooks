@@ -189,6 +189,18 @@ include("html.inc");
 <li><a href="bookshelf.php">My Bookshelf</a></li>
 <li><a href="my_sold_books.php">My Sold Books</a></li>
 <li><a href="addbook.php">Add a book</a></li>
+<li><a href="notificationpage.php">My Notifications <div class="circle">
+<?php
+
+session_start();
+$user_id = $_SESSION["user_id"];
+
+$query1 = pg_query("SELECT COUNT(*) AS num FROM notify WHERE whom = '$user_id'");
+
+$row = pg_fetch_array($query1);
+echo $row['num'];
+
+?></div></a></li>
 </ul></li>
 
 	      </ul>
@@ -253,7 +265,7 @@ $row1 = pg_fetch_array($result1);
 
 echo '<h2>'.$row['title'].'</h2><br/>';
 echo 'By: <em>'.$row1['f_name'].' '.$row1['l_name'].'</em><br/>';
-echo '<em>Posted '.$row['ts'].'</em><br/>';
+echo '<em>Posted '.$row['ts'].'</em><br/>.0';
 echo '<textarea name="textarea" rows="10" cols="50" style="overflow:hidden;" disabled>'.nl2br(pg_escape_string($row['content'])).'</textarea><br/>';
 $currentid=$_SESSION["user_id"];
 
@@ -332,9 +344,6 @@ echo <<<HTML
 
 							<div class="row">
 									<div class="col-md-12">
-									<button type="button" class="btn btn-success active btn-block">
-										Load More
-									</button>
 								</div>
 							</div>
 							<h3>

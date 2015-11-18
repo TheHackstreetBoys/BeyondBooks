@@ -240,7 +240,7 @@ $start_from = ($page-1) * $num_rec_per_page;
 session_start();
 $user_id = $_SESSION['user_id'];
 
-$result = pg_query("SELECT * FROM notify JOIN bid ON bid.prodid = notify.link WHERE notify.whom = '201351010' LIMIT $num_rec_per_page OFFSET $start_from");
+$result = pg_query("SELECT * FROM notify JOIN bid ON bid.prodid = notify.link WHERE notify.whom = '$user_id' LIMIT $num_rec_per_page OFFSET $start_from");
 echo pg_last_error();
 
 
@@ -266,12 +266,12 @@ else
 		echo $row['ts'].'<br/>';
 		$body = substr($row['description'], 0, 20);
 		echo nl2br($body).'...<br/>';
-		echo '<a href="notificationdelete.php?prodid='.$row['prodid'].'&bidder='.$row['bidder'].'&des='.$row['description'].'"><button type="button" class="btn btn-danger">Delete this Notification</button></a>';
+		echo '<a href="notificationdelete.php?prodid='.$row['prodid'].'&bidder='.$row['bidder'].'&des='.$row['description'].'"><button type="button" class="btn btn-danger">Delete this Notification</button></a><br/><br/>';
 
 
 
 $user=$_SESSION["user_id"];
-		$sql = "SELECT * FROM notify JOIN bid ON bid.prodid = notify.link WHERE notify.whom =''$user' ";
+		$sql = "SELECT * FROM notify JOIN bid ON bid.prodid = notify.link WHERE notify.whom = '$user_id' ";
 		$rs_result = pg_query($sql); //run the query
 		$total_records = pg_num_rows($rs_result);  //count number of records
 		$total_pages = ceil($total_records / $num_rec_per_page);

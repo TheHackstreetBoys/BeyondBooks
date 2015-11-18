@@ -344,9 +344,6 @@ echo <<<HTML
 
 							<div class="row">
 									<div class="col-md-12">
-									<button type="button" class="btn btn-success active btn-block">
-										Load More
-									</button>
 								</div>
 							</div>
 							<h3>

@@ -10,7 +10,7 @@ if(!isset($_SESSION["user_id"]))
 <html>
 <head>
 <title>
-Welcome to Forum
+Your Notifications
 </title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
@@ -72,7 +72,7 @@ $(document).ready(function(){
 
 	      <ul class="nav navbar-nav navbar-right">
 
-		
+
 		<li>
 <?php
 $content ='
@@ -240,31 +240,42 @@ $start_from = ($page-1) * $num_rec_per_page;
 session_start();
 $user_id = $_SESSION['user_id'];
 
-$result = pg_query("SELECT * FROM notify JOIN bid ON bid.prodid = notify.link WHERE notify.whom = '201351010' LIMIT $num_rec_per_page OFFSET $start_from");
+$result = pg_query("SELECT * FROM notify JOIN bid ON bid.prodid = notify.link WHERE notify.whom = '$user_id' LIMIT $num_rec_per_page OFFSET $start_from");
 echo pg_last_error();
 
 
 if(!pg_num_rows($result)) {
 	echo '<p>No Notifications</p>';
-} else {
-	while($row = pg_fetch_array($result)) {
+}
+else
+{
+	while($row = pg_fetch_array($result))
+	{
+		$filename1=$row['bidder'].'_dp';
+		$filename1="pictures/".$filename1."*";
+		$result2=glob($filename1);
+		if (!empty($result2))
+		echo '<img src="'.$result2[0].'"class="img-circle" style="width: 50px">';
+		else
+		echo '<img src="images/user.png"class="img-circle" style="width: 50px">';
+		$uid = $row['bidder'];
 
-	
-		echo '<h2>'.$row['bidder'].'</h2><br/>';
+		$namequery=pg_query("SELECT * from user_profile where user_id='$uid'");
+		$namequery_answer=pg_fetch_array($namequery);
+		echo '<b>'.$namequery_answer['f_name'].' '.$namequery_answer['l_name'].'</b>'.', '.$row['bidder'].'<br/>';
 		echo $row['ts'].'<br/>';
 		$body = substr($row['description'], 0, 20);
 		echo nl2br($body).'...<br/>';
-		echo '<a href="notificationdelete.php?prodid='.$row['prodid'].'&bidder='.$row['bidder'].'&des='..'">Delete this Notification</a>';
-	
+		echo '<a href="notificationdelete.php?prodid='.$row['prodid'].'&bidder='.$row['bidder'].'&des='.$row['description'].'"><button type="button" class="btn btn-danger">Delete this Notification</button></a><br/><br/>';
 
 
 
-$sql = "SELECT * FROM notify JOIN bid ON bid.prodid = notify.link WHERE notify.whom = '201351010'";
-$rs_result = pg_query($sql); //run the query
-$total_records = pg_num_rows($rs_result);  //count number of records
-$total_pages = ceil($total_records / $num_rec_per_page);
-
-}
+$user=$_SESSION["user_id"];
+		$sql = "SELECT * FROM notify JOIN bid ON bid.prodid = notify.link WHERE notify.whom = '$user_id' ";
+		$rs_result = pg_query($sql); //run the query
+		$total_records = pg_num_rows($rs_result);  //count number of records
+		$total_pages = ceil($total_records / $num_rec_per_page);
+	}
 }
 
 

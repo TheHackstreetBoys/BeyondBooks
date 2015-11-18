@@ -58,7 +58,7 @@ $(document).ready(function(){
    $user_id=$_SESSION["user_id"];
 	 $query="SELECT * FROM user_profile where user_id='$user_id'";
    $result=pg_query($query);
-   $row=pg_fetch_array($result);
+   $row_profile=pg_fetch_array($result);
 ?>
 
 
@@ -259,7 +259,7 @@ echo $row['num'];
 	<div class="row">
 		<div class="col-md-12" id="profile-pic">
 			<?php
-			$filename=$row['user_id'].'_dp';
+			$filename=$row_profile['user_id'].'_dp';
 			$filename="pictures/".$filename."*";
 			$result1=glob($filename);
 			if (!empty($result1))
@@ -292,7 +292,7 @@ echo $row['num'];
 								 </label>
 								  <div class="col-sm-7">
 								 	<?php
-								 		echo '<input type="text" class="form-control" id="fname" name="fname" placeholder="'.$row['f_name'].'"/>';
+								 		echo '<input type="text" class="form-control" id="fname" name="fname" placeholder="'.$row_profile['f_name'].'"/>';
 								 		?>
 								 	</div>
 								 <label for="lname" class="col-sm-3 control-label">
@@ -300,7 +300,7 @@ echo $row['num'];
 								 </label>
 								 	<div class="col-sm-7">
 								 	<?php
-								 		echo '<input type="text" class="form-control" id="lname" name="lname" placeholder="'.$row['l_name'].'"/>';
+								 		echo '<input type="text" class="form-control" id="lname" name="lname" placeholder="'.$row_profile['l_name'].'"/>';
 								 		?>
 								 	</div>
 							<label for="inputEmail3" class="col-sm-3 control-label">
@@ -308,7 +308,7 @@ echo $row['num'];
 							</label>
 							<div class="col-sm-7">
 								 <?php
-							        echo '<input type="text" class="form-control" id="inputEmail3" placeholder="'.$row['email_id'].'" readonly/>';
+							        echo '<input type="text" class="form-control" id="inputEmail3" placeholder="'.$row_profile['email_id'].'" readonly/>';
 							        ?>
 							</div>
 						</div>
@@ -321,7 +321,7 @@ echo $row['num'];
 				</div>
 				<div class="col-md-6" style="background-color:lavender;">
 					<h3> <b>Change Password</b></h3>
-						<h4>To change your password, enter your current password and then the password you desire!</h4> <hr/>
+						<h4>To change your password, enter your current password, click outside and then the password you desire!</h4> <hr/>
 
 						<div class="form-group">
 
