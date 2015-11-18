@@ -30,13 +30,7 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Temporary testing
-//        Intent to_delete = new Intent(this, Wireframe7.class);
-//        userData = new UserData(201351010);
-//        to_delete.putExtra("user_data", userData);
-//        to_delete.putExtra("isbn","1001");
-//        startActivity(to_delete);
-        //till here
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

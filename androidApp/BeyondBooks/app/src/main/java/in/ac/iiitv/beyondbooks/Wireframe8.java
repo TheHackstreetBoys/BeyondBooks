@@ -80,7 +80,7 @@ public class Wireframe8 extends AppCompatActivity implements AdapterView.OnItemC
         userid = (TextView) findViewById(R.id.user_id);
         userid.setText(userData.getId().toString());
 
-        notification_list.setOnItemClickListener(this);
+        //notification_list.setOnItemClickListener(this);
         //change password method
 //        changepass = (TextView) findViewById(R.id.changepass);
         changepass.setOnClickListener(new View.OnClickListener() {

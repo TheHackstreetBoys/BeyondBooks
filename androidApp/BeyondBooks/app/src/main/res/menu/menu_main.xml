@@ -1,20 +1,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <item android:id="@+id/option_home" android:title="Home"
-        android:orderInCategory="100" app:showAsAction="never" />
+
     <item android:id="@+id/option_search" android:title="Search"
         android:orderInCategory="100" app:showAsAction="always"
         android:icon="@android:drawable/ic_menu_search"/>
-    <item android:id="@+id/option_user_profile" android:title="User Profile"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/option_buy_sell" android:title="Sell Book"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/option_forum" android:title="Forum"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/option_book_shelf" android:title="Book shelf"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/option_activity_on_forum" android:title="Activities on forum"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/option_options" android:title="Options"
+        android:icon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
+        android:orderInCategory="100" app:showAsAction="always" >
+
+    <menu>
+        <item android:id="@+id/option_home" android:title="Home"
+            android:orderInCategory="100" app:showAsAction="never" />
+        <item android:id="@+id/option_user_profile" android:title="User Profile"
+            android:orderInCategory="100" app:showAsAction="never" />
+        <item android:id="@+id/option_buy_sell" android:title="Sell Book"
+            android:orderInCategory="100" app:showAsAction="never" />
+        <item android:id="@+id/option_forum" android:title="Forum"
+            android:orderInCategory="100" app:showAsAction="never" />
+        <item android:id="@+id/option_book_shelf" android:title="Book shelf"
+            android:orderInCategory="100" app:showAsAction="never" />
+        <item android:id="@+id/option_activity_on_forum" android:title="Activities on forum"
+            android:orderInCategory="100" app:showAsAction="never" />
+    </menu>
+    </item>
 
 </menu>
