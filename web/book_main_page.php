@@ -670,6 +670,7 @@ echo "<a href='book_main_page.php?isbn=$isbn&page1=$total_pages'>".'-Next'."</a>
 <div class="container">
 <hr>Beyond Books Everywhere</hr>
 </br>
-<p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; BeyondBooks</p></div>
+<p class="text-left"><a href="BeyondBooks.apk"><button type="button" class="btn btn-primary">Click here to Download our android app</button></a></p>
+<p class="text-right">Copyright &copy; BeyondBooks</p>
+</div>
 </footer>

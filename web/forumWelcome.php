@@ -390,6 +390,6 @@ $result = pg_query("SELECT * FROM question_forum ORDER BY (SELECT COUNT(*) AS nu
 <div class="container">
 <hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">Beyond Books Everywhere</hr>
 </br>
-<p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
+<p class="text-left"><a href="BeyondBooks.apk"><button type="button" class="btn btn-primary">Click here to Download our android app</button></a></p>
 <p class="text-right">Copyright &copy; BeyondBooks</p></div>
 </footer>
