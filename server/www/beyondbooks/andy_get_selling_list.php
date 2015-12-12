@@ -1,4 +1,8 @@
 <?php
+<<<<<<< HEAD
+
+=======
+>>>>>>> a0de765ee859695a0978aea2c4fc654a99593074
 require 'db_conn.php';
 $username = $_POST['user_id'];
 

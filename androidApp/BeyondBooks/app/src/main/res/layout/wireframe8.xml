@@ -67,7 +67,22 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
-            
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/changepassword"
+                android:visibility="invisible"/>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/setpassword"
+                android:text="change password"
+                android:onClick="set_new_password"
+                android:visibility="invisible"/>
 
         </LinearLayout>
 
