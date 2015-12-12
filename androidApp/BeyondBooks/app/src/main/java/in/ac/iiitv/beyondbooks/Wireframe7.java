@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -31,6 +32,7 @@ public class Wireframe7 extends AppCompatActivity {
     Intent intent;
     ImageView bookimage;
     RatingBar bookrating, rating;
+    CheckBox chkb;
     Long isbn;
     TextView bookdesc, general, student, faculty;
 
@@ -46,7 +48,7 @@ public class Wireframe7 extends AppCompatActivity {
         final BookDetails bookDetails = requestServer.book_page(isbn, MainActivity.userData.getId());
 
         //set image of the book
-        //TODO get image from server to set the image of the book
+
         bookimage = (ImageView) findViewById(R.id.book_image);
         Bitmap image_to_set = requestServer.getImage("/" + intent.getStringExtra("isbn") + ".jpg");
         bookimage.setImageBitmap(image_to_set);
@@ -54,6 +56,15 @@ public class Wireframe7 extends AppCompatActivity {
         //bookdetails should contain bookimage link
         // map.put(bookDetails.get, R.drawable.book_image);
         // bookimage.setImageResource(map.get(bookDetails.getImagelink()));
+
+        chkb = (CheckBox)findViewById(R.id.frame7_checkbox);
+        chkb.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckBox chh = (CheckBox)v;
+                new RequestServer().to_shelf(MainActivity.userData.getId(),isbn,chh.isChecked());
+            }
+        });
 
         //set ratings of the book
         bookrating = (RatingBar) findViewById(R.id.book_rating);

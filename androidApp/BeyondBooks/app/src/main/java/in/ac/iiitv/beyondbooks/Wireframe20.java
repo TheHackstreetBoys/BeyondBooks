@@ -38,7 +38,7 @@ public class Wireframe20 extends Activity {
         seller_id = Integer.parseInt(intent.getStringExtra("seller_id"));
         ImageView imageView = (ImageView)findViewById(R.id.imageView);
         RequestServer requestServer = new RequestServer();
-        Bitmap bitmap = requestServer.getImage("/books_pics/"+isbn.toString()+".jpg");
+        Bitmap bitmap = requestServer.getImage(isbn.toString()+".jpg");
         imageView.setImageBitmap(bitmap);
         TextView textViewBookDescription = (TextView)findViewById(R.id.textView7);
         textViewBookDescription.setText(book_description);

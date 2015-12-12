@@ -113,13 +113,8 @@ public class MainActivity extends AppCompatActivity  {
     public void change_pass_request(){
         userData = new UserData(id);
         RequestServer requestServer = new RequestServer();
-        Boolean result = requestServer.authenticate_forget(userData.getId());
-        if(result){
-            Toast.makeText(this, "Password sent to mail", Toast.LENGTH_LONG).show();
-        }
-        else{
-            Toast.makeText(this, "Some error occured", Toast.LENGTH_LONG).show();
-        }
+        requestServer.authenticate_forget(userData.getId());
+        Toast.makeText(this,"Password has been mailed. Please check spam too!",Toast.LENGTH_LONG).show();
     }
     public void change_pass_cancel(){
         Toast.makeText(this, "Enter your id first", Toast.LENGTH_LONG).show();

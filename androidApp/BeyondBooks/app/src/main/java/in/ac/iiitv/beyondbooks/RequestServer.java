@@ -46,10 +46,10 @@ public class RequestServer {
     String image_link;
     Bitmap image;
     RequestServer(){
-        //ip = "10.100.88.235/BeyondBooks/web/andy";
-        //image_link = "10.100.88.235/BeyondBooks/web";
-        ip = "10.100.91.55/beyondbooks";
-        image_link="10.100.91.55";
+        ip = "10.100.88.235/BeyondBooks/web/andy";
+        image_link = "10.100.88.235/BeyondBooks/web";
+        //ip = "10.100.91.55/beyondbooks";
+        //image_link="10.100.91.55";
     }
 
     public Boolean authenticate(Integer id, String password){
@@ -76,16 +76,14 @@ public class RequestServer {
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", id.toString()));
         try {
-            new Setup().execute(params).get();
+            new Setup().execute(params);
             System.out.println("Output " + output);
-            JSONObject is_authenticated_json = new JSONObject(output);
-            return Boolean.parseBoolean(is_authenticated_json.getString("result"));
-        }catch(JSONException e){
-            e.printStackTrace();
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }catch (ExecutionException e){
-            e.printStackTrace();
+//            JSONObject is_authenticated_json = new JSONObject(output);
+            return Boolean.parseBoolean("true");
+        }
+        catch (Exception e)
+        {
+            System.out.println("error file");
         }
         return false;
     }
@@ -104,14 +102,15 @@ public class RequestServer {
             JSONArray review = search_answer.getJSONArray("review");
             //JSONArray buy_sell = search_answer.getJSONArray("buy_sell");
             JSONArray forum = search_answer.getJSONArray("forum");
+            System.out.println(review);
             for(int i=0;i<review.length();i++){
                 JSONObject cur_book_obj = review.getJSONObject(i);
                 String image_link = cur_book_obj.getString("image_link");
                 String book_name = cur_book_obj.getString("book_name");
-                Float ratings = Float.parseFloat(cur_book_obj.getString("ratings"));
                 Long isbn = Long.parseLong(cur_book_obj.getString("isbn"));
-                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
+                NewlyAdded temp = new NewlyAdded(image_link, book_name, null, isbn);
                 review_list.add(temp);
+                System.out.println(book_name);
             }
 //            for(int i=0;i<buy_sell.length();i++){
 //                JSONObject cur_book_obj = buy_sell.getJSONObject(i);
@@ -139,6 +138,10 @@ public class RequestServer {
             e.printStackTrace();
         }catch (ExecutionException e){
             e.printStackTrace();
+        }
+        catch (Exception e)
+        {
+            System.out.println("caught exeception search");
         }
         return null;
     }
@@ -174,6 +177,7 @@ public class RequestServer {
 
     public ArrayList<NewlyAdded> top_rated(){
         address = "http://"+ip+"/andy_top_rated.php";
+
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         try{
             new Setup().execute(params).get();
@@ -279,7 +283,8 @@ public class RequestServer {
     }
 
     public Boolean to_shelf(Integer id, Long isbn, Boolean add){
-        address = "http://"+ip+"/andy_to_shelf.php";
+        address = "http://10.100.91.55/beyondbooks/andy_add_toshelf.php";
+        System.out.println(address);
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", id.toString()));
         params.add(new Pair<String, String>("isbn", isbn.toString()));

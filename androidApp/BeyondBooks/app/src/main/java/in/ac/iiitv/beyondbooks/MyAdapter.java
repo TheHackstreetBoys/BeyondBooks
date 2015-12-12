@@ -47,7 +47,7 @@ public class MyAdapter extends BaseAdapter{
         }
         TextView name = (TextView) vi.findViewById(R.id.textView4);
         TextView price = (TextView)vi.findViewById(R.id.textView9);
-        name.setText(task.get(position).first.toString());
+        name.setText(task.get(position).first.getUser_name());
         price.setText(task.get(position).second.toString());
         return vi;
     }
