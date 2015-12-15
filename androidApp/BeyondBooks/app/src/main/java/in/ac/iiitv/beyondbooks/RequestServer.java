@@ -8,9 +8,12 @@ import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Pair;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.auth.AUTH;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,31 +48,100 @@ public class RequestServer {
     private String output=null;
     String image_link;
     Bitmap image;
-    RequestServer(){
-    ip = "10.100.91.55/beyondbooks";
-    image_link="10.100.91.55";
+    LoaderInterface li;
+    HttpURLConnection urlConnection;
+
+
+//    This is to support the previous code till I fix all the others
+
+    RequestServer()
+    {
+        ip="192.168.0.101/beyondbooks";
+        image_link="192.168.0.101";
     }
 
-    public Boolean authenticate(Integer id, String password){
-        address = "http://"+ip+"/andy_authenticate.php";
-        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
-        params.add(new Pair<String, String>("id", id.toString()));
-        params.add(new Pair<String, String>("password", password));
-        try {
-            new Setup().execute(params).get();
-//            System.out.println("fucker 2"+output);
-            JSONObject is_authenticated_json = new JSONObject(output);
-            return Boolean.parseBoolean(is_authenticated_json.getString("result"));
-        }catch(JSONException e){
-            e.printStackTrace();
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }catch (ExecutionException e){
-            e.printStackTrace();
-        }
-        return false;
+
+//    This is for all those with options extention
+
+
+//    This is for the main activity
+
+    RequestServer(LoaderInterface lo){
+        li = lo;
+        ip = "192.168.0.101/beyondbooks";
+        image_link="192.168.0.101";
     }
-    public Boolean authenticate_forget(Integer id){
+
+
+
+    public class Authenticate extends AsyncTask<Void,Void,Void> {
+        Integer id;
+        String password;
+        Boolean op=false;
+        MainActivity ma;
+        LinearLayout linlaHeaderProgress = null;
+
+
+        public Authenticate(Integer id1, String password1, MainActivity a) {
+            this.id=id1;
+            this.password=password1;
+            this.ma=a;
+            linlaHeaderProgress = (LinearLayout) a.findViewById(R.id.linlaHeaderProgress);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            li.preDataRecv();
+            System.out.println("preexec");
+
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            li.postDataRecv(op);
+            System.out.println("postexec");
+        }
+
+        @Override
+        protected Void doInBackground(Void... params1) {
+
+            String address = "http://"+"192.168.0.101/beyondbooks"+"/andy_authenticate.php";
+            ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+            params.add(new Pair<String, String>("id", id.toString()));
+            params.add(new Pair<String, String>("password", password));
+            try {
+
+                String output = doInBackgroundHelper(params);
+
+                JSONObject is_authenticated_json = new JSONObject(output.toString());
+                op=Boolean.parseBoolean(is_authenticated_json.getString("result"));
+
+            }catch(JSONException e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        private String getQuery(ArrayList<Pair<String, String>> params) throws UnsupportedEncodingException
+        {
+            StringBuilder result = new StringBuilder();
+            boolean first = true;
+
+            for (int i=0;i<params.size();i++) {
+                if (i!=0)
+                    result.append("&");
+
+                result.append(URLEncoder.encode(params.get(i).first, "UTF-8"));
+                result.append("=");
+                result.append(URLEncoder.encode(params.get(i).second, "UTF-8"));
+            }
+
+            return result.toString();
+        }
+
+    }
+
+    /*public Boolean authenticate_forget(Integer id){
         address = "http://"+ip+"/andy_authenticate_forget.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", id.toString()));
@@ -90,7 +162,7 @@ public class RequestServer {
     public SearchOutputReturn search(String query){
         address = "http://"+ip+"/andy_search.php";
         ArrayList<NewlyAdded> review_list = new ArrayList<NewlyAdded>();
-//        ArrayList<NewlyAdded> buy_sell_list = new ArrayList<NewlyAdded>();
+//      ArrayList<NewlyAdded> buy_sell_list = new ArrayList<NewlyAdded>();
         ArrayList<ForumOverview> forum_list = new ArrayList<ForumOverview>();
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("query", query));
@@ -143,6 +215,51 @@ public class RequestServer {
         }
         return null;
     }
+    */
+
+    public class NewlyAddedFetcher extends AsyncTask<Void,Void,Void> {
+
+        ArrayList<NewlyAdded> op=null;
+
+        @Override
+        protected void onPreExecute() {
+            li.preDataRecv();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            li.postDataRecv(op);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params1) {
+            address = "http://"+ip+"/andy_newly_added.php";
+            ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+            try{
+
+                String output = doInBackgroundHelper(params);
+                ArrayList<NewlyAdded> newly_added_list = new ArrayList<NewlyAdded>();
+                JSONObject search_answer = new JSONObject(output);
+                JSONArray newly_added_json = search_answer.getJSONArray("newly_added");
+                for(int i=0;i<newly_added_json.length();i++){
+                    JSONObject cur_book_obj = newly_added_json.getJSONObject(i);
+                    String image_link = cur_book_obj.getString("image_link");
+                    String book_name = cur_book_obj.getString("book_name");
+                    Float ratings = Float.parseFloat(cur_book_obj.getString("ratings"));
+                    Long isbn = Long.parseLong(cur_book_obj.getString("isbn"));
+                    NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
+                    newly_added_list.add(temp);
+                }
+                op = newly_added_list;
+                return null;
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+    }
 
     public ArrayList<NewlyAdded> newly_added(){
         address = "http://"+ip+"/andy_newly_added.php";
@@ -164,7 +281,7 @@ public class RequestServer {
             return newly_added_list;
         }
         catch (JSONException e){
-            e.printStackTrace();;
+            e.printStackTrace();
         }catch(InterruptedException e){
             e.printStackTrace();
         }catch (ExecutionException e){
@@ -203,6 +320,7 @@ public class RequestServer {
         return null;
     }
 
+    /*
     public BookDetails book_page(Long isbn, Integer user_id){
         address = "http://"+ip+"/andy_book_page.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
@@ -867,6 +985,71 @@ public class RequestServer {
         }
         return false;
     }
+*/
+    protected String doInBackgroundHelper(ArrayList<Pair<String, String>>... args){
+        StringBuilder result = new StringBuilder();
+        try{
+            URL url = new URL(address);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setDoInput(true);
+            urlConnection.setDoOutput(true);
+            ArrayList<Pair<String, String>> to_send = args[0];
+            OutputStream os = urlConnection.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+            writer.write(getQuery(to_send));
+            writer.flush();
+            writer.close();
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String line;
+            while((line = reader.readLine())!= null){
+                result.append(line);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            urlConnection.disconnect();
+        }
+        return_method(result.toString());
+        return result.toString();
+    }
+
+    private void return_method(String return_value){
+        output = return_value;
+    }
+    private String getQuery(ArrayList<Pair<String, String>> params) throws UnsupportedEncodingException
+    {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+
+        for (int i=0;i<params.size();i++) {
+            if (i!=0)
+                result.append("&");
+
+            result.append(URLEncoder.encode(params.get(i).first, "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(params.get(i).second, "UTF-8"));
+        }
+
+        return result.toString();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    // For sometime these function will stay till I clean all the mess
+
 
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, Void, String> {
         HttpURLConnection urlConnection;
@@ -901,25 +1084,6 @@ public class RequestServer {
             return_method(result.toString());
             return result.toString();
         }
-    }
-    private void return_method(String return_value){
-        output = return_value;
-    }
-    private String getQuery(ArrayList<Pair<String, String>> params) throws UnsupportedEncodingException
-    {
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-
-        for (int i=0;i<params.size();i++) {
-            if (i!=0)
-                result.append("&");
-
-            result.append(URLEncoder.encode(params.get(i).first, "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(params.get(i).second, "UTF-8"));
-        }
-
-        return result.toString();
     }
 
     private class DownloadTask extends AsyncTask<String, Integer, Bitmap>{

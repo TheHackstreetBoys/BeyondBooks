@@ -40,7 +40,7 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-public class BookViewPage extends AppCompatActivity implements NewBook.OnFragmentInteractionListener, View.OnClickListener {
+public class BookViewPage extends OptionsActivity implements NewBook.OnFragmentInteractionListener, View.OnClickListener {
 
 
     private HorizontalScrollView hsv_new,hsv_top;
@@ -92,14 +92,24 @@ public class BookViewPage extends AppCompatActivity implements NewBook.OnFragmen
 
     @Override
     public void onFragmentInteraction(Long isbn) {
-        Intent in = new Intent(this,Wireframe7.class);
-        in.putExtra("isbn",isbn.toString());
-        startActivity(in);
+//        Intent in = new Intent(this,Wireframe7.class);
+//        in.putExtra("isbn",isbn.toString());
+//        startActivity(in);
     }
 
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(getApplicationContext(),AddBook.class));
+//        startActivity(new Intent(getApplicationContext(), AddBook.class));
+    }
+
+    @Override
+    public void postDataRecv(Object robj) {
+
+    }
+
+    @Override
+    public void preDataRecv() {
+
     }
 
     private class NewBooksPagerAdapter extends FragmentStatePagerAdapter
@@ -131,66 +141,7 @@ public class BookViewPage extends AppCompatActivity implements NewBook.OnFragmen
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        Intent in;
-        switch(id)
-        {
-            case R.id.option_search:
-                in = new Intent(this,Search.class);
-                startActivity(in);
-                break;
-            case R.id.option_home:
-
-                in = new Intent(this, BookViewPage.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(in);
-                break;
-            case R.id.option_user_profile:
-                in = new Intent(this, Wireframe8.class);
-                startActivity(in);
-                break;
-            case R.id.option_activity_on_forum:
-                in = new Intent(this,Wireframe12.class);
-                startActivity(in);
-                break;
-            case R.id.option_book_shelf:
-                in = new Intent(this,Frame10.class);
-                startActivity(in);
-                break;
-            case R.id.option_forum:
-                in = new Intent(this,Wireframe13.class);
-                startActivity(in);
-                break;
-            case R.id.option_sell:
-                in = new Intent(this,SellBook.class);
-                startActivity(in);
-                break;
-            case R.id.option_sell_list:
-                in = new Intent(this,SellingList.class);
-                startActivity(in);
-                break;
-            case R.id.option_logout:
-                in = new Intent(this,MainActivity.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(in);
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 
     private class ZoomOutPageTransformer implements ViewPager.PageTransformer {
