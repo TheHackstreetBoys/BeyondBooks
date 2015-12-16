@@ -103,11 +103,12 @@ public class MainActivity extends AppCompatActivity implements LoaderInterface, 
         MainActivity.userData = new UserData(id);
         passwordet.setText("");
 
-        //Intent intent = new Intent(this, BookViewPage.class);
+        Intent intent = new Intent(this, BookViewPage.class);
 //        intent.putExtra("user_data", userData);
 //        intent.putExtra("isbn", "1001");
         Toast.makeText(this, "Correct details", Toast.LENGTH_LONG).show();
-//        startActivity(intent);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 
     public void not_allowed(){

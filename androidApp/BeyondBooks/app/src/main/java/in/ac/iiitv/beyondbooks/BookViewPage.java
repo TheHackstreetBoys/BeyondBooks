@@ -32,12 +32,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 
 public class BookViewPage extends OptionsActivity implements NewBook.OnFragmentInteractionListener, View.OnClickListener {
@@ -53,6 +55,7 @@ public class BookViewPage extends OptionsActivity implements NewBook.OnFragmentI
     private ViewPager newbooks,topratedbook;
     private PagerAdapter newbooksadapter,topratedadapter;
     private Button addbook;
+    private LinearLayout lila=null;
 
     private int numOfSlides;
     ArrayList<NewlyAdded> naa,top;
@@ -60,33 +63,17 @@ public class BookViewPage extends OptionsActivity implements NewBook.OnFragmentI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_view_page);
-        RequestServer rs = new RequestServer();
-        naa = rs.newly_added();
-        top = rs.top_rated();
+        RequestServer rs = new RequestServer(this);
 
-        // set newly added book
-        numOfSlides = naa.size();
+        lila = (LinearLayout)findViewById(R.id.book_view_llp);
 
-        newbooks = (ViewPager)findViewById(R.id.book_view_newadded_pager);
-        newbooksadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),naa,naa.size());
-        newbooks.setAdapter(newbooksadapter);
+        rs.new TopRatedFetcher().execute();
+        rs.new NewlyAddedFetcher().execute();
+
 
 
         addbook = (Button) findViewById(R.id.book_view_btn);
         addbook.setOnClickListener(this);
-
-        //top rated books
-
-
-        numOfSlides = top.size();
-        topratedbook = (ViewPager)findViewById(R.id.book_toprated_pager);
-        topratedadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),top,top.size());
-        topratedbook.setAdapter(topratedadapter);
-
-        newbooks.setPageTransformer(true, new ZoomOutPageTransformer());
-        topratedbook.setPageTransformer(true,new ZoomOutPageTransformer());
-
-
     }
 
 
@@ -105,11 +92,43 @@ public class BookViewPage extends OptionsActivity implements NewBook.OnFragmentI
     @Override
     public void postDataRecv(Object robj) {
 
+        System.out.println(robj);
+        if(((HashMap<String,ArrayList<NewlyAdded>>)robj).containsKey("newly_added"))
+        {
+            // set newly added book
+            naa=((HashMap<String,ArrayList<NewlyAdded>>)robj).get("newly_added");
+
+            numOfSlides = naa.size();
+
+            newbooks = (ViewPager)findViewById(R.id.book_view_newadded_pager);
+            newbooksadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),naa,naa.size());
+            newbooks.setAdapter(newbooksadapter);
+
+
+
+            newbooks.setPageTransformer(true, new ZoomOutPageTransformer());
+        }
+        else
+        {
+
+            //top rated books
+            top = ((HashMap<String,ArrayList<NewlyAdded>>)robj).get("top_rated");
+            numOfSlides = top.size();
+            topratedbook = (ViewPager)findViewById(R.id.book_toprated_pager);
+            topratedadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),top,top.size());
+            topratedbook.setAdapter(topratedadapter);
+
+
+            topratedbook.setPageTransformer(true,new ZoomOutPageTransformer());
+        }
+
+        lila.setVisibility(View.GONE);
     }
 
     @Override
     public void preDataRecv() {
 
+        lila.setVisibility(View.VISIBLE);
     }
 
     private class NewBooksPagerAdapter extends FragmentStatePagerAdapter

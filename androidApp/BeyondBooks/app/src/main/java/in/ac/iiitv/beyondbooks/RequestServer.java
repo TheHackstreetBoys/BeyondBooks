@@ -35,8 +35,12 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.channels.NonWritableChannelException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Semaphore;
 
 /**
  * Created by anjul on 11/11/15.
@@ -52,12 +56,13 @@ public class RequestServer {
     HttpURLConnection urlConnection;
 
 
+
 //    This is to support the previous code till I fix all the others
 
     RequestServer()
     {
-        ip="192.168.0.101/beyondbooks";
-        image_link="192.168.0.101";
+        ip="192.168.0.102/beyondbooks";
+        image_link="192.168.0.102";
     }
 
 
@@ -68,8 +73,8 @@ public class RequestServer {
 
     RequestServer(LoaderInterface lo){
         li = lo;
-        ip = "192.168.0.101/beyondbooks";
-        image_link="192.168.0.101";
+        ip = "192.168.0.102/beyondbooks";
+        image_link="192.168.0.102";
     }
 
 
@@ -105,13 +110,13 @@ public class RequestServer {
         @Override
         protected Void doInBackground(Void... params1) {
 
-            String address = "http://"+"192.168.0.101/beyondbooks"+"/andy_authenticate.php";
+
             ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
             params.add(new Pair<String, String>("id", id.toString()));
             params.add(new Pair<String, String>("password", password));
             try {
 
-                String output = doInBackgroundHelper(params);
+                String output = doInBackgroundHelper("http://"+ip+"/andy_authenticate.php",params);
 
                 JSONObject is_authenticated_json = new JSONObject(output.toString());
                 op=Boolean.parseBoolean(is_authenticated_json.getString("result"));
@@ -223,21 +228,30 @@ public class RequestServer {
 
         @Override
         protected void onPreExecute() {
+            System.out.println("naf book preexec");
             li.preDataRecv();
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            li.postDataRecv(op);
+            System.out.println("naf book postexec");
+            System.out.println(op);
+
+            HashMap<String,ArrayList<NewlyAdded>> hm= new HashMap<String,ArrayList<NewlyAdded>>();
+            hm.put("newly_added", op);
+            System.out.println(hm);
+            li.postDataRecv(hm);
+
+
         }
 
         @Override
         protected Void doInBackground(Void... params1) {
-            address = "http://"+ip+"/andy_newly_added.php";
+
             ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
             try{
 
-                String output = doInBackgroundHelper(params);
+                String output = doInBackgroundHelper("http://"+ip+"/andy_newly_added.php",params);
                 ArrayList<NewlyAdded> newly_added_list = new ArrayList<NewlyAdded>();
                 JSONObject search_answer = new JSONObject(output);
                 JSONArray newly_added_json = search_answer.getJSONArray("newly_added");
@@ -251,11 +265,68 @@ public class RequestServer {
                     newly_added_list.add(temp);
                 }
                 op = newly_added_list;
+
                 return null;
             }
             catch (JSONException e) {
                 e.printStackTrace();
             }
+
+
+            return null;
+        }
+    }
+
+    public class TopRatedFetcher extends AsyncTask<Void,Void,Void> {
+
+        ArrayList<NewlyAdded> op=null;
+
+        @Override
+        protected void onPreExecute() {
+            System.out.println("trf book preexec");
+            li.preDataRecv();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            System.out.println("trf book postexec");
+            System.out.println(op);
+
+            HashMap<String,ArrayList<NewlyAdded>> hm= new HashMap<String,ArrayList<NewlyAdded>>();
+            hm.put("top_rated", op);
+            System.out.println(hm);
+            li.postDataRecv(hm);
+
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params1) {
+
+            ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+            try{
+
+                String output = doInBackgroundHelper("http://"+ip+"/andy_top_rated.php",params);
+                ArrayList<NewlyAdded> newly_added_list = new ArrayList<NewlyAdded>();
+                JSONObject search_answer = new JSONObject(output);
+                JSONArray newly_added_json = search_answer.getJSONArray("top_rated");
+                for(int i=0;i<newly_added_json.length();i++){
+                    JSONObject cur_book_obj = newly_added_json.getJSONObject(i);
+                    String image_link = cur_book_obj.getString("image_link");
+                    String book_name = cur_book_obj.getString("book_name");
+                    Float ratings = Float.parseFloat(cur_book_obj.getString("ratings"));
+                    Long isbn = Long.parseLong(cur_book_obj.getString("isbn"));
+                    NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
+                    newly_added_list.add(temp);
+                }
+                op = newly_added_list;
+
+                return null;
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+
 
             return null;
         }
@@ -297,6 +368,7 @@ public class RequestServer {
         try{
             new Setup().execute(params).get();
             ArrayList<NewlyAdded> top_rated_list = new ArrayList<NewlyAdded>();
+            System.out.println(output);
             JSONObject search_answer = new JSONObject(output);
             JSONArray top_rated_json = search_answer.getJSONArray("top_rated");
             for(int i=0;i<top_rated_json.length();i++) {
@@ -845,6 +917,7 @@ public class RequestServer {
         }
         return false;
     }
+*/
 
     public Bitmap getImage(String image_name){
         String str_link = "http://"+image_link+"/books_pics/"+image_name;
@@ -893,6 +966,7 @@ public class RequestServer {
         return false;
     }
 
+    /*
     public String get_seller_description(Long isbn, Integer seller_id){
         address = "http://"+ip+"/andy_get_seller_description.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
@@ -986,10 +1060,10 @@ public class RequestServer {
         return false;
     }
 */
-    protected String doInBackgroundHelper(ArrayList<Pair<String, String>>... args){
+    protected String doInBackgroundHelper(String addr, ArrayList<Pair<String, String>>... args){
         StringBuilder result = new StringBuilder();
         try{
-            URL url = new URL(address);
+            URL url = new URL(addr);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoInput(true);
@@ -1036,6 +1110,21 @@ public class RequestServer {
 
         return result.toString();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
