@@ -32,15 +32,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 
-public class BookViewPage extends AppCompatActivity implements NewBook.OnFragmentInteractionListener, View.OnClickListener {
+public class BookViewPage extends OptionsActivity implements NewBook.OnFragmentInteractionListener, View.OnClickListener {
 
 
     private HorizontalScrollView hsv_new,hsv_top;
@@ -53,6 +55,7 @@ public class BookViewPage extends AppCompatActivity implements NewBook.OnFragmen
     private ViewPager newbooks,topratedbook;
     private PagerAdapter newbooksadapter,topratedadapter;
     private Button addbook;
+    private LinearLayout lila=null;
 
     private int numOfSlides;
     ArrayList<NewlyAdded> naa,top;
@@ -60,46 +63,72 @@ public class BookViewPage extends AppCompatActivity implements NewBook.OnFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_view_page);
-        RequestServer rs = new RequestServer();
-        naa = rs.newly_added();
-        top = rs.top_rated();
+        RequestServer rs = new RequestServer(this);
 
-        // set newly added book
-        numOfSlides = naa.size();
+        lila = (LinearLayout)findViewById(R.id.book_view_llp);
 
-        newbooks = (ViewPager)findViewById(R.id.book_view_newadded_pager);
-        newbooksadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),naa,naa.size());
-        newbooks.setAdapter(newbooksadapter);
+        rs.new TopRatedFetcher().execute();
+        rs.new NewlyAddedFetcher().execute();
+
 
 
         addbook = (Button) findViewById(R.id.book_view_btn);
         addbook.setOnClickListener(this);
-
-        //top rated books
-
-
-        numOfSlides = top.size();
-        topratedbook = (ViewPager)findViewById(R.id.book_toprated_pager);
-        topratedadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),top,top.size());
-        topratedbook.setAdapter(topratedadapter);
-
-        newbooks.setPageTransformer(true, new ZoomOutPageTransformer());
-        topratedbook.setPageTransformer(true,new ZoomOutPageTransformer());
-
-
     }
 
 
     @Override
     public void onFragmentInteraction(Long isbn) {
-        Intent in = new Intent(this,Wireframe7.class);
-        in.putExtra("isbn",isbn.toString());
-        startActivity(in);
+//        Intent in = new Intent(this,Wireframe7.class);
+//        in.putExtra("isbn",isbn.toString());
+//        startActivity(in);
     }
 
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(getApplicationContext(),AddBook.class));
+//        startActivity(new Intent(getApplicationContext(), AddBook.class));
+    }
+
+    @Override
+    public void postDataRecv(Object robj) {
+
+        System.out.println(robj);
+        if(((HashMap<String,ArrayList<NewlyAdded>>)robj).containsKey("newly_added"))
+        {
+            // set newly added book
+            naa=((HashMap<String,ArrayList<NewlyAdded>>)robj).get("newly_added");
+
+            numOfSlides = naa.size();
+
+            newbooks = (ViewPager)findViewById(R.id.book_view_newadded_pager);
+            newbooksadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),naa,naa.size());
+            newbooks.setAdapter(newbooksadapter);
+
+
+
+            newbooks.setPageTransformer(true, new ZoomOutPageTransformer());
+        }
+        else
+        {
+
+            //top rated books
+            top = ((HashMap<String,ArrayList<NewlyAdded>>)robj).get("top_rated");
+            numOfSlides = top.size();
+            topratedbook = (ViewPager)findViewById(R.id.book_toprated_pager);
+            topratedadapter = new NewBooksPagerAdapter(getSupportFragmentManager(),top,top.size());
+            topratedbook.setAdapter(topratedadapter);
+
+
+            topratedbook.setPageTransformer(true,new ZoomOutPageTransformer());
+        }
+
+        lila.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void preDataRecv() {
+
+        lila.setVisibility(View.VISIBLE);
     }
 
     private class NewBooksPagerAdapter extends FragmentStatePagerAdapter
@@ -131,66 +160,7 @@ public class BookViewPage extends AppCompatActivity implements NewBook.OnFragmen
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        Intent in;
-        switch(id)
-        {
-            case R.id.option_search:
-                in = new Intent(this,Search.class);
-                startActivity(in);
-                break;
-            case R.id.option_home:
-
-                in = new Intent(this, BookViewPage.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(in);
-                break;
-            case R.id.option_user_profile:
-                in = new Intent(this, Wireframe8.class);
-                startActivity(in);
-                break;
-            case R.id.option_activity_on_forum:
-                in = new Intent(this,Wireframe12.class);
-                startActivity(in);
-                break;
-            case R.id.option_book_shelf:
-                in = new Intent(this,Frame10.class);
-                startActivity(in);
-                break;
-            case R.id.option_forum:
-                in = new Intent(this,Wireframe13.class);
-                startActivity(in);
-                break;
-            case R.id.option_sell:
-                in = new Intent(this,SellBook.class);
-                startActivity(in);
-                break;
-            case R.id.option_sell_list:
-                in = new Intent(this,SellingList.class);
-                startActivity(in);
-                break;
-            case R.id.option_logout:
-                in = new Intent(this,MainActivity.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(in);
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 
     private class ZoomOutPageTransformer implements ViewPager.PageTransformer {

@@ -157,7 +157,7 @@ $(\'#searchid\').click(function(){
     }
 </style>
 <div class="content" style="margin-top: -3%;">
-<input type="text" class="form-control search"  id="searchid" placeholder="Search for Books" />
+<input type="text" class="form-control search"  id="searchid" placeholder="Search for Froums" />
 	<span class="glyphicon glyphicon-search form-control-feedback" style="padding-top: 15%; color: #3596e0;"></span>
 <div id="result"> </div>
 </div>
@@ -344,9 +344,6 @@ echo <<<HTML
 
 							<div class="row">
 									<div class="col-md-12">
-									<button type="button" class="btn btn-success active btn-block">
-										Load More
-									</button>
 								</div>
 							</div>
 							<h3>
@@ -394,7 +391,7 @@ HTML;
 
 
 <?php
-$num_rec_per_page=2;
+$num_rec_per_page=4;
 
 if (isset($_GET["page2"])) { $page  = $_GET["page2"]; } else { $page=1; };
 $start_from = ($page-1) * $num_rec_per_page;
@@ -450,9 +447,11 @@ echo "<a href='forumview.php?qid=$qid&page2=$total_pages'>".'-Next'."</a> "; // 
 
 
 <footer>
+<hr />
 <div class="container">
-<hr style="height:3px; border:none; color:rgb(60,90,180); background-color:rgb(60,90,180);">Beyond Books Everywhere</hr>
+<hr>Beyond Books Everywhere</hr>
 </br>
-<p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; BeyondBooks</p></div>
+<p class="text-left"><a href="BeyondBooks.apk"><button type="button" class="btn btn-primary">Click here to Download our android app</button></a></p>
+<p class="text-right">Copyright &copy; BeyondBooks</p>
+</div>
 </footer>

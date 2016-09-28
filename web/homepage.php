@@ -234,7 +234,7 @@ $num_rec_per_page=4;
 if (isset($_GET["page1"])) { $page  = $_GET["page1"]; } else { $page=1; };
 $start_from = ($page-1) * $num_rec_per_page;
 
-			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn LIMIT $num_rec_per_page OFFSET $start_from");
+			$result = pg_query("SELECT * FROM books JOIN author ON books.isbn = author.isbn ORDER BY books.ts DESC LIMIT $num_rec_per_page OFFSET $start_from");
 
 
 
@@ -413,9 +413,10 @@ echo "<a href='mainpage.php?page2=$total_pages'>".'-Next'."</a> "; // Goto last 
 <div class="container">
 <hr>Beyond Books Everywhere</hr>
 </br>
-<p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
+<p class="text-left"><a href="BeyondBooks.apk"><button type="button" class="btn btn-primary">Click here to Download our android app</button></a></p>
 <p class="text-right">Copyright &copy; BeyondBooks</p>
 </div>
 </footer>
+
 </body>
 </html>

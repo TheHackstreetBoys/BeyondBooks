@@ -444,7 +444,7 @@ $start_from = ($page-1) * $num_rec_per_page;
 	$result = pg_query("SELECT * FROM review WHERE isbn = '$isbn' LIMIT $num_rec_per_page OFFSET $start_from");
 
 			if(!pg_num_rows($result)) {
-							echo '<p>No forums is Created Yet.</p>';
+							echo '<p>No Review is given</p>';
 						     }
 			else {
 
@@ -670,6 +670,7 @@ echo "<a href='book_main_page.php?isbn=$isbn&page1=$total_pages'>".'-Next'."</a>
 <div class="container">
 <hr>Beyond Books Everywhere</hr>
 </br>
-<p class="text-left"><button type="button" class="btn btn-primary">Click here to Download our android app</button></p>
-<p class="text-right">Copyright &copy; BeyondBooks</p></div>
+<p class="text-left"><a href="BeyondBooks.apk"><button type="button" class="btn btn-primary">Click here to Download our android app</button></a></p>
+<p class="text-right">Copyright &copy; BeyondBooks</p>
+</div>
 </footer>

@@ -2,9 +2,9 @@
 session_start();
 
 include_once "db_conn.php";
-$title = $_POST['title'];
-$htag   = $_POST['htag'];
-$content  = $_POST['content'];
+$title = pg_escape_string($_POST['title']);
+$htag   = pg_escape_string($_POST['htag']);
+$content  = pg_escape_string($_POST['content']);
 $asker  = $_SESSION["user_id"];
 
 

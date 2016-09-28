@@ -11,6 +11,21 @@
     android:weightSum="1"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/book_view_llp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ProgressBar
+            android:id="@+id/pbHeaderProgress"
+            style="@android:style/Widget.ProgressBar.Large.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </ProgressBar>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

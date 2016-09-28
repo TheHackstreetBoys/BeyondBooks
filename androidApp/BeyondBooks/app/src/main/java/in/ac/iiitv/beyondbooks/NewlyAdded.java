@@ -8,11 +8,18 @@ public class NewlyAdded {
     private String book_name;
     private Float ratings;
     private Long isbn;
-    NewlyAdded(String image_link, String book_name, Float ratings, Long isbn){
+
+
+    public NewlyAdded(String image_link, String book_name, Float ratings, Long isbn){
         this.image_link = image_link;
         this.book_name = book_name;
         this.ratings = ratings;
         this.isbn = isbn;
+    }
+
+    @Override
+    public String toString(){
+        return new String(this.book_name);
     }
 
     public void setBook_name(String book_name){

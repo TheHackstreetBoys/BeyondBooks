@@ -8,9 +8,12 @@ import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Pair;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.auth.AUTH;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,8 +35,12 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.channels.NonWritableChannelException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Semaphore;
 
 /**
  * Created by anjul on 11/11/15.
@@ -45,47 +52,113 @@ public class RequestServer {
     private String output=null;
     String image_link;
     Bitmap image;
-    RequestServer(){
-        //ip = "10.100.88.235/BeyondBooks/web/andy";
-        //image_link = "10.100.88.235/BeyondBooks/web";
-        ip = "10.100.91.55/beyondbooks";
-        image_link="10.100.91.55";
+    LoaderInterface li;
+    HttpURLConnection urlConnection;
+
+
+
+//    This is to support the previous code till I fix all the others
+
+    RequestServer()
+    {
+        ip="192.168.0.102/beyondbooks";
+        image_link="192.168.0.102";
     }
 
-    public Boolean authenticate(Integer id, String password){
-        address = "http://"+ip+"/andy_authenticate.php";
-        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
-        params.add(new Pair<String, String>("id", id.toString()));
-        params.add(new Pair<String, String>("password", password));
-        try {
-            new Setup().execute(params).get();
-//            System.out.println("fucker 2"+output);
-            JSONObject is_authenticated_json = new JSONObject(output);
-            return Boolean.parseBoolean(is_authenticated_json.getString("result"));
-        }catch(JSONException e){
-            e.printStackTrace();
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }catch (ExecutionException e){
-            e.printStackTrace();
-        }
-        return false;
+
+//    This is for all those with options extention
+
+
+//    This is for the main activity
+
+    RequestServer(LoaderInterface lo){
+        li = lo;
+        ip = "192.168.0.102/beyondbooks";
+        image_link="192.168.0.102";
     }
-    public Boolean authenticate_forget(Integer id){
+
+
+
+    public class Authenticate extends AsyncTask<Void,Void,Void> {
+        Integer id;
+        String password;
+        Boolean op=false;
+        MainActivity ma;
+        LinearLayout linlaHeaderProgress = null;
+
+
+        public Authenticate(Integer id1, String password1, MainActivity a) {
+            this.id=id1;
+            this.password=password1;
+            this.ma=a;
+            linlaHeaderProgress = (LinearLayout) a.findViewById(R.id.linlaHeaderProgress);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            li.preDataRecv();
+            System.out.println("preexec");
+
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            li.postDataRecv(op);
+            System.out.println("postexec");
+        }
+
+        @Override
+        protected Void doInBackground(Void... params1) {
+
+
+            ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+            params.add(new Pair<String, String>("id", id.toString()));
+            params.add(new Pair<String, String>("password", password));
+            try {
+
+                String output = doInBackgroundHelper("http://"+ip+"/andy_authenticate.php",params);
+
+                JSONObject is_authenticated_json = new JSONObject(output.toString());
+                op=Boolean.parseBoolean(is_authenticated_json.getString("result"));
+
+            }catch(JSONException e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        private String getQuery(ArrayList<Pair<String, String>> params) throws UnsupportedEncodingException
+        {
+            StringBuilder result = new StringBuilder();
+            boolean first = true;
+
+            for (int i=0;i<params.size();i++) {
+                if (i!=0)
+                    result.append("&");
+
+                result.append(URLEncoder.encode(params.get(i).first, "UTF-8"));
+                result.append("=");
+                result.append(URLEncoder.encode(params.get(i).second, "UTF-8"));
+            }
+
+            return result.toString();
+        }
+
+    }
+
+    /*public Boolean authenticate_forget(Integer id){
         address = "http://"+ip+"/andy_authenticate_forget.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", id.toString()));
         try {
-            new Setup().execute(params).get();
+            new Setup().execute(params);
             System.out.println("Output " + output);
-            JSONObject is_authenticated_json = new JSONObject(output);
-            return Boolean.parseBoolean(is_authenticated_json.getString("result"));
-        }catch(JSONException e){
-            e.printStackTrace();
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }catch (ExecutionException e){
-            e.printStackTrace();
+//            JSONObject is_authenticated_json = new JSONObject(output);
+            return Boolean.parseBoolean("true");
+        }
+        catch (Exception e)
+        {
+            System.out.println("error file");
         }
         return false;
     }
@@ -94,7 +167,7 @@ public class RequestServer {
     public SearchOutputReturn search(String query){
         address = "http://"+ip+"/andy_search.php";
         ArrayList<NewlyAdded> review_list = new ArrayList<NewlyAdded>();
-//        ArrayList<NewlyAdded> buy_sell_list = new ArrayList<NewlyAdded>();
+//      ArrayList<NewlyAdded> buy_sell_list = new ArrayList<NewlyAdded>();
         ArrayList<ForumOverview> forum_list = new ArrayList<ForumOverview>();
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("query", query));
@@ -104,14 +177,15 @@ public class RequestServer {
             JSONArray review = search_answer.getJSONArray("review");
             //JSONArray buy_sell = search_answer.getJSONArray("buy_sell");
             JSONArray forum = search_answer.getJSONArray("forum");
+            System.out.println(review);
             for(int i=0;i<review.length();i++){
                 JSONObject cur_book_obj = review.getJSONObject(i);
                 String image_link = cur_book_obj.getString("image_link");
                 String book_name = cur_book_obj.getString("book_name");
-                Float ratings = Float.parseFloat(cur_book_obj.getString("ratings"));
                 Long isbn = Long.parseLong(cur_book_obj.getString("isbn"));
-                NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
+                NewlyAdded temp = new NewlyAdded(image_link, book_name, null, isbn);
                 review_list.add(temp);
+                System.out.println(book_name);
             }
 //            for(int i=0;i<buy_sell.length();i++){
 //                JSONObject cur_book_obj = buy_sell.getJSONObject(i);
@@ -140,7 +214,122 @@ public class RequestServer {
         }catch (ExecutionException e){
             e.printStackTrace();
         }
+        catch (Exception e)
+        {
+            System.out.println("caught exeception search");
+        }
         return null;
+    }
+    */
+
+    public class NewlyAddedFetcher extends AsyncTask<Void,Void,Void> {
+
+        ArrayList<NewlyAdded> op=null;
+
+        @Override
+        protected void onPreExecute() {
+            System.out.println("naf book preexec");
+            li.preDataRecv();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            System.out.println("naf book postexec");
+            System.out.println(op);
+
+            HashMap<String,ArrayList<NewlyAdded>> hm= new HashMap<String,ArrayList<NewlyAdded>>();
+            hm.put("newly_added", op);
+            System.out.println(hm);
+            li.postDataRecv(hm);
+
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params1) {
+
+            ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+            try{
+
+                String output = doInBackgroundHelper("http://"+ip+"/andy_newly_added.php",params);
+                ArrayList<NewlyAdded> newly_added_list = new ArrayList<NewlyAdded>();
+                JSONObject search_answer = new JSONObject(output);
+                JSONArray newly_added_json = search_answer.getJSONArray("newly_added");
+                for(int i=0;i<newly_added_json.length();i++){
+                    JSONObject cur_book_obj = newly_added_json.getJSONObject(i);
+                    String image_link = cur_book_obj.getString("image_link");
+                    String book_name = cur_book_obj.getString("book_name");
+                    Float ratings = Float.parseFloat(cur_book_obj.getString("ratings"));
+                    Long isbn = Long.parseLong(cur_book_obj.getString("isbn"));
+                    NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
+                    newly_added_list.add(temp);
+                }
+                op = newly_added_list;
+
+                return null;
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
+    }
+
+    public class TopRatedFetcher extends AsyncTask<Void,Void,Void> {
+
+        ArrayList<NewlyAdded> op=null;
+
+        @Override
+        protected void onPreExecute() {
+            System.out.println("trf book preexec");
+            li.preDataRecv();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            System.out.println("trf book postexec");
+            System.out.println(op);
+
+            HashMap<String,ArrayList<NewlyAdded>> hm= new HashMap<String,ArrayList<NewlyAdded>>();
+            hm.put("top_rated", op);
+            System.out.println(hm);
+            li.postDataRecv(hm);
+
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params1) {
+
+            ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
+            try{
+
+                String output = doInBackgroundHelper("http://"+ip+"/andy_top_rated.php",params);
+                ArrayList<NewlyAdded> newly_added_list = new ArrayList<NewlyAdded>();
+                JSONObject search_answer = new JSONObject(output);
+                JSONArray newly_added_json = search_answer.getJSONArray("top_rated");
+                for(int i=0;i<newly_added_json.length();i++){
+                    JSONObject cur_book_obj = newly_added_json.getJSONObject(i);
+                    String image_link = cur_book_obj.getString("image_link");
+                    String book_name = cur_book_obj.getString("book_name");
+                    Float ratings = Float.parseFloat(cur_book_obj.getString("ratings"));
+                    Long isbn = Long.parseLong(cur_book_obj.getString("isbn"));
+                    NewlyAdded temp = new NewlyAdded(image_link, book_name, ratings, isbn);
+                    newly_added_list.add(temp);
+                }
+                op = newly_added_list;
+
+                return null;
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
     }
 
     public ArrayList<NewlyAdded> newly_added(){
@@ -163,7 +352,7 @@ public class RequestServer {
             return newly_added_list;
         }
         catch (JSONException e){
-            e.printStackTrace();;
+            e.printStackTrace();
         }catch(InterruptedException e){
             e.printStackTrace();
         }catch (ExecutionException e){
@@ -174,10 +363,12 @@ public class RequestServer {
 
     public ArrayList<NewlyAdded> top_rated(){
         address = "http://"+ip+"/andy_top_rated.php";
+
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         try{
             new Setup().execute(params).get();
             ArrayList<NewlyAdded> top_rated_list = new ArrayList<NewlyAdded>();
+            System.out.println(output);
             JSONObject search_answer = new JSONObject(output);
             JSONArray top_rated_json = search_answer.getJSONArray("top_rated");
             for(int i=0;i<top_rated_json.length();i++) {
@@ -201,6 +392,7 @@ public class RequestServer {
         return null;
     }
 
+    /*
     public BookDetails book_page(Long isbn, Integer user_id){
         address = "http://"+ip+"/andy_book_page.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
@@ -279,7 +471,8 @@ public class RequestServer {
     }
 
     public Boolean to_shelf(Integer id, Long isbn, Boolean add){
-        address = "http://"+ip+"/andy_to_shelf.php";
+        address = "http://10.100.91.55/beyondbooks/andy_add_toshelf.php";
+        System.out.println(address);
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", id.toString()));
         params.add(new Pair<String, String>("isbn", isbn.toString()));
@@ -724,6 +917,7 @@ public class RequestServer {
         }
         return false;
     }
+*/
 
     public Bitmap getImage(String image_name){
         String str_link = "http://"+image_link+"/books_pics/"+image_name;
@@ -756,7 +950,13 @@ public class RequestServer {
     public Boolean setImage(Bitmap image, String user_id){
         address = "http://"+ip+"/andy_set_image.php";
         try {
-            new UploadImage(image, user_id).execute();
+            new UploadImage(image, user_id).execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        try {
             JSONObject jsonObject = new JSONObject(output);
             Boolean result = Boolean.parseBoolean(jsonObject.getString("result"));
             return result;
@@ -766,6 +966,7 @@ public class RequestServer {
         return false;
     }
 
+    /*
     public String get_seller_description(Long isbn, Integer seller_id){
         address = "http://"+ip+"/andy_get_seller_description.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
@@ -815,7 +1016,7 @@ public class RequestServer {
         return 0;
     }
 
-    public ArrayList<Pair<String, Long>> get_selling_list(Integer user_id){
+    public ArrayList<String> get_selling_list(Integer user_id){
         address = "http://"+ip+"/andy_get_selling_list.php";
         ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
         params.add(new Pair<String, String>("user_id", user_id.toString()));
@@ -823,12 +1024,10 @@ public class RequestServer {
             new Setup().execute(params).get();
             JSONObject jsonObject = new JSONObject(output);
             JSONArray jsonArray = jsonObject.getJSONArray("selling_list");
-            ArrayList<Pair<String, Long>> to_return = new ArrayList<Pair<String, Long>>();
+            ArrayList<String> to_return = new ArrayList<String>();
             for(int i=0;i<jsonArray.length();i++){
-                JSONObject temp= jsonArray.getJSONObject(i);
-                String name = temp.getString("name");
-                Long isbn = Long.parseLong(temp.getString("isbn"));
-                to_return.add(new Pair<String, Long>(name, isbn));
+                String temp = jsonArray.getString(i);
+                to_return.add(temp);
             }
             return to_return;
         }catch(JSONException e){
@@ -860,26 +1059,86 @@ public class RequestServer {
         }
         return false;
     }
-
-    public Boolean delete_selling_list_item(Integer user_id, Long isbn){
-        address = "http://"+ip+"/andy_delete_selling_list_item.php";
-        ArrayList<Pair<String, String>> params = new ArrayList<Pair<String, String>>();
-        params.add(new Pair<String, String>("user_id", user_id.toString()));
-        params.add(new Pair<String, String>("isbn", isbn.toString()));
+*/
+    protected String doInBackgroundHelper(String addr, ArrayList<Pair<String, String>>... args){
+        StringBuilder result = new StringBuilder();
         try{
-            new Setup().execute(params).get();
-            JSONObject jsonObject = new JSONObject(output);
-            Boolean to_return = Boolean.parseBoolean(jsonObject.getString("result"));
-            return to_return;
-        }catch(JSONException e){
-            e.printStackTrace();
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }catch (ExecutionException e){
+            URL url = new URL(addr);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setDoInput(true);
+            urlConnection.setDoOutput(true);
+            ArrayList<Pair<String, String>> to_send = args[0];
+            OutputStream os = urlConnection.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+            writer.write(getQuery(to_send));
+            writer.flush();
+            writer.close();
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String line;
+            while((line = reader.readLine())!= null){
+                result.append(line);
+            }
+        }catch (Exception e){
             e.printStackTrace();
         }
-        return false;
+        finally {
+            urlConnection.disconnect();
+        }
+        return_method(result.toString());
+        return result.toString();
     }
+
+    private void return_method(String return_value){
+        output = return_value;
+    }
+    private String getQuery(ArrayList<Pair<String, String>> params) throws UnsupportedEncodingException
+    {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+
+        for (int i=0;i<params.size();i++) {
+            if (i!=0)
+                result.append("&");
+
+            result.append(URLEncoder.encode(params.get(i).first, "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(params.get(i).second, "UTF-8"));
+        }
+
+        return result.toString();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // For sometime these function will stay till I clean all the mess
+
 
     private class Setup extends AsyncTask<ArrayList<Pair<String, String>>, Void, String> {
         HttpURLConnection urlConnection;
@@ -914,25 +1173,6 @@ public class RequestServer {
             return_method(result.toString());
             return result.toString();
         }
-    }
-    private void return_method(String return_value){
-        output = return_value;
-    }
-    private String getQuery(ArrayList<Pair<String, String>> params) throws UnsupportedEncodingException
-    {
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-
-        for (int i=0;i<params.size();i++) {
-            if (i!=0)
-                result.append("&");
-
-            result.append(URLEncoder.encode(params.get(i).first, "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(params.get(i).second, "UTF-8"));
-        }
-
-        return result.toString();
     }
 
     private class DownloadTask extends AsyncTask<String, Integer, Bitmap>{

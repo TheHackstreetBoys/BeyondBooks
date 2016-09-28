@@ -3,7 +3,7 @@
 include 'db_conn.php';
 
 $qs = $_POST['query'];
-$query = "select * from question_forum where title like '%$qs%';";
+$query = "select * from question_forum where title ilike '%$qs%';";
 $result = pg_query($query);
 
 $for_ret=array();
@@ -12,7 +12,7 @@ while ($row = pg_fetch_array($result)) {
 }
 
 
-$query = "select * from ((review natural join books) as lund natural join rating) as lauda where lauda.title like '%$qs%';";
+$query = "select * from books where title ilike '%$qs%';";
 $result = pg_query($query);
 
 $review_ret=array();
